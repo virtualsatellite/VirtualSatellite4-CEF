@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef" description="VirSat DLR CEF Concept" version="1.4" displayName="CEF">
+  <categories name="SystemMode" applicableFor="de.dlr.sc.virsat.model.extension.cef.System">
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the mode" defaultValue="no description"/>
+  </categories>
+  <categories name="Parameter" applicableFor="de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="defaultValue" defaultValue="0"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="modeValues" description="An Array of Values, for default and other modes" type="de.dlr.sc.virsat.model.extension.cef.Value">
+      <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="rangeValues" description="Add minimum and/or Maximum value for the parameter" type="de.dlr.sc.virsat.model.extension.cef.ParameterRange">
+      <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the Parameter"/>
+  </categories>
+  <categories name="Value">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="value" defaultValue="0"/>
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="mode" description="The Mode for which this Value is Valid. Leave unassigned if default Mode" referenceType="de.dlr.sc.virsat.model.extension.cef.SystemMode"/>
+  </categories>
+  <categories name="SystemParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="systemMargin" description="Constant system margin" quantityKindName="Dimensionless" unitName="Percent" defaultValue="0"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="modeDuration" description="Duration of the modes" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Time" unitName="Second"/>
+  </categories>
+  <categories name="SystemMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotal"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massTotal"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotalWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massTotalWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massTotalWithMargin"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemParameters.systemMargin"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massTotalWithMarginWithSystemMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:AdditionAndSubtraction">
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massTotalWithMarginWithSystemMargin"/>
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massPropellant"/>
+        </left>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massAdapter"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massLaunch"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massLaunchMax"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massLaunch"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters.massBuffer"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massLaunch" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMarginWithSystemMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massAdapter" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massPropellant" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massLaunchMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massBuffer" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+  </categories>
+  <categories name="SystemPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters.powerAvgWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerAvgWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerAvgWithMargin"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemParameters.systemMargin"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerAvgWithSystemMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters.powerEnergyWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerEnergyWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerEnergyWithMargin"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemParameters.systemMargin"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters.powerEnergyWithSystemMargin"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithSystemMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithSystemMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
+  </categories>
+  <categories name="SubSystemMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.SubSystem" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal" depth="1"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotal"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin" depth="1"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotalWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotalWithMargin"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotal"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
+        <left xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="/">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotalWithMargin"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massTotal"/>
+          </right>
+        </left>
+        <right xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters.massMarginPercentage"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massMarginPercentage" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+  </categories>
+  <categories name="SubSystemPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.SubSystem" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerAvgWithMargin" depth="1"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters.powerAvgWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters.powerAvgWithMargin"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.SystemParameters.modeDuration"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters.powerEnergyWithMargin"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
+  </categories>
+  <categories name="EquipmentParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="marginMaturity" description="Constant Equipment Margin" quantityKindName="Dimensionless" unitName="Percent" defaultValue="0"/>
+    <properties xsi:type="dvlm_cppd:IntProperty" name="unitQuantity" description="Number of Equipments" quantityKindName="Dimensionless" unitName="No Unit" defaultValue="1"/>
+  </categories>
+  <categories name="EquipmentMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
+            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal" depth="1"/>
+          </right>
+        </left>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.unitQuantity"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massPerUnit" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+  </categories>
+  <categories name="EquipmentPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitOn"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitOn"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitOnWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitStby"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitStby"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitStbyWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitOnWithMargin"/>
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.powerDutyCycle"/>
+        </left>
+        <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitStbyWithMargin"/>
+          <right xsi:type="dvlm_calc:Parenthesis">
+            <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
+              <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.powerDutyCycle"/>
+            </right>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitAvgWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerPerUnitAvgWithMargin"/>
+            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerAvgWithMargin" depth="1"/>
+          </right>
+        </left>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.activeUnits"/>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.PowerAvgWithMargin"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="activeUnits" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerDutyCycle" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitOn" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitStby" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitOnWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitStbyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
+  </categories>
+  <categories name="EquipmentTemperatureParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureNoOpsMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureNoOpsMin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureOpsMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureOpsMin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
+  </categories>
+  <categories name="ParameterRange" cardinality="1">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="minValue"/>
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="maxValue"/>
+  </categories>
+  <categories name="Document" description="Category to describe documents such as specifications" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
+    <properties xsi:type="dvlm_cppd:StringProperty" name="name" description="Name of the document"/>
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="Some not of the document"/>
+    <properties xsi:type="dvlm_cppd:StringProperty" name="url" description="A reference URL to the document"/>
+    <properties xsi:type="dvlm_cppd:ResourceProperty" name="file" description="The actual file of the document"/>
+  </categories>
+  <categories name="ExcelCalculation" applicableFor="de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
+    <properties xsi:type="dvlm_cppd:ResourceProperty" name="excelFile"/>
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="fromVirSat2Excel" referenceType="de.dlr.sc.virsat.model.extension.cef.Parameter">
+      <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="fromExcel2VirSat" referenceType="de.dlr.sc.virsat.model.extension.cef.Parameter">
+      <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
+    </properties>
+  </categories>
+  <structuralElements name="SystemOfSystems" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems" isRootStructuralElement="true"/>
+  <structuralElements name="System" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems" isRootStructuralElement="true"/>
+  <structuralElements name="SubSystem" applicableFor="de.dlr.sc.virsat.model.extension.cef.System"/>
+  <structuralElements name="Equipment" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment de.dlr.sc.virsat.model.extension.cef.SubSystem"/>
+</dvlm_c:Concept>

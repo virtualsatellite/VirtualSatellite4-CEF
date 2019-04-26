@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2008-2019 German Aerospace Center (DLR), Simulation and 
+	Software Technology, Germany. This program and the accompanying materials 
+	are made available under the terms of the Eclipse Public License 2.0 which 
+	is available at http://www.eclipse.org/legal/epl-2.0. SPDX-License-Identifier: 
+	EPL-2.0 -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.dlr.sc.virsat.cef</groupId>
+	<artifactId>de.dlr.sc.virsat.cef</artifactId>
+	<version>4.9.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<profiles>
+		<profile>
+			<!-- Build profile for building the main product -->
+			<id>product</id>
+			<modules>
+				<module>de.dlr.sc.virsat.cef.target</module>
+				<module>de.dlr.sc.virsat.cef.target.feature</module>
+				<module>de.dlr.sc.virsat.cef.product</module>
+				<module>de.dlr.sc.virsat.cef.p2updatesite</module>
+
+				<module>de.dlr.sc.virsat.cef.test</module>
+
+				<module>de.dlr.sc.virsat.cef.branding.feature</module>
+				<module>de.dlr.sc.virsat.cef.branding.ui</module>
+				<module>de.dlr.sc.virsat.cef.docs.feature</module>
+				<module>de.dlr.sc.virsat.cef.license.feature</module>
+
+				<!-- The Extension for the CEF Data Model -->
+				<module>de.dlr.sc.virsat.model.extension.cef</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.ui</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.test</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.feature</module>
+
+				<!-- The Extension for the CEF Interfaces Data Model -->
+				<module>de.dlr.sc.virsat.model.extension.cef.interfaces</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.ui</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.test</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.feature</module>
+
+				<!-- The Extension for the CEF calculations -->
+				<module>de.dlr.sc.virsat.cef.calculation</module>
+				<module>de.dlr.sc.virsat.cef.calculation.test</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- Build profile for updating the target platform -->
+			<id>target</id>
+			<properties>
+				<build.src>tmodel-src</build.src>
+			</properties>
+			<modules>
+				<module>de.dlr.sc.virsat.cef.target</module>
+			</modules>
+		</profile>
+	</profiles>
+</project> 

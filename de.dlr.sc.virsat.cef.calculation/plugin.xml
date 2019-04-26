@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension
+         id="modeVectorExpressionExtender"
+         name="Mode Vector Expression Extender"
+         point="de.dlr.sc.virsat.model.edit.TypeInstanceSetterProvider">
+      <typeInstanceSetterProvider
+            class="de.dlr.sc.virsat.cef.calculation.modes.ModeVectorExpressionExtension"
+            priority="1">
+      </typeInstanceSetterProvider>
+   </extension>
+</plugin>

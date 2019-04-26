@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.dlr.sc.virsat.cef.license.feature"
+      label="VirSat CEF License Feature"
+      version="4.9.0.qualifier"
+      provider-name="DLR (German Aerospace Center)">
+
+   <description>
+      CEF License Feature
+Simulation and Software Technology
+   </description>
+
+   <copyright>
+      Copyright 2018
+by German Aerospace Center (DLR e.V.)
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+</feature>

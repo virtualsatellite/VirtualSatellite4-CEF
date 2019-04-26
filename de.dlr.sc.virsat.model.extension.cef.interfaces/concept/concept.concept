@@ -1,0 +1,69 @@
+Concept de.dlr.sc.virsat.model.extension.cef.interfaces 
+	displayname "CEF Data and Interfaces"
+	description "Concept for Functional Interface Architecture in CEF"
+	version 1.1 {
+	
+	Import de.dlr.sc.virsat.model.extension.cef.*;
+	
+	StructuralElement DataInterfaceTypeCollection {
+		IsRootStructuralElement;
+		Cardinality 1;
+	}
+	
+	Category EquipmentDataParameters { 
+		Applicable For [Equipment]; 
+		Cardinality 1;
+
+		Type DataDutyCycle of Category Parameter quantityKind "Dimensionless" unit "Percent";
+		Type DataPerUnitOn of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+		Type DataPerUnitStby of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+		Type DataPerUnitOnWithMargin of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+		Type DataPerUnitStbyWithMargin of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+		Type DataPerUnitAvgWithMargin of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+		Type DataAvgWithMargin of Category Parameter quantityKind "Data rate" unit "Megabyte Per Second";
+				
+		Ref: DataPerUnitOnWithMargin = DataPerUnitOn + (DataPerUnitOn * EquipmentParameters.marginMaturity);
+		Ref: DataPerUnitStbyWithMargin = DataPerUnitStby + (DataPerUnitStby * EquipmentParameters.marginMaturity);
+		Calc: DataCombinedDutyCycle = EquipmentPowerParameters.powerDutyCycle * DataDutyCycle;
+		Ref: DataPerUnitAvgWithMargin = DataPerUnitOnWithMargin * DataCombinedDutyCycle + DataPerUnitStbyWithMargin * (1 - DataCombinedDutyCycle);
+		Ref: DataAvgWithMargin = DataPerUnitAvgWithMargin * EquipmentPowerParameters.activeUnits;
+	}
+
+	Category DataInterfaceTypes {
+		Applicable For[DataInterfaceTypeCollection];
+		StringProperty note;
+	}
+
+	Category AInterfaceEnd {
+		Applicable For[Equipment];
+		IsAbstract;
+		IntProperty quantity quantityKind "Dimensionless" unit "No Unit" default 1;
+		StringProperty note;
+	}
+	
+	Category PowerInterfaceEnd extends AInterfaceEnd {
+		FloatProperty voltageMin quantityKind "Electric potential difference" unit "Volt";		
+		FloatProperty voltageNominal quantityKind "Electric potential difference" unit "Volt";
+		FloatProperty voltageMax quantityKind "Electric potential difference" unit "Volt";
+	}
+		
+	Category DataInterfaceEnd extends AInterfaceEnd {
+		Reference dataInterfaceType of Type DataInterfaceTypes;
+	}
+
+	Category AInterface {
+		Applicable For[Equipment];
+		IsAbstract;
+		StringProperty note;
+	}
+
+	Category PointToPointInterface extends AInterface {
+		Reference fromInterfaceEnd of Type AInterfaceEnd;
+		Reference toInterfceEnd of Type AInterfaceEnd;	
+	}
+	
+	Category BusInterface extends AInterface {
+		Reference conectedInterfaceEnds [] of Type AInterfaceEnd;
+	}
+}
+

@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VirSat CEF Model Extension Data Model
+Bundle-SymbolicName: de.dlr.sc.virsat.model.extension.cef;singleton:=true
+Bundle-Version: 4.9.0.qualifier
+Bundle-Vendor: DLR (German Aerospace Center)
+Eclipse-ExtensibleAPI: true
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.dlr.sc.virsat.external.lib.apache.poi,
+ de.dlr.sc.virsat.model,
+ de.dlr.sc.virsat.model.edit,
+ de.dlr.sc.virsat.project,
+ de.dlr.sc.virsat.build
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: de.dlr.sc.virsat.model.extension.cef,
+ de.dlr.sc.virsat.model.extension.cef.excel,
+ de.dlr.sc.virsat.model.extension.cef.model,
+ de.dlr.sc.virsat.model.extension.cef.util,
+ de.dlr.sc.virsat.model.extension.cef.validator
+Bundle-Activator: de.dlr.sc.virsat.model.extension.cef.Activator
+Automatic-Module-Name: de.dlr.sc.virsat.model.extension.cef

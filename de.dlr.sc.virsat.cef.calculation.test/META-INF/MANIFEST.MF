@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VirSat CEF Calculation Tests
+Bundle-SymbolicName: de.dlr.sc.virsat.cef.calculation.test
+Bundle-Version: 4.9.0.qualifier
+Fragment-Host: de.dlr.sc.virsat.cef.calculation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: DLR (German Aerospace Center)
+Require-Bundle: org.junit,
+ de.dlr.sc.virsat.model.extension.cef,
+ de.dlr.sc.virsat.commons,
+ de.dlr.sc.virsat.concept.unittest.util
+Export-Package: de.dlr.sc.virsat.cef.calculation.test
+Automatic-Module-Name: de.dlr.sc.virsat.cef.calculation.test

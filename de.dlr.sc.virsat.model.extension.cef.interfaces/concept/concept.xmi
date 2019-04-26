@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef.interfaces" description="Concept for Functional Interface Architecture in CEF" version="1.1" displayName="CEF Data and Interfaces">
+  <imports importedNamespace="de.dlr.sc.virsat.model.extension.cef.*"/>
+  <categories name="EquipmentDataParameters" cardinality="1">
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Equipment"/>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOn"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOn"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput">
+              <reference xsi:type="dvlm_cppd:FloatProperty" href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+            </right>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOnWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStby"/>
+        <right xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStby"/>
+            <right xsi:type="dvlm_calc:ReferencedDefinitionInput">
+              <reference xsi:type="dvlm_cppd:FloatProperty" href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+            </right>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStbyWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput">
+          <reference xsi:type="dvlm_cppd:ComposedProperty" href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.powerDutyCycle"/>
+        </left>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataDutyCycle"/>
+      </expression>
+      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="ac5dc870-e7c9-4dab-9b5f-b7c68713d9e0" name="DataCombinedDutyCycle"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
+        <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOnWithMargin"/>
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="ac5dc870-e7c9-4dab-9b5f-b7c68713d9e0"/>
+        </left>
+        <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStbyWithMargin"/>
+          <right xsi:type="dvlm_calc:Parenthesis">
+            <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
+              <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="ac5dc870-e7c9-4dab-9b5f-b7c68713d9e0"/>
+            </right>
+          </right>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitAvgWithMargin"/>
+    </equationDefinitions>
+    <equationDefinitions>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitAvgWithMargin"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput">
+          <reference xsi:type="dvlm_cppd:ComposedProperty" href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters.activeUnits"/>
+        </right>
+      </expression>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataAvgWithMargin"/>
+    </equationDefinitions>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataDutyCycle" quantityKindName="Dimensionless" unitName="Percent">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataPerUnitOn" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataPerUnitStby" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataPerUnitOnWithMargin" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataPerUnitStbyWithMargin" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataPerUnitAvgWithMargin" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="DataAvgWithMargin" quantityKindName="Data rate" unitName="Megabyte Per Second">
+      <type href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Parameter"/>
+    </properties>
+  </categories>
+  <categories name="DataInterfaceTypes" applicableFor="de.dlr.sc.virsat.model.extension.cef.interfaces.DataInterfaceTypeCollection">
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note"/>
+  </categories>
+  <categories name="AInterfaceEnd" isAbstract="true">
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Equipment"/>
+    <properties xsi:type="dvlm_cppd:IntProperty" name="quantity" quantityKindName="Dimensionless" unitName="No Unit" defaultValue="1"/>
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note"/>
+  </categories>
+  <categories name="PowerInterfaceEnd" extendsCategory="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd">
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="voltageMin" quantityKindName="Electric potential difference" unitName="Volt"/>
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="voltageNominal" quantityKindName="Electric potential difference" unitName="Volt"/>
+    <properties xsi:type="dvlm_cppd:FloatProperty" name="voltageMax" quantityKindName="Electric potential difference" unitName="Volt"/>
+  </categories>
+  <categories name="DataInterfaceEnd" extendsCategory="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd">
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="dataInterfaceType" referenceType="de.dlr.sc.virsat.model.extension.cef.interfaces.DataInterfaceTypes"/>
+  </categories>
+  <categories name="AInterface" isAbstract="true">
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.cef/concept/concept.concept#de.dlr.sc.virsat.model.extension.cef.Equipment"/>
+    <properties xsi:type="dvlm_cppd:StringProperty" name="note"/>
+  </categories>
+  <categories name="PointToPointInterface" extendsCategory="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterface">
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="fromInterfaceEnd" referenceType="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd"/>
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="toInterfceEnd" referenceType="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd"/>
+  </categories>
+  <categories name="BusInterface" extendsCategory="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterface">
+    <properties xsi:type="dvlm_cppd:ReferenceProperty" name="conectedInterfaceEnds" referenceType="de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd">
+      <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
+    </properties>
+  </categories>
+  <structuralElements name="DataInterfaceTypeCollection" cardinality="1" isRootStructuralElement="true"/>
+</dvlm_c:Concept>
