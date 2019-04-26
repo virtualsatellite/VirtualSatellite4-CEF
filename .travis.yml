@@ -42,7 +42,7 @@ env:
   # ---------------------------------------------
   # API Token for access to github
   # ---------------------------------------------
-  - secure: "POYGzbPXLBDe2BsehzJ7QUZ4toQ1Pbi2VdH8ZTSN9zqipLbBVnsMghs7Zf80C+AK1nKbY2DPWHwaWR6LE3MRhA9X3xeyYgJ/53J4JeMw1ORYpavVXJC9t8d+fMVCJhALzjQYz7PmE4ba/MHgr/UnoeNL2v1M/9mUpMbfD490jPUdOQjqpy0/FvM5HhXcQEwexUPsNsR+DffVSSmJ62aXHPM2pgKYaH0pnY5OYwm4t7v7lp8GgQf+b163+rD2LyLIEeLiQ1msXAqaRSBznuu2wqi7N3ZC176i864fRHf8M4RYbWqA0BneCd0keAQJLvpcPBoyE1T0XKYvjz5JdjbuNDX1p4waLo7CnU+UJzuCQ5hnkrDm7YJhwQY007T2kudUTPl0dP0TeoJsDtz30vvBC82equJA5+0xPb1BvvDmdKFkfF7gOGh05qjhAo3TJ8D5CXXFmdPr9VApYv0zqzh0hR5p+5FHkDmKhzJ7xg4jpo04IXa8ztBCjoB4dyLnUDhyTABtA5/uoRuMA4I7nc25mKL6Z9fz8O8HadAInlJFXyodQOrvD68k2Bf9WJWreZMKcLJiOWQC0bbPNa6ABrRpiuzdUdWEpzNjJJYktmPl+JwHAJ4Fa3CHaNFILaLLC9Z3gtrdNT2+PkME8u0sfVWZ1nU4nNO9EGUItcBEFhkCnZE="
+  - secure: "ayOj6xJ/IcL1v+a+IHoHhmJJYwA+AAPGRPivdti0G09fOS8XeKi9UPPDJKy7VOhjxdQFcjDvO5vNF1AOs7zC8uwvkT9i00zZ+cA959zan/3rkOOjaS9egqp0N9E7LvAsBLmbmNkRvDVI7Z/6DpOl/Whl7oru+imqEZvlemnUXFuFHqs68a3d8c0/A3M1mpXRT1iTGe2Fj+VL5r1wjTlq8/kHAOLeYSSMUDeG+5MMqT8+wQMqzpAG9LgCvc+8ZR9OlMDBi+NI7NwuseLk2csjgDKTGBtm56t+FT9Tni0EUyNW0dmwIiFqeHEu7KKtRuYWiKhP/FzsLz5w3lCqq50Dn7XV38EDuGZegSgMgYjf9a8ADTSniPQXpzcOu72KFmM0EBVgv4h3xJGNkTa6RXruescgtPQx3ZmYOamfDxK4gnk+BbpcNDru1ahWfGutkUWuQKdonzK+MgaDiLx9QaVjZdCxM8zCLd7QdE0cYI2GSF7ASYGLTkiGx6/ex7Yq95c7uB5esKl8aMZ1RH0qYthJfNhJcngRWhnegoluuEoccVd4MtrXpgxbgo2xyypqKNuLjfvg9aOvWAncEOyz0q7pnxKv7u1UGcm1b059v4aiVVpea+pwRLFpI9RLV4C/MMJMgOz32XDJNIbwc3cpSCtu5thblUpJVl21zKUeDg81IKg="
   # ---------------------------------------------
   # Setup Overtarget Repository and Version
   # ---------------------------------------------
@@ -85,7 +85,7 @@ after_failure:
   # SWTBot to see what happened 
   # ----------------------------------------
   - mkdir -p -m 700 /tmp/.sourceforge_ssh
-  - openssl aes-256-cbc -K $encrypted_9c25c12f834a_key -iv $encrypted_9c25c12f834a_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
+  - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
   - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
   - ssh-add /tmp/.sourceforge_ssh/id_ed25519
   - ls -l $TRAVIS_BUILD_DIR/swtbot/
@@ -247,7 +247,7 @@ jobs:
       - mvn clean compile -P development,target -B -V | tee maven.log
       - echo "Check for Maven Problems on Overtarget:"
       - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,javadoc,deploy,deployUnsecured,product -B -V | tee maven.log
+      - mvn install -P development,deploy,deployUnsecured,product -B -V | tee maven.log
       - echo "Check for Maven Problems on Product:"
       - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
 
@@ -265,7 +265,7 @@ jobs:
       - mvn clean compile -P development,target -B -V | tee maven.log
       - echo "Check for Maven Problems on Overtarget:"
       - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,javadoc,deploy,deployUnsecured,product -B -V | tee maven.log
+      - mvn install -P development,deploy,deployUnsecured,product -B -V | tee maven.log
       - echo "Check for Maven Problems on Product:"
       - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
       before_deploy:
@@ -278,7 +278,7 @@ jobs:
         # deployment store and add it to ssh-agent
         # ----------------------------------------
         - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_9c25c12f834a_key -iv $encrypted_9c25c12f834a_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
+        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
         - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
         - ssh-add /tmp/.sourceforge_ssh/id_ed25519
         # -----------------------------------------------------------
@@ -337,7 +337,7 @@ jobs:
       - mvn clean compile -P development,target -B -V | tee maven.log
       - echo "Check for Maven Problems on Overtarget:"
       - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P integration,javadoc,deploy,deployUnsecured,product -B -V | tee maven.log
+      - mvn install -P integration,deploy,deployUnsecured,product -B -V | tee maven.log
       - echo "Check for Maven Problems on Product:"
       - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
       before_deploy:
@@ -350,7 +350,7 @@ jobs:
         # deployment store and add it to ssh-agent
         # ----------------------------------------
         - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_9c25c12f834a_key -iv $encrypted_9c25c12f834a_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
+        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
         - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
         - ssh-add /tmp/.sourceforge_ssh/id_ed25519
         # -----------------------------------------------------------
@@ -409,7 +409,7 @@ jobs:
       - mvn clean compile -P development,target -B -V | tee maven.log
       - echo "Check for Maven Problems on Overtarget:"
       - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,javadoc,deploy,deployBackuped,product -B -V | tee maven.log
+      - mvn install -P release,deploy,deployBackuped,product -B -V | tee maven.log
       - echo "Check for Maven Problems on Product:"
       - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
       before_deploy:
@@ -422,7 +422,7 @@ jobs:
         # deployment store and add it to ssh-agent
         # ----------------------------------------
         - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_9c25c12f834a_key -iv $encrypted_9c25c12f834a_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
+        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
         - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
         - ssh-add /tmp/.sourceforge_ssh/id_ed25519
       deploy:
