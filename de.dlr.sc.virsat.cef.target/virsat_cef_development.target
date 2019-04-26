@@ -2,6 +2,31 @@
 		<?pde version="3.8"?><target name="virsat_cef_development" sequenceNumber="1">
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.svn.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="0.0.0"/>
+		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"/>
+		</location>              
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201812241324"/>
 		<repository location="https://download.eclipse.org/nebula/releases/latest/"/>
 		</location>              
@@ -26,30 +51,6 @@
 		<unit id="org.eclipse.xtext.sdk.feature.group" version="2.12.0.v20170519-1412"/>
 		<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
 		<repository location="http://download.eclipse.org/releases/oxygen/"/>
-		</location>              
-		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.svn.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="0.0.0"/>
-		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"/>
 		</location>              
 		</locations>
 		<environment>
