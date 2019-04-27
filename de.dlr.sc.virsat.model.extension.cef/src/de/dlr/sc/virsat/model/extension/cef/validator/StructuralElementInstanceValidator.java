@@ -59,9 +59,23 @@ public class StructuralElementInstanceValidator extends AStructuralElementInstan
 	@Override
 	public boolean validate(StructuralElementInstance sei) {
 		boolean allInfoValid = true;
-		List<Parameter> parameters = bCaHelper.getAllNestedBeanCategories(sei, Parameter.class);
-		List<ExcelCalculation> excelCalcs = bCaHelper.getAllNestedBeanCategories(sei, ExcelCalculation.class);
 		
+		allInfoValid &= validateParameters(sei);
+		allInfoValid &= validateExcelCalculations(sei);
+		
+		// now check if there are InterfaceEnds which are used more than once
+		return super.validate(sei) && allInfoValid;
+	}
+	
+	/**
+	 * Validates the correctness of the Parameters attached to the given sei
+	 * @param sei the sei to validate
+	 * @return true iff all parameter data is correct
+	 */
+	private boolean validateParameters(StructuralElementInstance sei) {
+		boolean allInfoValid = true;
+		
+		List<Parameter> parameters = bCaHelper.getAllNestedBeanCategories(sei, Parameter.class);
 		for (Parameter parameter : parameters) {
 			// check if the modes and values are all set for this parameter
 
@@ -163,7 +177,19 @@ public class StructuralElementInstanceValidator extends AStructuralElementInstan
 			}
 			
 		}
+
+		return allInfoValid;
+	}
+	
+	/**
+	 * Validates the correctness of the ExcelCaluldations attached to the given sei
+	 * @param sei the sei to validate
+	 * @return true iff all excel calulation data is correct
+	 */
+	private boolean validateExcelCalculations(StructuralElementInstance sei) {
+		boolean allInfoValid = true;
 		
+		List<ExcelCalculation> excelCalcs = bCaHelper.getAllNestedBeanCategories(sei, ExcelCalculation.class);
 		for (ExcelCalculation excelCalc : excelCalcs) {
 			// check if an excel file has been attached and if all parameters (input/output) have been assigned
 			String fqn = excelCalc.getTypeInstance().getFullQualifiedInstanceName();
@@ -181,9 +207,6 @@ public class StructuralElementInstanceValidator extends AStructuralElementInstan
 			}
 		}
 		
-		// now check if there are InterfaceEnds which are used more than once
-		
-		return super.validate(sei) && allInfoValid;
+		return allInfoValid;
 	}
-	
 }
