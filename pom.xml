@@ -19,8 +19,21 @@
 
 	<profiles>
 		<profile>
+			<!-- Build profile for updating the target platform -->
+			<id>target</id>
+			<properties>
+				<build.src>tmodel-src</build.src>
+			</properties>
+			<modules>
+				<module>de.dlr.sc.virsat.cef.target</module>
+			</modules>
+		</profile>
+		<profile>
 			<!-- Build profile for building the main product -->
 			<id>product</id>
+			<properties>
+				<build.src>src</build.src>
+			</properties>
 			<modules>
 				<module>de.dlr.sc.virsat.cef.target</module>
 				<module>de.dlr.sc.virsat.cef.target.feature</module>
@@ -49,16 +62,6 @@
 				<!-- The Extension for the CEF calculations -->
 				<module>de.dlr.sc.virsat.cef.calculation</module>
 				<module>de.dlr.sc.virsat.cef.calculation.test</module>
-			</modules>
-		</profile>
-		<profile>
-			<!-- Build profile for updating the target platform -->
-			<id>target</id>
-			<properties>
-				<build.src>tmodel-src</build.src>
-			</properties>
-			<modules>
-				<module>de.dlr.sc.virsat.cef.target</module>
 			</modules>
 		</profile>
 	</profiles>
