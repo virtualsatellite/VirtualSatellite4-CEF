@@ -78,106 +78,143 @@ public class StructuralElementInstanceValidator extends AStructuralElementInstan
 		List<Parameter> parameters = bCaHelper.getAllNestedBeanCategories(sei, Parameter.class);
 		for (Parameter parameter : parameters) {
 			// check if the modes and values are all set for this parameter
-
 			String fqn = parameter.getTypeInstance().getFullQualifiedInstanceName();
 			UnitValuePropertyInstance uvpi = parameter.getDefaultValueBean().getTypeInstance();
 			IUuid iUuid = uvpi;	
 			
-			//check if range values are specified for the parameter
-			if (!parameter.getRangeValues().isEmpty()) {
-				if (parameter.getRangeValues().get(0).isSetMinValue()) {
-					if (parameter.getDefaultValue() < parameter.getRangeValues().get(0).getMinValue()) {
-						allInfoValid = false;
-						vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_OUT_OF_RANGE + fqn, iUuid);
-					}
-				}
-				if (parameter.getRangeValues().get(0).isSetMaxValue()) {
-					if (parameter.getDefaultValue() > parameter.getRangeValues().get(0).getMaxValue()) {
-						allInfoValid = false;
-						vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_OUT_OF_RANGE + fqn, iUuid);
-					}
-				}
-			}	
+			allInfoValid &= validateParameterRange(parameter, fqn, iUuid);
+			allInfoValid &= validateParameterDefaultValue(parameter, fqn, iUuid);
+			allInfoValid &= validateParameterModeValues(parameter, fqn);
+		}
 
-			if (!parameter.isSetDefaultValue()) {
-				allInfoValid = false;													
-				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_DEFAULT_VALUE + fqn, iUuid);
+		return allInfoValid;
+	}
+	
+	/**
+	 * Check if range values are specified for the parameter
+	 * @param parameter the parameter bean
+	 * @param fqn the full qualified name of the parameter
+	 * @param iUuid the uuid of the parameter instance
+	 * @return true iff parameter values are in range
+	 */
+	private boolean validateParameterRange(Parameter parameter, String fqn, IUuid iUuid) {
+		boolean allInfoValid = true;
+		if (!parameter.getRangeValues().isEmpty()) {
+			if (parameter.getRangeValues().get(0).isSetMinValue()) {
+				if (parameter.getDefaultValue() < parameter.getRangeValues().get(0).getMinValue()) {
+					allInfoValid = false;
+					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_OUT_OF_RANGE + fqn, iUuid);
+				}
+			}
+			if (parameter.getRangeValues().get(0).isSetMaxValue()) {
+				if (parameter.getDefaultValue() > parameter.getRangeValues().get(0).getMaxValue()) {
+					allInfoValid = false;
+					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_OUT_OF_RANGE + fqn, iUuid);
+				}
+			}
+		}	
+		
+		return allInfoValid;
+	}
+	
+	/**
+	 * Check if the default value is correctly set
+	 * @param parameter the parameter bean
+	 * @param fqn the full qualified name of the parameter
+	 * @param iUuid the uuid of the parameter instance
+	 * @return true iff parameter values are in range
+	 */
+	private boolean validateParameterDefaultValue(Parameter parameter, String fqn, IUuid iUuid) {
+		boolean allInfoValid = true;
+		
+		if (!parameter.isSetDefaultValue()) {
+			allInfoValid = false;													
+			vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_DEFAULT_VALUE + fqn, iUuid);
+		} else {
+			boolean parameterOk = false;
+			
+			try {
+				double value = parameter.getDefaultValue();
+				parameterOk = !Double.isNaN(value);
+			} catch (Exception e) {
+			}
+			
+			if (!parameterOk) {
+				allInfoValid = false;
+				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_NOT_NUMERIC + fqn, iUuid);
+			}
+		}
+		
+		return allInfoValid;
+	}
+	
+	/**
+	 * Check if the mode values are set correctly
+	 * @param parameter the parameter bean
+	 * @param fqn the full qualified name of the parameter
+	 * @return true iff parameter values are in range
+	 */
+	private boolean validateParameterModeValues(Parameter parameter, String fqn) {
+		boolean allInfoValid = true;
+		
+		List<SystemMode> assignedSystemModes = new ArrayList<SystemMode>();
+		for (Value modeValue : parameter.getModeValues()) {
+			UnitValuePropertyInstance uvpi = modeValue.getValueBean().getTypeInstance();
+			IUuid iUuid = uvpi;
+			
+			if (!modeValue.isSetValue()) {
+				allInfoValid = false;															
+				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_MODE_VALUE_VALUE + fqn, iUuid);
 			} else {
-				boolean parameterOk = false;
+				boolean modeValueOk = false;
 				
 				try {
 					double value = parameter.getDefaultValue();
-					parameterOk = !Double.isNaN(value);
+					modeValueOk = !Double.isNaN(value);
 				} catch (Exception e) {
 				}
 				
-				if (!parameterOk) {
-					allInfoValid = false;
-					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_DEFAULT_VALUE_NOT_NUMERIC + fqn, iUuid);
+				if (!modeValueOk) {
+					allInfoValid = false;														
+					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MODE_VALUE_NOT_NUMERIC + fqn, iUuid);
 				}
 			}
-			
-			List<SystemMode> assignedSystemModes = new ArrayList<SystemMode>();
-			for (Value modeValue : parameter.getModeValues()) {
-				
-				uvpi = modeValue.getValueBean().getTypeInstance();
-				iUuid = uvpi;
-				
-				if (!modeValue.isSetValue()) {
-					allInfoValid = false;															
-					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_MODE_VALUE_VALUE + fqn, iUuid);
-				} else {
-					boolean modeValueOk = false;
-					
-					try {
-						double value = parameter.getDefaultValue();
-						modeValueOk = !Double.isNaN(value);
-					} catch (Exception e) {
-					}
-					
-					if (!modeValueOk) {
-						allInfoValid = false;														
-						vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MODE_VALUE_NOT_NUMERIC + fqn, iUuid);
-					}
-				}
 
-				if (modeValue.getMode() != null) {
-					assignedSystemModes.add(modeValue.getMode());
-				}	
+			if (modeValue.getMode() != null) {
+				assignedSystemModes.add(modeValue.getMode());
+			}	
 
-				if (modeValue.getMode() == null) {
-					allInfoValid = false;
-					ReferencePropertyInstance rpi = modeValue.getTypeReferenceProperty();
-					iUuid = rpi;																	
-					vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_MODE_VALUE_MODE + fqn, iUuid);
-				}
+			if (modeValue.getMode() == null) {
+				allInfoValid = false;
+				ReferencePropertyInstance rpi = modeValue.getTypeReferenceProperty();
+				iUuid = rpi;																	
+				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MISSING_MODE_VALUE_MODE + fqn, iUuid);
 			}
-			
-			
-			//validator to check if multiple mode values are assigned to one system mode
-			
-			final Set<SystemMode> setOfAllModeValues = new HashSet<SystemMode>();
-			final Set<SystemMode> setOfDuplicateModeAssignment = new HashSet<SystemMode>();
-			
-			for (SystemMode sm : assignedSystemModes) {
-				if (!setOfAllModeValues.add(sm)) {
-					setOfDuplicateModeAssignment.add(sm);
-				}
-			}
-			 
-			if (!setOfDuplicateModeAssignment.isEmpty()) {
-				for (SystemMode sm : setOfDuplicateModeAssignment) {
-					for (Value md: parameter.getModeValues()) {
-						if (md.getMode() != null && md.getMode().equals(sm)) {
-							iUuid = md.getTypeReferenceProperty();
-							vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MODE_VALUE_ASSIGNED_MULTIPLE + fqn, iUuid);
-						}	
-					}
-				}	
-			}
-			
 		}
-
+		
+		
+		//validator to check if multiple mode values are assigned to one system mode
+		
+		final Set<SystemMode> setOfAllModeValues = new HashSet<SystemMode>();
+		final Set<SystemMode> setOfDuplicateModeAssignment = new HashSet<SystemMode>();
+		
+		for (SystemMode sm : assignedSystemModes) {
+			if (!setOfAllModeValues.add(sm)) {
+				setOfDuplicateModeAssignment.add(sm);
+			}
+		}
+		 
+		if (!setOfDuplicateModeAssignment.isEmpty()) {
+			for (SystemMode sm : setOfDuplicateModeAssignment) {
+				for (Value md: parameter.getModeValues()) {
+					if (md.getMode() != null && md.getMode().equals(sm)) {
+						ReferencePropertyInstance iUuid = md.getTypeReferenceProperty();
+						vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, WARNING_MODE_VALUE_ASSIGNED_MULTIPLE + fqn, iUuid);
+					}	
+				}
+			}	
+		}
+		
 		return allInfoValid;
 	}
 	
