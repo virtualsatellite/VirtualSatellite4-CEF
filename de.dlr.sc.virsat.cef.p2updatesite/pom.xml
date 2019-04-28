@@ -53,7 +53,7 @@
 										</fail>
 										<delete dir="${build.folder.fullpath}" />
 										<copy todir="${build.folder.fullpath}">
-											<fileset dir="./target/Repository">
+											<fileset dir="./target/repository">
 											</fileset>
 										</copy>
 									</target>
