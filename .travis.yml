@@ -100,9 +100,7 @@ jobs:
     # --- Development and Feature Branches
     - stage: build-test
       # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) \ 
-        AND NOT (tag =~ /^Release/) \                  
-        AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
       name: Build and Test - SpotBugs - Development and Features
       script:
       - mvn clean compile -P development,target -B -V | tee maven.log
@@ -143,9 +141,7 @@ jobs:
     # --- Development and Feature Branches
     - stage: build-test
       # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) \ 
-        AND NOT (tag =~ /^Release/) \                  
-        AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
       name: Build and Test - Surefire - Development and Features
       script:
       - mvn clean compile -P development,target -B -V | tee maven.log
@@ -202,10 +198,7 @@ jobs:
     # -----------------------------------------------------
     # --- Development and Feature Branches
     - stage: build-test
-      # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) \ 
-        AND NOT (tag =~ /^Release/) \                  
-        AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
       name: Build and Test - Checkstyle - Development and Features
       script:
       - mvn clean compile -P development,target -B -V | tee maven.log
@@ -247,9 +240,7 @@ jobs:
     # --- The Job for feature branches only. Assemble the product, but don't deploy
     - stage: build-assemble-deploy
       # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) \ 
-        AND NOT (tag =~ /^Release/) \                  
-        AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
       name: Build-Assemble-Deploy - Feature
       script:
       # -------------------------------------------------------
