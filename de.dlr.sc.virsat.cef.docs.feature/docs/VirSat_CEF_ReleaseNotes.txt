@@ -3,6 +3,30 @@ VirSat CEF Release Notes
 
 VirSat CEF is based on VirSat Core. Please don't forget to read the Release Notes of VirSat Core as well!
 
+Release 4.9.0 (29th April 2018)
+----------------------------------
+
+New Features:
+	Transition to Open Source at https://github.com/virtualsatellite/VirtualSatellite4-CEF #1 #2 Release
+
+Release 4.8.0 (22nd February 2018)
+----------------------------------
+
+New Features:
+	Open Source Compliance #662 Release
+	API Improvements for the AppEngine #635 #634 #633 Feature
+	
+Usability Updates:
+	Copy & Pasting a SEI now directly assigns the discipline to the person doing the paste #609 Comfort/Usability
+	Selecting a concept in the add concept dialoge now also selects all dependencies #644 Comfort/Usability
+	Added DrillDown button in inheritance section #631 Comfort/Usability
+
+Fixed Bugs:
+	Fixed issue of deadlock / race condition freezing VirSat #648 Bug
+	Fixed issue where concept generator did not generate migrator tests correctly #647 Bug
+	Fixed issue of having a NullPointerException when getting all bean children of a SEI #637 Bug
+	Fixed issue where automatic name generation for copy & pasted objects did not behave correctly #616 Bug UIEngine
+
 Release 4.7.0 (2nd July 2018)
 ----------------------------------
 
@@ -21,12 +45,12 @@ New Features:
  	Adjust CEF Calculation Extension to cope with new CORE Calculation API (#118)
 	Adjust Handlers to auto Assignrequired Categories (#117) 
 	Document category is applicable for system (#109)
-    Parameter tables order should follow the CEF process (#91)
+	Parameter tables order should follow the CEF process (#91)
 
 Usability Updates:
-    Icon for CEF context menu (#127)
-    Fixing incorrect usage of Activators (#124)
-     System Mode Table does not show warning icons (#107) 
+	Icon for CEF context menu (#127)
+	Fixing incorrect usage of Activators (#124)
+	System Mode Table does not show warning icons (#107) 
 	Icon color wrong (#106) 
 	CefMarkerHelper to match markers to Snippets (#104) 
     
@@ -41,12 +65,12 @@ Release 4.5.0 (31st July 2017)
 ----------------------------------
 
 New Features:
-    CEF Concept (#2) for modeling:
-    	- Product structure
-    	- Mass, Power, Temperature parameters
-    	- User-defined parameters
-    	- System modes and mode-dependent parameter values
-    	- Unit quantity and maturity (margins)
+	CEF Concept (#2) for modeling:
+		- Product structure
+		- Mass, Power, Temperature parameters
+		- User-defined parameters
+		- System modes and mode-dependent parameter values
+		- Unit quantity and maturity (margins)
 	Excel calculations (#19)
 	Mass summary tables and graphs (#17)
 	Mode overview graphs (#15)
@@ -54,7 +78,7 @@ New Features:
 	"Domain Round" view with the update order of disciplines (#32)
 
 Usability Updates:
-    Mode-dependent values can be added via context menu in a table (#59)
-    Equipment unitQuantity is shown in the Navigator (#75)
+	Mode-dependent values can be added via context menu in a table (#59)
+	Equipment unitQuantity is shown in the Navigator (#75)
     
 Fixed Bugs:    
