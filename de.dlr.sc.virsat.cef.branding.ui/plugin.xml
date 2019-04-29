@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="de.dlr.sc.virsat.cef.branding.ui.intro.IntroPart"
+            id="de.dlr.sc.virsat.cef.branding.ui.intro">
+      </intro>
+      <introProductBinding
+            introId="de.dlr.sc.virsat.cef.branding.ui.intro"
+            productId="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF">
+      </introProductBinding>
+   </extension>
+   <extension
+         id="VirSat_CEF"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="VirSat CEF Edition">
+         <property
+               name="windowImages"
+               value="resources/images/Branding/CEF16.gif,resources/images/Branding/CEF32.gif,resources/images/Branding/CEF48.gif,resources/images/Branding/CEF64.gif,resources/images/Branding/CEF128.gif,resources/images/Branding/CEF256.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="Virtual Satellite 4 - CEF&#x0A;&#x0A;Version 4.9.0&#x0A;&#x0A;Copyright 2019 - Simulation and Software Technology (DLR)&#x0A;&#x0A;German Aerospace Center (DLR) e.V.&#x0A;Lilienthalplatz 7&#x0A;38108 Braunschweig&#x0A;Germany">
+         </property>
+         <property
+               name="aboutImage"
+               value="resources/images/Branding/CEF_256x330.gif">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="808080">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,280,230,15">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,260,230,20">
+         </property>
+         <property
+               name="appName"
+               value="VirSat CEF Edition">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.dlr.sc.virsat.cef.branding.ui.perspective.DefaultPerspective"
+            icon="resources/images/cef.gif"
+            id="de.dlr.sc.virsat.cef.branding.ui.default.perspective"
+            name="CEF Default">
+      </perspective>
+   </extension>
+</plugin>

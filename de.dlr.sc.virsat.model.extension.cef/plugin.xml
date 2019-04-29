@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="de.dlr.sc.virsat.model.Concept">
+	<concept
+	          id="de.dlr.sc.virsat.model.extension.cef"
+	          version="1.5"
+	          xmi="concept/concept.xmi">
+	    </concept>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cef"
+				class="de.dlr.sc.virsat.model.extension.cef.validator.StructuralElementInstanceValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
+	<extension point="de.dlr.sc.virsat.model.edit.ConceptTypeFactoryCaBeanRegistration">
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SystemMode"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SystemMode">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.Parameter"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.Parameter">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.Value"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.Value">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SystemParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SystemParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SystemMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SystemMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SystemPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SystemPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SubSystemMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.SubSystemPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.SubSystemPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.EquipmentParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.EquipmentMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.EquipmentPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.EquipmentPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.EquipmentTemperatureParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.EquipmentTemperatureParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.ParameterRange"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.ParameterRange">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.Document"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.Document">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cef.ExcelCalculation"
+			caBean="de.dlr.sc.virsat.model.extension.cef.model.ExcelCalculation">
+		</CategoryAssignmentBean>
+	</extension>
+	<extension point="de.dlr.sc.virsat.model.edit.ConceptTypeFactorySeiBeanRegistration">
+		<StructuralElementInstanceBean
+			id="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems"
+			seiBean="de.dlr.sc.virsat.model.extension.cef.model.SystemOfSystems">
+		</StructuralElementInstanceBean>
+		<StructuralElementInstanceBean
+			id="de.dlr.sc.virsat.model.extension.cef.System"
+			seiBean="de.dlr.sc.virsat.model.extension.cef.model.System">
+		</StructuralElementInstanceBean>
+		<StructuralElementInstanceBean
+			id="de.dlr.sc.virsat.model.extension.cef.SubSystem"
+			seiBean="de.dlr.sc.virsat.model.extension.cef.model.SubSystem">
+		</StructuralElementInstanceBean>
+		<StructuralElementInstanceBean
+			id="de.dlr.sc.virsat.model.extension.cef.Equipment"
+			seiBean="de.dlr.sc.virsat.model.extension.cef.model.Equipment">
+		</StructuralElementInstanceBean>
+	</extension>
+	<!-- Plugin.XML Protected Region Start -->
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.0"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v0"
+		xmi="concept/concept_v1_0.xmi">
+	</migrator>
+</extension>
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.1"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v1"
+		xmi="concept/concept_v1_1.xmi">
+	</migrator>
+</extension>
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.2"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v2"
+		xmi="concept/concept_v1_2.xmi">
+	</migrator>
+</extension>
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.3"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v3"
+		xmi="concept/concept_v1_3.xmi">
+	</migrator>
+</extension>
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.4"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v4"
+		xmi="concept/concept_v1_4.xmi">
+	</migrator>
+</extension>
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cef"
+		version="1.5"
+		class="de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v5"
+		xmi="concept/concept_v1_5.xmi">
+	</migrator>
+</extension>
+	<!-- Plugin.XML Protected Region End -->
+	<!-- Plugin.XML Protected Region Start -->
+	<!-- Plugin.XML Protected Region End -->
+</plugin>

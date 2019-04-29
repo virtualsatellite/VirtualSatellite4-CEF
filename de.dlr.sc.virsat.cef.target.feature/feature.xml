@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.dlr.sc.virsat.cef.target.feature"
+      label="VirSat CEF Target Feature"
+      version="4.9.0.qualifier"
+      provider-name="DLR (German Aerospace Center)"
+      plugin="de.dlr.sc.virsat.cef.branding.ui"
+      license-feature="de.dlr.sc.virsat.cef.license.feature">
+
+   <description>
+      This feature contains the target platform information to enable target platform inheritance for VirSat CEF extensions.
+   </description>
+
+   <copyright>
+      Copyright 2017
+by German Aerospace Center (DLR e.V.)
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="de.dlr.sc.virsat.cef.branding.feature" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="de.dlr.sc.virsat.cef.license.feature" version="0.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="de.dlr.sc.virsat.cef.target"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

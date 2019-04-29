@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VirSat CEF Target
+Bundle-SymbolicName: de.dlr.sc.virsat.cef.target
+Bundle-Version: 4.9.0.qualifier
+Bundle-Vendor: DLR (German Aerospace Center)
+Eclipse-ExtensibleAPI: true
+Automatic-Module-Name: de.dlr.sc.virsat.cef.target
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: de.dlr.sc.virsat.target
