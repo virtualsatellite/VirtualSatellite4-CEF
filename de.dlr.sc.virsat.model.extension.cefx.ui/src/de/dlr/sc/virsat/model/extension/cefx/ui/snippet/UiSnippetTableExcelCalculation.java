@@ -19,7 +19,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.excel.ExcelUpdater;
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableExcelCalculation;
 
 // *****************************************************************
 // * Class Declaration

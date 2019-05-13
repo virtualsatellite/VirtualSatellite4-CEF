@@ -24,7 +24,6 @@ import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
-import de.dlr.sc.virsat.model.extension.cefx.ui.command.ACreateAddSystemModeCommand;
 import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelper;
 
 /**

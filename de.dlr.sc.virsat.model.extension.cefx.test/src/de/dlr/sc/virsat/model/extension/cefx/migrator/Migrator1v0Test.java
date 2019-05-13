@@ -16,8 +16,6 @@ package de.dlr.sc.virsat.model.extension.cefx.migrator;
 
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.ConceptsFactory;
-import de.dlr.sc.virsat.model.extension.cefx.migrator.AMigrator1v0Test;
-import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0;
 import de.dlr.sc.virsat.model.dvlm.DVLMFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import de.dlr.sc.virsat.model.dvlm.Repository;

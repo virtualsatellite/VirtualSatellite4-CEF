@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.extension.cefx.ui.command.ACreateAddEquipmentMassParametersCommand;
+
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class

@@ -11,7 +11,6 @@ package de.dlr.sc.virsat.model.extension.cefx.ui.snippet;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableParameterRangeValuesParameterRange;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.IUiSnippet;
 
 

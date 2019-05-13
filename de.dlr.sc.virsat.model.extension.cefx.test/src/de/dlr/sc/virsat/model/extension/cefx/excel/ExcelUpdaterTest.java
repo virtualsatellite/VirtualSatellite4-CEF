@@ -44,8 +44,6 @@ import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.util.StructuralInstantiator;
-import de.dlr.sc.virsat.model.extension.cefx.excel.ExcelHelper;
-import de.dlr.sc.virsat.model.extension.cefx.excel.ExcelUpdater;
 import de.dlr.sc.virsat.model.extension.cefx.model.ExcelCalculation;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;

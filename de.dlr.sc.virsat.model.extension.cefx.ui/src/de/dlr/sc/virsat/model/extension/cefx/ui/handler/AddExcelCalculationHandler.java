@@ -9,7 +9,6 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.handler;
 
-import de.dlr.sc.virsat.model.extension.cefx.ui.handler.AAddExcelCalculationHandler;
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class

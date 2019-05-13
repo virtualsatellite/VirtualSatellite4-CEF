@@ -19,7 +19,6 @@ import de.dlr.sc.virsat.model.extension.cefx.model.ExcelCalculation;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
-import de.dlr.sc.virsat.model.extension.cefx.validator.AStructuralElementInstanceValidator;
 
 import java.util.ArrayList;
 import java.util.HashSet;

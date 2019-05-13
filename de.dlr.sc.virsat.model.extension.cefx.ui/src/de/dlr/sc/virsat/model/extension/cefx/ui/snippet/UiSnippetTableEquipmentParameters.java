@@ -13,7 +13,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider.VirSatCefTreeContentProvider;
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableEquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.UiSnippetCefTreeTableImpl;
 
 // *****************************************************************

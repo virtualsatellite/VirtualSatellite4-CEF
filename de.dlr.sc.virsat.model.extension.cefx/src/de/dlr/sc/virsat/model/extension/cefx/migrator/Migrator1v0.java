@@ -10,7 +10,6 @@
 package de.dlr.sc.virsat.model.extension.cefx.migrator;
 
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.extension.cefx.migrator.AMigrator1v0;
 import de.dlr.sc.virsat.model.concept.migrator.IMigrator;
 
 

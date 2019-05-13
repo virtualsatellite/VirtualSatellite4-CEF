@@ -9,7 +9,6 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.snippet;
 
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableExcelCalculationFromExcel2VirSat;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.IUiSnippet;
 
 

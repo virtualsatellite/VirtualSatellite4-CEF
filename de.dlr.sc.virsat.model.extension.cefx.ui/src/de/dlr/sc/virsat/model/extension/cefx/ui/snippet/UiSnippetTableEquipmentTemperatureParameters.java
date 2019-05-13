@@ -13,7 +13,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameters;
 import de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider.VirSatCefTreeContentProvider;
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableEquipmentTemperatureParameters;
 import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.UiSnippetCefTreeTableImpl;
 
 // *****************************************************************

@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Text;
 
 import de.dlr.sc.virsat.model.dvlm.categories.ATypeInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.util.PropertyInstanceHelper;
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetSectionValue;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.IUiSnippet;
 
 

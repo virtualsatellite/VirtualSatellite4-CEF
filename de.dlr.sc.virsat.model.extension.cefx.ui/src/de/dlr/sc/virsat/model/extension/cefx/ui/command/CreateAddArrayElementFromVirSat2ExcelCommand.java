@@ -9,7 +9,7 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.command;
 
-import de.dlr.sc.virsat.model.extension.cefx.ui.command.ACreateAddArrayElementFromVirSat2ExcelCommand;
+
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class

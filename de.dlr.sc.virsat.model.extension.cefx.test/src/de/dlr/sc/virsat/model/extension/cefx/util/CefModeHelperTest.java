@@ -39,7 +39,6 @@ import de.dlr.sc.virsat.model.dvlm.structural.provider.DVLMStructuralItemProvide
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
-import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelper;
 
 /**
  * test Cases for the CEF Mode Helper

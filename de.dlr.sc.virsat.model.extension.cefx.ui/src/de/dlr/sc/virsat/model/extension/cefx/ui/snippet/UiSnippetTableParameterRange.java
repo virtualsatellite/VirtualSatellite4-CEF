@@ -9,7 +9,6 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.snippet;
 
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableParameterRange;
 
 // *****************************************************************
 // * Class Declaration

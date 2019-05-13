@@ -29,7 +29,6 @@ import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
-import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.AUiSnippetTableSystemMode;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.ui.propertyinstance.util.PreferencedPropertyInstanceValueSwitchFactory;
 import de.dlr.sc.virsat.project.markers.VirSatProblemMarkerHelper;

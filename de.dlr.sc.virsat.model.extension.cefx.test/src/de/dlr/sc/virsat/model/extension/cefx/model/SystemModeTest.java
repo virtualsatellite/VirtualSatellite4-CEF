@@ -12,8 +12,6 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import de.dlr.sc.virsat.model.extension.cefx.model.ASystemModeTest;
-import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 
 // *****************************************************************
 // * Import Statements

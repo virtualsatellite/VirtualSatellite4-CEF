@@ -14,7 +14,6 @@ import org.eclipse.core.resources.IProject;
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cefx.propertyTester.AConceptEnabledTester;
 import de.dlr.sc.virsat.project.editingDomain.VirSatEditingDomainRegistry;
 import de.dlr.sc.virsat.project.resources.VirSatProjectResource;
 import org.eclipse.emf.ecore.EObject;
