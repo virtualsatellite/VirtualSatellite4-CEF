@@ -1198,7 +1198,7 @@
               </or>
            </triggerPoints>
            <dropAssistant
-                 class="de.dlr.sc.virsat.model.extension.cefx.ui.dropAssist.CEFutureConfigurationInheritanceDropAdapterAssistant"
+                 class="de.dlr.sc.virsat.model.extension.cefx.ui.dropAssist.ConfigurationInheritanceDropAdapterAssistant"
                  id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
               <possibleDropTargets>
                  <or>
