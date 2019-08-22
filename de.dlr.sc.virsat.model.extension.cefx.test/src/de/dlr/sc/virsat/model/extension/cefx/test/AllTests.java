@@ -14,10 +14,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import de.dlr.sc.virsat.model.extension.cefx.calculation.ParameterGetter;
-import de.dlr.sc.virsat.model.extension.cefx.calculation.ParameterSetter;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ModeVectorEvaluatorTest;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ModeVectorResultTest;
+import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ParameterGetterTest;
+import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ParameterSetterTest;
 import de.dlr.sc.virsat.model.extension.cefx.excel.ExcelUpdaterTest;
 import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelperTest;
 import de.dlr.sc.virsat.model.extension.cefx.validator.ValidatorTest;
@@ -36,8 +36,8 @@ import junit.framework.JUnit4TestAdapter;
 	CefModeHelperTest.class,
 	ModeVectorEvaluatorTest.class,
 	ModeVectorResultTest.class,
-	ParameterGetter.class,
-	ParameterSetter.class,
+	ParameterGetterTest.class,
+	ParameterSetterTest.class,
 	})
 
 public class AllTests {

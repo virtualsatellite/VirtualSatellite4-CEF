@@ -32,6 +32,7 @@ import de.dlr.sc.virsat.model.dvlm.calculation.NumberLiteral;
 import de.dlr.sc.virsat.model.dvlm.calculation.SetFunction;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoriesFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorEvaluator;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorResult;
@@ -159,6 +160,10 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 	
 	@Test
 	public void testWithConcept1() {
+		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentMassParameters.class.getSimpleName()).setIsApplicableForAll(true);
+		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentParameters.class.getSimpleName()).setIsApplicableForAll(true);
+		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
+		
 		ElementConfiguration equipment = new ElementConfiguration(conceptPS);
 		
 		EquipmentMassParameters equipMassParams = new EquipmentMassParameters(conceptCEFX);
@@ -188,7 +193,11 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 	
 	@Test
 	public void testWithConcept2() {
-		ElementConfiguration equipment = new ElementConfiguration(conceptCEFX);
+		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentMassParameters.class.getSimpleName()).setIsApplicableForAll(true);
+		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentParameters.class.getSimpleName()).setIsApplicableForAll(true);
+		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
+		
+		ElementConfiguration equipment = new ElementConfiguration(conceptPS);
 		EquipmentParameters equipParams = new EquipmentParameters(conceptCEFX);
 		EquipmentPowerParameters equipPowerParams = new EquipmentPowerParameters(conceptCEFX);
 		SystemMode idleMode = new SystemMode(conceptCEFX);

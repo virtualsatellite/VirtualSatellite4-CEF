@@ -66,8 +66,6 @@ public class CefModeHelperTest extends AConceptTestCase {
 		
 		cefModeHelper = new CefModeHelper();
 		
-		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
-		
 		// Create an Editing Domain
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory.addAdapterFactory(new DVLMResourceItemProviderAdapterFactory());
@@ -93,6 +91,8 @@ public class CefModeHelperTest extends AConceptTestCase {
 		 * - SubSystem
 		 * -- Parameter
 		 */
+		
+		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
 		
 		ConfigurationTree system = new ConfigurationTree(conceptPS);
 		SystemMode systemMode1 = new SystemMode(conceptCEFX);
