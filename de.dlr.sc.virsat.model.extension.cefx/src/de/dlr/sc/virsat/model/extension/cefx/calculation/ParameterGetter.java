@@ -45,7 +45,7 @@ public class ParameterGetter implements IInputGetter {
 	
 	private IExpressionResult get(CategoryAssignment ca) {
 		// Create a value for the default mode and then for each additionally specified mode
-		if (ca.getType().getName().equals(Parameter.class.getSimpleName())) {
+		if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
 			Parameter parameter = new Parameter(ca);
 			
 			// Grab the value for the default mode
