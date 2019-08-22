@@ -127,7 +127,6 @@ public abstract class AUiSnippetTable {
 	 * @param targetUnitName the unit in which the parameter should be converted for the print
 	 * @return a string representation of the default value of the passed parameter
 	 */
-	
 	protected String printParameter(Parameter parameter, String targetUnitName) {
 		if (parameter != null) {
 			return printBean(parameter.getDefaultValueBean(), targetUnitName);
