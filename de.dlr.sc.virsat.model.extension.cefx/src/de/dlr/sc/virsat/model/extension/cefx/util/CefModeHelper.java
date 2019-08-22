@@ -15,12 +15,16 @@ import java.util.List;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
+import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
+import de.dlr.sc.virsat.model.dvlm.structural.util.StructuralElementInstanceHelper;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
-import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 
 /**
  * The mode helper class is used to get all system modes for a given parameter
@@ -39,8 +43,14 @@ public class CefModeHelper {
 	 * @return a List of all system modes
 	 */
 	public List<SystemMode> getAllModes(Parameter param) {
-		ConfigurationTree system = param.getParentOfClass(ConfigurationTree.class);
-		List<SystemMode> systemModes = system.getAll(SystemMode.class);
+		// get containing bean ro get the root and then to search all system modes in the tree
+		IBeanStructuralElementInstance beanSei = param.getParent();
+		StructuralElementInstance rootSei = (StructuralElementInstance) new StructuralElementInstanceHelper(beanSei.getStructuralElementInstance()).getRoot();
+		IBeanStructuralElementInstance rootBeanSei = new BeanStructuralElementInstance(rootSei);
+
+		List<SystemMode> systemModes = rootBeanSei.getAll(SystemMode.class);
+		
+		rootBeanSei.getDeepChildren(ABeanStructuralElementInstance.class).forEach((childBeanSei) -> systemModes.addAll(childBeanSei.getAll(SystemMode.class)));
 		return systemModes;
 	}
 	
