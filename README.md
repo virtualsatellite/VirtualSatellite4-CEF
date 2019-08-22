@@ -52,7 +52,13 @@ Deployments are done using GitHub Releases as well as sourceforge: [![Download v
 
 ## Contribution
 
-To contribute to this project follow the given steps:
+We are happy to receive your contributions. Nevertheless in such a big project there is a lot to respect and to obey. 
+One thing to respect are legal requirements such as authorship rights and privacy protection. 
+Therefore, before we can accept your contributions we need you to sign our *Contributor License Agreement (CLA)*.
+
+Please follow the process described in *[Virtual Satellite 4 - Core](https://github.com/virtualsatellite/VirtualSatellite4-Core)* to become an authorized contributor. 
+
+Once you are an authorized committer feel free to contribute. We will not activate your account within our organization. Therefore use Pull-Requests to contribute:
 
 1. Create your own fork of the project.
 2. Apply your changes.
