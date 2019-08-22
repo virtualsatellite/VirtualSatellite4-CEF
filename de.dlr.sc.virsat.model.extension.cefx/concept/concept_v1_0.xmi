@@ -2,8 +2,8 @@
 <dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cefx" description="VirSat DLR CEF Concept for extended Product Structures" displayName="CEF-Extended">
   <imports importedNamespace="de.dlr.sc.model.extension.ps.*"/>
   <categories name="SystemMode">
-    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ConfigurationTree"/>
-    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.AssemblyTree"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementConfiguration"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the mode" defaultValue="no description"/>
   </categories>
   <categories name="Parameter" isApplicableForAll="true">
@@ -23,12 +23,16 @@
   <categories name="SystemParameters" cardinality="1">
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ConfigurationTree"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.AssemblyTree"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementConfiguration"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <properties xsi:type="dvlm_cppd:FloatProperty" name="systemMargin" description="Constant system margin" quantityKindName="Dimensionless" unitName="Percent" defaultValue="0"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="modeDuration" description="Duration of the modes" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Time" unitName="Second"/>
   </categories>
   <categories name="SystemMassParameters" cardinality="1">
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ConfigurationTree"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.AssemblyTree"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementConfiguration"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.SubSystemMassParameters.massTotal"/>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.SystemMassParameters.massTotal"/>
@@ -78,6 +82,8 @@
   <categories name="SystemPowerParameters" cardinality="1">
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ConfigurationTree"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.AssemblyTree"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementConfiguration"/>
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.SubSystemPowerParameters.powerAvgWithMargin"/>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.SystemPowerParameters.powerAvgWithMargin"/>
