@@ -23,15 +23,16 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
 import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.provider.PropertydefinitionsItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.provider.PropertyinstancesItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.provider.DVLMCategoriesItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.provider.ConceptsItemProviderAdapterFactory;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.general.provider.GeneralItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.provider.DVLMItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.resource.provider.DVLMResourceItemProviderAdapterFactory;
@@ -39,22 +40,30 @@ import de.dlr.sc.virsat.model.dvlm.structural.provider.DVLMStructuralItemProvide
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
+import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
+import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 
 /**
  * test Cases for the CEF Mode Helper
  * @author fisc_ph
  *
  */
-public class CefModeHelperTest {
+public class CefModeHelperTest extends AConceptTestCase {
 
-	protected Concept concept;
+	private static final String CONCEPT_ID_CEFX = de.dlr.sc.virsat.model.extension.cefx.Activator.PLUGIN_ID;
+	private static final String CONCEPT_ID_PS = de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId();
+	
+	protected Concept conceptCEFX;
+	protected Concept conceptPS;
+	
 	protected CefModeHelper cefModeHelper;
 	protected EditingDomain ed;
 	
 	@Before
 	public void setUp() throws Exception {
-		String conceptXmiPluginPath = "de.dlr.sc.virsat.model.extension.cefx/concept/concept.xmi";
-		concept = de.dlr.sc.virsat.concept.unittest.util.ConceptXmiLoader.loadConceptFromPlugin(conceptXmiPluginPath);
+		conceptCEFX = loadConceptFromPlugin(CONCEPT_ID_CEFX);
+		conceptPS = loadConceptFromPlugin(CONCEPT_ID_PS);
+		
 		cefModeHelper = new CefModeHelper();
 		
 		// Create an Editing Domain
@@ -71,10 +80,6 @@ public class CefModeHelperTest {
 		ed = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void testGetAllModes() {
 		
@@ -87,15 +92,17 @@ public class CefModeHelperTest {
 		 * -- Parameter
 		 */
 		
-		System system = new System(concept);
-		SystemMode systemMode1 = new SystemMode(concept);
-		SystemMode systemMode2 = new SystemMode(concept);
+		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
+		
+		ConfigurationTree system = new ConfigurationTree(conceptPS);
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
 		system.add(systemMode1);
 		system.add(systemMode2);
 		
-		SubSystem subSystem = new SubSystem(concept);
+		ElementConfiguration subSystem = new ElementConfiguration(conceptPS);
 		system.add(subSystem);
-		Parameter param = new Parameter(concept);
+		Parameter param = new Parameter(conceptCEFX);
 		subSystem.add(param);
 		
 		List<SystemMode> systemModes = cefModeHelper.getAllModes(param);
@@ -104,13 +111,13 @@ public class CefModeHelperTest {
 
 	@Test
 	public void testGetAllActiveModes() {
-		Parameter param = new Parameter(concept);
+		Parameter param = new Parameter(conceptCEFX);
 		
-		Value value1 = new Value(concept);
-		Value value2 = new Value(concept);
+		Value value1 = new Value(conceptCEFX);
+		Value value2 = new Value(conceptCEFX);
 		
-		SystemMode systemMode1 = new SystemMode(concept);
-		SystemMode systemMode2 = new SystemMode(concept);
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
 		
 		value1.setMode(systemMode1);
 		value2.setMode(systemMode2);
@@ -124,8 +131,8 @@ public class CefModeHelperTest {
 
 	@Test
 	public void testAddModeValue() {
-		Parameter param = new Parameter(concept);
-		SystemMode systemMode = new SystemMode(concept);
+		Parameter param = new Parameter(conceptCEFX);
+		SystemMode systemMode = new SystemMode(conceptCEFX);
 		
 		Command command = cefModeHelper.addModeValue(ed, param, systemMode);
 		assertTrue("Command can be executed", command.canExecute());
@@ -138,9 +145,9 @@ public class CefModeHelperTest {
 
 	@Test
 	public void testRemoveModeValue() {
-		Parameter param = new Parameter(concept);
-		SystemMode systemMode = new SystemMode(concept);
-		Value value = new Value(concept);
+		Parameter param = new Parameter(conceptCEFX);
+		SystemMode systemMode = new SystemMode(conceptCEFX);
+		Value value = new Value(conceptCEFX);
 		
 		value.setMode(systemMode);
 		param.getModeValues().add(value);
@@ -157,13 +164,13 @@ public class CefModeHelperTest {
 	
 	@Test
 	public void testGetModeValue() {
-		Parameter param = new Parameter(concept);
+		Parameter param = new Parameter(conceptCEFX);
 	
-		Value value1 = new Value(concept);
-		Value value2 = new Value(concept);
+		Value value1 = new Value(conceptCEFX);
+		Value value2 = new Value(conceptCEFX);
 		
-		SystemMode systemMode1 = new SystemMode(concept);
-		SystemMode systemMode2 = new SystemMode(concept);
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
 		
 		value1.setMode(systemMode1);
 		value2.setMode(systemMode2);
@@ -179,13 +186,13 @@ public class CefModeHelperTest {
 	
 	@Test
 	public void testGetModeValueOrDefault() {
-		Parameter param = new Parameter(concept);
+		Parameter param = new Parameter(conceptCEFX);
 	
-		Value value1 = new Value(concept);
-		Value value2 = new Value(concept);
+		Value value1 = new Value(conceptCEFX);
+		Value value2 = new Value(conceptCEFX);
 		
-		SystemMode systemMode1 = new SystemMode(concept);
-		SystemMode systemMode2 = new SystemMode(concept);
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
 		
 		value1.setMode(systemMode1);
 		value2.setMode(systemMode2);
