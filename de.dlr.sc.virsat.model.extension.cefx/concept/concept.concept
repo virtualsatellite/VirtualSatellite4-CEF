@@ -14,7 +14,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	/** Basic categories for handling data in form of mode dependent parameters */
 	
 	Category SystemMode {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		StringProperty note description "A note for the mode" default "no description";
 	} 
 	
