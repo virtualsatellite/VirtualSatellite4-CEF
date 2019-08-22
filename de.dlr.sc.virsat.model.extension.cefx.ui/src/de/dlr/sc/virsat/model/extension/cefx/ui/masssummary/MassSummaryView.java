@@ -39,18 +39,17 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.experimental.chart.swt.ChartComposite;
 
-import de.dlr.sc.virsat.model.concept.types.util.BeanCategoryAssignmentHelper;
+import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
-import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain.IResourceEventListener;
 
 /**
  * View providing a mass summary
- * @author muel_s8
  *
  */
 
@@ -208,89 +207,57 @@ public class MassSummaryView extends ViewPart {
 			return dataset;
 		}
 		
-		BeanCategoryAssignmentHelper beanCaHelper = new BeanCategoryAssignmentHelper();
-		List<SystemMassParameters> systemMassParametersList = beanCaHelper.getAllBeanCategories(sei, SystemMassParameters.class);
+		// Find the total mass as it is defined on the current level		
+	
 		double massWithMarginSystemTotal = 0;
 		
-		if (systemMassParametersList.size() == 0) {
-			// if we dont have a system mass, check for a subsystem mass
-			
-			List<SubSystemMassParameters> subSysMassParametersList = beanCaHelper.getAllBeanCategories(sei, SubSystemMassParameters.class);
-			if (subSysMassParametersList.size() == 0) {
-				// if we dont have subsystem mass parameters, check for equipment mass parameters
+		BeanStructuralElementInstance beanSei = new BeanStructuralElementInstance(sei);
+		SystemMassParameters systemMassParameters = beanSei.getFirst(SystemMassParameters.class);
+		SubSystemMassParameters subSystemMassParameters = beanSei.getFirst(SubSystemMassParameters.class);
+		EquipmentMassParameters equipmentMassParameters = beanSei.getFirst(EquipmentMassParameters.class);
 	
-				List<EquipmentMassParameters> equipMassParametersList = beanCaHelper.getAllBeanCategories(sei, EquipmentMassParameters.class);
-				
-				if (equipMassParametersList.size() == 0) {
-					// if we dont even have equipment mass parameters then there is nothing to calculate
+		if (systemMassParameters == null) {
+			if (subSystemMassParameters == null) {
+				if (equipmentMassParameters == null) {
 					return dataset;	
 				} else {
-					for (EquipmentMassParameters equipMassParameters : equipMassParametersList) {
-						if (equipMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-							massWithMarginSystemTotal += equipMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-						}
+					if (equipmentMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+						massWithMarginSystemTotal = equipmentMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 					}
 				}
-				
 			} else {
-				// else we can compute a contribution
-				SubSystemMassParameters subSystemMassParameters = subSysMassParametersList.get(0);
-				if (!subSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-					return dataset;
+				if (subSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+					massWithMarginSystemTotal = subSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 				}	
-							
-				massWithMarginSystemTotal = massWithMarginSystemTotal + subSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 			}
 		} else {
-			// if we have a system mass
-			SystemMassParameters systemMassParameters = systemMassParametersList.get(0);
-			if (!systemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-				return dataset;
+			if (systemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+				massWithMarginSystemTotal = systemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 			}
-			
-			massWithMarginSystemTotal = systemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 		}
 		
-		List<StructuralElementInstance> listSei = sei.getChildren();
+		List<ABeanStructuralElementInstance> childBeanSeis = beanSei.getChildren(ABeanStructuralElementInstance.class);
 		
 		// Now check the children
-		for (StructuralElementInstance sei : listSei) {	
-			// Check if they actually have well defined mass parameters
-			if (sei.getType().getName().matches(ElementConfiguration.class.getSimpleName())) {
-				List<SubSystemMassParameters> massParametersList = beanCaHelper.getAllBeanCategories(sei, SubSystemMassParameters.class);
-
-				if (massParametersList.size() == 0) {
-					continue;
-				}
-
-				SubSystemMassParameters massParameters = massParametersList.get(0);
-
-				if (!massParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-					continue;
-				}
-
-				// Calculate the individual contributions
-				double massWithMarginTotal = massParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-				double result = massWithMarginTotal / massWithMarginSystemTotal;
-				dataset.setValue(sei.getName(), result);
-			} else if (sei.getType().getName().matches(ElementConfiguration.class.getSimpleName())) {
-				// Check if they actually have well defined mass parameters
-				List<EquipmentMassParameters> equipMassParametersList = beanCaHelper.getAllBeanCategories(sei, EquipmentMassParameters.class);
-
-				if (equipMassParametersList.size() == 0) {
-					continue;
-				}
-
-				double massWithMarginTotal = 0;
-				for (EquipmentMassParameters equipMassParameters : equipMassParametersList) {
-					if (equipMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-						massWithMarginTotal += equipMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-					}
-				}
-
-				// Calculate the individual contributions
-				double result = massWithMarginTotal / massWithMarginSystemTotal;
-				dataset.setValue(sei.getName(), result);
+		for (ABeanStructuralElementInstance childBeanSei : childBeanSeis) {	
+			
+			// If we have a SystemMassParameters category assigned then we are searching for SubSystem Masses
+			if (systemMassParameters != null) {
+				SubSystemMassParameters childSubSystemMassParameters = childBeanSei.getFirst(SubSystemMassParameters.class);
+				if (childSubSystemMassParameters != null
+						&& childSubSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+					double massWithMarginTotal = childSubSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
+					double result = massWithMarginTotal / massWithMarginSystemTotal;
+					dataset.setValue(childBeanSei.getName(), result);
+				} 				
+			} else if (subSystemMassParameters != null) {
+				EquipmentMassParameters childEquipmentSystemMassParameters = childBeanSei.getFirst(EquipmentMassParameters.class);
+				if (childEquipmentSystemMassParameters != null
+						&& childEquipmentSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+					double massWithMarginTotal = childEquipmentSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
+					double result = massWithMarginTotal / massWithMarginSystemTotal;
+					dataset.setValue(childBeanSei.getName(), result);
+				} 
 			}		
 		}
 			
