@@ -14,7 +14,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	/** Basic categories for handling data in form of mode dependent parameters */
 	
 	Category SystemMode {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		StringProperty note description "A note for the mode" default "no description";
 	} 
 	
@@ -34,7 +34,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	/** System specific collection of data and parameters */
 	
 	Category SystemParameters {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		Cardinality 1;
 		
 		FloatProperty systemMargin description "Constant system margin" default 0 quantityKind "Dimensionless" unit "Percent";		
@@ -42,7 +42,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	}
 	
 	Category SystemMassParameters {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		Cardinality 1;
 				
 		Type massLaunch of Category Parameter quantityKind "Mass" unit "Kilogram";
@@ -62,7 +62,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	}
 	
 	Category SystemPowerParameters {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		Cardinality 1;
 				
 		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
