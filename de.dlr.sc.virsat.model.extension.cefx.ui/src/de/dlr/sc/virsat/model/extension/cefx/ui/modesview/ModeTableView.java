@@ -93,7 +93,6 @@ public class ModeTableView extends ViewPart {
 			Object o = ss.getFirstElement();
 
 			if (o instanceof StructuralElementInstance) {
-				System.out.println("Update by Selection Listener");
 				updateTable((StructuralElementInstance) o);
 			}
 		}
@@ -105,8 +104,6 @@ public class ModeTableView extends ViewPart {
 				if (event == VirSatTransactionalEditingDomain.EVENT_RELOAD) {
 					reloadModel();
 				}
-				
-				System.out.println("Update by Event");
 				updateTable(sei);
 			}
 		});

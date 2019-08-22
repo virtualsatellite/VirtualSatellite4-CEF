@@ -9,8 +9,6 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.masssummary;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -23,13 +21,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import de.dlr.sc.virsat.model.concept.types.util.BeanCategoryAssignmentHelper;
-import de.dlr.sc.virsat.model.dvlm.categories.ICategoryAssignmentContainer;
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryAssignmentHelper;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
 import de.dlr.sc.virsat.model.dvlm.qudv.util.QudvUnitHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
-import de.dlr.sc.virsat.model.dvlm.structural.util.StructuralElementInstanceHelper;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
@@ -107,39 +104,42 @@ public class UiSnippetElements extends AUiSnippetTable {
 				if (!(element instanceof StructuralElementInstance)) {
 					return null;
 				}
+
+				// First try to convert into a bean since it eases access to all relevant information
+				StructuralElementInstance sei = (StructuralElementInstance) element;
+				BeanStructuralElementInstance beanSei = new BeanStructuralElementInstance(sei);
 				
-				StructuralElementInstance child = (StructuralElementInstance) element;
-				BeanCategoryAssignmentHelper beanCaHelper = new BeanCategoryAssignmentHelper();
+				// Here we are displaying masses, since it is the mass view. THus we can check for the correct 
+				// Categories being assigned rather than checking the SE type names. The new Product structures are less
+				// semantically defined in terms of hierarchy. Therefore this different way of accessing the information is
+				// needed.
 				
-				if (child.getType().getName().matches("SubSystem")) {
-					
+				// Now lets see if the children are indirectly typed by Mass Subsystem parameters
+				SubSystemMassParameters subSystemMassParameters = beanSei.getFirst(SubSystemMassParameters.class);
+				EquipmentMassParameters equipmentMassParameters = beanSei.getFirst(EquipmentMassParameters.class);
 				
-					List<SubSystemMassParameters> massParamsList = beanCaHelper.getAllBeanCategories(child, SubSystemMassParameters.class);
-					SubSystemMassParameters massParams = massParamsList.size() > 0 ? massParamsList.get(0) : null;
+				if (subSystemMassParameters != null) {
 					
 					switch (columnIndex) {
 						case COLUMN_SEI:
-							return child.getName();
+							return beanSei.getName();
 						case COLUMN_MWOMARGIN:
-							return printParameter(massParams != null ? massParams.getMassTotal() : null, KILOGRAM);
+							return printParameter(subSystemMassParameters.getMassTotal(), KILOGRAM);
 						case COLUMN_MARGIN_PERCENT:
-							return printParameter(massParams != null ? massParams.getMassMarginPercentage() : null, PERCENT);
+							return printParameter(subSystemMassParameters.getMassMarginPercentage(), PERCENT);
 						case COLUMN_MARGIN_KG:
-							return printParameter(massParams != null ? massParams.getMassMargin() : null, KILOGRAM);
+							return printParameter(subSystemMassParameters.getMassMargin(), KILOGRAM);
 						case COLUMN_MWMARGINKG:
-							return printParameter(massParams != null ? massParams.getMassTotalWithMargin() : null, KILOGRAM);
+							return printParameter(subSystemMassParameters.getMassTotal(), KILOGRAM);
 						case COLUMN_PERCENT_DRY_MASS:
-							if (sei == null) {
-								return UNDEFINED;
-							}
+							SystemMassParameters systemMassParameters = getSystemMassParameters(beanSei);
 
-							ICategoryAssignmentContainer caContainerSystemParent = new StructuralElementInstanceHelper(sei).getRoot(); 
-							
-							List<SystemMassParameters> systemMassParamsList = beanCaHelper.getAllBeanCategories(caContainerSystemParent, SystemMassParameters.class);
-							SystemMassParameters systemMassParams = systemMassParamsList.size() > 0 ? systemMassParamsList.get(0) : null;
-
-							if (systemMassParams != null && massParams != null && systemMassParams.getMassTotalWithMarginWithSystemMargin().isSetDefaultValue() && massParams.getMassTotalWithMargin().isSetDefaultValue()) {
-								double value = massParams.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit() / systemMassParams.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
+							if (systemMassParameters != null
+									&& systemMassParameters.getMassTotalWithMarginWithSystemMargin().isSetDefaultValue() 
+									&& subSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+								
+								double value = subSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit() 
+										/ systemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 
 								AUnit targetUnit = QudvUnitHelper.getInstance().getUnitByName(domain.getResourceSet().getUnitManagement().getSystemOfUnit(), PERCENT);
 								AUnit sourceUnit = QudvUnitHelper.getInstance().getUnitByName(domain.getResourceSet().getUnitManagement().getSystemOfUnit(), NO_UNIT);
@@ -152,46 +152,32 @@ public class UiSnippetElements extends AUiSnippetTable {
 						default:
 							return super.getColumnText(element, columnIndex);
 					}
-				} else if (child.getType().getName().matches("Equipment")) {
-					EquipmentMassParameters ownMassParams = beanCaHelper.getFirstBeanCategory(child, EquipmentMassParameters.class);
+				} else if (equipmentMassParameters != null) {
 					
-					double totalMassWithoutMargin = Double.NaN;
-					double totalMassWithMargin = Double.NaN;
-					if (ownMassParams != null) {
-						totalMassWithoutMargin = ownMassParams.getMassTotal().getDefaultValueBean().getValueToBaseUnit();
-						totalMassWithMargin = ownMassParams.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-					}
+					double totalMassWithoutMargin = equipmentMassParameters.getMassTotal().getDefaultValueBean().getValueToBaseUnit();
+					double totalMassWithMargin = equipmentMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 					
 					double marginMass = totalMassWithMargin - totalMassWithoutMargin;
 					double marginPercent = marginMass / totalMassWithoutMargin;
 					
 					switch (columnIndex) {
 						case COLUMN_SEI:
-							return child.getName();
+							return beanSei.getName();
 						case COLUMN_MWOMARGIN:
-							return Double.isNaN(totalMassWithoutMargin) ? UNDEFINED
-									: printDoubleInUnit(totalMassWithoutMargin, KILOGRAM);
+							return printDoubleInUnit(totalMassWithoutMargin, KILOGRAM);
 						case COLUMN_MARGIN_PERCENT:
-							return Double.isNaN(marginPercent) ? UNDEFINED
-									: printDoubleInUnit(marginPercent, PERCENT);
+							return printDoubleInUnit(marginPercent, PERCENT);
 						case COLUMN_MARGIN_KG:
-							return Double.isNaN(marginMass) ? UNDEFINED
-									: printDoubleInUnit(marginMass, KILOGRAM);
+							return printDoubleInUnit(marginMass, KILOGRAM);
 						case COLUMN_MWMARGINKG:
-							return Double.isNaN(totalMassWithMargin) ? UNDEFINED
-									: printDoubleInUnit(totalMassWithMargin, KILOGRAM);
+							return printDoubleInUnit(totalMassWithMargin, KILOGRAM);
 						case COLUMN_PERCENT_DRY_MASS:
-							if (sei == null) {
-								return UNDEFINED;
-							}
-							
-							ICategoryAssignmentContainer caContainerSystemParent = new StructuralElementInstanceHelper(sei).getRoot();
-							
-							List<SystemMassParameters> systemMassParamsList = beanCaHelper.getAllBeanCategories(caContainerSystemParent, SystemMassParameters.class);
-							SystemMassParameters systemMassParams = systemMassParamsList.size() > 0 ? systemMassParamsList.get(0) : null;
+							SystemMassParameters systemMassParameters = getSystemMassParameters(beanSei);
 
-							if (systemMassParams != null && systemMassParams.getMassTotalWithMarginWithSystemMargin().isSetDefaultValue() && !Double.isNaN(totalMassWithMargin)) {
-								double value = totalMassWithMargin / systemMassParams.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
+							if (systemMassParameters != null 
+									&& systemMassParameters.getMassTotalWithMarginWithSystemMargin().isSetDefaultValue() 
+									&& !Double.isNaN(totalMassWithMargin)) {
+								double value = totalMassWithMargin / systemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 								return printDoubleInUnit(value, PERCENT);
 							} else {
 								return UNDEFINED;
@@ -203,9 +189,30 @@ public class UiSnippetElements extends AUiSnippetTable {
 					return null;
 				}
 			}
+
 		};
 	}
 
+	/**
+	 * This method starts crawling the tree upwards from the given Sei in order to find
+	 * a CA for SystemMassParameters. If it is found it will be handed back.
+	 * @param beanSei the BeanSei from where to start searching for
+	 * @return the BeanCategory for the Visualization or null if it was not found
+	 */
+	private SystemMassParameters getSystemMassParameters(BeanStructuralElementInstance beanSei) {
+		IBeanStructuralElementInstance parentBeanSei = beanSei.getParentSeiBean(); 
+		
+		while (parentBeanSei != null) {
+			SystemMassParameters systemMassParameters = parentBeanSei.getFirst(SystemMassParameters.class);
+			if (systemMassParameters != null) {
+				return systemMassParameters;
+			}
+			parentBeanSei = parentBeanSei.getParentSeiBean();
+		}
+		
+		return null;
+	}
+	
 	@Override
 	protected void createColumns() {
 	    // defining the first column: 
