@@ -789,23 +789,23 @@
 	<!-- Plugin.XML Protected Region Start -->
 <extension point="org.eclipse.ui.views">
 		<category 
-			id="de.dlr.sc.virsat.project.ui.view.category.cef"
-			name="VirSat">	
+			id="de.dlr.sc.virsat.project.ui.view.category.cefx"
+			name="VirSat - CEF-X">	
 		</category>
-		<view id="de.dlr.sc.virsat.extension.cef.ui.modesview.modeGraphsView"
+		<view id="de.dlr.sc.virsat.extension.cefx.ui.modesview.modeGraphsView"
 			name="Mode Graphs"
 			icon="resources/icons/ModeGraphs.gif"
-			category="de.dlr.sc.virsat.project.ui.view.category.cef"
+			category="de.dlr.sc.virsat.project.ui.view.category.cefx"
 			class="de.dlr.sc.virsat.model.extension.cefx.ui.modesview.ModeGraphsView"/>
-		<view id="de.dlr.sc.virsat.extension.cef.ui.modesview.modeTableView"
+		<view id="de.dlr.sc.virsat.extension.cefx.ui.modesview.modeTableView"
 			name="Mode Table"
 			icon="resources/icons/Modes.gif"
-			category="de.dlr.sc.virsat.project.ui.view.category.cef"
+			category="de.dlr.sc.virsat.project.ui.view.category.cefx"
 			class="de.dlr.sc.virsat.model.extension.cefx.ui.modesview.ModeTableView"/>
-		<view id="de.dlr.sc.virsat.model.extension.cef.ui.masssummary.massSummaryView"
-			name="Mass Summary"
+		<view id="de.dlr.sc.virsat.model.extension.cefx.ui.masssummary.massSummaryView"
+			name="Mass Summary "
 			icon="resources/icons/MassSummary.gif"
-			category="de.dlr.sc.virsat.project.ui.view.category.cef"
+			category="de.dlr.sc.virsat.project.ui.view.category.cefx"
 			class="de.dlr.sc.virsat.model.extension.cefx.ui.masssummary.MassSummaryView"/>
 	</extension>
 		
@@ -1022,19 +1022,19 @@
   <extension
         point="org.eclipse.ui.views">
      <view
-           category="de.dlr.sc.virsat.project.ui.view.category.cef"
+           category="de.dlr.sc.virsat.project.ui.view.category.cefx"
            class="de.dlr.sc.virsat.project.ui.navigator.VirSatNavigator"
            icon="resources/icons/ProductTree.gif"
            id="de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView"
-           name="Product Tree"
+           name="Product Navigator"
            restorable="true">
      </view>
      <view
-           category="de.dlr.sc.virsat.project.ui.view.category.cef"
+           category="de.dlr.sc.virsat.project.ui.view.category.cefx"
            class="de.dlr.sc.virsat.project.ui.navigator.VirSatNavigator"
            icon="resources/icons/ConfigurationTree.gif"
            id="de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView"
-           name="ConfigurationTree"
+           name="Configuration Navigator"
            restorable="true">
      </view>
   </extension>
@@ -1197,16 +1197,6 @@
                  </instanceof>
               </or>
            </triggerPoints>
-           <dropAssistant
-                 class="de.dlr.sc.virsat.model.extension.cefx.ui.dropAssist.ConfigurationInheritanceDropAdapterAssistant"
-                 id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
-              <possibleDropTargets>
-                 <or>
-                    <instanceof
-                          value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
-                    </instanceof>
-                 </or></possibleDropTargets>
-           </dropAssistant>
            <commonSorter
                  class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter">
               <parentExpression>
