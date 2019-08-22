@@ -1,0 +1,63 @@
+/*******************************************************************************
+ * Copyright (c) 2008-2019 German Aerospace Center (DLR), Simulation and Software Technology, Germany.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+package de.dlr.sc.virsat.model.extension.cefx.calculation.modes;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorResult;
+import de.dlr.sc.virsat.model.extension.cefx.calculation.ParameterGetter;
+import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
+import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
+import de.dlr.sc.virsat.model.extension.cefx.model.Value;
+
+/**
+ * Tests the ParameterGetter
+ * @author muel_s8
+ *
+ */
+
+public class ParameterGetterTest extends ATestCase {
+
+	
+	private static final double DEFAULT_VALUE = 12;
+	private static final double IDLE_VALUE = -5;
+	
+	private Parameter parameter;
+	private SystemMode idle;
+	
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		
+	    // Create a parameter with some default data
+		parameter = new Parameter(conceptCEFX);
+		parameter.setDefaultValue(DEFAULT_VALUE);
+		
+		Value idleValue = new Value(conceptCEFX);
+		idle = new SystemMode(conceptCEFX);
+		idleValue.setValue(IDLE_VALUE);
+		idleValue.setMode(idle);
+		parameter.getModeValues().add(idleValue);
+	}
+
+	@Test
+	public void testGet() {
+		ParameterGetter getter = new ParameterGetter();
+		ModeVectorResult modeVector = (ModeVectorResult) getter.get(parameter.getATypeInstance());
+		
+		assertEquals("Default value correct", Double.valueOf(modeVector.getResult(null).getNumberLiteral().getValue()), DEFAULT_VALUE, TEST_EPSILON);
+		double idleValue = Double.valueOf(modeVector.getResult(idle.getTypeInstance()).getNumberLiteral().getValue());
+		assertEquals("Idle value correct", idleValue, IDLE_VALUE, TEST_EPSILON);
+	}
+
+}
