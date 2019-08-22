@@ -193,7 +193,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 	
 	@Test
 	public void testWithConcept2() {
-		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentMassParameters.class.getSimpleName()).setIsApplicableForAll(true);
+		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentPowerParameters.class.getSimpleName()).setIsApplicableForAll(true);
 		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentParameters.class.getSimpleName()).setIsApplicableForAll(true);
 		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
 		
