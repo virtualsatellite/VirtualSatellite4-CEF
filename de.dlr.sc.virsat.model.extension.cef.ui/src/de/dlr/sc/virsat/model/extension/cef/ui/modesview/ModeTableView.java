@@ -251,8 +251,6 @@ public class ModeTableView extends ViewPart {
 	 * @param sei the selected structural element instance
 	 */
 	private void updateTable(StructuralElementInstance sei) {
-		System.out.println("Updating table.....");
-
 		domain = (VirSatTransactionalEditingDomain) VirSatTransactionalEditingDomain.getEditingDomainFor(sei);
         if (domain == null || isDisposed) {
         	sei = null;
