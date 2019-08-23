@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.cefx.util;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -48,7 +49,7 @@ public class CefModeHelper {
 		StructuralElementInstance rootSei = (StructuralElementInstance) new StructuralElementInstanceHelper(beanSei.getStructuralElementInstance()).getRoot();
 		IBeanStructuralElementInstance rootBeanSei = new BeanStructuralElementInstance(rootSei);
 
-		List<SystemMode> systemModes = rootBeanSei.getAll(SystemMode.class);
+		List<SystemMode> systemModes = new LinkedList<>(rootBeanSei.getAll(SystemMode.class));
 		
 		rootBeanSei.getDeepChildren(ABeanStructuralElementInstance.class).forEach((childBeanSei) -> systemModes.addAll(childBeanSei.getAll(SystemMode.class)));
 		return systemModes;

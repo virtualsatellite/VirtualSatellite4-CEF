@@ -2,6 +2,7 @@
 <dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cefx" description="VirSat DLR CEF Concept for extended Product Structures" displayName="CEF-Extended">
   <imports importedNamespace="de.dlr.sc.model.extension.ps.*"/>
   <categories name="SystemMode">
+    <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementDefinition"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementConfiguration"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the mode" defaultValue="no description"/>

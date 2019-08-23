@@ -14,10 +14,13 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 	/** Basic categories for handling data in form of mode dependent parameters */
 	
 	Category SystemMode {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, 
+			de.dlr.sc.virsat.model.extension.ps.ElementConfiguration,
+			de.dlr.sc.virsat.model.extension.ps.ElementOccurence
+		];
 		StringProperty note description "A note for the mode" default "no description";
 	} 
-	
+	 
 	Category Parameter { 
 		Applicable For All;
 		FloatProperty defaultValue default 0;
@@ -25,7 +28,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version
 		Type rangeValues [] of Category ParameterRange description "Add minimum and/or Maximum value for the parameter";
 		StringProperty note description "A note for the Parameter";
 	}
-	
+	 
 	Category Value {
 		FloatProperty value default 0;
 		Reference mode of Type SystemMode description "The Mode for which this Value is Valid. Leave unassigned if default Mode";			
