@@ -113,6 +113,7 @@ Germany
       <feature id="org.eclipse.ocl"/>
       <feature id="org.eclipse.emf.compare"/>
       <feature id="org.eclipse.emf.validation"/>
+      <feature id="org.eclipse.egit"/>
    </features>
 
    <configurations>
