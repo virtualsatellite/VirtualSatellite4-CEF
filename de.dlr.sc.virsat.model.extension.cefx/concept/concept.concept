@@ -7,7 +7,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-Concept de.dlr.sc.virsat.model.extension.cefx displayname "CEF-Extended" version 1.0 description "VirSat DLR CEF Concept for extended Product Structures" {
+Concept de.dlr.sc.virsat.model.extension.cefx 
+	displayname "CEF-Extended" 
+	version 1.0 
+	description "VirSat DLR CEF Concept for extended Product Structures"
+	beta {
 		
 	Import de.dlr.sc.model.extension.ps.*;	
 	
