@@ -24,6 +24,8 @@ import org.junit.runners.Suite;
 				de.dlr.sc.virsat.cef.calculation.test.AllTests.class,
 				de.dlr.sc.virsat.model.extension.cef.test.AllTests.class,
 				de.dlr.sc.virsat.model.extension.cef.test.AllTestsGen.class,
+				de.dlr.sc.virsat.model.extension.cefx.test.AllTests.class,
+				de.dlr.sc.virsat.model.extension.cefx.test.AllTestsGen.class,
 				de.dlr.sc.virsat.model.extension.cef.interfaces.test.AllTests.class,
 				de.dlr.sc.virsat.model.extension.cef.interfaces.test.AllTestsGen.class
 				})
