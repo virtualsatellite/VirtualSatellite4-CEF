@@ -1412,5 +1412,22 @@
 		</uiSnippet>
 		
 	</extension>
+	<extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.dlr.sc.virsat.model.extension.cef.ui.perspective.CefPerspective"
+            icon="resources/icons/cef.gif"
+            id="de.dlr.sc.virsat.model.extension.cef.perspective"
+            name="CEF Classic">
+      </perspective>
+   </extension>
+ <extension
+       point="de.dlr.sc.virsat.cef.intro.contribution">
+    <IntroPerspectiveAdvertisement
+          advertisementMessage="Start a classical CEF session..."
+          perspectiveID="de.dlr.sc.virsat.model.extension.cef.perspective">
+    </IntroPerspectiveAdvertisement>
+ </extension>
+	
 	<!-- Plugin.XML Protected Region End -->
 </plugin>
