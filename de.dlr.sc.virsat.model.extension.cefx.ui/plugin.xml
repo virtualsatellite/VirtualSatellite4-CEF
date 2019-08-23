@@ -1232,9 +1232,9 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="de.dlr.sc.virsat.model.extension.cefx.ui.perspective.CefXPerspective"
-            icon="resources/icons/cef.gif"
+            icon="resources/icons/Cefx.gif"
             id="de.dlr.sc.virsat.model.extension.cefx.perspective"
-            name="CEF Classic">
+            name="CEF X">
       </perspective>
    </extension>
  <extension

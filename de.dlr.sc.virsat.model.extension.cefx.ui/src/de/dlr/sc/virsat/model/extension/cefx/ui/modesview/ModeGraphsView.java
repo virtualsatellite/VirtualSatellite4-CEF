@@ -65,7 +65,7 @@ import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain.I
 
 public class ModeGraphsView extends ViewPart {
 
-	public static final String VIEW_ID = "de.dlr.sc.virsat.extension.cefuture.ui.modesview.modeGraphsView";
+	public static final String VIEW_ID = "de.dlr.sc.virsat.extension.cefx.ui.modesview.modeGraphsView";
 	
 	private static final String TITLE_TEXT_START_TOKEN =  "Mode Overview Graphs: ";
 	private static final String PARAMETER_MODES_GRAPH_NAME = "Parameter Mode Values";

@@ -26,7 +26,8 @@ import de.dlr.sc.virsat.model.extension.cefx.ui.modesview.ModeTableView;
  */
 public class CefXPerspective implements IPerspectiveFactory {
 
-	public static final String ID_LEFT_FOLDER = "de.dlr.sc.virsat.perspective.cefx.LEFT";
+	public static final String ID_PRODUCT_FOLDER = "de.dlr.sc.virsat.perspective.cefx.product";
+	public static final String ID_CONFIGURATION_FOLDER = "de.dlr.sc.virsat.perspective.cefx.configuration";
 	public static final String ID_BOTTOM_LEFT_FOLDER = "de.dlr.sc.virsat.perspective.cefx.BOTTOMLEFT";
 	public static final String ID_BOTTOM_RIGHT_FOLDER = "de.dlr.sc.virsat.perspective.cefx.BOTTOMRIGHT";
 	public static final String ID_LEFT_MID_FOLDER = "de.dlr.sc.virsat.perspective.cefx.LEFT_MID";
@@ -38,23 +39,28 @@ public class CefXPerspective implements IPerspectiveFactory {
 		
 		final float QUARTER = 0.25f;
 		final float TWOTHIRDS = 0.66f;
+		final float HALF = 0.5f;
 		
-		// Create a folder to bottom left and Add the problem view to the left bottom side		
+		// Create a folder to bottom right and Add the problem and CEF views to it	
 		IFolderLayout bottomrightFolder = layout.createFolder(ID_BOTTOM_RIGHT_FOLDER, IPageLayout.BOTTOM, TWOTHIRDS, editorArea);
+		bottomrightFolder.addView(MassSummaryView.VIEW_ID);
+		bottomrightFolder.addView(ModeTableView.VIEW_ID);
+		bottomrightFolder.addView(DomainRoundView.VIEW_ID);
 		bottomrightFolder.addView("org.eclipse.ui.views.PropertySheet");
 		bottomrightFolder.addView("org.eclipse.ui.views.ProblemView");
-		bottomrightFolder.addView(ModeGraphsView.VIEW_ID);
-		bottomrightFolder.addView(MassSummaryView.VIEW_ID);
-		bottomrightFolder.addView(DomainRoundView.VIEW_ID);
 
-		// Create a folder to the bottom right and add the outline view to it
-		IFolderLayout bottomleftFolder = layout.createFolder(ID_BOTTOM_LEFT_FOLDER, IPageLayout.LEFT, QUARTER, ID_BOTTOM_RIGHT_FOLDER);
+		// Create a folder to the bottom left and add the outline view to it
+		IFolderLayout bottomleftFolder = layout.createFolder(ID_BOTTOM_LEFT_FOLDER, IPageLayout.LEFT, HALF, ID_BOTTOM_RIGHT_FOLDER);
+		bottomleftFolder.addView(ModeGraphsView.VIEW_ID);
 		bottomleftFolder.addView("org.eclipse.ui.views.ContentOutline");
-		bottomleftFolder.addView(ModeTableView.VIEW_ID);
 		
 		// Create a folder to left and Add the navigator to the left side
-		IFolderLayout leftFolder = layout.createFolder(ID_LEFT_FOLDER, IPageLayout.LEFT, QUARTER, editorArea);
-		leftFolder.addView("de.dlr.sc.virsat.project.ui.navigator.view");
-		leftFolder.addView("org.eclipse.ui.navigator.ProjectExplorer");
+		IFolderLayout productViewFolder = layout.createFolder(ID_PRODUCT_FOLDER, IPageLayout.LEFT, QUARTER, editorArea);
+		productViewFolder.addView("de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView");
+		productViewFolder.addView("de.dlr.sc.virsat.project.ui.navigator.view");
+		
+		IFolderLayout configurationViewFolder = layout.createFolder(ID_CONFIGURATION_FOLDER, IPageLayout.RIGHT, HALF, ID_PRODUCT_FOLDER);
+		configurationViewFolder.addView("de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView");
+		configurationViewFolder.addView("org.eclipse.ui.navigator.ProjectExplorer");
 	}
 }
