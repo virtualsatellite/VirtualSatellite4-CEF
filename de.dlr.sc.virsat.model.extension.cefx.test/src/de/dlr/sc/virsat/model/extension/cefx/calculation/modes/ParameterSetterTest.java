@@ -20,6 +20,8 @@ import org.junit.Test;
 import de.dlr.sc.virsat.model.calculation.compute.extensions.NumberLiteralResult;
 import de.dlr.sc.virsat.model.dvlm.calculation.CalculationFactory;
 import de.dlr.sc.virsat.model.dvlm.calculation.NumberLiteral;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesFactory;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorResult;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.ParameterSetter;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
@@ -110,10 +112,13 @@ public class ParameterSetterTest extends ATestCase {
 	public void testIsApplicableFor() {
 		ParameterSetter parameterSetter = new ParameterSetter();
 		
-		/* Applicable for CategoryAssignments of name "Parameter" */
-		assertTrue(parameterSetter.isApplicableFor(parameter.getTypeInstance()));
-		/* Not Applicable for ValuePropertyInstances */
-		assertFalse(parameterSetter.isApplicableFor(parameter.getDefaultValueBean().getATypeInstance()));
+		assertTrue("Applicable for CategoryAssignments of name Parameter", parameterSetter.isApplicableFor(parameter.getTypeInstance()));
+		assertFalse("Not Applicable for ValuePropertyInstances", parameterSetter.isApplicableFor(parameter.getDefaultValueBean().getATypeInstance()));
+		
+		ComposedPropertyInstance cpi = PropertyinstancesFactory.eINSTANCE.createComposedPropertyInstance();
+		cpi.setTypeInstance(parameter.getTypeInstance());
+		
+		assertTrue("Applicable for ComposedPropertyInstances containing a parameter", parameterSetter.isApplicableFor(cpi));
 	}
 
 }
