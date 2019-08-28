@@ -70,7 +70,6 @@ Germany
       <feature id="de.dlr.sc.virsat.model.feature"/>
       <feature id="de.dlr.sc.virsat.project.feature"/>
       <feature id="de.dlr.sc.virsat.apps.feature"/>
-      <feature id="de.dlr.sc.virsat.svn.feature"/>
       <feature id="de.dlr.sc.virsat.uiengine.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
       <feature id="org.eclipse.help"/>
@@ -103,6 +102,7 @@ Germany
       <feature id="de.dlr.sc.virsat.cef.docs.feature"/>
       <feature id="de.dlr.sc.virsat.cef.license.feature"/>
       <feature id="de.dlr.sc.virsat.docs.feature"/>
+      <feature id="de.dlr.sc.virsat.team.feature"/>
       <feature id="de.dlr.sc.virsat.branding.feature"/>
       <feature id="org.eclipse.pde"/>
       <feature id="org.eclipse.emf.edapt.runtime.feature"/>
@@ -113,6 +113,7 @@ Germany
       <feature id="org.eclipse.ocl"/>
       <feature id="org.eclipse.emf.compare"/>
       <feature id="org.eclipse.emf.validation"/>
+      <feature id="org.eclipse.egit"/>
    </features>
 
    <configurations>

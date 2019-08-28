@@ -101,7 +101,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 	}
 	
 	Category SubSystemPowerParameters {
-		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
 		Cardinality 1;
 				
 		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
