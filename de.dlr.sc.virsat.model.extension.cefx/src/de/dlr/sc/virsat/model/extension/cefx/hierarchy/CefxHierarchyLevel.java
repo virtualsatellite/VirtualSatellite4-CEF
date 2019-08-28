@@ -23,8 +23,8 @@ import de.dlr.sc.virsat.model.concept.types.structural.level.IHierarchyLevel;
 public class CefxHierarchyLevel implements IHierarchyLevel {
 
 	protected Set<Class<? extends IBeanCategoryAssignment>> categoryBeanClasses;
-	protected boolean canBeNested;
-	protected boolean optional;
+	protected boolean canBeNested = false;
+	protected boolean optional = false;
 	
 	
 	/**

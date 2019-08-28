@@ -18,6 +18,7 @@ import de.dlr.sc.virsat.model.concept.types.structural.level.IHierarchyLevel;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentPowerParameters;
+import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
@@ -118,6 +119,9 @@ public class CefxHierarchyLevelChecker {
 		beanClassList.add(EquipmentParameters.class);
 		beanClassList.add(EquipmentMassParameters.class);
 		beanClassList.add(EquipmentPowerParameters.class);
-		return new CefxHierarchyLevel(beanClassList);
+		beanClassList.add(EquipmentTemperatureParameters.class);
+		CefxHierarchyLevel equipmentLevel = new CefxHierarchyLevel(beanClassList);
+		equipmentLevel.setCanBeNested(true);
+		return equipmentLevel;
 	}
 }
