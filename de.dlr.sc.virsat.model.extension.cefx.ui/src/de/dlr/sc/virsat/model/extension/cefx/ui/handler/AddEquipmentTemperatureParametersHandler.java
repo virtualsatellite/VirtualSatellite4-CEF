@@ -9,6 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.handler;
 
+import org.eclipse.emf.ecore.EObject;
+
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
+import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelChecker;
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class
@@ -19,4 +24,17 @@ package de.dlr.sc.virsat.model.extension.cefx.ui.handler;
  * 
  */
 public class AddEquipmentTemperatureParametersHandler extends AAddEquipmentTemperatureParametersHandler {
+	
+	@Override
+	public boolean isEnabled() {
+		if (super.isEnabled()) {
+			EObject element = getFirstSelectedObject();
+			if (element instanceof StructuralElementInstance) {
+				BeanStructuralElementInstance bean = new BeanStructuralElementInstance((StructuralElementInstance) element);
+				return new CefxHierarchyLevelChecker().canAddEquipmentCategory(bean);
+			}
+		}
+		return false;
+	}
+	
 }
