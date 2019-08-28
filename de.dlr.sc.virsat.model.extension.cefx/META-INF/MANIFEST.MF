@@ -19,6 +19,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.dlr.sc.virsat.model.extension.cefx,
  de.dlr.sc.virsat.model.extension.cefx.excel,
+ de.dlr.sc.virsat.model.extension.cefx.hierarchy,
  de.dlr.sc.virsat.model.extension.cefx.model,
  de.dlr.sc.virsat.model.extension.cefx.util,
  de.dlr.sc.virsat.model.extension.cefx.validator

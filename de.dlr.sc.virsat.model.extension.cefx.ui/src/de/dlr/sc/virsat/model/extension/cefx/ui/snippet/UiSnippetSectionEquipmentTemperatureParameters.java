@@ -9,6 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.snippet;
 
+import org.eclipse.emf.ecore.EObject;
+
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
+import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelChecker;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.IUiSnippet;
 
 
@@ -21,4 +26,16 @@ import de.dlr.sc.virsat.uiengine.ui.editor.snippets.IUiSnippet;
  * 
  */
 public class UiSnippetSectionEquipmentTemperatureParameters extends AUiSnippetSectionEquipmentTemperatureParameters implements IUiSnippet {
+	
+	@Override
+	public boolean isActive(EObject model) {
+		if (super.isActive(model)) {
+			if (model instanceof StructuralElementInstance) {
+				BeanStructuralElementInstance bean = new BeanStructuralElementInstance((StructuralElementInstance) model);
+				return new CefxHierarchyLevelChecker().canAddEquipmentCategory(bean);
+			}
+		}
+		return false;
+	}
+	
 }
