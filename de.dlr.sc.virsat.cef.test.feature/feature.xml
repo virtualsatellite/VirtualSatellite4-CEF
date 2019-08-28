@@ -29,7 +29,6 @@ by German Aerospace Center (DLR e.V.)
       <import plugin="de.dlr.sc.virsat.model.extension.cef"/>
       <import feature="de.dlr.sc.virsat.model.feature" version="0.0.0" match="greaterOrEqual"/>
       <import feature="de.dlr.sc.virsat.project.feature" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="de.dlr.sc.virsat.svn.feature" version="0.0.0" match="greaterOrEqual"/>
       <import feature="de.dlr.sc.virsat.uiengine.feature" version="0.0.0" match="greaterOrEqual"/>
       <import plugin="de.dlr.sc.virsat.commons"/>
    </requires>

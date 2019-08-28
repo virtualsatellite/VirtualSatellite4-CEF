@@ -53,6 +53,12 @@
 				<module>de.dlr.sc.virsat.model.extension.cef.test</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.feature</module>
 
+				<!-- The Extension for the CEF Extended Data Model -->
+				<module>de.dlr.sc.virsat.model.extension.cefx</module>
+				<module>de.dlr.sc.virsat.model.extension.cefx.ui</module>
+				<module>de.dlr.sc.virsat.model.extension.cefx.test</module>
+				<module>de.dlr.sc.virsat.model.extension.cefx.feature</module>
+
 				<!-- The Extension for the CEF Interfaces Data Model -->
 				<module>de.dlr.sc.virsat.model.extension.cef.interfaces</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.ui</module>

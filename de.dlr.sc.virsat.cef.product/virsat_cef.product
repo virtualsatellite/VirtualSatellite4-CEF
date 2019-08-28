@@ -71,9 +71,7 @@ Germany
       <feature id="de.dlr.sc.virsat.project.feature"/>
       <feature id="de.dlr.sc.virsat.apps.feature"/>
       <feature id="de.dlr.sc.virsat.uiengine.feature"/>
-      <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
       <feature id="org.eclipse.help"/>
-      <feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature"/>
       <feature id="org.eclipse.team.svn"/>
       <feature id="org.eclipse.emf.common.ui"/>
       <feature id="org.eclipse.jdt"/>
@@ -94,6 +92,7 @@ Germany
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.equinox.p2.rcp.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient45.feature"/>
       <feature id="org.eclipse.emf.workspace"/>
       <feature id="org.eclipse.platform"/>
       <feature id="org.eclipse.emf.databinding"/>
@@ -113,6 +112,7 @@ Germany
       <feature id="org.eclipse.ocl"/>
       <feature id="org.eclipse.emf.compare"/>
       <feature id="org.eclipse.emf.validation"/>
+      <feature id="org.eclipse.egit"/>
    </features>
 
    <configurations>

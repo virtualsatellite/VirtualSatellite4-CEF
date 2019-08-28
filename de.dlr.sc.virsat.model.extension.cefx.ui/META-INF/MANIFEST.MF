@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VirSat CEF Extended Model Extension UI
+Bundle-SymbolicName: de.dlr.sc.virsat.model.extension.cefx.ui;singleton:=true
+Bundle-Version: 4.9.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.core.expressions,
+ org.eclipse.emf.edit,
+ org.eclipse.emf.transaction,
+ de.dlr.sc.virsat.external.lib.jfreechart,
+ de.dlr.sc.virsat.model,
+ de.dlr.sc.virsat.project,
+ de.dlr.sc.virsat.project.ui,
+ de.dlr.sc.virsat.uiengine.ui,
+ de.dlr.sc.virsat.cef.calculation,
+ de.dlr.sc.virsat.model.calculation,
+ de.dlr.sc.virsat.commons,
+ de.dlr.sc.virsat.build,
+ de.dlr.sc.virsat.build.ui,
+ de.dlr.sc.virsat.model.extension.cefx,
+ org.eclipse.ui.navigator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider,
+ de.dlr.sc.virsat.model.extension.cefx.ui.masssummary,
+ de.dlr.sc.virsat.model.extension.cefx.ui.modesview,
+ de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl
+Bundle-Activator: de.dlr.sc.virsat.model.extension.cefx.ui.Activator
+Bundle-Vendor: DLR (German Aerospace Center)
+Automatic-Module-Name: de.dlr.sc.virsat.model.extension.cef.ui

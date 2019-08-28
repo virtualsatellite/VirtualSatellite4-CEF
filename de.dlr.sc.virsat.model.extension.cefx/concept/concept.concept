@@ -1,0 +1,179 @@
+/*******************************************************************************
+ * Copyright (c) 2008-2019 German Aerospace Center (DLR), Simulation and Software Technology, Germany.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+Concept de.dlr.sc.virsat.model.extension.cefx 
+	displayname "CEF-Extended" 
+	version 1.0 
+	description "VirSat DLR CEF Concept for extended Product Structures"
+	beta {
+		
+	Import de.dlr.sc.model.extension.ps.*;	
+	
+	/** Basic categories for handling data in form of mode dependent parameters */
+	
+	Category SystemMode {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, 
+			de.dlr.sc.virsat.model.extension.ps.ElementConfiguration,
+			de.dlr.sc.virsat.model.extension.ps.ElementOccurence
+		];
+		StringProperty note description "A note for the mode" default "no description";
+	} 
+	 
+	Category Parameter { 
+		Applicable For All;
+		FloatProperty defaultValue default 0;
+		Type modeValues [] of Category Value description "An Array of Values, for default and other modes";
+		Type rangeValues [] of Category ParameterRange description "Add minimum and/or Maximum value for the parameter";
+		StringProperty note description "A note for the Parameter";
+	}
+	 
+	Category Value {
+		FloatProperty value default 0;
+		Reference mode of Type SystemMode description "The Mode for which this Value is Valid. Leave unassigned if default Mode";			
+	}
+	
+	/** System specific collection of data and parameters */
+	
+	Category SystemParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
+		Cardinality 1;
+		
+		FloatProperty systemMargin description "Constant system margin" default 0 quantityKind "Dimensionless" unit "Percent";		
+		Type modeDuration of Category Parameter description "Duration of the modes" quantityKind "Time" unit "Second";
+	}
+	
+	Category SystemMassParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
+		Cardinality 1;
+				
+		Type massLaunch of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotalWithMarginWithSystemMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massAdapter of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massPropellant of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massLaunchMax of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massBuffer of Category Parameter quantityKind "Mass" unit "Kilogram";
+		
+		Ref: massTotal = summary{SubSystemMassParameters.massTotal};
+		Ref: massTotalWithMargin = summary{SubSystemMassParameters.massTotalWithMargin};
+		Ref: massTotalWithMarginWithSystemMargin = massTotalWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: massLaunch = massTotalWithMarginWithSystemMargin + massPropellant + massAdapter;
+		Ref: massBuffer = massLaunchMax - massLaunch;
+	}
+	
+	Category SystemPowerParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
+		Cardinality 1;
+				
+		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type powerAvgWithSystemMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		Type powerEnergyWithSystemMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		
+		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin};
+		Ref: powerAvgWithSystemMargin = powerAvgWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: powerEnergyWithMargin = summary{SubSystemPowerParameters.powerEnergyWithMargin};
+		Ref: powerEnergyWithSystemMargin = powerEnergyWithMargin * (1 + SystemParameters.systemMargin);
+	}
+	
+	/** SubSystem level specific collections of data and parameters */
+	
+	Category SubSystemMassParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+				
+		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massMarginPercentage of Category Parameter quantityKind "Dimensionless" unit "Percent";
+		Type massMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
+		
+		Ref: massTotal = summary{EquipmentMassParameters.massTotal, 1};
+		Ref: massTotalWithMargin = summary{EquipmentMassParameters.massTotalWithMargin, 1};
+		Ref: massMargin = massTotalWithMargin - massTotal;
+		Ref: massMarginPercentage = (massTotalWithMargin / massTotal) - 1;
+	}
+	
+	Category SubSystemPowerParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+				
+		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
+		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		
+		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.PowerAvgWithMargin, 1};
+		Ref: powerEnergyWithMargin = powerAvgWithMargin * SystemParameters.modeDuration; 
+	}
+	
+	/** Equipment level specific collections of data and parameters */
+	Category EquipmentParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+		
+		FloatProperty marginMaturity description "Constant Equipment Margin" default 0 quantityKind "Dimensionless" unit "Percent";
+	}
+	
+	Category EquipmentMassParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+				
+		Type massPerUnit of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
+		
+		Ref: massTotal = massPerUnit + summary{massTotal, 1};
+		Ref: massTotalWithMargin = massTotal + (massTotal * EquipmentParameters.marginMaturity); 
+	}
+	
+	Category EquipmentPowerParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+
+		Type powerUnitActive of Category Parameter quantityKind "Dimensionless" unit "No Unit" description "Should be 1 if the equipment is active in the given mode, 0 in case it is totally off."; 
+ 
+		Type powerDutyCycle of Category Parameter quantityKind "Dimensionless" unit "Percent";
+		Type PowerPerUnitOn of Category Parameter quantityKind "Power" unit "Watt";
+		Type PowerPerUnitStby of Category Parameter quantityKind "Power" unit "Watt";
+		Type PowerPerUnitOnWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type PowerPerUnitStbyWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type PowerPerUnitAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type PowerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+				
+		Ref: PowerPerUnitOnWithMargin = PowerPerUnitOn + (PowerPerUnitOn * EquipmentParameters.marginMaturity);
+		Ref: PowerPerUnitStbyWithMargin = PowerPerUnitStby + (PowerPerUnitStby * EquipmentParameters.marginMaturity);
+		Ref: PowerPerUnitAvgWithMargin = PowerPerUnitOnWithMargin * powerDutyCycle + PowerPerUnitStbyWithMargin * (1 - powerDutyCycle);
+		Ref: PowerAvgWithMargin = (PowerPerUnitAvgWithMargin + summary{PowerAvgWithMargin, 1}) * powerUnitActive;
+	}
+	
+	Category EquipmentTemperatureParameters {
+		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
+		Cardinality 1;
+		
+		Type temperatureNoOpsMax of Category Parameter quantityKind "Temperature" unit "Degree Celsius";
+		Type temperatureNoOpsMin of Category Parameter quantityKind "Temperature" unit "Degree Celsius";
+		Type temperatureOpsMax of Category Parameter quantityKind "Temperature" unit "Degree Celsius";
+		Type temperatureOpsMin of Category Parameter quantityKind "Temperature" unit "Degree Celsius";
+	}
+	
+	Category ParameterRange {
+		Cardinality 1;
+		
+		FloatProperty minValue;
+		FloatProperty maxValue;
+	} 
+	
+	Category ExcelCalculation {
+		Applicable For All;
+		Resource excelFile;
+		Reference fromVirSat2Excel[] of Type Parameter;
+		Reference fromExcel2VirSat[] of Type Parameter; 
+	}
+	
+}
+
