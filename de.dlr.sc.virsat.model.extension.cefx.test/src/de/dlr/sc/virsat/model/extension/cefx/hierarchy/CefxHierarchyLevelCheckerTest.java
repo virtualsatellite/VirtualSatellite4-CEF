@@ -75,107 +75,108 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 
 	@Test
 	public void testHierarchy() {
-		ConfigurationTree ct = new ConfigurationTree(conceptPS);
-		ElementConfiguration ec1 = new ElementConfiguration(conceptPS);
-		ElementConfiguration ec2 = new ElementConfiguration(conceptPS);
-		ElementConfiguration ec3 = new ElementConfiguration(conceptPS);
-		
-		ct.add(ec1);
-		ec1.add(ec2);
-		ec2.add(ec3);
-
+		ConfigurationTree ctSystem = new ConfigurationTree(conceptPS);
 		SystemParameters sp = new SystemParameters(conceptCEFX);
-		ct.add(sp);
+		ctSystem.add(sp);
 
+		ElementConfiguration ecPotentialSubSystem = new ElementConfiguration(conceptPS);
+		ctSystem.add(ecPotentialSubSystem);
+
+		ElementConfiguration ecEquipment = new ElementConfiguration(conceptPS);
+		ecPotentialSubSystem.add(ecEquipment);
 		EquipmentParameters ep = new EquipmentParameters(conceptCEFX);
-		ec2.add(ep);
+		ecEquipment.add(ep);
+
+		ElementConfiguration ecPotentialEquipment = new ElementConfiguration(conceptPS);
+		ecEquipment.add(ecPotentialEquipment);
 		
-		// CT can only be system
-		assertTrue(checker.canAdd(ct, SystemParameters.class));
-		assertTrue(checker.canAdd(ct, SystemMassParameters.class));
-		assertTrue(checker.canAdd(ct, SystemPowerParameters.class));
 
-		assertFalse(checker.canAdd(ct, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ct, SubSystemPowerParameters.class));
+		assertTrue(checker.canAdd(ctSystem, SystemParameters.class));
+		assertTrue(checker.canAdd(ctSystem, SystemMassParameters.class));
+		assertTrue(checker.canAdd(ctSystem, SystemPowerParameters.class));
 
-		assertFalse(checker.canAdd(ct, EquipmentParameters.class));
-		assertFalse(checker.canAdd(ct, EquipmentMassParameters.class));
-		assertFalse(checker.canAdd(ct, EquipmentPowerParameters.class));
-		assertFalse(checker.canAdd(ct, EquipmentTemperatureParameters.class));
+		assertFalse(checker.canAdd(ctSystem, SubSystemMassParameters.class));
+		assertFalse(checker.canAdd(ctSystem, SubSystemPowerParameters.class));
+
+		assertFalse(checker.canAdd(ctSystem, EquipmentParameters.class));
+		assertFalse(checker.canAdd(ctSystem, EquipmentMassParameters.class));
+		assertFalse(checker.canAdd(ctSystem, EquipmentPowerParameters.class));
+		assertFalse(checker.canAdd(ctSystem, EquipmentTemperatureParameters.class));
 		
-		assertFalse(checker.hasMultipleLevels(ct));
-		assertFalse(checker.hasWrongLevel(ct));
+		assertFalse(checker.hasMultipleLevels(ctSystem));
+		assertFalse(checker.hasWrongLevel(ctSystem));
 
-		// EC1 can only be subsystem
-		assertFalse(checker.canAdd(ec1, SystemParameters.class));
-		assertFalse(checker.canAdd(ec1, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ec1, SystemPowerParameters.class));
 
-		assertTrue(checker.canAdd(ec1, SubSystemMassParameters.class));
-		assertTrue(checker.canAdd(ec1, SubSystemPowerParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemMassParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemPowerParameters.class));
 
-		assertFalse(checker.canAdd(ec1, EquipmentParameters.class));
-		assertFalse(checker.canAdd(ec1, EquipmentMassParameters.class));
-		assertFalse(checker.canAdd(ec1, EquipmentPowerParameters.class));
-		assertFalse(checker.canAdd(ec1, EquipmentTemperatureParameters.class));
+		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemMassParameters.class));
+		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemPowerParameters.class));
 
-		assertFalse(checker.hasMultipleLevels(ec1));
-		assertFalse(checker.hasWrongLevel(ec1));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentMassParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentPowerParameters.class));
+		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentTemperatureParameters.class));
+
+		assertFalse(checker.hasMultipleLevels(ecPotentialSubSystem));
+		assertFalse(checker.hasWrongLevel(ecPotentialSubSystem));
 		
-		//EC2 and 3 can be equipment
-		assertFalse(checker.canAdd(ec2, SystemParameters.class));
-		assertFalse(checker.canAdd(ec2, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ec2, SystemPowerParameters.class));
 
-		assertFalse(checker.canAdd(ec2, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ec2, SubSystemPowerParameters.class));
+		assertFalse(checker.canAdd(ecEquipment, SystemParameters.class));
+		assertFalse(checker.canAdd(ecEquipment, SystemMassParameters.class));
+		assertFalse(checker.canAdd(ecEquipment, SystemPowerParameters.class));
 
-		assertTrue(checker.canAdd(ec2, EquipmentParameters.class));
-		assertTrue(checker.canAdd(ec2, EquipmentMassParameters.class));
-		assertTrue(checker.canAdd(ec2, EquipmentPowerParameters.class));
-		assertTrue(checker.canAdd(ec2, EquipmentTemperatureParameters.class));
+		assertFalse(checker.canAdd(ecEquipment, SubSystemMassParameters.class));
+		assertFalse(checker.canAdd(ecEquipment, SubSystemPowerParameters.class));
 
-		assertFalse(checker.hasMultipleLevels(ec2));
-		assertFalse(checker.hasWrongLevel(ec2));
+		assertTrue(checker.canAdd(ecEquipment, EquipmentParameters.class));
+		assertTrue(checker.canAdd(ecEquipment, EquipmentMassParameters.class));
+		assertTrue(checker.canAdd(ecEquipment, EquipmentPowerParameters.class));
+		assertTrue(checker.canAdd(ecEquipment, EquipmentTemperatureParameters.class));
 
-		assertFalse(checker.canAdd(ec3, SystemParameters.class));
-		assertFalse(checker.canAdd(ec3, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ec3, SystemPowerParameters.class));
+		assertFalse(checker.hasMultipleLevels(ecEquipment));
+		assertFalse(checker.hasWrongLevel(ecEquipment));
 
-		assertFalse(checker.canAdd(ec3, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ec3, SubSystemPowerParameters.class));
 
-		assertTrue(checker.canAdd(ec3, EquipmentParameters.class));
-		assertTrue(checker.canAdd(ec3, EquipmentMassParameters.class));
-		assertTrue(checker.canAdd(ec3, EquipmentPowerParameters.class));
-		assertTrue(checker.canAdd(ec3, EquipmentTemperatureParameters.class));
+		assertFalse(checker.canAdd(ecPotentialEquipment, SystemParameters.class));
+		assertFalse(checker.canAdd(ecPotentialEquipment, SystemMassParameters.class));
+		assertFalse(checker.canAdd(ecPotentialEquipment, SystemPowerParameters.class));
 
-		assertFalse(checker.hasMultipleLevels(ec3));
-		assertFalse(checker.hasWrongLevel(ec3));
+		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemMassParameters.class));
+		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemPowerParameters.class));
+
+		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentParameters.class));
+		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentMassParameters.class));
+		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentPowerParameters.class));
+		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentTemperatureParameters.class));
+
+		assertFalse(checker.hasMultipleLevels(ecPotentialEquipment));
+		assertFalse(checker.hasWrongLevel(ecPotentialEquipment));
 	}
 	
 	@Test
 	public void testMultipleLevels() {
-		ElementConfiguration ec = new ElementConfiguration(conceptPS);
+		ElementConfiguration ecBothSystemAndEquipmentParams = new ElementConfiguration(conceptPS);
 		
 		SystemParameters sp = new SystemParameters(conceptCEFX);
-		ec.add(sp);
+		ecBothSystemAndEquipmentParams.add(sp);
 
 		EquipmentParameters ep = new EquipmentParameters(conceptCEFX);
-		ec.add(ep);
+		ecBothSystemAndEquipmentParams.add(ep);
 
-		assertTrue(checker.hasMultipleLevels(ec));
+		assertTrue(checker.hasMultipleLevels(ecBothSystemAndEquipmentParams));
 	}
 
 	@Test
 	public void testWrongLevel() {
 		ConfigurationTree ct = new ConfigurationTree(conceptPS);
-		ElementConfiguration ec = new ElementConfiguration(conceptPS);
-		ct.add(ec);
-		
 		SystemParameters sp = new SystemParameters(conceptCEFX);
 		ct.add(sp);
 
+		//Equipment cannot be directly under a system because subsystem level is missing
+		ElementConfiguration ec = new ElementConfiguration(conceptPS);
+		ct.add(ec);
 		EquipmentParameters ep = new EquipmentParameters(conceptCEFX);
 		ec.add(ep);
 
