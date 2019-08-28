@@ -60,14 +60,17 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertTrue(checker.canAdd(ec, SystemParameters.class));
 		assertTrue(checker.canAdd(ec, SystemMassParameters.class));
 		assertTrue(checker.canAdd(ec, SystemPowerParameters.class));
+		assertTrue(checker.canAddSystemCategory(ec));
 
 		assertTrue(checker.canAdd(ec, SubSystemMassParameters.class));
 		assertTrue(checker.canAdd(ec, SubSystemPowerParameters.class));
+		assertTrue(checker.canAddSubSystemCategory(ec));
 
 		assertTrue(checker.canAdd(ec, EquipmentParameters.class));
 		assertTrue(checker.canAdd(ec, EquipmentMassParameters.class));
 		assertTrue(checker.canAdd(ec, EquipmentPowerParameters.class));
 		assertTrue(checker.canAdd(ec, EquipmentTemperatureParameters.class));
+		assertTrue(checker.canAddEquipmentCategory(ec));
 		
 		assertFalse(checker.beanHasAmbiguousLevel(ec));
 		assertFalse(checker.beanHasInapplicableLevel(ec));
@@ -94,14 +97,17 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertTrue(checker.canAdd(ctSystem, SystemParameters.class));
 		assertTrue(checker.canAdd(ctSystem, SystemMassParameters.class));
 		assertTrue(checker.canAdd(ctSystem, SystemPowerParameters.class));
+		assertTrue(checker.canAddSystemCategory(ctSystem));
 
 		assertFalse(checker.canAdd(ctSystem, SubSystemMassParameters.class));
 		assertFalse(checker.canAdd(ctSystem, SubSystemPowerParameters.class));
+		assertFalse(checker.canAddSubSystemCategory(ctSystem));
 
 		assertFalse(checker.canAdd(ctSystem, EquipmentParameters.class));
 		assertFalse(checker.canAdd(ctSystem, EquipmentMassParameters.class));
 		assertFalse(checker.canAdd(ctSystem, EquipmentPowerParameters.class));
 		assertFalse(checker.canAdd(ctSystem, EquipmentTemperatureParameters.class));
+		assertFalse(checker.canAddEquipmentCategory(ctSystem));
 		
 		assertFalse(checker.beanHasAmbiguousLevel(ctSystem));
 		assertFalse(checker.beanHasInapplicableLevel(ctSystem));
@@ -110,14 +116,17 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemParameters.class));
 		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemMassParameters.class));
 		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemPowerParameters.class));
+		assertFalse(checker.canAddSystemCategory(ecPotentialSubSystem));
 
 		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemMassParameters.class));
 		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemPowerParameters.class));
+		assertTrue(checker.canAddSubSystemCategory(ecPotentialSubSystem));
 
 		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentParameters.class));
 		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentMassParameters.class));
 		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentPowerParameters.class));
 		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentTemperatureParameters.class));
+		assertFalse(checker.canAddEquipmentCategory(ecPotentialSubSystem));
 
 		assertFalse(checker.beanHasAmbiguousLevel(ecPotentialSubSystem));
 		assertFalse(checker.beanHasInapplicableLevel(ecPotentialSubSystem));
@@ -126,14 +135,17 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertFalse(checker.canAdd(ecEquipment, SystemParameters.class));
 		assertFalse(checker.canAdd(ecEquipment, SystemMassParameters.class));
 		assertFalse(checker.canAdd(ecEquipment, SystemPowerParameters.class));
+		assertFalse(checker.canAddSystemCategory(ecEquipment));
 
 		assertFalse(checker.canAdd(ecEquipment, SubSystemMassParameters.class));
 		assertFalse(checker.canAdd(ecEquipment, SubSystemPowerParameters.class));
+		assertFalse(checker.canAddSubSystemCategory(ecEquipment));
 
 		assertTrue(checker.canAdd(ecEquipment, EquipmentParameters.class));
 		assertTrue(checker.canAdd(ecEquipment, EquipmentMassParameters.class));
 		assertTrue(checker.canAdd(ecEquipment, EquipmentPowerParameters.class));
 		assertTrue(checker.canAdd(ecEquipment, EquipmentTemperatureParameters.class));
+		assertTrue(checker.canAddEquipmentCategory(ecEquipment));
 
 		assertFalse(checker.beanHasAmbiguousLevel(ecEquipment));
 		assertFalse(checker.beanHasInapplicableLevel(ecEquipment));
@@ -142,14 +154,17 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertFalse(checker.canAdd(ecPotentialEquipment, SystemParameters.class));
 		assertFalse(checker.canAdd(ecPotentialEquipment, SystemMassParameters.class));
 		assertFalse(checker.canAdd(ecPotentialEquipment, SystemPowerParameters.class));
+		assertFalse(checker.canAddSystemCategory(ecPotentialEquipment));
 
 		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemMassParameters.class));
 		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemPowerParameters.class));
+		assertFalse(checker.canAddSubSystemCategory(ecPotentialEquipment));
 
 		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentParameters.class));
 		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentMassParameters.class));
 		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentPowerParameters.class));
 		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentTemperatureParameters.class));
+		assertTrue(checker.canAddEquipmentCategory(ecPotentialEquipment));
 
 		assertFalse(checker.beanHasAmbiguousLevel(ecPotentialEquipment));
 		assertFalse(checker.beanHasInapplicableLevel(ecPotentialEquipment));

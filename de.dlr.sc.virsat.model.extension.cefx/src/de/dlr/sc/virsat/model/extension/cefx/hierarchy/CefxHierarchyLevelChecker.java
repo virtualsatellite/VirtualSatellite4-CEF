@@ -47,48 +47,120 @@ public class CefxHierarchyLevelChecker {
 		levelList.add(systemLevel);
 		levelList.add(subSystemLevel);
 		levelList.add(equipmentLevel);
-		
+
 		levelChecker = new HierarchyLevelChecker(levelList);
 	}
 
 	/**
-	 * Method that checks if a specific category assignment can be added to a structural element bean
-	 * considering the level hierarchy. 
-	 * @param bean the structural element bean 
-	 * @param categoryBeanClass the bean class of the category assignment that should be checked
+	 * Method that checks if a specific category assignment can be added to a
+	 * structural element bean considering the level hierarchy.
+	 * 
+	 * @param bean
+	 *            the structural element bean
+	 * @param categoryBeanClass
+	 *            the bean class of the category assignment that should be checked
 	 * @return true if it can be added, false if otherwise
 	 */
 	public boolean canAdd(IBeanStructuralElementInstance bean,
 			Class<? extends IBeanCategoryAssignment> categoryBeanClass) {
-		for (IHierarchyLevel level : levelChecker.getApplicableLevels(bean)) {
-			if (((CefxHierarchyLevel) level).categoryBelongsToLevel(categoryBeanClass)) {
-				return true;
+		try {
+			for (IHierarchyLevel level : levelChecker.getApplicableLevels(bean)) {
+				if (((CefxHierarchyLevel) level).categoryBelongsToLevel(categoryBeanClass)) {
+					return true;
+				}
 			}
+		} catch (IllegalArgumentException e) {
+			// If the model is broken then we accept any change here.
+			// Validators should notify the user about the broken model.
+			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Check if a structural element has category assignment of multiple levels assigned 
-	 * @param bean the structural element to validate
+	 * Method that checks if a category that belongs to the system level can be
+	 * added to the structural element bean
+	 * 
+	 * @param bean
+	 *            the structural element bean
+	 * @return true if a system related category assignment can be added
+	 */
+	public boolean canAddSystemCategory(IBeanStructuralElementInstance bean) {
+		try {
+			return levelChecker.checkApplicable(bean, systemLevel);
+		} catch (IllegalArgumentException e) {
+			// If the model is broken then we accept any change here.
+			// Validators should notify the user about the broken model.
+			return true;
+		}
+
+	}
+
+	/**
+	 * Method that checks if a category that belongs to the sub system level can be
+	 * added to the structural element bean
+	 * 
+	 * @param bean
+	 *            the structural element bean
+	 * @return true if a sub system related category assignment can be added
+	 */
+	public boolean canAddSubSystemCategory(IBeanStructuralElementInstance bean) {
+		try {
+			return levelChecker.checkApplicable(bean, subSystemLevel);
+		} catch (IllegalArgumentException e) {
+			// If the model is broken then we accept any change here.
+			// Validators should notify the user about the broken model.
+			return true;
+		}
+	}
+
+	/**
+	 * Method that checks if a category that belongs to the equipment level can be
+	 * added to the structural element bean
+	 * 
+	 * @param bean
+	 *            the structural element bean
+	 * @return true if a equipment related category assignment can be added
+	 */
+	public boolean canAddEquipmentCategory(IBeanStructuralElementInstance bean) {
+		try {
+			return levelChecker.checkApplicable(bean, equipmentLevel);
+		} catch (IllegalArgumentException e) {
+			// If the model is broken then we accept any change here.
+			// Validators should notify the user about the broken model.
+			return true;
+		}
+	}
+
+	/**
+	 * Check if a structural element has category assignment of multiple levels
+	 * assigned
+	 * 
+	 * @param bean
+	 *            the structural element to validate
 	 * @return true if the element belongs to multiple levels, false if it is valid
 	 */
 	public boolean beanHasAmbiguousLevel(IBeanStructuralElementInstance bean) {
 		return levelChecker.beanHasAmbiguousLevel(bean);
 	}
-	
+
 	/**
-	 * Check if a structural element has an invalid level - its level is invalid if it contains a
-	 * category assignment that does not fit the specified tree hierarchy
-	 * @param bean the bean of the structural element to validate
+	 * Check if a structural element has an invalid level - its level is invalid if
+	 * it contains a category assignment that does not fit the specified tree
+	 * hierarchy
+	 * 
+	 * @param bean
+	 *            the bean of the structural element to validate
 	 * @return true if the element has an invalid level
 	 */
 	public boolean beanHasInapplicableLevel(IBeanStructuralElementInstance bean) {
 		return levelChecker.beanHasInapplicableLevel(bean);
 	}
-	
+
 	/**
-	 * Create a system hierarchy level by assigning its category assignment bean classes 
+	 * Create a system hierarchy level by assigning its category assignment bean
+	 * classes
+	 * 
 	 * @return the level object for the system hierarchy level
 	 */
 	private CefxHierarchyLevel createSystemLevel() {
@@ -98,9 +170,11 @@ public class CefxHierarchyLevelChecker {
 		beanClassList.add(SystemParameters.class);
 		return new CefxHierarchyLevel(beanClassList);
 	}
-	
+
 	/**
-	 * Create a sub system hierarchy level by assigning its category assignment bean classes 
+	 * Create a sub system hierarchy level by assigning its category assignment bean
+	 * classes
+	 * 
 	 * @return the level object for the sub system hierarchy level
 	 */
 	private CefxHierarchyLevel createSubSystemLevel() {
@@ -109,9 +183,11 @@ public class CefxHierarchyLevelChecker {
 		beanClassList.add(SubSystemPowerParameters.class);
 		return new CefxHierarchyLevel(beanClassList);
 	}
-	
+
 	/**
-	 * Create a equipment hierarchy level by assigning its category assignment bean classes 
+	 * Create a equipment hierarchy level by assigning its category assignment bean
+	 * classes
+	 * 
 	 * @return the level object for the equipment hierarchy level
 	 */
 	private CefxHierarchyLevel createEquipmentLevel() {
