@@ -389,7 +389,9 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 			inputStream = converter.createInputStream(eResourceUri);
 			wb = new XSSFWorkbook(inputStream);
 		} finally {
-			inputStream.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		}
 		
 		return new ExcelHelper(wb);

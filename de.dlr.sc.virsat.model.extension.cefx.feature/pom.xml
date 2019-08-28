@@ -18,8 +18,8 @@
 		<relativePath>../maven/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>de.dlr.sc.virsat.model.extension.cef.feature</artifactId>
-	<name>de.dlr.sc.virsat.model.extension.cef.feature</name>
+	<artifactId>de.dlr.sc.virsat.model.extension.cefx.feature</artifactId>
+	<name>de.dlr.sc.virsat.model.extension.cefx.feature</name>
 
 	<packaging>eclipse-feature</packaging>
 </project> 
