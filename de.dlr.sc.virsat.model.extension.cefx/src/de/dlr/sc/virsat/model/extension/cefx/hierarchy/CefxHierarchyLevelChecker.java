@@ -73,8 +73,8 @@ public class CefxHierarchyLevelChecker {
 	 * @param bean the structural element to validate
 	 * @return true if the element belongs to multiple levels, false if it is valid
 	 */
-	public boolean hasMultipleLevels(IBeanStructuralElementInstance bean) {
-		return !levelChecker.beanHasAmbiguousLevel(bean);
+	public boolean beanHasAmbiguousLevel(IBeanStructuralElementInstance bean) {
+		return levelChecker.beanHasAmbiguousLevel(bean);
 	}
 	
 	/**
@@ -83,8 +83,8 @@ public class CefxHierarchyLevelChecker {
 	 * @param bean the bean of the structural element to validate
 	 * @return true if the element has an invalid level
 	 */
-	public boolean hasWrongLevel(IBeanStructuralElementInstance bean) {
-		return !levelChecker.beanHasInapplicableLevel(bean);
+	public boolean beanHasInapplicableLevel(IBeanStructuralElementInstance bean) {
+		return levelChecker.beanHasInapplicableLevel(bean);
 	}
 	
 	/**
