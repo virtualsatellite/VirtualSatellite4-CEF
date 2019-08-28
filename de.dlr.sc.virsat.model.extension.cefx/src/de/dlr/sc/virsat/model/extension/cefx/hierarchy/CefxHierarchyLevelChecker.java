@@ -74,7 +74,7 @@ public class CefxHierarchyLevelChecker {
 	 * @return true if the element belongs to multiple levels, false if it is valid
 	 */
 	public boolean hasMultipleLevels(IBeanStructuralElementInstance bean) {
-		return !levelChecker.validateUniqueLevel(bean);
+		return !levelChecker.beanHasAmbiguousLevel(bean);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class CefxHierarchyLevelChecker {
 	 * @return true if the element has an invalid level
 	 */
 	public boolean hasWrongLevel(IBeanStructuralElementInstance bean) {
-		return !levelChecker.validateApplicableLevel(bean);
+		return !levelChecker.beanHasInapplicableLevel(bean);
 	}
 	
 	/**
