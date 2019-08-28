@@ -22,41 +22,63 @@ import de.dlr.sc.virsat.model.concept.types.structural.level.IHierarchyLevel;
  */
 public class CefxHierarchyLevel implements IHierarchyLevel {
 
-	Set<Class<? extends IBeanCategoryAssignment>> categoryBeans;
+	protected Set<Class<? extends IBeanCategoryAssignment>> categoryBeanClasses;
+	protected boolean canBeNested;
+	protected boolean optional;
+	
 	
 	/**
 	 * 
 	 * @param beanClasses a list of category bean classes that define a level 
 	 */
 	public CefxHierarchyLevel(Collection<Class<? extends IBeanCategoryAssignment>> beanClasses) {
-		categoryBeans = new HashSet<>(beanClasses);
+		categoryBeanClasses = new HashSet<>(beanClasses);
 	}
 	
 	/**
-	 * 
-	 * @param beanClass
-	 * @return
+	 * Check if a category bean class belongs to the definition of this level
+	 * @param beanClass the bean class
+	 * @return true if bean class belongs to definition of level
 	 */
 	public boolean categoryBelongsToLevel(Class<? extends IBeanCategoryAssignment> beanClass) {
-		return categoryBeans.contains(beanClass);
+		return categoryBeanClasses.contains(beanClass);
 	}
 	
 	@Override
 	public boolean isOnLevel(IBeanStructuralElementInstance bean) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isOnLevel = false;
+		for (Class<? extends IBeanCategoryAssignment> beanClass : categoryBeanClasses) {
+			isOnLevel |= bean.getFirst(beanClass) != null;
+		}
+		return isOnLevel;
 	}
 
 	@Override
 	public boolean canBeNested() {
-		// TODO Auto-generated method stub
-		return false;
+		return canBeNested;
 	}
 
 	@Override
 	public boolean isOptional() {
-		// TODO Auto-generated method stub
-		return false;
+		return optional;
 	}
+
+	/**
+	 * Specify if the level can be nested
+	 * @param canBeNested true if it can be nested
+	 */
+	public void setCanBeNested(boolean canBeNested) {
+		this.canBeNested = canBeNested;
+	}
+
+	/**
+	 * Specify if the level is optional
+	 * @param optional true if the level is optional
+	 */
+	public void setOptional(boolean optional) {
+		this.optional = optional;
+	}
+	
+	
 
 }
