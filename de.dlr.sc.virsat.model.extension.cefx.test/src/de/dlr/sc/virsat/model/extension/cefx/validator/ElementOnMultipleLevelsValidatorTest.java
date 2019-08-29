@@ -95,6 +95,6 @@ public class ElementOnMultipleLevelsValidatorTest extends AConceptProjectTestCas
 		
 		assertFalse(validator.validate(sys.getStructuralElementInstance()));
 		numberOfMarkers = fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
-		assertEquals(1, numberOfMarkers);
+		assertEquals("Two markers expected for two conflicting CAs", 2, numberOfMarkers);
 	}
 }

@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IMarker;
 
 import de.dlr.sc.virsat.build.marker.util.VirSatValidationMarkerHelper;
 import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValidator;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelChecker;
@@ -28,8 +29,13 @@ public class ElementOnMultipleLevelsValidator implements IStructuralElementInsta
 
 	@Override
 	public boolean validate(StructuralElementInstance sei) {
-		if (levelChecker.beanHasAmbiguousLevel(new BeanStructuralElementInstance(sei))) {
-			vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, "Element mixes parameters from different levels (System, SubSystem, Equipment).", sei);
+		BeanStructuralElementInstance bean = new BeanStructuralElementInstance(sei);
+		if (levelChecker.beanHasAmbiguousLevel(bean)) {
+			for (IBeanCategoryAssignment invalidCaBean : levelChecker.getLevelDefiningCategoryAssignments(bean)) {
+				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING,
+						"Element mixes parameters from different levels.",
+						invalidCaBean.getTypeInstance());
+			}
 			return false;
 		}
 		return true;

@@ -13,10 +13,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
@@ -24,6 +27,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentPowerParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameters;
+import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
@@ -54,20 +58,36 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		
 		checker = new CefxHierarchyLevelChecker();
 	}
-	
+
 	@Test
-	public void testSingleElement() {
+	public void testSingleElementNoWarnings() {
 		ElementConfiguration ec = new ElementConfiguration(conceptPS);
-		
-		assertCanAddSystemCAs(ec, true);
-		assertCanAddSubSystemCAs(ec, true);
-		assertCanAddEquipmentCAs(ec, true);
-		
 		assertFalse(checker.beanHasAmbiguousLevel(ec));
 		assertFalse(checker.beanHasInapplicableLevel(ec));
-		assertFalse(checker.isSystem(ec));
-		assertFalse(checker.isSubSystem(ec));
-		assertFalse(checker.isEquipment(ec));
+	}
+	
+	@Test
+	public void testElementsWithoutLevels() {
+		ElementConfiguration ec1 = new ElementConfiguration(conceptPS);
+		ElementConfiguration ec2 = new ElementConfiguration(conceptPS);
+		ElementConfiguration ec3 = new ElementConfiguration(conceptPS);
+		ec1.add(ec2);
+		ec2.add(ec3);
+		
+		// root can only be system
+		assertCanAddSystemCAs(ec1, true);
+		assertCanAddSubSystemCAs(ec1, false);
+		assertCanAddEquipmentCAs(ec1, false);
+
+		// second can be system or subsystem
+		assertCanAddSystemCAs(ec2, true);
+		assertCanAddSubSystemCAs(ec2, true);
+		assertCanAddEquipmentCAs(ec2, false);
+		
+		// third can be any level
+		assertCanAddSystemCAs(ec3, true);
+		assertCanAddSubSystemCAs(ec3, true);
+		assertCanAddEquipmentCAs(ec3, true);
 	}
 
 	@Test
@@ -92,7 +112,6 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertCanAddSubSystemCAs(ctSystem, false);
 		assertCanAddEquipmentCAs(ctSystem, false);
 
-		assertTrue(checker.isSystem(ctSystem));
 		assertFalse(checker.beanHasAmbiguousLevel(ctSystem));
 		assertFalse(checker.beanHasInapplicableLevel(ctSystem));
 
@@ -109,7 +128,6 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		assertCanAddSubSystemCAs(ecEquipment, false);
 		assertCanAddEquipmentCAs(ecEquipment, true);
 
-		assertTrue(checker.isEquipment(ecEquipment));
 		assertFalse(checker.beanHasAmbiguousLevel(ecEquipment));
 		assertFalse(checker.beanHasInapplicableLevel(ecEquipment));
 
@@ -149,6 +167,25 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 
 		assertTrue(checker.beanHasInapplicableLevel(ct));
 		assertTrue(checker.beanHasInapplicableLevel(ec));
+	}
+	
+	@Test
+	public void testGetLevelDefiningCAs() {
+		ConfigurationTree ct = new ConfigurationTree(conceptPS);
+
+		assertTrue(checker.getLevelDefiningCategoryAssignments(ct).isEmpty());
+
+		Parameter irrelevantCA = new Parameter(conceptCEFX);
+		ct.add(irrelevantCA);
+
+		assertTrue(checker.getLevelDefiningCategoryAssignments(ct).isEmpty());
+		
+		SystemParameters sp = new SystemParameters(conceptCEFX);
+		ct.add(sp);
+
+		List<IBeanCategoryAssignment> levelDefiningCAs = checker.getLevelDefiningCategoryAssignments(ct);
+		assertEquals(1, levelDefiningCAs.size());
+		assertTrue(levelDefiningCAs.contains(sp));
 	}
 	
 	/**

@@ -101,10 +101,10 @@ public class WrongHierarchyValidatorTest extends AConceptProjectTestCase {
 		int numberOfMarkersSys2 = fileSys2.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
 		assertEquals(0, numberOfMarkersSys1);
 		assertEquals(0, numberOfMarkersSys2);
-		
+
 		SystemParameters sp = new SystemParameters(conceptCEFX);
 		sys2.add(sp);
-		
+
 		assertFalse("System under system is not allowed", validator.validate(sys1.getStructuralElementInstance()));
 		assertFalse("System under system is not allowed", validator.validate(sys2.getStructuralElementInstance()));
 		numberOfMarkersSys1 = fileSys1.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;

@@ -10,6 +10,8 @@
 package de.dlr.sc.virsat.model.extension.cefx.hierarchy;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
@@ -93,7 +95,6 @@ public class CefxHierarchyLevelChecker {
 			// Validators should notify the user about the broken model.
 			return true;
 		}
-
 	}
 
 	/**
@@ -133,30 +134,16 @@ public class CefxHierarchyLevelChecker {
 	}
 
 	/**
-	 * Check that the given bean is a system
-	 * @param bean structural bean to check
-	 * @return true if the bean has system CAs
+	 * Get all CA beans of a given structural bean that define its hierarchy level
+	 * @param bean structural bean
+	 * @return level-defining CA beans
 	 */
-	public boolean isSystem(IBeanStructuralElementInstance bean) {
-		return systemLevel.isOnLevel(bean);
-	}
-
-	/**
-	 * Check that the given bean is a subsystem
-	 * @param bean structural bean to check
-	 * @return true if the bean has subsystem CAs
-	 */
-	public boolean isSubSystem(IBeanStructuralElementInstance bean) {
-		return subSystemLevel.isOnLevel(bean);
-	}
-
-	/**
-	 * Check that the given bean is an equipment
-	 * @param bean structural bean to check
-	 * @return true if the bean has equipment CAs
-	 */
-	public boolean isEquipment(IBeanStructuralElementInstance bean) {
-		return equipmentLevel.isOnLevel(bean);
+	public List<IBeanCategoryAssignment> getLevelDefiningCategoryAssignments(IBeanStructuralElementInstance bean) {
+		return bean.getAll(IBeanCategoryAssignment.class).stream()
+				.filter(ca -> systemLevel.categoryBelongsToLevel(ca.getClass())
+								|| subSystemLevel.categoryBelongsToLevel(ca.getClass())
+								|| equipmentLevel.categoryBelongsToLevel(ca.getClass()))
+				.collect(Collectors.toList());
 	}
 	
 	/**

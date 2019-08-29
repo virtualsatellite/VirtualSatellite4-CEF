@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IMarker;
 
 import de.dlr.sc.virsat.build.marker.util.VirSatValidationMarkerHelper;
 import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValidator;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelChecker;
@@ -27,8 +28,13 @@ public class WrongHierarchyValidator implements IStructuralElementInstanceValida
 
 	@Override
 	public boolean validate(StructuralElementInstance sei) {
-		if (levelChecker.beanHasInapplicableLevel(new BeanStructuralElementInstance(sei))) {
-			vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING, "Element is in the wrong place in the [System > SubSystem > Equipment] hierarchy.", sei);
+		BeanStructuralElementInstance bean = new BeanStructuralElementInstance(sei);
+		if (levelChecker.beanHasInapplicableLevel(bean)) {
+			for (IBeanCategoryAssignment invalidCaBean : levelChecker.getLevelDefiningCategoryAssignments(bean)) {
+				vvmHelper.createDVLMValidationMarker(IMarker.SEVERITY_WARNING,
+						"Element is in the wrong place in the [System > SubSystem > Equipment] hierarchy.",
+						invalidCaBean.getTypeInstance());
+			}
 			return false;
 		}
 		return true;
