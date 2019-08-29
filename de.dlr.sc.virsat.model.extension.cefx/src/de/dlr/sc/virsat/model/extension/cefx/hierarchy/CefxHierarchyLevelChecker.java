@@ -133,6 +133,33 @@ public class CefxHierarchyLevelChecker {
 	}
 
 	/**
+	 * Check that the given bean is a system
+	 * @param bean structural bean to check
+	 * @return true if the bean has system CAs
+	 */
+	public boolean isSystem(IBeanStructuralElementInstance bean) {
+		return systemLevel.isOnLevel(bean);
+	}
+
+	/**
+	 * Check that the given bean is a subsystem
+	 * @param bean structural bean to check
+	 * @return true if the bean has subsystem CAs
+	 */
+	public boolean isSubSystem(IBeanStructuralElementInstance bean) {
+		return subSystemLevel.isOnLevel(bean);
+	}
+
+	/**
+	 * Check that the given bean is an equipment
+	 * @param bean structural bean to check
+	 * @return true if the bean has equipment CAs
+	 */
+	public boolean isEquipment(IBeanStructuralElementInstance bean) {
+		return equipmentLevel.isOnLevel(bean);
+	}
+	
+	/**
 	 * Check if a structural element has category assignment of multiple levels
 	 * assigned
 	 * 

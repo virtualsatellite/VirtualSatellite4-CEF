@@ -9,6 +9,7 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.hierarchy;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -16,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
+import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
@@ -57,23 +59,15 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 	public void testSingleElement() {
 		ElementConfiguration ec = new ElementConfiguration(conceptPS);
 		
-		assertTrue(checker.canAdd(ec, SystemParameters.class));
-		assertTrue(checker.canAdd(ec, SystemMassParameters.class));
-		assertTrue(checker.canAdd(ec, SystemPowerParameters.class));
-		assertTrue(checker.canAddSystemCategory(ec));
-
-		assertTrue(checker.canAdd(ec, SubSystemMassParameters.class));
-		assertTrue(checker.canAdd(ec, SubSystemPowerParameters.class));
-		assertTrue(checker.canAddSubSystemCategory(ec));
-
-		assertTrue(checker.canAdd(ec, EquipmentParameters.class));
-		assertTrue(checker.canAdd(ec, EquipmentMassParameters.class));
-		assertTrue(checker.canAdd(ec, EquipmentPowerParameters.class));
-		assertTrue(checker.canAdd(ec, EquipmentTemperatureParameters.class));
-		assertTrue(checker.canAddEquipmentCategory(ec));
+		assertCanAddSystemCAs(ec, true);
+		assertCanAddSubSystemCAs(ec, true);
+		assertCanAddEquipmentCAs(ec, true);
 		
 		assertFalse(checker.beanHasAmbiguousLevel(ec));
 		assertFalse(checker.beanHasInapplicableLevel(ec));
+		assertFalse(checker.isSystem(ec));
+		assertFalse(checker.isSubSystem(ec));
+		assertFalse(checker.isEquipment(ec));
 	}
 
 	@Test
@@ -94,82 +88,40 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		ecEquipment.add(ecPotentialEquipment);
 		
 
-		assertTrue(checker.canAdd(ctSystem, SystemParameters.class));
-		assertTrue(checker.canAdd(ctSystem, SystemMassParameters.class));
-		assertTrue(checker.canAdd(ctSystem, SystemPowerParameters.class));
-		assertTrue(checker.canAddSystemCategory(ctSystem));
+		assertCanAddSystemCAs(ctSystem, true);
+		assertCanAddSubSystemCAs(ctSystem, false);
+		assertCanAddEquipmentCAs(ctSystem, false);
 
-		assertFalse(checker.canAdd(ctSystem, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ctSystem, SubSystemPowerParameters.class));
-		assertFalse(checker.canAddSubSystemCategory(ctSystem));
-
-		assertFalse(checker.canAdd(ctSystem, EquipmentParameters.class));
-		assertFalse(checker.canAdd(ctSystem, EquipmentMassParameters.class));
-		assertFalse(checker.canAdd(ctSystem, EquipmentPowerParameters.class));
-		assertFalse(checker.canAdd(ctSystem, EquipmentTemperatureParameters.class));
-		assertFalse(checker.canAddEquipmentCategory(ctSystem));
-		
+		assertTrue(checker.isSystem(ctSystem));
 		assertFalse(checker.beanHasAmbiguousLevel(ctSystem));
 		assertFalse(checker.beanHasInapplicableLevel(ctSystem));
 
-
-		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemParameters.class));
-		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ecPotentialSubSystem, SystemPowerParameters.class));
-		assertFalse(checker.canAddSystemCategory(ecPotentialSubSystem));
-
-		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemMassParameters.class));
-		assertTrue(checker.canAdd(ecPotentialSubSystem, SubSystemPowerParameters.class));
-		assertTrue(checker.canAddSubSystemCategory(ecPotentialSubSystem));
-
-		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentParameters.class));
-		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentMassParameters.class));
-		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentPowerParameters.class));
-		assertFalse(checker.canAdd(ecPotentialSubSystem, EquipmentTemperatureParameters.class));
-		assertFalse(checker.canAddEquipmentCategory(ecPotentialSubSystem));
+		
+		assertCanAddSystemCAs(ecPotentialSubSystem, false);
+		assertCanAddSubSystemCAs(ecPotentialSubSystem, true);
+		assertCanAddEquipmentCAs(ecPotentialSubSystem, false);
 
 		assertFalse(checker.beanHasAmbiguousLevel(ecPotentialSubSystem));
 		assertFalse(checker.beanHasInapplicableLevel(ecPotentialSubSystem));
 		
 
-		assertFalse(checker.canAdd(ecEquipment, SystemParameters.class));
-		assertFalse(checker.canAdd(ecEquipment, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ecEquipment, SystemPowerParameters.class));
-		assertFalse(checker.canAddSystemCategory(ecEquipment));
+		assertCanAddSystemCAs(ecEquipment, false);
+		assertCanAddSubSystemCAs(ecEquipment, false);
+		assertCanAddEquipmentCAs(ecEquipment, true);
 
-		assertFalse(checker.canAdd(ecEquipment, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ecEquipment, SubSystemPowerParameters.class));
-		assertFalse(checker.canAddSubSystemCategory(ecEquipment));
-
-		assertTrue(checker.canAdd(ecEquipment, EquipmentParameters.class));
-		assertTrue(checker.canAdd(ecEquipment, EquipmentMassParameters.class));
-		assertTrue(checker.canAdd(ecEquipment, EquipmentPowerParameters.class));
-		assertTrue(checker.canAdd(ecEquipment, EquipmentTemperatureParameters.class));
-		assertTrue(checker.canAddEquipmentCategory(ecEquipment));
-
+		assertTrue(checker.isEquipment(ecEquipment));
 		assertFalse(checker.beanHasAmbiguousLevel(ecEquipment));
 		assertFalse(checker.beanHasInapplicableLevel(ecEquipment));
 
 
-		assertFalse(checker.canAdd(ecPotentialEquipment, SystemParameters.class));
-		assertFalse(checker.canAdd(ecPotentialEquipment, SystemMassParameters.class));
-		assertFalse(checker.canAdd(ecPotentialEquipment, SystemPowerParameters.class));
-		assertFalse(checker.canAddSystemCategory(ecPotentialEquipment));
-
-		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemMassParameters.class));
-		assertFalse(checker.canAdd(ecPotentialEquipment, SubSystemPowerParameters.class));
-		assertFalse(checker.canAddSubSystemCategory(ecPotentialEquipment));
-
-		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentParameters.class));
-		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentMassParameters.class));
-		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentPowerParameters.class));
-		assertTrue(checker.canAdd(ecPotentialEquipment, EquipmentTemperatureParameters.class));
-		assertTrue(checker.canAddEquipmentCategory(ecPotentialEquipment));
+		assertCanAddSystemCAs(ecPotentialEquipment, false);
+		assertCanAddSubSystemCAs(ecPotentialEquipment, false);
+		assertCanAddEquipmentCAs(ecPotentialEquipment, true);
 
 		assertFalse(checker.beanHasAmbiguousLevel(ecPotentialEquipment));
 		assertFalse(checker.beanHasInapplicableLevel(ecPotentialEquipment));
 	}
-	
+
 	@Test
 	public void testMultipleLevels() {
 		ElementConfiguration ecBothSystemAndEquipmentParams = new ElementConfiguration(conceptPS);
@@ -197,5 +149,41 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 
 		assertTrue(checker.beanHasInapplicableLevel(ct));
 		assertTrue(checker.beanHasInapplicableLevel(ec));
+	}
+	
+	/**
+	 * Asserts that system categories can/cannot be added to this bean
+	 * @param bean 
+	 * @param expectedCanAdd true if we expect that system categories can be added to the bean, false otherwise
+	 */
+	private void assertCanAddSystemCAs(IBeanStructuralElementInstance bean, boolean expectedCanAdd) {
+		assertEquals(expectedCanAdd, checker.canAdd(bean, SystemParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, SystemMassParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, SystemPowerParameters.class));
+		assertEquals(expectedCanAdd, checker.canAddSystemCategory(bean));
+	}
+
+	/**
+	 * Asserts that subsystem categories can/cannot be added to this bean
+	 * @param bean 
+	 * @param expectedCanAdd true if we expect that subsystem categories can be added to the bean, false otherwise
+	 */
+	private void assertCanAddSubSystemCAs(IBeanStructuralElementInstance bean, boolean expectedCanAdd) {
+		assertEquals(expectedCanAdd, checker.canAdd(bean, SubSystemMassParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, SubSystemPowerParameters.class));
+		assertEquals(expectedCanAdd, checker.canAddSubSystemCategory(bean));
+	}
+
+	/**
+	 * Asserts that equipment categories can/cannot be added to this bean
+	 * @param bean 
+	 * @param expectedCanAdd true if we expect that equipment categories can be added to the bean, false otherwise
+	 */
+	private void assertCanAddEquipmentCAs(IBeanStructuralElementInstance bean, boolean expectedCanAdd) {
+		assertEquals(expectedCanAdd, checker.canAdd(bean, EquipmentParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, EquipmentMassParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, EquipmentPowerParameters.class));
+		assertEquals(expectedCanAdd, checker.canAdd(bean, EquipmentTemperatureParameters.class));
+		assertEquals(expectedCanAdd, checker.canAddEquipmentCategory(bean));
 	}
 }
