@@ -25,8 +25,8 @@ import de.dlr.sc.virsat.concept.unittest.util.test.AConceptProjectTestCase;
 import de.dlr.sc.virsat.model.dvlm.DVLMFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
+import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.project.resources.VirSatResourceSet;
 import de.dlr.sc.virsat.project.structure.VirSatProjectCommons;
@@ -34,17 +34,19 @@ import de.dlr.sc.virsat.project.structure.VirSatProjectCommons;
 /**
  * Test class for level validators
  */
-public class ElementOnMultipleLevelsValidatorTest extends AConceptProjectTestCase {
+public class WrongHierarchyValidatorTest extends AConceptProjectTestCase {
 	
 	private static final String CONCEPT_ID_CEFX = de.dlr.sc.virsat.model.extension.cefx.Activator.PLUGIN_ID;
 	private static final String CONCEPT_ID_PS = de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId();
 	
-	private IResource fileSys;
+	private IResource fileSys1;
+	private IResource fileSys2;
 	
 	private Concept conceptCEFX;
 	private Concept conceptPS;
 	
-	private ElementConfiguration sys;
+	private ConfigurationTree sys1;
+	private ElementConfiguration sys2;
 	
 	@Before
 	public void setUp() throws CoreException {
@@ -58,21 +60,28 @@ public class ElementOnMultipleLevelsValidatorTest extends AConceptProjectTestCas
 		conceptCEFX = loadConceptFromPlugin(CONCEPT_ID_CEFX);
 
 		ActiveConceptHelper.getCategory(conceptCEFX, SystemParameters.class.getSimpleName()).setIsApplicableForAll(true);
-		ActiveConceptHelper.getCategory(conceptCEFX, EquipmentParameters.class.getSimpleName()).setIsApplicableForAll(true);
 		
-		sys = new ElementConfiguration(conceptPS);
+		sys1 = new ConfigurationTree(conceptPS);
 		
 		SystemParameters systemParameters = new SystemParameters(conceptCEFX);
-		sys.add(systemParameters);
+		sys1.add(systemParameters);
+
+		sys2 = new ElementConfiguration(conceptPS);
+		sys1.add(sys2);
 		
 		// And finally we use the project commons to create the correct workspace paths
 		// for the individual resources of the SEIs. We still have to attach the SEI eObjects
 		// to their EMF Resources and save them
 		VirSatProjectCommons projectCommons = new VirSatProjectCommons(testProject);
-		fileSys = projectCommons.getStructuralElementInstanceFile(sys.getStructuralElementInstance());
+		fileSys1 = projectCommons.getStructuralElementInstanceFile(sys1.getStructuralElementInstance());
 		
-		Resource resSys = resourceSet.getStructuralElementInstanceResource(sys.getStructuralElementInstance());
-		resSys.getContents().add(sys.getStructuralElementInstance());
+		Resource resSys1 = resourceSet.getStructuralElementInstanceResource(sys1.getStructuralElementInstance());
+		resSys1.getContents().add(sys1.getStructuralElementInstance());
+
+		fileSys2 = projectCommons.getStructuralElementInstanceFile(sys2.getStructuralElementInstance());
+		
+		Resource resSys2 = resourceSet.getStructuralElementInstanceResource(sys2.getStructuralElementInstance());
+		resSys2.getContents().add(sys2.getStructuralElementInstance());
 		
 		resourceSet.saveAllResources(null);
 	}
@@ -83,18 +92,24 @@ public class ElementOnMultipleLevelsValidatorTest extends AConceptProjectTestCas
 	}
 	
 	@Test
-	public void testSystemWithEquipmentParameters() throws Exception {
-		ElementOnMultipleLevelsValidator validator = new ElementOnMultipleLevelsValidator();
+	public void testSystemUnderSystem() throws Exception {
+		WrongHierarchyValidator validator = new WrongHierarchyValidator();
 
-		assertTrue(validator.validate(sys.getStructuralElementInstance()));
-		int numberOfMarkers = fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
-		assertEquals(0, numberOfMarkers);
+		assertTrue(validator.validate(sys1.getStructuralElementInstance()));
+		assertTrue(validator.validate(sys2.getStructuralElementInstance()));
+		int numberOfMarkersSys1 = fileSys1.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
+		int numberOfMarkersSys2 = fileSys2.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
+		assertEquals(0, numberOfMarkersSys1);
+		assertEquals(0, numberOfMarkersSys2);
 		
-		EquipmentParameters equipmentParameters = new EquipmentParameters(conceptCEFX);
-		sys.add(equipmentParameters);
+		SystemParameters sp = new SystemParameters(conceptCEFX);
+		sys2.add(sp);
 		
-		assertFalse(validator.validate(sys.getStructuralElementInstance()));
-		numberOfMarkers = fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
-		assertEquals(1, numberOfMarkers);
+		assertFalse("System under system is not allowed", validator.validate(sys1.getStructuralElementInstance()));
+		assertFalse("System under system is not allowed", validator.validate(sys2.getStructuralElementInstance()));
+		numberOfMarkersSys1 = fileSys1.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
+		numberOfMarkersSys2 = fileSys2.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length;
+		assertEquals(1, numberOfMarkersSys1);
+		assertEquals(1, numberOfMarkersSys2);
 	}
 }

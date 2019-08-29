@@ -23,6 +23,7 @@ import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelChecker
 import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelperTest;
 import de.dlr.sc.virsat.model.extension.cefx.validator.ElementOnMultipleLevelsValidatorTest;
 import de.dlr.sc.virsat.model.extension.cefx.validator.ValidatorTest;
+import de.dlr.sc.virsat.model.extension.cefx.validator.WrongHierarchyValidatorTest;
 import junit.framework.JUnit4TestAdapter;
 
 /**
@@ -41,7 +42,8 @@ import junit.framework.JUnit4TestAdapter;
 	ParameterGetterTest.class,
 	ParameterSetterTest.class,
 	CefxHierarchyLevelCheckerTest.class,
-	ElementOnMultipleLevelsValidatorTest.class
+	ElementOnMultipleLevelsValidatorTest.class,
+	WrongHierarchyValidatorTest.class
 	})
 
 public class AllTests {
