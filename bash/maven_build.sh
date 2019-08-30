@@ -26,7 +26,7 @@ printUsage() {
 	echo "usage: ${COMMAND} -j [surefire|spotbugs|checkstyle|assemble] -p [development|integration|release]"
 	echo ""
 	echo "Options:"
-	echo " -j, --jobs <jobname>	    The name of the Travis-CI job to be build."
+	echo " -j, --jobs <jobname>     The name of the Travis-CI job to be build."
 	echo " -p, --profile <profile>  The name of the maven profile to be build."
 	echo ""
 	echo "Jobname:"
@@ -91,7 +91,7 @@ callMavenAssemble() {
 	mvn clean compile -P ${MAVEN_PROFILE},target -B -V | tee maven.log
 	echo "Check for Maven Problems on Overtarget:"
 	(grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-	mvn install -P ${MAVEN_PROFILE},javadoc,deploy,${DEPLOY_TYPE},product -B -V | tee maven.log
+	mvn install -P ${MAVEN_PROFILE},deploy,${DEPLOY_TYPE},product -B -V | tee maven.log
 	echo "Check for Maven Problems on Product:"
 	(grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
 	echo "Check for AsciiDoc Problems on Product:"
