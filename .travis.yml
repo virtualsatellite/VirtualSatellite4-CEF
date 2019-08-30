@@ -1,9 +1,15 @@
 language: java
 
-dist: trusty
+dist: xenial
 
 jdk:
-- oraclejdk8
+- openjdk8
+ 
+services:
+  # -----------------------------------------------------
+  # Start up xvfb service for SWT bot GUI tests
+  # -----------------------------------------------------
+  - xvfb 
  
 cache:
   directories:
@@ -21,6 +27,12 @@ addons:
   # ---------------------------------------------------------------
   apt:
     packages:
+    - libvtk6.2 # libvtk7.1 # for bionic. At the moment we are still with jdk8 which is on xenial only
+    - libvtk6-java # libvtk7-java # for bionic
+    # - libvtk7-jni # for bionic
+    - libzmq5
+    - libzmq-java
+    - libzmq-jni
     - metacity
     - ant
 
@@ -38,10 +50,6 @@ stages:
 
 env:
   global:
-  # -------------------------------
-  # set the display for UI testing
-  # -------------------------------
-  - DISPLAY=:99.0
   # ---------------------------------------------
   # API Token for access to github
   # ---------------------------------------------
@@ -56,11 +64,6 @@ env:
   - SWTBOT_SCREENSHOT=true
 
 before_script:
-  # --------------------------------------------------
-  # Start the XVFB Service for ui testing as suggested
-  # by the travis documentation
-  # --------------------------------------------------
-  - sh -e /etc/init.d/xvfb start
   # -----------------------------------
   # Startup the metacity window manager
   # -----------------------------------
@@ -71,29 +74,24 @@ before_script:
   - mkdir -p ./OverTarget
   - curl -L -o ./OverTarget/OverTarget.jar $OVERTARGET_REPO/$OVERTARGET_GROUP.language_$OVERTARGET_VERSION.jar
   - mvn install:install-file -Dfile=./OverTarget/OverTarget.jar -DgroupId=$OVERTARGET_GROUP -DartifactId=$OVERTARGET_GROUP.language -Dversion=$OVERTARGET_VERSION -Dpackaging=jar
+  # --------------------------------------------------------------
+  # Setup environment variables for correct linking of vtk and zmq
+  # --------------------------------------------------------------
+  - source bash/setup_environment.sh
   
 after_failure:
-  # ---------------------------------------
-  # Show the debug output of Surefire Junit
-  # ---------------------------------------
-  - cat $TRAVIS_BUILD_DIR/de.dlr.sc.virsat.cef.test/target/surefire-reports/de.dlr.sc.virsat.cef.test.ProjectAllTest-output.txt
-  # --------------------------------------
-  # Start the ssh agent
-  # --------------------------------------
-  - eval "$(ssh-agent -s)"
   # ----------------------------------------
   # Decrypt the key for accessign the 
   # deployment store and add it to ssh-agent
   # then try to deploy the screenshots from 
   # SWTBot to see what happened 
   # ----------------------------------------
-  - mkdir -p -m 700 /tmp/.sourceforge_ssh
-  - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
-  - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
-  - ssh-add /tmp/.sourceforge_ssh/id_ed25519
-  - ls -l $TRAVIS_BUILD_DIR/swtbot/
-  - rsync -e ssh -avP $TRAVIS_BUILD_DIR/swtbot/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/swtbot/
-
+  - bash/deploy_sourceforge.sh -k $encrypted_f25ed140d658_key -i $encrypted_f25ed140d658_iv -u swtbot
+  # ---------------------------------------
+  # Show the debug output of Surefire Junit
+  # ---------------------------------------
+  - cat $TRAVIS_BUILD_DIR/de.dlr.sc.virsat.cef.test/target/surefire-reports/de.dlr.sc.virsat.cef.test.ProjectAllTest-output.txt
+  
 jobs:
   include:
     # --------------------------------------------
@@ -103,146 +101,79 @@ jobs:
     - stage: verify
       name: Verify - Authors Sanity Check
       script:
-      - ./bash/verify_commit_authors.sh known_authors.txt   
-
+      - ./bash/verify_commit_authors.sh known_authors.txt
+  
     # -----------------------------------------------------
     # Build and Test - SpotBugs Jobs
     # -----------------------------------------------------
     # --- Development and Feature Branches
     - stage: build-test
-      # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
       name: Build and Test - SpotBugs - Development and Features
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,spotbugs,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j spotbugs -p development
     # ----------------------------
     # --- Integration Branches
     - stage: build-test
       if: branch = integration
       name: Build and Test - SpotBugs - Integration
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P integration,spotbugs,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j spotbugs -p integration
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: tag =~ /^Release/ OR branch = master OR (type = pull_request AND env(TRAVIS_BRANCH) = master)
+      if: tag =~ /^Release/
       name: Build and Test - SpotBugs - Release
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,spotbugs,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-   
+      - bash/maven_build.sh -j spotbugs -p release   
     
     # -----------------------------------------------------
     # Build and Test - Surefire Jobs
     # -----------------------------------------------------
     # --- Development and Feature Branches
     - stage: build-test
-      # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
       name: Build and Test - Surefire - Development and Features
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,surefire,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - echo "Check for failed test cases:"
-      - (grep -n "<<< FAILURE!" maven.log || exit 0 && exit 1;)
-      - ant jacocoPrepareDependencies
-      - ant jacocoReport 2>&1 | tee ant.log
-      - (grep -n "Rule violated" ant.log || exit 0 && exit 1;)
-      - bash <(curl -s https://codecov.io/bash)
+      - bash/maven_build.sh -j surefire -p development   
     # ----------------------------
     # --- Integration Branches
     - stage: build-test
       if: branch = integration
       name: Build and Test - Surefire - Integration
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P integration,surefire,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - echo "Check for failed test cases:"
-      - (grep -n "<<< FAILURE!" maven.log || exit 0 && exit 1;)
-      - ant jacocoPrepareDependencies
-      - ant jacocoReport 2>&1 | tee ant.log
-      - (grep -n "Rule violated" ant.log || exit 0 && exit 1;)
-      - bash <(curl -s https://codecov.io/bash)
+      - bash/maven_build.sh -j surefire -p integration   
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: tag =~ /^Release/ OR branch = master OR (type = pull_request AND env(TRAVIS_BRANCH) = master)
+      if: tag =~ /^Release/
       name: Build and Test - Surefire - Release
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,surefire,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - echo "Check for failed test cases:"
-      - (grep -n "<<< FAILURE!" maven.log || exit 0 && exit 1;)
-      - ant jacocoPrepareDependencies
-      - ant jacocoReport 2>&1 | tee ant.log
-      - (grep -n "Rule violated" ant.log || exit 0 && exit 1;)
-      - bash <(curl -s https://codecov.io/bash)  
+      - bash/maven_build.sh -j surefire -p release   
 
     # -----------------------------------------------------
     # Build and Test - Checkstyle Jobs
     # -----------------------------------------------------
     # --- Development and Feature Branches
     - stage: build-test
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
       name: Build and Test - Checkstyle - Development and Features
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,checkstyle,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j checkstyle -p development   
     # ----------------------------
     # --- Integration Branches
     - stage: build-test
       if: branch = integration
       name: Build and Test - Checkstyle - Integration
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P integration,checkstyle,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j checkstyle -p integration   
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: tag =~ /^Release/ OR branch = master OR (type = pull_request AND env(TRAVIS_BRANCH) = master)
+      if: tag =~ /^Release/
       name: Build and Test - Checkstyle - Release
       script:
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,checkstyle,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-
+      - bash/maven_build.sh -j checkstyle -p release   
 
     # -----------------------------------------------------------
     # -----------------------------------------------------------
@@ -250,36 +181,10 @@ jobs:
     # -----------------------------------------------------------
     # --- The Job for feature branches only. Assemble the product, but don't deploy
     - stage: build-assemble-deploy
-      # 1. build development and feature branches in particular, 2. don't build tags for releases and 3. don't build the pull request to the master branch
-      if: branch NOT IN (integration, master, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/) AND NOT ((type = pull_request) AND (env(TRAVIS_BRANCH) = master))  
+      if: branch NOT IN (integration, development, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
       name: Build-Assemble-Deploy - Feature
       script:
-      # -------------------------------------------------------
-      # call the maven build and store the output in a log file
-      # use this log file to analyze it for compiler warnings
-      # -------------------------------------------------------
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,deploy,deployUnsecured,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-
-    # --- The Job for a master branch build before release where no deployment is needed
-    - stage: build-assemble-deploy
-      if: branch = master
-      name: Build-Assemble-Deploy - Release (No Deployment)
-      script:
-      # -------------------------------------------------------
-      # call the maven build and store the output in a log file
-      # use this log file to analyze it for compiler warnings
-      # -------------------------------------------------------
-      - mvn clean compile -P release,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,deploy,deployBackuped,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j assemble -p development   
 
     # -----------------------------------------------------------
     # Deploy Jobs for unsecured Development.
@@ -288,29 +193,8 @@ jobs:
       if: branch = development
       name: Build-Assemble-Deploy - Development
       script:
-      # -------------------------------------------------------
-      # call the maven build and store the output in a log file
-      # use this log file to analyze it for compiler warnings
-      # -------------------------------------------------------
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P development,deploy,deployUnsecured,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j assemble -p development   
       before_deploy:
-        # --------------------------------------
-        # Start the ssh agent
-        # --------------------------------------
-        - eval "$(ssh-agent -s)"
-        # ----------------------------------------
-        # Decrypt the key for accessign the 
-        # deployment store and add it to ssh-agent
-        # ----------------------------------------
-        - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
-        - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
-        - ssh-add /tmp/.sourceforge_ssh/id_ed25519
         # -----------------------------------------------------------
         # Update the development tag beforehand
         # And send it back to the origin, otherwise travis will 
@@ -333,6 +217,7 @@ jobs:
         - deploy/unsecured/p2/**/zip/*_p2.zip
         - deploy/unsecured/bin/**/*.zip
         - deploy/unsecured/bin/**/*.tar.gz
+        - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
         skip_cleanup: true
         name: Virtual Satellite 4 CEF Development Build
         body: Development build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
@@ -342,16 +227,13 @@ jobs:
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
           branch: development
-      # ---------------------------------------------
-      # push build to sourceforge repo for deployment
-      # ---------------------------------------------    
       - provider: script
         skip_cleanup: true
-        script: #
-        - rsync -e ssh -avP --delete $TRAVIS_BUILD_DIR/deploy/unsecured/p2/VirSat4_CEF_Application/development/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/development/
+        script: bash bash/deploy_sourceforge.sh -k $encrypted_f25ed140d658_key -i $encrypted_f25ed140d658_iv -u development
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
           branch: development
+          
       
     # -----------------------------------------------------------
     # Deploy Jobs for unsecured Integration.
@@ -360,29 +242,8 @@ jobs:
       if: branch = integration
       name: Build-Assemble-Deploy - Integration
       script:
-      # -------------------------------------------------------
-      # call the maven build and store the output in a log file
-      # use this log file to analyze it for compiler warnings
-      # -------------------------------------------------------
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P integration,deploy,deployUnsecured,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
+      - bash/maven_build.sh -j assemble -p integration   
       before_deploy:
-        # --------------------------------------
-        # Start the ssh agent
-        # --------------------------------------
-        - eval "$(ssh-agent -s)"
-        # ----------------------------------------
-        # Decrypt the key for accessign the 
-        # deployment store and add it to ssh-agent
-        # ----------------------------------------
-        - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
-        - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
-        - ssh-add /tmp/.sourceforge_ssh/id_ed25519
         # -----------------------------------------------------------
         # Update the development tag beforehand
         # And send it back to the origin, otherwise travis will 
@@ -405,6 +266,7 @@ jobs:
         - deploy/unsecured/p2/**/zip/*_p2.zip
         - deploy/unsecured/bin/**/*.zip
         - deploy/unsecured/bin/**/*.tar.gz
+        - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
         skip_cleanup: true
         name: Virtual Satellite 4 CEF Integration Build
         body: Integration build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
@@ -419,8 +281,7 @@ jobs:
       # ---------------------------------------------    
       - provider: script
         skip_cleanup: true
-        script: # 
-        - rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/unsecured/p2/VirSat4_CEF_Application/integration/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/integration/
+        script: bash bash/deploy_sourceforge.sh -k $encrypted_f25ed140d658_key -i $encrypted_f25ed140d658_iv -u integration
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
           branch: integration
@@ -432,29 +293,7 @@ jobs:
       if: tag =~ /^Release/
       name: Build-Assemble-Deploy - Release
       script:
-      # -------------------------------------------------------
-      # call the maven build and store the output in a log file
-      # use this log file to analyze it for compiler warnings
-      # -------------------------------------------------------
-      - mvn clean compile -P development,target -B -V | tee maven.log
-      - echo "Check for Maven Problems on Overtarget:"
-      - (grep -n "\[\(WARN\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      - mvn install -P release,deploy,deployBackuped,product -B -V | tee maven.log
-      - echo "Check for Maven Problems on Product:"
-      - (grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log || exit 0  && exit 1;)
-      before_deploy:
-        # --------------------------------------
-        # Start the ssh agent
-        # --------------------------------------
-        - eval "$(ssh-agent -s)"
-        # ----------------------------------------
-        # Decrypt the key for accessign the 
-        # deployment store and add it to ssh-agent
-        # ----------------------------------------
-        - mkdir -p -m 700 /tmp/.sourceforge_ssh
-        - openssl aes-256-cbc -K $encrypted_f25ed140d658_key -iv $encrypted_f25ed140d658_iv -in id_ed25519.enc -out /tmp/.sourceforge_ssh/id_ed25519 -d
-        - chmod 600 /tmp/.sourceforge_ssh/id_ed25519
-        - ssh-add /tmp/.sourceforge_ssh/id_ed25519
+      - bash/maven_build.sh -j assemble -p release   
       deploy:
         # -----------------------------------------------------------
         # Now attach the release to the Release Tag.
@@ -466,6 +305,7 @@ jobs:
         - deploy/secured/p2/**/zip/*_p2.zip
         - deploy/secured/bin/**/*.zip
         - deploy/secured/bin/**/*.tar.gz
+        - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
         skip_cleanup: true
         name: Virtual Satellite 4 CEF Release Build
         body: Release build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This is a stable release.
@@ -478,9 +318,8 @@ jobs:
       # ---------------------------------------------    
       - provider: script
         skip_cleanup: true
-        script: # 
-        - rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/secured/p2/VirSat4_CEF_Application/release/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/release/
-        on:
+        script: bash bash/deploy_sourceforge.sh -k $encrypted_f25ed140d658_key -i $encrypted_f25ed140d658_iv -u release
+       on:
           repo: virtualsatellite/VirtualSatellite4-CEF
           tags: true
                     
