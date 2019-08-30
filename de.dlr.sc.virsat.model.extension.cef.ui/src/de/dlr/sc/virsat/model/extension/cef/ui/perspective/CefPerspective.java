@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 
-package de.dlr.sc.virsat.cef.branding.ui.perspective;
+package de.dlr.sc.virsat.model.extension.cef.ui.perspective;
 
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
@@ -24,7 +24,7 @@ import de.dlr.sc.virsat.model.extension.cef.ui.modesview.ModeTableView;
  * @author fisc_ph
  *
  */
-public class DefaultPerspective implements IPerspectiveFactory {
+public class CefPerspective implements IPerspectiveFactory {
 
 	public static final String ID_LEFT_FOLDER = "de.dlr.sc.virsat.perspective.cef.LEFT";
 	public static final String ID_BOTTOM_LEFT_FOLDER = "de.dlr.sc.virsat.perspective.cef.BOTTOMLEFT";
