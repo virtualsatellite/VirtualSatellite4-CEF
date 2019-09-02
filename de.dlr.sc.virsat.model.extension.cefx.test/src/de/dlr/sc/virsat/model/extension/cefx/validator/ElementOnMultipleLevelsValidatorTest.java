@@ -76,12 +76,7 @@ public class ElementOnMultipleLevelsValidatorTest extends AConceptProjectTestCas
 		
 		resourceSet.saveAllResources(null);
 	}
-	
-	@After
-	public void tearDown() throws CoreException {
-		super.tearDown();
-	}
-	
+
 	@Test
 	public void testSystemWithEquipmentParameters() throws Exception {
 		ElementOnMultipleLevelsValidator validator = new ElementOnMultipleLevelsValidator();

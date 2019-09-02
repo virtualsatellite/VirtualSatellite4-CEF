@@ -37,6 +37,7 @@ import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 
 /**
+ * Test class for CefxHierarchyLevelChecker
  */
 public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 

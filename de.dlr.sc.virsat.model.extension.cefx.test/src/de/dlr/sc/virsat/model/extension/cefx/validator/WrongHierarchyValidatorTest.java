@@ -85,12 +85,7 @@ public class WrongHierarchyValidatorTest extends AConceptProjectTestCase {
 		
 		resourceSet.saveAllResources(null);
 	}
-	
-	@After
-	public void tearDown() throws CoreException {
-		super.tearDown();
-	}
-	
+
 	@Test
 	public void testSystemUnderSystem() throws Exception {
 		WrongHierarchyValidator validator = new WrongHierarchyValidator();
