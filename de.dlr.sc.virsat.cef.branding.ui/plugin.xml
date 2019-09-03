@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.dlr.sc.virsat.cef.intro.contribution" name="Intro Contribution" schema="schema/de.dlr.sc.virsat.cef.intro.contribution.exsd"/>
    <extension
          point="org.eclipse.ui.intro">
       <intro
@@ -51,14 +52,5 @@
                value="plugin_customization.ini">
          </property>
       </product>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="de.dlr.sc.virsat.cef.branding.ui.perspective.DefaultPerspective"
-            icon="resources/images/cef.gif"
-            id="de.dlr.sc.virsat.cef.branding.ui.default.perspective"
-            name="CEF Default">
-      </perspective>
    </extension>
 </plugin>

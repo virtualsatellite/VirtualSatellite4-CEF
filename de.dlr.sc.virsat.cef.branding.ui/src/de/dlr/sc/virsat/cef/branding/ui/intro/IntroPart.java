@@ -9,6 +9,8 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.cef.branding.ui.intro;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -34,6 +36,7 @@ import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.intro.IIntroSite;
 
 import de.dlr.sc.virsat.cef.branding.ui.BrandingPlugin;
+import de.dlr.sc.virsat.cef.branding.ui.PluginXml;
 
 /**
  * Introduction / Welcome Screen page for VirSat
@@ -46,27 +49,25 @@ public class IntroPart implements IIntroPart {
 	}
 
 	@Override
-	public void init(IIntroSite site, IMemento memento)
-		throws PartInitException {
-
+	public void init(IIntroSite site, IMemento memento)	throws PartInitException {
 	}
 
 	@Override
 	public void standbyStateChanged(boolean standby) {
-
 	}
 
 	@Override
 	public void saveState(IMemento memento) {
-
 	}
 
 	@Override
 	public void addPropertyListener(IPropertyListener listener) {
-
 	}
 
-	static Image oldImage;
+	static Image cefImage;
+	
+	public static final String EXTENSION_POINT_INTRO_ADVERTISEMENT_MESSAGE = "advertisementMessage";
+	public static final String EXTENSION_POINT_INTRO_ADVERTISEMENT_PERSPECTIVE = "perspectiveID";
 	
 	@Override
 	public void createPartControl(Composite container) {
@@ -90,10 +91,10 @@ public class IntroPart implements IIntroPart {
     			gc.drawImage(backgroundImage, 0, 0, backgroundImage.getBounds().width, backgroundImage.getBounds().height, 0, 0, rect.width, rect.height);
     			gc.dispose();
     			outerContainer.setBackgroundImage(backgroundImage);
-    			if (oldImage != null) {
-					oldImage.dispose();
+    			if (cefImage != null) {
+					cefImage.dispose();
 				}
-    			oldImage = backgroundImage;
+    			cefImage = backgroundImage;
     		}
     	});
 
@@ -122,40 +123,46 @@ public class IntroPart implements IIntroPart {
     	gridData.horizontalAlignment = GridData.FILL;
     	gridData.verticalAlignment = GridData.FILL;
     	welcomeText.setLayoutData(gridData);
-	    
-     	
-      	// adding an icon button for start modeling
-    	CLabel startLabel = new CLabel(outerContainer, SWT.NULL);
-    	startLabel.setImage(loginImage);
-    	startLabel.setSize(loginImage.getBounds().width, loginImage.getBounds().height);
     	
-    	gridData = new GridData();
-     	gridData.horizontalAlignment = GridData.FILL;
-    	gridData.verticalAlignment = GridData.FILL;
-    	gridData.grabExcessHorizontalSpace = false;
-    	startLabel.setLayoutData(gridData);	
-    	
-    	startLabel.addMouseListener(new MyMouseListener());
-    	
-    	// adding a link for start modeling
-    	StyledText startLink = new StyledText(outerContainer, SWT.NULL);
-    	Font notSoBoldFont = new Font(welcomeText.getDisplay(), new FontData("Arial", FONT_SIZE_18, SWT.UNDERLINE_LINK));
-    	startLink.setFont(notSoBoldFont);
-    	startLink.setForeground(outerContainer.getDisplay().getSystemColor(SWT.COLOR_BLACK));
-    	startLink.setText("Start the CEF Session Now!");
-    	
-    	gridData = new GridData(); 
-    	gridData.horizontalAlignment = GridData.FILL;
-    	gridData.verticalAlignment = GridData.CENTER;
-    	startLink.setLayoutData(gridData);
+    	IConfigurationElement[] configElements = Platform.getExtensionRegistry().getConfigurationElementsFor(PluginXml.ExtensionPoints.Dedlrscvirsatcefintrocontribution.ID);
 
-    	startLink.addMouseListener(new MyMouseListener());
+    	for (IConfigurationElement cElement : configElements) {
+     	
+    		String perspectiveId = cElement.getAttribute(EXTENSION_POINT_INTRO_ADVERTISEMENT_PERSPECTIVE);
+    		String message = cElement.getAttribute(EXTENSION_POINT_INTRO_ADVERTISEMENT_MESSAGE);
+    		
+	      	// adding an icon button for start modeling
+	    	CLabel startLabel = new CLabel(outerContainer, SWT.NULL);
+	    	startLabel.setImage(loginImage);
+	    	startLabel.setSize(loginImage.getBounds().width, loginImage.getBounds().height);
+	    	
+	    	gridData = new GridData();
+	     	gridData.horizontalAlignment = GridData.FILL;
+	    	gridData.verticalAlignment = GridData.FILL;
+	    	gridData.grabExcessHorizontalSpace = false;
+	    	startLabel.setLayoutData(gridData);	
+	    	
+	    	startLabel.addMouseListener(new OpenPerspectiveMouseListener(perspectiveId));
+	    	
+	    	// adding a link for start modeling
+	    	StyledText startLink = new StyledText(outerContainer, SWT.NULL);
+	    	Font notSoBoldFont = new Font(welcomeText.getDisplay(), new FontData("Arial", FONT_SIZE_18, SWT.UNDERLINE_LINK));
+	    	startLink.setFont(notSoBoldFont);
+	    	startLink.setForeground(outerContainer.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+	    	startLink.setText(message);
+	    	
+	    	gridData = new GridData(); 
+	    	gridData.horizontalAlignment = GridData.FILL;
+	    	gridData.verticalAlignment = GridData.CENTER;
+	    	startLink.setLayoutData(gridData);
+	
+	    	startLink.addMouseListener(new OpenPerspectiveMouseListener(perspectiveId));
+    	}
 	}
 
 	@Override
 	public void dispose() {
-		oldImage.dispose();
-
+		cefImage.dispose();
 	}
 
 	@Override
@@ -167,17 +174,15 @@ public class IntroPart implements IIntroPart {
 
 	@Override
 	public String getTitle() {
-		return "Welcome";
+		return "Welcome to Virtual Satellite CEF";
 	}
 
 	@Override
 	public void removePropertyListener(IPropertyListener listener) {
-
 	}
 
 	@Override
 	public void setFocus() {
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -187,15 +192,25 @@ public class IntroPart implements IIntroPart {
 	}
 
 	/**
-	 * Little embedded clas to define a mouse listener on the text label in the Welcome Screen
+	 * Little embedded class to define a mouse listener on the text label in the Welcome Screen
 	 * @author scha_vo
 	 *
 	 */
-	class MyMouseListener implements MouseListener {
+	class OpenPerspectiveMouseListener implements MouseListener {
+
+		private String perspectiveId;
+		
+		/**
+		 * Constructs a mouse listener which will open the given perspective
+		 * @param perspectiveId the id of the perspective to be opened by the listener
+		 */
+		OpenPerspectiveMouseListener(String perspectiveId) {
+			this.perspectiveId = perspectiveId;
+		}
 		
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-			
+			mouseDown(e);
 		}
 
 		@Override
@@ -203,7 +218,7 @@ public class IntroPart implements IIntroPart {
 			try {
 				IIntroPart welcomePart = PlatformUI.getWorkbench().getIntroManager().getIntro();
 				PlatformUI.getWorkbench().getIntroManager().closeIntro(welcomePart);
-				PlatformUI.getWorkbench().showPerspective("de.dlr.sc.virsat.cef.branding.ui.default.perspective", PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+				PlatformUI.getWorkbench().showPerspective(perspectiveId, PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 			} catch (Exception ex) {
 				BrandingPlugin.getDefault().getLog().log(new Status(Status.ERROR, "BrandingPlugin", "Login command not found or perspective not found"));
 			}
@@ -211,11 +226,6 @@ public class IntroPart implements IIntroPart {
 
 		@Override
 		public void mouseUp(MouseEvent e) {
-			
 		}
-	
-					
 	}
-		
-		
 }

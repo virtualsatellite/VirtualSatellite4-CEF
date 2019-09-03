@@ -12,7 +12,5 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.osgi,
  org.eclipse.core.runtime,
  org.eclipse.ui.intro,
- org.eclipse.ui,
- de.dlr.sc.virsat.model.extension.cef.ui,
- de.dlr.sc.virsat.model.calculation.ui
+ org.eclipse.ui
 Automatic-Module-Name: de.dlr.sc.virsat.cef.branding.ui
