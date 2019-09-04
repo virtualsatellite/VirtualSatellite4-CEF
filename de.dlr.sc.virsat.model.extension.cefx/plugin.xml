@@ -85,14 +85,30 @@
 </extension>
 	<!-- Plugin.XML Protected Region End -->
 	<!-- Plugin.XML Protected Region Start -->
-<extension
-         id="modeVectorExpressionExtender"
-         name="Mode Vector Expression Extender"
-         point="de.dlr.sc.virsat.model.edit.TypeInstanceSetterProvider">
-      <typeInstanceSetterProvider
-            class="de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorExpressionExtension"
-            priority="1">
-      </typeInstanceSetterProvider>
-      </extension>
+	<extension
+		id="modeVectorExpressionExtender"
+		name="Mode Vector Expression Extender"
+		point="de.dlr.sc.virsat.model.edit.TypeInstanceSetterProvider">
+		<typeInstanceSetterProvider
+			class="de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorExpressionExtension"
+			priority="1">
+		</typeInstanceSetterProvider>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cefx.multilevel.validator"
+				class="de.dlr.sc.virsat.model.extension.cefx.validator.ElementOnMultipleLevelsValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cefx.wronglevel.validator"
+				class="de.dlr.sc.virsat.model.extension.cefx.validator.WrongHierarchyValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
 	<!-- Plugin.XML Protected Region End -->
 </plugin>

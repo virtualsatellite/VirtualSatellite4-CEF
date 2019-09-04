@@ -19,7 +19,7 @@ public class ManifestMf {
 	public static final String BUNDLE_VENDOR = "DLR (German Aerospace Center)";
 	public static final String MANIFEST_VERSION = "1.0";
 	public static final String ECLIPSE_EXTENSIBLEAPI = "true";
-	public static final String EXPORT_PACKAGE = "de.dlr.sc.virsat.model.extension.cefx,de.dlr.sc.virsat.model.extension.cefx.excel,de.dlr.sc.virsat.model.extension.cefx.model,de.dlr.sc.virsat.model.extension.cefx.util,de.dlr.sc.virsat.model.extension.cefx.validator";
+	public static final String EXPORT_PACKAGE = "de.dlr.sc.virsat.model.extension.cefx,de.dlr.sc.virsat.model.extension.cefx.excel,de.dlr.sc.virsat.model.extension.cefx.hierarchy,de.dlr.sc.virsat.model.extension.cefx.model,de.dlr.sc.virsat.model.extension.cefx.util,de.dlr.sc.virsat.model.extension.cefx.validator";
 	public static final String BUNDLE_NAME = "VirSat CEF Extended Model Extension Data Model";
 	public static final String BUNDLE_VERSION = "4.9.0.qualifier";
 	public static final String BUNDLE_ACTIVATOR = "de.dlr.sc.virsat.model.extension.cefx.Activator";
