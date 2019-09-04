@@ -19,8 +19,11 @@ import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ModeVectorResultT
 import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ParameterGetterTest;
 import de.dlr.sc.virsat.model.extension.cefx.calculation.modes.ParameterSetterTest;
 import de.dlr.sc.virsat.model.extension.cefx.excel.ExcelUpdaterTest;
+import de.dlr.sc.virsat.model.extension.cefx.hierarchy.CefxHierarchyLevelCheckerTest;
 import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelperTest;
+import de.dlr.sc.virsat.model.extension.cefx.validator.ElementOnMultipleLevelsValidatorTest;
 import de.dlr.sc.virsat.model.extension.cefx.validator.ValidatorTest;
+import de.dlr.sc.virsat.model.extension.cefx.validator.WrongHierarchyValidatorTest;
 import junit.framework.JUnit4TestAdapter;
 
 /**
@@ -38,6 +41,9 @@ import junit.framework.JUnit4TestAdapter;
 	ModeVectorResultTest.class,
 	ParameterGetterTest.class,
 	ParameterSetterTest.class,
+	CefxHierarchyLevelCheckerTest.class,
+	ElementOnMultipleLevelsValidatorTest.class,
+	WrongHierarchyValidatorTest.class
 	})
 
 public class AllTests {
