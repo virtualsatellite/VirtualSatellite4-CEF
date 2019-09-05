@@ -36,38 +36,50 @@
 			</properties>
 			<modules>
 				<module>de.dlr.sc.virsat.cef.target</module>
-				<module>de.dlr.sc.virsat.cef.target.feature</module>
-				<module>de.dlr.sc.virsat.cef.product</module>
-				<module>de.dlr.sc.virsat.cef.p2updatesite</module>
 
 				<module>de.dlr.sc.virsat.cef.test</module>
-
-				<module>de.dlr.sc.virsat.cef.branding.feature</module>
 				<module>de.dlr.sc.virsat.cef.branding.ui</module>
-				<module>de.dlr.sc.virsat.cef.docs.feature</module>
-				<module>de.dlr.sc.virsat.cef.license.feature</module>
 
 				<!-- The Extension for the CEF Data Model -->
 				<module>de.dlr.sc.virsat.model.extension.cef</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.ui</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.test</module>
-				<module>de.dlr.sc.virsat.model.extension.cef.feature</module>
 
 				<!-- The Extension for the CEF Extended Data Model -->
 				<module>de.dlr.sc.virsat.model.extension.cefx</module>
 				<module>de.dlr.sc.virsat.model.extension.cefx.ui</module>
 				<module>de.dlr.sc.virsat.model.extension.cefx.test</module>
-				<module>de.dlr.sc.virsat.model.extension.cefx.feature</module>
 
 				<!-- The Extension for the CEF Interfaces Data Model -->
 				<module>de.dlr.sc.virsat.model.extension.cef.interfaces</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.ui</module>
 				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.test</module>
-				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.feature</module>
 
 				<!-- The Extension for the CEF calculations -->
 				<module>de.dlr.sc.virsat.cef.calculation</module>
 				<module>de.dlr.sc.virsat.cef.calculation.test</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- Build profile for building the main product -->
+			<id>deploy</id>
+			<properties>
+				<build.src>src</build.src>
+			</properties>
+			<modules>
+				<module>de.dlr.sc.virsat.cef.target.feature</module>
+
+				<module>de.dlr.sc.virsat.cef.branding.feature</module>
+				<module>de.dlr.sc.virsat.cef.docs.feature</module>
+				<module>de.dlr.sc.virsat.cef.license.feature</module>
+
+				<module>de.dlr.sc.virsat.model.extension.cef.feature</module>
+				<module>de.dlr.sc.virsat.model.extension.cefx.feature</module>
+				<module>de.dlr.sc.virsat.model.extension.cef.interfaces.feature</module>
+
+				<module>de.dlr.sc.virsat.cef.product</module>
+				<module>de.dlr.sc.virsat.cef.p2updatesite</module>
+
 			</modules>
 		</profile>
 	</profiles>
