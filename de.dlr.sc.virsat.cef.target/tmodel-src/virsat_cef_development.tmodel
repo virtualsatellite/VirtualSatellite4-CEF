@@ -2,6 +2,6 @@ Target virsat_cef_development extends virsat {
 	Import core_development 
 	
 	RepositoryLocation VirSat4CoreDevelopment url "https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"{	
-		Unit de.dlr.sc.virsat.target.feature.feature.group version newest;
+		Unit de.dlr.sc.virsat.target.feature.feature.group version newest; 
 	}
 }
