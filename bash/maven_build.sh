@@ -48,6 +48,7 @@ checkforMavenProblems() {
 	(grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log \
 	| grep -v "\[WARNING\] Checksum validation failed" \
 	| grep -v "\[WARNING\] Could not validate integrity of download" \
+	| grep -v "\[WARNING\] Ignoring Bundle-ClassPath entry 'external:\$.*\$" \
 	|| exit 0 && exit 1;)
 }
 
