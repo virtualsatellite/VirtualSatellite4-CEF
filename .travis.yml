@@ -78,6 +78,10 @@ before_script:
   # Setup environment variables for correct linking of vtk and zmq
   # --------------------------------------------------------------
   - source bash/setup_environment.sh
+  # ------------------------------------
+  # Make sure all scripts are executable
+  # ------------------------------------
+  - chmod 766 bash/*
   
 after_failure:
   # ----------------------------------------

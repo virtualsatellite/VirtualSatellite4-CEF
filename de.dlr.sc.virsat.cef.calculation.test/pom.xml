@@ -21,5 +21,5 @@
 	<artifactId>de.dlr.sc.virsat.cef.calculation.test</artifactId>
 	<name>de.dlr.sc.virsat.cef.calculation.test</name>
 
-	<packaging>eclipse-plugin</packaging>
+	<packaging>eclipse-test-plugin</packaging>
 </project>
