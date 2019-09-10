@@ -37,18 +37,18 @@ uploadSwtBot() {
 }
 
 uploadDevelopment() {
-	rsync -e ssh -avP --delete $TRAVIS_BUILD_DIR/deploy/unsecured/p2/VirSat4_CEF_Application/development/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/development/
-	rsync -e ssh -avP --delete $TRAVIS_BUILD_DIR/deploy/unsecured/bin/VirSat4_CEF_Application/development/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/development/
+	rsync -e ssh -avP --delete $TRAVIS_BUILD_DIR/deploy/unsecured/p2/VirSatCEFBinary/development/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/development/
+	rsync -e ssh -avP --delete $TRAVIS_BUILD_DIR/deploy/unsecured/bin/VirSatCEFBinary/development/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/development/
 }
 
 uploadIntegration() {
 	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/unsecured/p2/VirSat4_CEF_Application/integration/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/integration/
-	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/unsecured/bin/VirSat4_CEF_Application/integration/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/integration/
+	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/unsecured/bin/VirSatCEFBinary/integration/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/integration/
 }
 
 uploadRelease() {
 	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/secured/p2/VirSat4_CEF_Application/release/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/release/
-	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/secured/bin/VirSat4_CEF_Application/release/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/release/
+	rsync -e ssh -avP $TRAVIS_BUILD_DIR/deploy/secured/bin/VirSatCEFBinary/release/  dlrscmns@frs.sourceforge.net:/home/frs/project/virtualsatellite/VirtualSatellite4-CEF/bin/release/
 }
 
 
