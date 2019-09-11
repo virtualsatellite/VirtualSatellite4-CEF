@@ -110,8 +110,8 @@ Germany
       <feature id="org.eclipse.xtext.xbase.lib" installMode="root"/>
       <feature id="org.eclipse.xtext.xbase" installMode="root"/>
       <feature id="org.eclipse.ocl" installMode="root"/>
-      <feature id="org.eclipse.emf.compare installMode="root""/>
-      <feature id="org.eclipse.emf.validation installMode="root""/>
+      <feature id="org.eclipse.emf.compare" installMode="root"/>
+      <feature id="org.eclipse.emf.validation" installMode="root"/>
       <feature id="org.eclipse.egit" installMode="root"/>
       <feature id="org.eclipse.jgit.ssh.apache" installMode="root"/>
       <feature id="org.eclipse.jgit" installMode="root"/>
