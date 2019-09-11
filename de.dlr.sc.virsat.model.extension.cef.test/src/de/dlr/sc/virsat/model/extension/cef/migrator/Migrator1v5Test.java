@@ -25,26 +25,22 @@ import org.junit.Test;
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class
- * 
+ *
  * This class is generated once, do your changes here
- * 
+ *
  * VirSat DLR CEF Concept
- * 
+ *
  */
-public class Migrator1v5Test extends AMigrator1v5Test {		
-	
+public class Migrator1v5Test extends AMigrator1v5Test {
+
 	@Test
 	public void testMigrator1v5() {
 		Migrator1v5 testMigrator1v5 = new Migrator1v5();
-		
+
 		Repository repository = DVLMFactory.eINSTANCE.createRepository();
 		repository.getActiveConcepts().add(conceptMigrateFromRepository);
-		
-		//TODO: Setup test instances
-		
+
 		testMigrator1v5.migrate(conceptMigrateFrom, conceptMigrateFromRepository, conceptMigrateTo);
-		
-		//TODO: Check for correct migration
 	}
-	
+
 }
