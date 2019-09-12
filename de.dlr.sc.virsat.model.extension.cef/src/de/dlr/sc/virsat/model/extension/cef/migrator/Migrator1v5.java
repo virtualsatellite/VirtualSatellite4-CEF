@@ -19,17 +19,16 @@ import de.dlr.sc.virsat.model.concept.migrator.IMigrator;
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class
- * 
+ *
  * This class is generated once, do your changes here
- * 
+ *
  * VirSat DLR CEF Concept
- * 
+ *
  */
 public class Migrator1v5 extends AMigrator1v5 implements IMigrator {
 
 	@Override
 	public void migrate(Concept concept, IMigrator previousMigrator) {
-		//TODO: Implement custom concept migration for version 1.5
 		super.migrate(concept, previousMigrator);
 	}
 }
