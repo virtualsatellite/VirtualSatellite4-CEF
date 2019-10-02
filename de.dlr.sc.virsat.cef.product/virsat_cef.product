@@ -67,6 +67,7 @@ Germany
       <feature id="de.dlr.sc.virsat.model.calculation.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.extension.cef.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.cefx.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.project.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.apps.feature" installMode="root"/>
