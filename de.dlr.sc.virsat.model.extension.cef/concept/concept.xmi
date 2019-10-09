@@ -172,17 +172,22 @@
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
     </equationDefinitions>
     <equationDefinitions>
-      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
-        <left xsi:type="dvlm_calc:AdditionAndSubtraction">
-          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
-          <right xsi:type="dvlm_calc:Parenthesis">
-            <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:AdditionAndSubtraction">
               <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
-              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
-            </right>
+              <right xsi:type="dvlm_calc:Parenthesis">
+                <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+                  <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
+                  <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+                </right>
+              </right>
+            </left>
+            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin" depth="1"/>
           </right>
         </left>
-        <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin" depth="1"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.unitQuantity"/>
       </expression>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin"/>
     </equationDefinitions>
