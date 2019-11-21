@@ -27,7 +27,7 @@
 		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/release/4.9.0/171/"/>
 		</location>              
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201812241324"/>
+		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201907151344"/>
 		<repository location="https://download.eclipse.org/nebula/releases/latest/"/>
 		</location>              
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
