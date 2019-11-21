@@ -2,7 +2,7 @@
 <feature
       id="de.dlr.sc.virsat.cef.docs.feature"
       label="VirSat CEF Documents and Release Notes Feature"
-      version="4.9.0.qualifier"
+      version="4.9.2.qualifier"
       provider-name="DLR (German Aerospace Center)"
       plugin="de.dlr.sc.virsat.cef.branding.ui"
       license-feature="de.dlr.sc.virsat.cef.license.feature">
