@@ -3,6 +3,12 @@ VirSat CEF Release Notes
 
 VirSat CEF is based on VirSat Core. Please don't forget to read the Release Notes of VirSat Core as well!
 
+Release 4.9.2 (21st November 2019)
+----------------------------------
+
+Fixed Bugs:
+	Fixed crash on opening multiple instances of VirSat (in Core 4.9.2)
+
 Release 4.9.0 (29th April 2018)
 ----------------------------------
 
