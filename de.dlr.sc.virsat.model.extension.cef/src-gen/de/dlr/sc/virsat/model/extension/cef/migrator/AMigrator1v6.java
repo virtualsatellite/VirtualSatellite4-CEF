@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package de.dlr.sc.virsat.model.extension.cefx.migrator;
+package de.dlr.sc.virsat.model.extension.cef.migrator;
 
 import de.dlr.sc.virsat.model.concept.migrator.AMigrator;
 
@@ -21,9 +21,9 @@ import de.dlr.sc.virsat.model.concept.migrator.AMigrator;
  * 
  * Don't Manually modify this class
  * 
- * VirSat DLR CEF Concept for extended Product Structures
+ * VirSat DLR CEF Concept
  * 
  */	
-public abstract class AMigrator1v1 extends AMigrator {
+public abstract class AMigrator1v6 extends AMigrator {
 
 }
