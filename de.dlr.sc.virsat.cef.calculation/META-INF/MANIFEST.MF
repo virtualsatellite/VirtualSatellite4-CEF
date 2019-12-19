@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Calculation
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.calculation;singleton:=true
-Bundle-Version: 4.9.2.qualifier
+Bundle-Version: 4.9.3.qualifier
 Bundle-ClassPath: .
 Eclipse-ExtensibleAPI: true
 Require-Bundle: org.eclipse.ui,

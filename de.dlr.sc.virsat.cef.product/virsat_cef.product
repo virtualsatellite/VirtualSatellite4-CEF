@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.9.2.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.9.3.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_256x330.gif"/>
       <text>
          Virtual Satellite 4 - CEF
 
-Version 4.9.2
+Version 4.9.3
 
 Copyright 2018 by German Aerospace Center (DLR) e.V.
 
