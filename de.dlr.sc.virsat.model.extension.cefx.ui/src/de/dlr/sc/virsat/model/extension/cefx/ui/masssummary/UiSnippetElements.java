@@ -9,6 +9,8 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.masssummary;
 
+import java.util.ArrayList;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -23,6 +25,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.tree.BeanStructuralTreeTraverser;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryAssignmentHelper;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
 import de.dlr.sc.virsat.model.dvlm.qudv.util.QudvUnitHelper;
@@ -30,6 +33,8 @@ import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
+import de.dlr.sc.virsat.model.extension.cefx.ui.masssummary.MassSummaryView.TreeTraverserMatcherSubSystemEquipment;
+import de.dlr.sc.virsat.model.extension.cefx.ui.masssummary.MassSummaryView.TreeTraverserMatcherSubSystemMass;
 import de.dlr.sc.virsat.model.ui.editor.input.VirSatUriEditorInput;
 import de.dlr.sc.virsat.project.ui.contentProvider.VirSatTransactionalAdapterFactoryContentProvider;
 import de.dlr.sc.virsat.project.ui.labelProvider.VirSatTransactionalAdapterFactoryLabelProvider;
@@ -71,15 +76,35 @@ public class UiSnippetElements extends AUiSnippetTable {
 	@Override
 	public IStructuredContentProvider getContentProvider() {
 		return new VirSatTransactionalAdapterFactoryContentProvider(adapterFactory) {
+
+			private BeanStructuralTreeTraverser treeTraverser = new BeanStructuralTreeTraverser();
+			
 			@Override
 			public Object[] getElements(Object inputElement) {
 				if (inputElement instanceof StructuralElementInstance) {
-					return ((StructuralElementInstance) inputElement).getChildren().stream().filter(
-							sei ->
-								!CategoryAssignmentHelper.getCategoryAssignmentsOfType(sei, SubSystemMassParameters.FULL_QUALIFIED_CATEGORY_NAME).isEmpty()
-								||
-								!CategoryAssignmentHelper.getCategoryAssignmentsOfType(sei, EquipmentMassParameters.FULL_QUALIFIED_CATEGORY_NAME).isEmpty()
-							).toArray();
+					BeanStructuralElementInstance beanSei = new BeanStructuralElementInstance((StructuralElementInstance) inputElement);
+					SystemMassParameters systemMassParameters = beanSei.getFirst(SystemMassParameters.class);
+					SubSystemMassParameters subSystemMassParameters = beanSei.getFirst(SubSystemMassParameters.class);
+
+					ArrayList<StructuralElementInstance> children = new ArrayList<>();
+					
+					if (systemMassParameters != null) {
+						treeTraverser.traverse(beanSei, new TreeTraverserMatcherSubSystemMass() {
+							@Override
+							public void processMatch(IBeanStructuralElementInstance childBeanSei, IBeanStructuralElementInstance matchingParent) {
+								children.add(childBeanSei.getStructuralElementInstance());
+							}
+						});
+					} else if (subSystemMassParameters != null) {
+						treeTraverser.traverse(beanSei, new TreeTraverserMatcherSubSystemEquipment() {
+							@Override
+							public void processMatch(IBeanStructuralElementInstance childBeanSei, IBeanStructuralElementInstance matchingParent) {
+								children.add(childBeanSei.getStructuralElementInstance());
+							}
+						});
+					}
+					
+					return children.toArray();
 				}
 				return super.getElements(inputElement);
 			}
