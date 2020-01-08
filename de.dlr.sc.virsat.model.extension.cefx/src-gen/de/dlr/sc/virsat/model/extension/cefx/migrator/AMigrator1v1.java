@@ -21,7 +21,7 @@ import de.dlr.sc.virsat.model.concept.migrator.AMigrator;
  * 
  * Don't Manually modify this class
  * 
- * VirSat DLR CEF Concept for extended Product Structures
+ * VirSat DLR CEF Concept
  * 
  */	
 public abstract class AMigrator1v1 extends AMigrator {

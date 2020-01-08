@@ -9,7 +9,7 @@
  *******************************************************************************/
 Concept de.dlr.sc.virsat.model.extension.cefx 
 	displayname "CEF-Extended" 
-	version 1.1
+	version 1.0 
 	description "VirSat DLR CEF Concept for extended Product Structures"
 	beta {
 		
@@ -23,7 +23,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 			de.dlr.sc.virsat.model.extension.ps.ElementOccurence
 		];
 		StringProperty note description "A note for the mode" default "no description";
-	}  
+	} 
 	 
 	Category Parameter { 
 		Applicable For All;
