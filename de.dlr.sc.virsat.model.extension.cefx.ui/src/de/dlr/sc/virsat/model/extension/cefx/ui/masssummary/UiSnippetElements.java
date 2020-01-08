@@ -26,7 +26,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.tree.BeanStructuralTreeTraverser;
-import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryAssignmentHelper;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
 import de.dlr.sc.virsat.model.dvlm.qudv.util.QudvUnitHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
