@@ -250,7 +250,7 @@ public class MassSummaryView extends ViewPart {
 					//now process the parameters of the node
 					double massWithMarginTotal = currentSubSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 					double result = massWithMarginTotal / finalMassWithMarginSystemTotal;
-					dataset.setValue(childBeanSei.getName(), result);
+					dataset.setValue(childBeanSei.getStructuralElementInstance().getFullQualifiedInstanceName(), result);
 				}
 			});
 		} else if (subSystemMassParameters != null) {
@@ -259,7 +259,7 @@ public class MassSummaryView extends ViewPart {
 				public void processMatch(IBeanStructuralElementInstance childBeanSei, IBeanStructuralElementInstance matchingParent) {
 					double massWithMarginTotal = childEquipmentSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 					double result = massWithMarginTotal / finalMassWithMarginSystemTotal;
-					dataset.setValue(childBeanSei.getName(), result);
+					dataset.setValue(childBeanSei.getStructuralElementInstance().getFullQualifiedInstanceName(), result);
 				}
 			});
 		}
@@ -300,7 +300,7 @@ public class MassSummaryView extends ViewPart {
 		
 		@Override
 		public boolean isMatching(IBeanStructuralElementInstance childBeanSei) {
-			EquipmentMassParameters childEquipmentSystemMassParameters = childBeanSei.getFirst(EquipmentMassParameters.class);
+			childEquipmentSystemMassParameters = childBeanSei.getFirst(EquipmentMassParameters.class);
 			return (childEquipmentSystemMassParameters != null && childEquipmentSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue());
 		}
 				
