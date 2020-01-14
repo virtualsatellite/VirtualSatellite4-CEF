@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef" description="VirSat DLR CEF Concept" version="1.5" displayName="CEF">
+<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v6/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v6/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v6/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef" description="VirSat DLR CEF Concept" version="1.6" displayName="CEF">
   <categories name="SystemMode" applicableFor="de.dlr.sc.virsat.model.extension.cef.System">
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the mode" defaultValue="no description"/>
   </categories>
@@ -172,14 +172,22 @@
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
     </equationDefinitions>
     <equationDefinitions>
-      <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
-        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
-        <right xsi:type="dvlm_calc:Parenthesis">
-          <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
-            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotal"/>
-            <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+      <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+        <left xsi:type="dvlm_calc:Parenthesis">
+          <right xsi:type="dvlm_calc:AdditionAndSubtraction">
+            <left xsi:type="dvlm_calc:AdditionAndSubtraction">
+              <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
+              <right xsi:type="dvlm_calc:Parenthesis">
+                <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
+                  <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massPerUnit"/>
+                  <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.marginMaturity"/>
+                </right>
+              </right>
+            </left>
+            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin" depth="1"/>
           </right>
-        </right>
+        </left>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentParameters.unitQuantity"/>
       </expression>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cef.EquipmentMassParameters.massTotalWithMargin"/>
     </equationDefinitions>

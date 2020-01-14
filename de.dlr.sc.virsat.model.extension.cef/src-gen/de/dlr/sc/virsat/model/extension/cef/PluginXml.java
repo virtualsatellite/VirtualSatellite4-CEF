@@ -54,11 +54,17 @@ public class PluginXml {
 			public static final String VERSION = "1.5";
 			public static final String XMI = "concept/concept_v1_5.xmi";
 		}	
+		public static class Migrator1_6 {
+			public static final String CLASSNAME = "de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v6";
+			public static final String ID = "de.dlr.sc.virsat.model.extension.cef";
+			public static final String VERSION = "1.6";
+			public static final String XMI = "concept/concept_v1_6.xmi";
+		}	
 	}
 	public static class concept {
 		public static class Concept {
 			public static final String ID = "de.dlr.sc.virsat.model.extension.cef";
-			public static final String VERSION = "1.5";
+			public static final String VERSION = "1.6";
 			public static final String XMI = "concept/concept.xmi";
 		}	
 	}
