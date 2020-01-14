@@ -28,7 +28,7 @@ public class PluginXml {
 	public static class concept {
 		public static class Concept {
 			public static final String ID = "de.dlr.sc.virsat.model.extension.cefx";
-			public static final String VERSION = "1.1";
+			public static final String VERSION = "1.0";
 			public static final String XMI = "concept/concept.xmi";
 		}	
 	}

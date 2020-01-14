@@ -4,7 +4,7 @@
 	<extension point="de.dlr.sc.virsat.model.Concept">
 	<concept
 	          id="de.dlr.sc.virsat.model.extension.cefx"
-	          version="1.1"
+	          version="1.0"
 	          xmi="concept/concept.xmi">
 	    </concept>
 	</extension>
