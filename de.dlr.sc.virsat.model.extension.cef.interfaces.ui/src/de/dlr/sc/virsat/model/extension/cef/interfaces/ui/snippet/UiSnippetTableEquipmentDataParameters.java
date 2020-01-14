@@ -41,13 +41,11 @@ public class UiSnippetTableEquipmentDataParameters extends AUiSnippetTableEquipm
 		return new VirSatCefTreeContentProvider(adapterFactory, EquipmentDataParameters.FULL_QUALIFIED_CATEGORY_NAME) { 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				// TODO Auto-generated method stub
 				return super.getElements(inputElement);
 			}
 		
 			@Override
 			public Object[] getChildren(Object parentElement) {
-				// TODO Auto-generated method stub
 				return super.getChildren(parentElement);
 			}
 		};
@@ -57,13 +55,11 @@ public class UiSnippetTableEquipmentDataParameters extends AUiSnippetTableEquipm
 	
 	@Override
 	protected void setTableViewerInput() {
-		// TODO Auto-generated method stub
 		super.setTableViewerInput();
 	}
 	
 	@Override
 	protected void setUpTableViewer(EditingDomain editingDomain, FormToolkit toolkit) {
-		// TODO Auto-generated method stub
 		super.setUpTableViewer(editingDomain, toolkit);
 	}
 }
