@@ -24,9 +24,6 @@
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
-    <module name="LineLength">
-      <property name="max" value="300"/>
-    </module>
     <module name="MethodLength"/>
     <module name="EmptyForIteratorPad"/>
     <module name="MethodParamPad"/>
@@ -61,7 +58,9 @@
       <property name="protectedAllowed" value="true"/>
     </module>
     <module name="ArrayTypeStyle"/>
-    <module name="TodoComment"/>
+    <module name="TodoComment">
+      <property name="format" value="(TODO)|(FIXME)"/>
+    </module>
     <module name="UpperEll"/>
     <module name="Indentation"/>
     <module name="LocalFinalVariableName">
@@ -83,10 +82,10 @@
     <module name="ParameterNumber">
       <property name="max" value="15"/>
     </module>
-    <module name="JavadocMethod">
+    <module name="MissingJavadocMethod">
+      <property name="scope" value="private"/>
+      <property name="allowedAnnotations" value="Test,Before,After,BeforeClass,AfterClass,RunWith,Override"/>
       <property name="minLineCount" value="5"/>
-      <property name="allowedAnnotations" value="Test,Before,BeforeClass,After,AfterClass,RunWith,Override"/>
-      <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="JavadocType"/>
     <module name="SuppressionCommentFilter">
@@ -112,7 +111,11 @@
   <module name="Header">
     <property name="header" value="/*******************************************************************************\n * Copyright (c) 2008-2019 German Aerospace Center (DLR), Simulation and Software Technology, Germany.\n *\n * This program and the accompanying materials are made available under the\n * terms of the Eclipse Public License 2.0 which is available at\n * http://www.eclipse.org/legal/epl-2.0.\n *\n * SPDX-License-Identifier: EPL-2.0\n *******************************************************************************/"/>
     <property name="ignoreLines" value="4"/>
-    <property name="fileExtensions" value="java"/>
+    <property name="fileExtensions" value="java, xtend, concept"/>
+  </module>
+  <module name="LineLength">
+    <property name="max" value="300"/>
+    <property name="fileExtensions" value="java, xtend"/>
   </module>
   <module name="SuppressionFilter">
     <property name="file" value="${samedir}/checkStyleSuppression.xml"/>
