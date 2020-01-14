@@ -284,7 +284,7 @@ public class MassSummaryView extends ViewPart {
 		}
 		
 		@Override
-		public boolean processChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
+		public boolean continueTraverseChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
 			// In case the node is matching, then don't search for further children. Thus invert the matching result
 			return !isMatching;
 		}
@@ -305,7 +305,7 @@ public class MassSummaryView extends ViewPart {
 		}
 				
 		@Override
-		public boolean processChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
+		public boolean continueTraverseChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
 			// In case the node is matching, then don't search for further children. Thus invert the matching result
 			return !isMatching;
 		}
