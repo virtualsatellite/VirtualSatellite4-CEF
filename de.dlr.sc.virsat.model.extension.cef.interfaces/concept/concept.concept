@@ -10,7 +10,7 @@
  Concept de.dlr.sc.virsat.model.extension.cef.interfaces 
 	displayname "CEF Data and Interfaces"
 	description "Concept for Functional Interface Architecture in CEF"
-	version 1.2 {
+	version 1.1 {
 	
 	Import de.dlr.sc.virsat.model.extension.cef.*;
 	

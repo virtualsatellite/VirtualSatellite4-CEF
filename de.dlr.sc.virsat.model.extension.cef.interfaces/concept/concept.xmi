@@ -38,20 +38,32 @@
         </left>
         <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataDutyCycle"/>
       </expression>
+<<<<<<< feature/task_63-CEFX_Summaries_do_not_
       <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="136f08a7-941a-403f-829d-c537137bc2f2" name="DataCombinedDutyCycle"/>
+=======
+      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="b6639b3c-f2b6-4ade-b611-e7c34fceae5f" name="DataCombinedDutyCycle"/>
+>>>>>>> 9a480a4 Updating CEF Interfaces Concept - (Task #61)
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
         <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOnWithMargin"/>
+<<<<<<< feature/task_63-CEFX_Summaries_do_not_
           <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="136f08a7-941a-403f-829d-c537137bc2f2"/>
+=======
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="b6639b3c-f2b6-4ade-b611-e7c34fceae5f"/>
+>>>>>>> 9a480a4 Updating CEF Interfaces Concept - (Task #61)
         </left>
         <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStbyWithMargin"/>
           <right xsi:type="dvlm_calc:Parenthesis">
             <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
               <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
+<<<<<<< feature/task_63-CEFX_Summaries_do_not_
               <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="136f08a7-941a-403f-829d-c537137bc2f2"/>
+=======
+              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="b6639b3c-f2b6-4ade-b611-e7c34fceae5f"/>
+>>>>>>> 9a480a4 Updating CEF Interfaces Concept - (Task #61)
             </right>
           </right>
         </right>
