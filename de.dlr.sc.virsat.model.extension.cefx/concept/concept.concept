@@ -128,7 +128,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
 		Ref: massTotal = massPerUnit + summary{massTotal, 1};
-		Ref: massTotalWithMargin = massTotal + (massTotal * EquipmentParameters.marginMaturity); 
+		Ref: massTotalWithMargin = massPerUnit + (massPerUnit * EquipmentParameters.marginMaturity) + summary{massTotalWithMargin, 1}; 
 	}
 	
 	Category EquipmentPowerParameters {
