@@ -85,7 +85,7 @@
 </extension>
 	<!-- Plugin.XML Protected Region End -->
 	<!-- Plugin.XML Protected Region Start -->
-	<extension
+<extension
 		id="modeVectorExpressionExtender"
 		name="Mode Vector Expression Extender"
 		point="de.dlr.sc.virsat.model.edit.TypeInstanceSetterProvider">
