@@ -1210,6 +1210,11 @@
                  </or>
               </parentExpression>
            </commonSorter>
+           <dropAssistant
+                 class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMObjectDropAdapterAssistant"
+                 id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
+              <possibleDropTargets></possibleDropTargets>
+           </dropAssistant>
         </navigatorContent>
   </extension>
   <extension
