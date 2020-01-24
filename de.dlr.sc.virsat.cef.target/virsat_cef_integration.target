@@ -19,6 +19,7 @@
 		<unit id="de.dlr.sc.virsat.model.extension.budget.power.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.funcelectrical.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.statemachines.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.extension.requirements.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="0.0.0"/>
@@ -26,10 +27,11 @@
 		<unit id="de.dlr.sc.virsat.model.extension.mechanical.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.server.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="0.0.0"/>
-		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/integration/4.9.0/"/>
+		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/integration/4.11.0/"/>
 		</location>              
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201907151344"/>
@@ -37,7 +39,9 @@
 		<repository location="https://download.eclipse.org/nebula/releases/2.2.0/"/>
 		</location>              
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="org.antlr.runtime" version="0.0.0"/>
+		<unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
+		<unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
+		<unit id="org.apache.commons.io.source" version="2.6.0.v20190123-2029"/>
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
 		</location>              
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -61,6 +65,11 @@
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.team.svn.feature.group" version="4.0.5.I20170425-1700"/>
 		<repository location="https://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+		</location>              
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="6.0.4.I20161211-1700"/>
+		<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="6.0.4.I20161211-1700"/>
+		<repository location="http://community.polarion.com/projects/subversive/download/eclipse/6.0/update-site/"/>
 		</location>              
 		</locations>
 		<environment>
