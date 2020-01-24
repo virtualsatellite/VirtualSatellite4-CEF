@@ -843,16 +843,6 @@
 		</uiSnippet>
 
 		<!-- CEF Phase 0 -->
-		<uiSnippet
-		      id="de.dlr.sc.virsat.model.extension.cefx.table.uiSnippetDocument"
-		      section="de.dlr.sc.virsat.model.extension.cefx.ui.section.phase0.structure"
-		      snippet="de.dlr.sc.virsat.model.extension.cefx.ui.snippet.UiSnippetTableDocument">
-		</uiSnippet>
-		<uiSnippet
-		      id="de.dlr.sc.virsat.model.extension.cefx.section.uiSnippetDocument"
-		      section="de.dlr.sc.virsat.model.extension.cefx.ui.section.phase0.structure"
-		      snippet="de.dlr.sc.virsat.model.extension.cefx.ui.snippet.UiSnippetSectionDocument">
-		</uiSnippet>
 		
 		<!-- CEF Phase 1 -->
 		<uiSnippet

@@ -39,8 +39,10 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.experimental.chart.swt.ChartComposite;
 
-import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.tree.BeanStructuralTreeTraverser;
+import de.dlr.sc.virsat.model.concept.types.structural.tree.IBeanStructuralTreeTraverserMatcher;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
@@ -235,35 +237,80 @@ public class MassSummaryView extends ViewPart {
 				massWithMarginSystemTotal = systemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
 			}
 		}
+
+		BeanStructuralTreeTraverser treeTraverser = new BeanStructuralTreeTraverser();
+
+		double finalMassWithMarginSystemTotal = massWithMarginSystemTotal;
 		
-		List<ABeanStructuralElementInstance> childBeanSeis = beanSei.getChildren(ABeanStructuralElementInstance.class);
-		
-		// Now check the children
-		for (ABeanStructuralElementInstance childBeanSei : childBeanSeis) {	
-			
-			// If we have a SystemMassParameters category assigned then we are searching for SubSystem Masses
-			if (systemMassParameters != null) {
-				SubSystemMassParameters childSubSystemMassParameters = childBeanSei.getFirst(SubSystemMassParameters.class);
-				if (childSubSystemMassParameters != null
-						&& childSubSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
-					double massWithMarginTotal = childSubSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-					double result = massWithMarginTotal / massWithMarginSystemTotal;
-					dataset.setValue(childBeanSei.getName(), result);
-				} 				
-			} else if (subSystemMassParameters != null) {
-				EquipmentMassParameters childEquipmentSystemMassParameters = childBeanSei.getFirst(EquipmentMassParameters.class);
-				if (childEquipmentSystemMassParameters != null
-						&& childEquipmentSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue()) {
+		// If we have a SystemMassParameters category assigned then we are searching for SubSystem Masses
+		if (systemMassParameters != null) {
+			treeTraverser.traverse(beanSei, new TreeTraverserMatcherSubSystemMass() {
+				@Override
+				public void processMatch(IBeanStructuralElementInstance childBeanSei, IBeanStructuralElementInstance matchingParent) {
+					//now process the parameters of the node
+					double massWithMarginTotal = currentSubSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
+					double result = massWithMarginTotal / finalMassWithMarginSystemTotal;
+					dataset.setValue(childBeanSei.getStructuralElementInstance().getFullQualifiedInstanceName(), result);
+				}
+			});
+		} else if (subSystemMassParameters != null) {
+			treeTraverser.traverse(beanSei, new TreeTraverserMatcherSubSystemEquipment() {
+				@Override
+				public void processMatch(IBeanStructuralElementInstance childBeanSei, IBeanStructuralElementInstance matchingParent) {
 					double massWithMarginTotal = childEquipmentSystemMassParameters.getMassTotalWithMargin().getDefaultValueBean().getValueToBaseUnit();
-					double result = massWithMarginTotal / massWithMarginSystemTotal;
-					dataset.setValue(childBeanSei.getName(), result);
-				} 
-			}		
+					double result = massWithMarginTotal / finalMassWithMarginSystemTotal;
+					dataset.setValue(childBeanSei.getStructuralElementInstance().getFullQualifiedInstanceName(), result);
+				}
+			});
 		}
 			
 		return dataset;
 	}
+	
+	/**
+	 * Generic TreeTraverser Matcher to identify the first occurrences of
+	 * sub system masses down a tree.
+	 */
+	protected abstract static class TreeTraverserMatcherSubSystemMass implements IBeanStructuralTreeTraverserMatcher {
+		// variable to remember the currently identified subsystemparameters
+		protected SubSystemMassParameters currentSubSystemMassParameters;
 
+		@Override
+		public boolean isMatching(IBeanStructuralElementInstance childBeanSei) {
+			// identify the node by checking if the parameters in question exist
+			// also remember the node and process it later.
+			currentSubSystemMassParameters = childBeanSei.getFirst(SubSystemMassParameters.class);
+			return (currentSubSystemMassParameters != null && currentSubSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue());
+		}
+		
+		@Override
+		public boolean continueTraverseChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
+			// In case the node is matching, then don't search for further children. Thus invert the matching result
+			return !isMatching;
+		}
+	}
+
+	/**
+	 * Generic TreeTraverser Matcher to identify the first occurrences of
+	 * equipment masses down a tree.
+	 */
+	protected abstract static class TreeTraverserMatcherSubSystemEquipment implements IBeanStructuralTreeTraverserMatcher {
+		// variable to remember the currently identified equipment mass parameters
+		protected EquipmentMassParameters childEquipmentSystemMassParameters;
+		
+		@Override
+		public boolean isMatching(IBeanStructuralElementInstance childBeanSei) {
+			childEquipmentSystemMassParameters = childBeanSei.getFirst(EquipmentMassParameters.class);
+			return (childEquipmentSystemMassParameters != null && childEquipmentSystemMassParameters.getMassTotalWithMargin().isSetDefaultValue());
+		}
+				
+		@Override
+		public boolean continueTraverseChildren(IBeanStructuralElementInstance treeNode, boolean isMatching) {
+			// In case the node is matching, then don't search for further children. Thus invert the matching result
+			return !isMatching;
+		}
+	}
+	
 	@Override
 	public void dispose() {
 		isDisposed = true;
