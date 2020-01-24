@@ -1127,7 +1127,7 @@
             </or>
          </triggerPoints>
          <dropAssistant
-               class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMObjectDropAdapterAssistant"
+               class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMDelegateDropAdapterAssistant"
                id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
             <possibleDropTargets></possibleDropTargets>
          </dropAssistant>
@@ -1201,7 +1201,7 @@
               </parentExpression>
            </commonSorter>
            <dropAssistant
-                 class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMObjectDropAdapterAssistant"
+                 class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMDelegateDropAdapterAssistant"
                  id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
               <possibleDropTargets></possibleDropTargets>
            </dropAssistant>
