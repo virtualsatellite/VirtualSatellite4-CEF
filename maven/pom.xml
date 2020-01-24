@@ -12,7 +12,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.dlr.sc.virsat.cef</groupId>
 	<artifactId>de.dlr.sc.virsat.cef.parent</artifactId>
-	<version>4.9.0-SNAPSHOT</version>
+	<version>4.11.0-SNAPSHOT</version>
 	
 	<packaging>pom</packaging>
 
@@ -268,7 +268,7 @@
 						<artifact>
 							<groupId>de.dlr.sc.virsat.cef</groupId>
 							<artifactId>de.dlr.sc.virsat.cef.target</artifactId>
-							<version>4.9.0-SNAPSHOT</version>
+							<version>4.11.0-SNAPSHOT</version>
 							<classifier>${target.platform.name}</classifier>
 						</artifact>
 					</target>
