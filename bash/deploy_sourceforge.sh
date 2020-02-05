@@ -63,13 +63,13 @@ sourceforgeDecryptSecret
 
 # Decide what to upload
 case $UPLOAD in
-    swtbot )           	uploadSwtBot
+    swtbot )            uploadSwtBot
                         exit
                         ;;
-    development )      	uploadDevelopment
+    development )       uploadDevelopment
                         exit
                         ;;
-    integration )      	uploadIntegration
+    integration )       uploadIntegration
                         exit
                         ;;
     release )           uploadRelease
