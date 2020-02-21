@@ -12,31 +12,19 @@ package de.dlr.sc.virsat.model.extension.cefx.util;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
-import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.provider.PropertydefinitionsItemProviderAdapterFactory;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.provider.PropertyinstancesItemProviderAdapterFactory;
-import de.dlr.sc.virsat.model.dvlm.categories.provider.DVLMCategoriesItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.dvlm.concepts.provider.ConceptsItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.dvlm.general.provider.GeneralItemProviderAdapterFactory;
-import de.dlr.sc.virsat.model.dvlm.provider.DVLMItemProviderAdapterFactory;
-import de.dlr.sc.virsat.model.dvlm.resource.provider.DVLMResourceItemProviderAdapterFactory;
-import de.dlr.sc.virsat.model.dvlm.structural.provider.DVLMStructuralItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
@@ -45,7 +33,6 @@ import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 
 /**
  * test Cases for the CEF Mode Helper
- * @author fisc_ph
  *
  */
 public class CefModeHelperTest extends AConceptTestCase {
@@ -57,7 +44,6 @@ public class CefModeHelperTest extends AConceptTestCase {
 	protected Concept conceptPS;
 	
 	protected CefModeHelper cefModeHelper;
-	protected EditingDomain ed;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -66,18 +52,7 @@ public class CefModeHelperTest extends AConceptTestCase {
 		
 		cefModeHelper = new CefModeHelper();
 		
-		// Create an Editing Domain
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactory.addAdapterFactory(new DVLMResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DVLMItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DVLMStructuralItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new GeneralItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ConceptsItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DVLMCategoriesItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new PropertydefinitionsItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new PropertyinstancesItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		ed = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack());
+		prepareEditingDomain();
 	}
 
 	@Test
@@ -105,8 +80,28 @@ public class CefModeHelperTest extends AConceptTestCase {
 		Parameter param = new Parameter(conceptCEFX);
 		subSystem.add(param);
 		
-		List<SystemMode> systemModes = cefModeHelper.getAllModes(param);
-		assertThat("Found the system modes on System level", systemModes, hasItems(systemMode1, systemMode2));
+		List<SystemMode> systemModesSei = cefModeHelper.getAllModes(subSystem);
+		assertThat("Found the system modes on System level", systemModesSei, hasItems(systemMode1, systemMode2));
+		
+		List<SystemMode> systemModesParam = cefModeHelper.getAllModes(param);
+		assertEquals("Found the same system modes on System level", systemModesSei, systemModesParam);
+	}
+	
+	@Test
+	public void testGetModeByName() {
+		ActiveConceptHelper.getCategory(conceptCEFX, SystemMode.class.getSimpleName()).setIsApplicableForAll(true);
+		
+		ConfigurationTree system = new ConfigurationTree(conceptPS);
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
+		system.add(systemMode1);
+		system.add(systemMode2);
+		
+		systemMode1.setName("MODE_1");
+		systemMode2.setName("MODE_2");
+		
+		assertNull("Did not find non-existent system mode", cefModeHelper.getModeByName(system, "DOESNT_EXIST"));
+		assertEquals("Found the system modes on System level", cefModeHelper.getModeByName(system, "MODE_1"), systemMode1);
 	}
 
 	@Test
@@ -134,7 +129,7 @@ public class CefModeHelperTest extends AConceptTestCase {
 		Parameter param = new Parameter(conceptCEFX);
 		SystemMode systemMode = new SystemMode(conceptCEFX);
 		
-		Command command = cefModeHelper.addModeValue(ed, param, systemMode);
+		Command command = cefModeHelper.addModeValue(editingDomain, param, systemMode);
 		assertTrue("Command can be executed", command.canExecute());
 		
 		command.execute();
@@ -154,7 +149,7 @@ public class CefModeHelperTest extends AConceptTestCase {
 		
 		assertThat("Mode Value is attached for System Mode", param.getModeValues(), hasItem(value));
 		
-		Command command = cefModeHelper.removeModeValue(ed, param, systemMode);
+		Command command = cefModeHelper.removeModeValue(editingDomain, param, systemMode);
 		assertTrue("Command can be executed", command.canExecute());
 		
 		command.execute();
