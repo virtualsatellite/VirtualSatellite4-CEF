@@ -41,9 +41,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
 
+import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
+import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelper;
 import de.dlr.sc.virsat.model.ui.editor.input.VirSatUriEditorInput;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain.IResourceEventListener;
@@ -57,7 +59,7 @@ import de.dlr.sc.virsat.project.ui.comparer.VirSatComparer;
 
 public class ModeTableView extends ViewPart {
 
-	public static final String VIEW_ID = "de.dlr.sc.virsat.extension.cefuture.ui.modesview.modeTableView";
+	public static final String VIEW_ID = "de.dlr.sc.virsat.extension.cefx.ui.modesview.modeTableView";
 	
 	private static final String TITLE_TEXT_START_TOKEN =  "Mode Overview Table: ";
 	
@@ -82,6 +84,8 @@ public class ModeTableView extends ViewPart {
 	private ScrolledForm form;
 	private StructuralElementInstance sei;
 	private boolean isDisposed;
+	
+	private CefModeHelper modeHelper = new CefModeHelper();
 	
 	ISelectionListener listener = new ISelectionListener() {
 		public void selectionChanged(IWorkbenchPart part, ISelection sel) {
@@ -210,9 +214,7 @@ public class ModeTableView extends ViewPart {
 		super.dispose();
 	}
 
-	// We use this variable to check if the list of modes has changed with the previous
-	// Call. If it has changed we will have to update it
-	private List<SystemMode> previousModes =  new LinkedList<SystemMode>();
+	private List<SystemMode> systemModes =  new LinkedList<SystemMode>();
 	private SystemMode selectedColumnMode;
 
 	private VirSatTransactionalEditingDomain domain;
@@ -265,16 +267,9 @@ public class ModeTableView extends ViewPart {
 		form.setText(TITLE_TEXT_START_TOKEN + sei.getName());
 
 		// Now get all Modes
-		List<SystemMode> currentModes = ModeHelper.getSystemModes(sei);
-		
-		// Compare if the modes have changed in case they have
-		// remember the new set of modes for the future
-		// and trigger the update for the table columns
-		if (!previousModes.equals(currentModes)) {
-			previousModes = new LinkedList<SystemMode>(currentModes);
-			
-		}
-		
+		BeanStructuralElementInstance beanSei = new BeanStructuralElementInstance(sei);
+		systemModes = modeHelper.getAllModes(beanSei);
+
 		// and now refresh the table itself
 		treeViewer.getControl().setRedraw(false);
 		Object[] expanded = treeViewer.getExpandedElements();
@@ -303,10 +298,7 @@ public class ModeTableView extends ViewPart {
 		
 		// Now where they have been removed we will update the modes
 		// according to the currently active modes for the selected system
-		// remember modes are stored in the root component but the helper will
-		// take care of that. previous modes carries the current modes since the lists
-		// have been swapped
-		for (SystemMode mode : previousModes) {
+		for (SystemMode mode : systemModes) {
 			addColumnToTree(mode.getName(), TABLE_COLUMN_DEF_SIZE, SWT.RIGHT);
 		}
 	
@@ -342,7 +334,8 @@ public class ModeTableView extends ViewPart {
 		public void widgetSelected(SelectionEvent e) {
 			TreeColumn column = (TreeColumn) e.widget;
 			String modeName = column.getText();
-			selectedColumnMode = ModeHelper.getModeByName((StructuralElementInstance) treeViewer.getInput(), modeName);
+			BeanStructuralElementInstance beanSei = new BeanStructuralElementInstance(sei);
+			selectedColumnMode = modeHelper.getModeByName(beanSei, modeName);
 			updateGraph();
 		}
 
