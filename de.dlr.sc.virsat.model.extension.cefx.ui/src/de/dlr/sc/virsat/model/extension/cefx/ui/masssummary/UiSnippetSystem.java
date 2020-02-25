@@ -106,7 +106,7 @@ public class UiSnippetSystem extends AUiSnippetTable {
 						if (element.equals(ROWS[DRY_MASS_ROW])) {
 							return printParameter(systemMassParams != null ? systemMassParams.getMassTotalWithMargin() : null, KILOGRAM);
 						} else if (element.equals(ROWS[SYSTEM_MARGIN_ROW])) {
-							if (systemParams != null && systemParams.isSetSystemMargin() && systemMassParams.getMassTotalWithMargin().isSetDefaultValue()) {
+							if (systemParams != null && systemParams.isSetSystemMargin() && systemMassParams != null && systemMassParams.getMassTotalWithMargin().isSetDefaultValue()) {
 								return printParameterWithMargin(systemMassParams.getMassTotalWithMargin(), systemParams.getSystemMarginBean(), KILOGRAM);
 							} else {
 								return UNDEFINED;
