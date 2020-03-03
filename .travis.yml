@@ -198,7 +198,7 @@ jobs:
     # -----------------------------------------------------------
     # --- The Job for feature branches only. Assemble the product, but don't deploy
     - stage: build-assemble-deploy
-      if: branch NOT IN (integration, development, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
+      if: branch NOT IN (integration, development, integration_snapshot, development_snapshot) AND NOT (branch =~ /^master/) AND NOT (tag =~ /^Release/)
       name: Build-Assemble-Deploy - Feature
       script:
       - bash/maven_build.sh -j assemble -p development   
