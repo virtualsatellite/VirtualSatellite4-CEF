@@ -18,7 +18,7 @@ Target virsat_cef_release extends virsat {
 		Unit de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group version 4.11.0.r202003031303;
 		Unit de.dlr.sc.virsat.model.feature.feature.group version 4.11.0.r202003031303;
 		Unit de.dlr.sc.virsat.project.feature.feature.group version 4.11.0.r202003031303;
-		Unit de.dlr.sc.virsat.svn.feature.feature.group version 4.11.0.r202003031303;
+		Unit de.dlr.sc.virsat.team.feature.feature.group version 4.11.0.r202003031303;
 		Unit de.dlr.sc.virsat.test.feature.feature.group version 4.11.0.r202003031303;
 		Unit de.dlr.sc.virsat.uiengine.feature.feature.group version 4.11.0.r202003031303;
 		Unit de.dlr.sc.virsat.target.feature.feature.group version 4.11.0.r202003031303;
