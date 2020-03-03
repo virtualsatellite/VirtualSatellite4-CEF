@@ -3,7 +3,17 @@ VirSat CEF Release Notes
 
 VirSat CEF is based on VirSat Core. Please don't forget to read the Release Notes of VirSat Core as well!
 
-Release 4.9.0 (29th April 2018)
+Release 4.11.0 (28th February 2020)
+----------------------------------
+
+New Features:
+	Introduced new CEF-X Model Extension #7 #32 Feature
+	Implemented support for drag & drop modeling with product structures #72 Feature
+
+Fixed Bugs:
+	Fixed issue where margins of nested equipments are not being considered in the mass summary #10 Bug
+
+Release 4.9.0 (29th April 2019)
 ----------------------------------
 
 New Features:
