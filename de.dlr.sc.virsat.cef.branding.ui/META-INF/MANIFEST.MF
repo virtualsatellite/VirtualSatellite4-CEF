@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Branding
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.branding.ui;singleton:=true
-Bundle-Version: 4.9.0.qualifier
+Bundle-Version: 4.11.0.qualifier
 Bundle-Activator: de.dlr.sc.virsat.cef.branding.ui.BrandingPlugin
 Bundle-Vendor: DLR (German Aerospace Center)
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -12,7 +12,5 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.osgi,
  org.eclipse.core.runtime,
  org.eclipse.ui.intro,
- org.eclipse.ui,
- de.dlr.sc.virsat.model.extension.cef.ui,
- de.dlr.sc.virsat.model.calculation.ui
+ org.eclipse.ui
 Automatic-Module-Name: de.dlr.sc.virsat.cef.branding.ui

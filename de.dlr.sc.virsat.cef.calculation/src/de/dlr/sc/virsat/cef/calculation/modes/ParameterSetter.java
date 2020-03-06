@@ -153,11 +153,11 @@ public class ParameterSetter implements IResultSetter {
 	public boolean isApplicableFor(ATypeInstance instance) {
 		if (instance instanceof CategoryAssignment) {
 			CategoryAssignment ca = (CategoryAssignment) instance;
-			return ca.getType().getName().equals(Parameter.class.getSimpleName());
+			return ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME);
 		} else if (instance instanceof ComposedPropertyInstance) {
 			ComposedPropertyInstance cpi = (ComposedPropertyInstance) instance;
 			CategoryAssignment ca = cpi.getTypeInstance();
-			return ca.getType().getName().equals(Parameter.class.getSimpleName());
+			return ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME);
 		}
 		return false;
 	}

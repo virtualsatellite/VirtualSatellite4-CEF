@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="de.dlr.sc.virsat.model.Concept">
+	<concept
+	          id="de.dlr.sc.virsat.model.extension.cefx"
+	          version="1.0"
+	          xmi="concept/concept.xmi">
+	    </concept>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cefx"
+				class="de.dlr.sc.virsat.model.extension.cefx.validator.StructuralElementInstanceValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
+	<extension point="de.dlr.sc.virsat.model.edit.ConceptTypeFactoryCaBeanRegistration">
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SystemMode"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SystemMode">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.Parameter"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.Parameter">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.Value"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.Value">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SystemParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SystemMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SystemPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SubSystemMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.SubSystemPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.EquipmentParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.EquipmentMassParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.EquipmentPowerParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.EquipmentTemperatureParameters"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameters">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.ParameterRange"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.ParameterRange">
+		</CategoryAssignmentBean>
+		<CategoryAssignmentBean
+			id="de.dlr.sc.virsat.model.extension.cefx.ExcelCalculation"
+			caBean="de.dlr.sc.virsat.model.extension.cefx.model.ExcelCalculation">
+		</CategoryAssignmentBean>
+	</extension>
+	<!-- Plugin.XML Protected Region Start -->
+<extension point="de.dlr.sc.virsat.model.edit.ConceptMigrator">
+	<migrator
+		id="de.dlr.sc.virsat.model.extension.cefx"
+		version="1.0"
+		class="de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0"
+		xmi="concept/concept_v1_0.xmi">
+	</migrator>
+</extension>
+	<!-- Plugin.XML Protected Region End -->
+	<!-- Plugin.XML Protected Region Start -->
+<extension
+		id="modeVectorExpressionExtender"
+		name="Mode Vector Expression Extender"
+		point="de.dlr.sc.virsat.model.edit.TypeInstanceSetterProvider">
+		<typeInstanceSetterProvider
+			class="de.dlr.sc.virsat.model.extension.cefx.calculation.ModeVectorExpressionExtension"
+			priority="1">
+		</typeInstanceSetterProvider>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cefx.multilevel.validator"
+				class="de.dlr.sc.virsat.model.extension.cefx.validator.ElementOnMultipleLevelsValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
+	<extension point="de.dlr.sc.virsat.build.DvlmValidator">
+		<dvlmValidator>
+			<seiValidator
+				id="de.dlr.sc.virsat.model.extension.cefx.wronglevel.validator"
+				class="de.dlr.sc.virsat.model.extension.cefx.validator.WrongHierarchyValidator">
+			</seiValidator>
+		</dvlmValidator>
+	</extension>
+	<!-- Plugin.XML Protected Region End -->
+</plugin>

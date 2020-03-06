@@ -2,17 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Test Plugin
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.test
-Bundle-Version: 4.9.0.qualifier
+Bundle-Version: 4.11.0.qualifier
 Bundle-Activator: de.dlr.sc.virsat.cef.plugin.Activator
 Bundle-Vendor: DLR (German Aerospace Center)
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
  de.dlr.sc.virsat.cef.calculation,
  de.dlr.sc.virsat.model.extension.cef,
+ de.dlr.sc.virsat.model.extension.cefx,
  de.dlr.sc.virsat.test
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.dlr.sc.virsat.cef.calculation.test,
  de.dlr.sc.virsat.model.extension.cef.test,
+ de.dlr.sc.virsat.model.extension.cefx.test,
  de.dlr.sc.virsat.model.extension.cef.interfaces.test
 Automatic-Module-Name: de.dlr.sc.virsat.cef.test

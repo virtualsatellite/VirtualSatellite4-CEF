@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Model Extension Data Model UI
 Bundle-SymbolicName: de.dlr.sc.virsat.model.extension.cef.ui;singleton:=true
-Bundle-Version: 4.9.0.qualifier
+Bundle-Version: 4.11.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.ui,
  de.dlr.sc.virsat.model.calculation,
  de.dlr.sc.virsat.commons,
  de.dlr.sc.virsat.build,
- de.dlr.sc.virsat.build.ui
+ de.dlr.sc.virsat.build.ui,
+ de.dlr.sc.virsat.model.calculation.ui,
+ de.dlr.sc.virsat.cef.branding.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.expressions
