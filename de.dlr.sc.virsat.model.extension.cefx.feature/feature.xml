@@ -2,7 +2,7 @@
 <feature
       id="de.dlr.sc.virsat.model.extension.cefx.feature"
       label="VirSat CEF Extended Model Extension Feature"
-      version="4.9.0.qualifier"
+      version="4.11.0.qualifier"
       provider-name="DLR (German Aerospace Center)"
       plugin="de.dlr.sc.virsat.cef.branding.ui"
       license-feature="de.dlr.sc.virsat.cef.license.feature">
@@ -43,10 +43,10 @@ by German Aerospace Center (DLR e.V.)
       <import plugin="de.dlr.sc.virsat.build.ui"/>
       <import plugin="org.eclipse.ui.navigator"/>
       <import plugin="de.dlr.sc.virsat.model.extension.cef"/>
-      <import feature="de.dlr.sc.virsat.model.extension.ps.feature" version="4.9.0.d201905010941"/>
-      <import feature="de.dlr.sc.virsat.external.lib.feature" version="4.9.0.d201905010941"/>
-      <import feature="de.dlr.sc.virsat.build.feature" version="4.9.0.d201905010941"/>
-      <import feature="de.dlr.sc.virsat.project.feature" version="4.9.0.d201905010941"/>
+      <import feature="de.dlr.sc.virsat.model.extension.ps.feature"/>
+      <import feature="de.dlr.sc.virsat.external.lib.feature"/>
+      <import feature="de.dlr.sc.virsat.build.feature"/>
+      <import feature="de.dlr.sc.virsat.project.feature"/>
    </requires>
 
    <plugin

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.9.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.11.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_256x330.gif"/>
       <text>
          Virtual Satellite 4 - CEF
 
-Version 4.9.0
+Version 4.11.0
 
 Copyright 2018 by German Aerospace Center (DLR) e.V.
-
-Unauthorized Distribution in any way is not permitted.
 
 German Aerospace Center (DLR) e.V.
 Lilienthalplatz 7
@@ -57,22 +55,31 @@ Germany
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
-
    <plugins>
    </plugins>
 
    <features>
       <feature id="de.dlr.sc.virsat.build.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.cef.branding.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.cef.docs.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.cef.license.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.dependencies.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.calculation.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.extension.cef.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.extension.cefx.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.license.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.commons.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.docs.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.team.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.external.lib.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.branding.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.project.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.apps.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.uiengine.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.calculation.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.ps.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.visualisation.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.cef.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.extension.cefx.feature" installMode="root"/>
       <feature id="org.eclipse.help" installMode="root"/>
       <feature id="org.eclipse.team.svn" installMode="root"/>
       <feature id="org.eclipse.emf.common.ui" installMode="root"/>
@@ -84,8 +91,11 @@ Germany
       <feature id="org.eclipse.equinox.executable" installMode="root"/>
       <feature id="org.eclipse.emf.edit" installMode="root"/>
       <feature id="org.eclipse.xtext.runtime" installMode="root"/>
+      <feature id="org.eclipse.xtext.ui" installMode="root"/>
       <feature id="org.eclipse.emf.transaction" installMode="root"/>
       <feature id="org.eclipse.emf.ecore" installMode="root"/>
+      <feature id="org.eclipse.emf.ecore.editor" installMode="root"/>
+      <feature id="org.eclipse.emf.ecore.edit" installMode="root"/>
       <feature id="org.eclipse.equinox.p2.user.ui" installMode="root"/>
       <feature id="org.eclipse.equinox.p2.extras.feature" installMode="root"/>
       <feature id="org.eclipse.emf.databinding.edit" installMode="root"/>
@@ -99,16 +109,8 @@ Germany
       <feature id="org.eclipse.platform" installMode="root"/>
       <feature id="org.eclipse.emf.databinding" installMode="root"/>
       <feature id="org.eclipse.e4.rcp" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.model.extension.visualisation.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.cef.docs.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.cef.license.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.docs.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.team.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.branding.feature" installMode="root"/>
       <feature id="org.eclipse.pde" installMode="root"/>
       <feature id="org.eclipse.emf.edapt.runtime.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.license.feature" installMode="root"/>
-      <feature id="de.dlr.sc.virsat.commons.feature" installMode="root"/>
       <feature id="org.eclipse.xtext.xbase.lib" installMode="root"/>
       <feature id="org.eclipse.xtext.xbase" installMode="root"/>
       <feature id="org.eclipse.ocl" installMode="root"/>

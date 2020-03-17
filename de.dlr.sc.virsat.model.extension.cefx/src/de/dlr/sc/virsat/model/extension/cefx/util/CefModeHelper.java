@@ -39,13 +39,11 @@ public class CefModeHelper {
 	public static final SystemMode DEFAULT_MODE = null;
 
 	/**
-	 * This method hands back all System Modes of a given parameter
-	 * @param param the parameter for which to get all the modes
+	 * This method hands back all System Modes of a given structural element instance
+	 * @param beanSei the structural element instance wrapped in its bean
 	 * @return a List of all system modes
 	 */
-	public List<SystemMode> getAllModes(Parameter param) {
-		// get containing bean ro get the root and then to search all system modes in the tree
-		IBeanStructuralElementInstance beanSei = param.getParent();
+	public List<SystemMode> getAllModes(IBeanStructuralElementInstance beanSei) {
 		StructuralElementInstance rootSei = (StructuralElementInstance) new StructuralElementInstanceHelper(beanSei.getStructuralElementInstance()).getRoot();
 		IBeanStructuralElementInstance rootBeanSei = new BeanStructuralElementInstance(rootSei);
 
@@ -53,6 +51,17 @@ public class CefModeHelper {
 		
 		rootBeanSei.getDeepChildren(ABeanStructuralElementInstance.class).forEach((childBeanSei) -> systemModes.addAll(childBeanSei.getAll(SystemMode.class)));
 		return systemModes;
+	}
+	
+	/**
+	 * This method hands back all System Modes of a given parameter
+	 * @param param the parameter for which to get all the modes
+	 * @return a List of all system modes
+	 */
+	public List<SystemMode> getAllModes(Parameter param) {
+		// get containing bean ro get the root and then to search all system modes in the tree
+		IBeanStructuralElementInstance beanSei = param.getParent();
+		return getAllModes(beanSei);
 	}
 	
 	/**
@@ -145,5 +154,22 @@ public class CefModeHelper {
 		}
 	
 		return parameter.getModeValues().remove(ed, value);
+	}
+
+	/**
+	 * This method gets a system mode by its name
+	 * @param beanSei the wrapped structural element instance from which we wil get the system modes
+	 * @param modeName the name of the desired mode
+	 * @return the mode with the corresponding name or null if it doesnt exist
+	 */
+	public SystemMode getModeByName(IBeanStructuralElementInstance beanSei, String modeName) {
+		List<SystemMode> systemModes = getAllModes(beanSei);
+		for (SystemMode mode : systemModes) {
+			if (mode.getName().contentEquals(modeName)) {
+				return mode;
+			}
+		}
+		
+		return null;
 	}
 }

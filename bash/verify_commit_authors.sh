@@ -40,12 +40,12 @@ echo "[Info] ------------------------------------"
 
 echo "[Info] Checking .mailmap"
 
-git diff --quiet development .mailmap
+git diff --quiet development... .mailmap
 CHANGED_MAILMAP=$?
 
 echo "[Info] Checking known_authors.txt"
 
-git diff --quiet development known_authors.txt
+git diff --quiet development... known_authors.txt
 CHANGED_KNOWN_AUTHORS=$?
 
 echo "[Info] ------------------------------------"
@@ -75,14 +75,14 @@ echo "[Info] Create commit authors file"
 echo "[Info] ------------------------------------"
 echo "[Info] "
 
-git log development... --pretty=format:"%aN" | sort | uniq > ./commit_authors.txt
+git log development.. --pretty=format:"%aN" | sort | uniq > ./commit_authors.txt
 
 echo "[Info] ------------------------------------"
 echo "[Info] List of Commits and Authors"
 echo "[Info] ------------------------------------"
 echo "[Info] "
 
-git --no-pager log development... --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset" --abbrev-commit --reverse
+git --no-pager log development.. --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset" --abbrev-commit --reverse
 
 echo ""
 echo "[Info] ------------------------------------"

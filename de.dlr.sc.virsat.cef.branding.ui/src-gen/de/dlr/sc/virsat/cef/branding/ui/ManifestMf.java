@@ -13,7 +13,7 @@ public class ManifestMf {
 	public static final String AUTOMATIC_MODULE_NAME = "de.dlr.sc.virsat.cef.branding.ui";
 	public static final String BUNDLE_SYMBOLICNAME = "de.dlr.sc.virsat.cef.branding.ui";
 	public static final String BUNDLE_NAME = "VirSat CEF Branding";
-	public static final String BUNDLE_VERSION = "4.9.0.qualifier";
+	public static final String BUNDLE_VERSION = "4.11.0.qualifier";
 	public static final String REQUIRE_BUNDLE = "org.eclipse.ui.workbench,org.eclipse.jface,org.eclipse.osgi,org.eclipse.core.runtime,org.eclipse.ui.intro,org.eclipse.ui";
 	public static final String BUNDLE_MANIFESTVERSION = "2";
 	public static final String BUNDLE_ACTIVATOR = "de.dlr.sc.virsat.cef.branding.ui.BrandingPlugin";
