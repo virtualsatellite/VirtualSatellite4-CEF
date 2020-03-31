@@ -42,10 +42,10 @@ public class InterfaceEndQuantityKindDecorator extends QuantityKindDecorator imp
 				if ((iBca != null) && (iBca instanceof DataInterfaceEnd)) {
 					DataInterfaceEnd dIfe = (DataInterfaceEnd) iBca;
 					String iftName = dIfe.getDataInterfaceType() != null ? dIfe.getDataInterfaceType().getName() : "N/A";
-					decorateQuantityAndType(decoration, dIfe.getQuantity(), iftName);
+					decorateQuantityAndType(decoration, dIfe.getQuantityBean().getValue(), iftName);
 				} else if ((iBca != null) && (iBca instanceof AInterfaceEnd)) {
 					AInterfaceEnd aIfe = (AInterfaceEnd) iBca;
-					decorateQuantity(decoration, aIfe.getQuantity());
+					decorateQuantity(decoration, aIfe.getQuantityBean().getValue());
 				}
 			} catch (CoreException e1) {
 			}

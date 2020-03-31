@@ -63,11 +63,12 @@ public abstract class AInterfaceEnd extends AAInterfaceEnd {
 	 */
 	public long getGlobalUnitQuantity() {
 		long globalUnitQuantity = 1;
-		try {
-			globalUnitQuantity *= getQuantity();
-		} catch (NumberFormatException e) {
-			globalUnitQuantity *= 1;
-		}
+
+		// Workaround due to API Inconsistency with Beans see https://github.com/virtualsatellite/VirtualSatellite4-CEF/issues/99
+		Long unitQauntity = getQuantityBean().getValue();
+		
+		globalUnitQuantity *= (unitQauntity != null) ? unitQauntity : 1;
+		
 		IBeanStructuralElementInstance equipment = getParent();
 		if (equipment != null) {
 			EquipmentParameters equipmentParameters = equipment.getFirst(EquipmentParameters.class);
