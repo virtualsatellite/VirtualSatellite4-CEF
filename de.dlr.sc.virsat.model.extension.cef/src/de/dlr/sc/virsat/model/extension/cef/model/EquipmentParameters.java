@@ -61,11 +61,12 @@ public  class EquipmentParameters extends AEquipmentParameters {
 	 */
 	public long getGlobalUnitQuantity() {
 		long globalUnitQuantity = 1;
-		try {
-			globalUnitQuantity *= getUnitQuantity();
-		} catch (NumberFormatException e) {
-			globalUnitQuantity *= 1;
-		}
+		
+		// Workaround due to API Inconsistency with Beans see https://github.com/virtualsatellite/VirtualSatellite4-CEF/issues/99
+		Long unitQauntity = getUnitQuantityBean().getValue();
+		
+		globalUnitQuantity *= (unitQauntity != null) ? unitQauntity : 1;
+		
 		EquipmentParameters parentEquipmentParameters = getCaBeanFromParentSei(EquipmentParameters.class);
 		if (parentEquipmentParameters != null) {
 			globalUnitQuantity *= parentEquipmentParameters.getGlobalUnitQuantity();
