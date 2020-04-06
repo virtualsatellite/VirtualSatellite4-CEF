@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.swtbot.go,
  org.eclipse.core.resources,
  de.dlr.sc.virsat.model
 Automatic-Module-Name: de.dlr.sc.virsat.fdir.swtbot.test
-Export-Package: de.dlr.sc.virsat.fdir.swtbot.test
+Export-Package: de.dlr.sc.virsat.cef.swtbot.test
 Import-Package: org.zeromq,
  vtk,
  vtk.rendering,
