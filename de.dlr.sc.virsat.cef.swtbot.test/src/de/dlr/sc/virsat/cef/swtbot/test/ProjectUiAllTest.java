@@ -24,5 +24,5 @@ import org.junit.runners.Suite;
 	SWTBotTestCaseStub.class
 	})
 
-public class ProjectUiAllTests {
+public class ProjectUiAllTest {
 }
