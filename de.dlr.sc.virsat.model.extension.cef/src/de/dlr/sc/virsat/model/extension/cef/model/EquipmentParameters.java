@@ -9,11 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cef.model;
 
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 
 // *****************************************************************
 // * Class Declaration
@@ -61,11 +61,9 @@ public  class EquipmentParameters extends AEquipmentParameters {
 	 */
 	public long getGlobalUnitQuantity() {
 		long globalUnitQuantity = 1;
-		try {
-			globalUnitQuantity *= getUnitQuantity();
-		} catch (NumberFormatException e) {
-			globalUnitQuantity *= 1;
-		}
+		
+		globalUnitQuantity *= isSetUnitQuantity() ? getUnitQuantity() : 1;
+		
 		EquipmentParameters parentEquipmentParameters = getCaBeanFromParentSei(EquipmentParameters.class);
 		if (parentEquipmentParameters != null) {
 			globalUnitQuantity *= parentEquipmentParameters.getGlobalUnitQuantity();
