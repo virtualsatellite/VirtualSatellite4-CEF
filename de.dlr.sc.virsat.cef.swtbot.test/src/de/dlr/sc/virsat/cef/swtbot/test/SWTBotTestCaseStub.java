@@ -10,15 +10,16 @@
 
 package de.dlr.sc.virsat.cef.swtbot.test;
 
+import org.eclipse.core.runtime.Status;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-//*import de.dlr.sc.virsat.model.extension.fdir.model.Fault;
-import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
-import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
+import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.swtbot.test.ASwtBotTestCase;
+import de.dlr.sc.virsat.swtbot.test.Activator;
 
 
 /**
@@ -28,10 +29,39 @@ import de.dlr.sc.virsat.swtbot.test.ASwtBotTestCase;
  */
 public class SWTBotTestCaseStub extends ASwtBotTestCase {
 	
-	private SWTBotTreeItem repositoryNavigatorItem;	
-	private SWTBotTreeItem configurationTree;
-	private SWTBotTreeItem elementConfiguration;
-
+	@Override
+	protected void openCorePerspective() {
+		bot.menu("Window").menu("Perspective").menu("Open Perspective").menu("Other...").click();
+		waitForEditingDomainAndUiThread();
+		bot.table().select("VirSat - Core");
+		bot.button("Open").click();
+		waitForEditingDomainAndUiThread(); 
+	}
+	
+	@Override
+	protected void addAllConcepts(String projectName) {
+		waitForEditingDomainAndUiThread();
+		bot.viewById("de.dlr.sc.virsat.project.ui.navigator.view").setFocus();
+		waitForEditingDomainAndUiThread();
+		SWTBotTreeItem projectItem = bot.tree().expandNode(projectName);
+		waitForEditingDomainAndUiThread();
+		projectItem.getNode(Repository.class.getSimpleName()).doubleClick();
+		waitForEditingDomainAndUiThread();
+		bot.button("Add from Registry").click();
+		bot.button("Select All").click();
+		bot.button("OK").click();
+		waitForEditingDomainAndUiThread();
+	}
+	
+	@Override
+	protected void closeWelcomeScreen() {
+		Activator.getDefault().getLog().log(new Status(Status.INFO, Activator.getPluginId(), "ASwtBotTestCase: Close welcome screen if it exists"));
+		for (SWTBotView view : bot.views()) {
+			if (view.getTitle().equals("Welcome")) {
+				view.close();
+			}
+		}
+	}
 	
 	@Before
 	public void before() throws Exception {
@@ -40,10 +70,6 @@ public class SWTBotTestCaseStub extends ASwtBotTestCase {
 	
 	@Test
 	public void stubSWTBot() {
-		// create the necessary items for the test
-		repositoryNavigatorItem = bot.tree().expandNode(SWTBOT_TEST_PROJECTNAME, "Repository");
-		configurationTree = addElement(ConfigurationTree.class, conceptPs, repositoryNavigatorItem);
-		elementConfiguration = addElement(ElementConfiguration.class, conceptPs, configurationTree);
-		Assert.assertNotNull(elementConfiguration);
+		Assert.assertNull(null);
 	}
 }
