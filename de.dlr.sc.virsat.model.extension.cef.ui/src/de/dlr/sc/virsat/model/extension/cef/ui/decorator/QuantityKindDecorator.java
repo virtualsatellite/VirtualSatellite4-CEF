@@ -13,7 +13,6 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
-import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
 import de.dlr.sc.virsat.model.concept.types.util.BeanCategoryAssignmentHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cef.model.EquipmentParameters;
@@ -52,26 +51,20 @@ public class QuantityKindDecorator implements ILightweightLabelDecorator {
 			StructuralElementInstance sei = (StructuralElementInstance) element;
 			EquipmentParameters eps = bCahelper.getFirstBeanCategory(sei, EquipmentParameters.class);
 			if (eps != null) {
-				decorateQuantity(decoration, eps.getUnitQuantityBean());
+				decorateQuantity(decoration, eps.getUnitQuantityBean().getValue());
 			}
 		}
 	}
 	
-	public static final String SUFFIX_VALID_FORMAT = " ( x %d)";
-	public static final String SUFFIX_INVALID = " ( x NaN)";
-	
 	/**
 	 * This method is doing the uniform decoration of the quantity and adds it as text
-	 * to the tree widget in the navigator in the way such as (x 4)
+	 * to the tree widget in the navigator in the way such as ( x 4)
 	 * @param decoration the decoration to be used to add the quantity
-	 * @param quantity the actual quantity to be added
+	 * @param quantity the actual quantity to be added. If null, decoration will be ( x null)
 	 */
-	protected void decorateQuantity(IDecoration decoration, BeanPropertyInt quantity) {
-		try {
-			String suffix = quantity.isSet() ? String.format(SUFFIX_VALID_FORMAT, quantity.getValue()) : SUFFIX_INVALID;
-			decoration.addSuffix(suffix);
-		} catch (NumberFormatException e) {
-			decoration.addSuffix(SUFFIX_INVALID);
-		}
+	protected void decorateQuantity(IDecoration decoration, Long quantity) {
+		String suffixFormat = " ( x %d)";
+		String suffix = String.format(suffixFormat, quantity);
+		decoration.addSuffix(suffix);
 	}
 }

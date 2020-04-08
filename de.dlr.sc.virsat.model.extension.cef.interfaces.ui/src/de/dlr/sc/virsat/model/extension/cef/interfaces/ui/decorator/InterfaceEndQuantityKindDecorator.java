@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.factory.BeanCategoryAssignmentFactory;
-import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterfaceEnd;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.DataInterfaceEnd;
@@ -43,33 +42,26 @@ public class InterfaceEndQuantityKindDecorator extends QuantityKindDecorator imp
 				if ((iBca != null) && (iBca instanceof DataInterfaceEnd)) {
 					DataInterfaceEnd dIfe = (DataInterfaceEnd) iBca;
 					String iftName = dIfe.getDataInterfaceType() != null ? dIfe.getDataInterfaceType().getName() : "N/A";
-					decorateQuantityAndType(decoration, dIfe.getQuantityBean(), iftName);
+					decorateQuantityAndType(decoration, dIfe.getQuantityBean().getValue(), iftName);
 				} else if ((iBca != null) && (iBca instanceof AInterfaceEnd)) {
 					AInterfaceEnd aIfe = (AInterfaceEnd) iBca;
-					decorateQuantity(decoration, aIfe.getQuantityBean());
+					decorateQuantity(decoration, aIfe.getQuantityBean().getValue());
 				}
 			} catch (CoreException e1) {
 			}
 		}
 	}
-
-	public static final String SUFFIX_VALID_FORMAT = " ( x %d %s)";
-	public static final String SUFFIX_INVALID = " ( x NaN N/A)";
 	
 	/**
 	 * This method is doing the uniform decoration of the quantity and adds it as text
-	 * to the tree widget in the navigator in the way such as (x 4 Can) it also
-	 * adds the type in case it is given
+	 * to the tree widget in the navigator in the way such as ( x quantity type), e.g. ( x 4 Can)
 	 * @param decoration the decoration to be used to add the quantity
-	 * @param quantity the actual quantity to be added
-	 * @param type the interface type
+	 * @param quantity the actual quantity to be added. If null, the decoration will have "null" in quantity
+	 * @param type the interface type. If null, the decoration will have "null" in type
 	 */
-	protected void decorateQuantityAndType(IDecoration decoration, BeanPropertyInt quantity, String type) {
-		try {
-			String suffix = quantity.isSet() ? String.format(SUFFIX_VALID_FORMAT, quantity.getValue(), type) : SUFFIX_INVALID;
-			decoration.addSuffix(suffix);
-		} catch (NumberFormatException e) {
-			decoration.addSuffix(SUFFIX_INVALID);
-		}
+	protected void decorateQuantityAndType(IDecoration decoration, Long quantity, String type) {
+		String suffixFormat = " ( x %d %s)";
+		String suffix = String.format(suffixFormat, quantity, type);
+		decoration.addSuffix(suffix);
 	}
 }
