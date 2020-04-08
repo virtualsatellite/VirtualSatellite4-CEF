@@ -10,16 +10,11 @@
 
 package de.dlr.sc.virsat.cef.swtbot.test;
 
-import org.eclipse.core.runtime.Status;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.swtbot.test.ASwtBotTestCase;
-import de.dlr.sc.virsat.swtbot.test.Activator;
 
 
 /**
@@ -36,31 +31,6 @@ public class SWTBotTestCaseStub extends ASwtBotTestCase {
 		bot.table().select("VirSat - Core");
 		bot.button("Open").click();
 		waitForEditingDomainAndUiThread(); 
-	}
-	
-	@Override
-	protected void addAllConcepts(String projectName) {
-		waitForEditingDomainAndUiThread();
-		bot.viewById("de.dlr.sc.virsat.project.ui.navigator.view").setFocus();
-		waitForEditingDomainAndUiThread();
-		SWTBotTreeItem projectItem = bot.tree().expandNode(projectName);
-		waitForEditingDomainAndUiThread();
-		projectItem.getNode(Repository.class.getSimpleName()).doubleClick();
-		waitForEditingDomainAndUiThread();
-		bot.button("Add from Registry").click();
-		bot.button("Select All").click();
-		bot.button("OK").click();
-		waitForEditingDomainAndUiThread();
-	}
-	
-	@Override
-	protected void closeWelcomeScreen() {
-		Activator.getDefault().getLog().log(new Status(Status.INFO, Activator.getPluginId(), "ASwtBotTestCase: Close welcome screen if it exists"));
-		for (SWTBotView view : bot.views()) {
-			if (view.getTitle().equals("Welcome")) {
-				view.close();
-			}
-		}
 	}
 	
 	@Before
