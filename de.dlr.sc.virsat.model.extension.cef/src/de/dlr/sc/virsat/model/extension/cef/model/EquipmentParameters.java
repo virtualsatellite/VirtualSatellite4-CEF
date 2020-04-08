@@ -9,12 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cef.model;
 
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
-import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 
 // *****************************************************************
 // * Class Declaration
@@ -63,9 +62,7 @@ public  class EquipmentParameters extends AEquipmentParameters {
 	public long getGlobalUnitQuantity() {
 		long globalUnitQuantity = 1;
 		
-		// Workaround due to API Inconsistency with Beans see https://github.com/virtualsatellite/VirtualSatellite4-CEF/issues/99
-		BeanPropertyInt quantitiyBean = getUnitQuantityBean();
-		globalUnitQuantity *= quantitiyBean.isSet() ? quantitiyBean.getValue() : 1;
+		globalUnitQuantity *= isSetUnitQuantity() ? getUnitQuantity() : 1;
 		
 		EquipmentParameters parentEquipmentParameters = getCaBeanFromParentSei(EquipmentParameters.class);
 		if (parentEquipmentParameters != null) {
