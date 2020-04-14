@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
 
 /**
  * 
- * @author muel_s8
+ * Test suite for all SWTBot UI tests.
  *
  */
 
