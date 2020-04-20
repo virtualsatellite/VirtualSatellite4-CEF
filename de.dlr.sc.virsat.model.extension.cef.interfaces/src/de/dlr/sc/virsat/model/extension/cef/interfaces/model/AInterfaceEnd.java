@@ -9,13 +9,13 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 
+import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.extension.cef.model.EquipmentParameters;
-import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
-import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 
 // *****************************************************************
 // * Class Declaration
@@ -64,10 +64,7 @@ public abstract class AInterfaceEnd extends AAInterfaceEnd {
 	public long getGlobalUnitQuantity() {
 		long globalUnitQuantity = 1;
 
-		// Workaround due to API Inconsistency with Beans see https://github.com/virtualsatellite/VirtualSatellite4-CEF/issues/99
-		Long unitQauntity = getQuantityBean().getValue();
-		
-		globalUnitQuantity *= (unitQauntity != null) ? unitQauntity : 1;
+		globalUnitQuantity *= isSetQuantity() ? getQuantity() : 1;
 		
 		IBeanStructuralElementInstance equipment = getParent();
 		if (equipment != null) {
