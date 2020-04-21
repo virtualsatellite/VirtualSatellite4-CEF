@@ -28,7 +28,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IMarker;
 
 import de.dlr.sc.virsat.build.marker.util.VirSatValidationMarkerHelper;
-import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValidator;
+import de.dlr.sc.virsat.model.dvlm.validator.IStructuralElementInstanceValidator;
 
 
 // *****************************************************************

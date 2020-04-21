@@ -12,7 +12,7 @@ package de.dlr.sc.virsat.model.extension.cefx.validator;
 import org.eclipse.core.resources.IMarker;
 
 import de.dlr.sc.virsat.build.marker.util.VirSatValidationMarkerHelper;
-import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValidator;
+import de.dlr.sc.virsat.model.dvlm.validator.IStructuralElementInstanceValidator;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
