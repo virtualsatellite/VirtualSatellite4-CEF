@@ -38,6 +38,7 @@
 				<module>de.dlr.sc.virsat.cef.target</module>
 
 				<module>de.dlr.sc.virsat.cef.test</module>
+				<module>de.dlr.sc.virsat.cef.swtbot.test</module>
 				<module>de.dlr.sc.virsat.cef.branding.ui</module>
 
 				<!-- The Extension for the CEF Data Model -->
