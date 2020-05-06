@@ -55,14 +55,6 @@ env:
   # API Token for access to github
   # ---------------------------------------------
   - secure: "ayOj6xJ/IcL1v+a+IHoHhmJJYwA+AAPGRPivdti0G09fOS8XeKi9UPPDJKy7VOhjxdQFcjDvO5vNF1AOs7zC8uwvkT9i00zZ+cA959zan/3rkOOjaS9egqp0N9E7LvAsBLmbmNkRvDVI7Z/6DpOl/Whl7oru+imqEZvlemnUXFuFHqs68a3d8c0/A3M1mpXRT1iTGe2Fj+VL5r1wjTlq8/kHAOLeYSSMUDeG+5MMqT8+wQMqzpAG9LgCvc+8ZR9OlMDBi+NI7NwuseLk2csjgDKTGBtm56t+FT9Tni0EUyNW0dmwIiFqeHEu7KKtRuYWiKhP/FzsLz5w3lCqq50Dn7XV38EDuGZegSgMgYjf9a8ADTSniPQXpzcOu72KFmM0EBVgv4h3xJGNkTa6RXruescgtPQx3ZmYOamfDxK4gnk+BbpcNDru1ahWfGutkUWuQKdonzK+MgaDiLx9QaVjZdCxM8zCLd7QdE0cYI2GSF7ASYGLTkiGx6/ex7Yq95c7uB5esKl8aMZ1RH0qYthJfNhJcngRWhnegoluuEoccVd4MtrXpgxbgo2xyypqKNuLjfvg9aOvWAncEOyz0q7pnxKv7u1UGcm1b059v4aiVVpea+pwRLFpI9RLV4C/MMJMgOz32XDJNIbwc3cpSCtu5thblUpJVl21zKUeDg81IKg="
-  # ---------------------------------------------
-  # Setup Overtarget Repository and Version
-  # ---------------------------------------------
-  - OVERTARGET_VERSION=1.1.0.r201903120902
-  - OVERTARGET_REPO=https://sourceforge.net/projects/overtarget/files/release/1.1.0/25/plugins
-  - OVERTARGET_GROUP=de.dlr.sc.overtarget
-  - JUNIT_DEBUG_PROJECT_TEST_CASE=true
-  - SWTBOT_SCREENSHOT=true
 
 before_script:
   # -----------------------------------
@@ -72,9 +64,7 @@ before_script:
   # -------------------------------------------------------------------
   # create adirectory for Overtarget and try to receive language plugin
   # -------------------------------------------------------------------
-  - mkdir -p ./OverTarget
-  - curl -L -o ./OverTarget/OverTarget.jar $OVERTARGET_REPO/$OVERTARGET_GROUP.language_$OVERTARGET_VERSION.jar
-  - mvn install:install-file -Dfile=./OverTarget/OverTarget.jar -DgroupId=$OVERTARGET_GROUP -DartifactId=$OVERTARGET_GROUP.language -Dversion=$OVERTARGET_VERSION -Dpackaging=jar
+  - bash/maven_build.sh -j dependencies -p dependencies
   # --------------------------------------------------------------
   # Setup environment variables for correct linking of vtk and zmq
   # --------------------------------------------------------------
@@ -103,7 +93,7 @@ after_failure:
   # then try to deploy the screenshots from 
   # SWTBot to see what happened 
   # ----------------------------------------
-  - bash/deploy_sourceforge.sh -k $encrypted_f25ed140d658_key -i $encrypted_f25ed140d658_iv -u swtbot
+  - bash/deploy_sourceforge.sh -u swtbot
   # ---------------------------------------
   # Show the debug output of Surefire Junit
   # ---------------------------------------
@@ -139,7 +129,7 @@ jobs:
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: (tag =~ /^Release/) OR (branch =~ /^master/)
+      if: (branch =~ /^master/) OR (tag =~ /^Release/)
       name: Build and Test - SpotBugs - Release
       script:
       - bash/maven_build.sh -j spotbugs -p release   
@@ -152,21 +142,21 @@ jobs:
       if: branch NOT IN (integration, integration_snapshot, development_snapshot) AND NOT (branch =~ /^master/) AND NOT (tag =~ /^Release/)
       name: Build and Test - Surefire - Development and Features
       script:
-      - bash/maven_build.sh -j surefire -p development   
+      - bash/maven_build.sh -j surecoverage -p development   
     # ----------------------------
     # --- Integration Branches
     - stage: build-test
       if: branch = integration
       name: Build and Test - Surefire - Integration
       script:
-      - bash/maven_build.sh -j surefire -p integration   
+      - bash/maven_build.sh -j surecoverage -p integration   
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: (tag =~ /^Release/) OR (branch =~ /^master/)
+      if: (branch =~ /^master/) OR (tag =~ /^Release/)
       name: Build and Test - Surefire - Release
       script:
-      - bash/maven_build.sh -j surefire -p release   
+      - bash/maven_build.sh -j surecoverage -p release   
 
     # -----------------------------------------------------
     # Build and Test - Checkstyle Jobs
@@ -187,7 +177,7 @@ jobs:
     # ----------------------------
     # --- Release Tags
     - stage: build-test
-      if: (tag =~ /^Release/) OR (branch =~ /^master/)
+      if: (branch =~ /^master/) OR (tag =~ /^Release/)
       name: Build and Test - Checkstyle - Release
       script:
       - bash/maven_build.sh -j checkstyle -p release   
