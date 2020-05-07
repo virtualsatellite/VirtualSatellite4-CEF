@@ -53,6 +53,12 @@ printUsage() {
 	echo "Copyright by DLR (German Aerospace Center)"
 }
 
+callMavenDependencies() {
+	mkdir -p ./OverTarget
+	curl -v -L -o ./OverTarget/OverTarget.jar ${OVERTARGET_REPO}/${OVERTARGET_GROUP}.language_${OVERTARGET_VERSION}.jar/download
+	mvn install:install-file -Dfile=./OverTarget/OverTarget.jar -DgroupId=${OVERTARGET_GROUP} -DartifactId=${OVERTARGET_GROUP}.language -Dversion=${OVERTARGET_VERSION} -Dpackaging=jar
+}
+
 checkforMavenProblems() {
 	echo "Check for Maven Problems on Product:"
 	(grep -n "\[\(WARN\|WARNING\|ERROR\)\]" maven.log \
