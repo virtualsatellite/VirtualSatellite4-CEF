@@ -46,6 +46,7 @@ import de.dlr.sc.virsat.model.dvlm.general.IUuid;
 import de.dlr.sc.virsat.model.dvlm.provider.DVLMEditPlugin;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
 import de.dlr.sc.virsat.model.dvlm.roles.Discipline;
+import de.dlr.sc.virsat.model.dvlm.roles.IUserContext;
 import de.dlr.sc.virsat.model.dvlm.roles.RightsHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cef.Activator;
@@ -126,12 +127,15 @@ public class ExcelUpdater {
 	private Sheet xlSheetParamsVirSat2Xl;
 	private Sheet xlSheetParamsXl2VirSat;
 	
+	private IUserContext userContext;
+	
 	/**
 	 * Creates an excel updater for each excel calculation attached to the object
 	 * and performs it.
 	 * @param sei the structural element instance with the attached excel calculations
+	 * @param userContext The User Context under which to execute the excel update.
 	 */
-	public static void performUpdate(StructuralElementInstance sei) {
+	public static void performUpdate(StructuralElementInstance sei, IUserContext userContext) {
 		VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(sei);
 		IProject project = editingDomain.getResourceSet().getProject();
 		
@@ -140,7 +144,7 @@ public class ExcelUpdater {
 		List<ExcelCalculation> excelCalcs = beanCaHelper.getAllBeanCategories(sei, ExcelCalculation.class);
 		
 		for (ExcelCalculation excelCalc : excelCalcs) {
-			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc);
+			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc, userContext);
 			if (updater.canUpdateExcelFile()) {
 				updater.updateExcelFile();
 			}
@@ -153,13 +157,15 @@ public class ExcelUpdater {
 	 * @param project the project in which the updating process happens
 	 * @param editingDomain the editing domain
 	 * @param excelCalc the excel calculation we wish to perform
+	 * @param userContext  The user Context for running the excel sheet update
 	 */
-	public ExcelUpdater(IProject project, TransactionalEditingDomain editingDomain, ExcelCalculation excelCalc) {
+	public ExcelUpdater(IProject project, TransactionalEditingDomain editingDomain, ExcelCalculation excelCalc, IUserContext userContext) {
 		this.project = project;
 		this.editingDomain = editingDomain;
 		this.virsatXlCalculationBean = excelCalc;
-		
-    	openExcelFile();
+		this.userContext = userContext;
+
+		openExcelFile();
 	}
 	
 	/**
@@ -510,7 +516,7 @@ public class ExcelUpdater {
 		
 		for (Parameter parameter : parameters) {
 			int rowIndex = getParameterRowIndex(parameter);
-			boolean hasRights = RightsHelper.hasWritePermission(parameter.getTypeInstance());
+			boolean hasRights = RightsHelper.hasWritePermission(parameter.getTypeInstance(), userContext);
 			if (hasRights) {
 				// If there are access rights to the referenced output parameter try to get the value
 				Row rowParameter = xlSheetParamsXl2VirSat.getRow(rowIndex);
