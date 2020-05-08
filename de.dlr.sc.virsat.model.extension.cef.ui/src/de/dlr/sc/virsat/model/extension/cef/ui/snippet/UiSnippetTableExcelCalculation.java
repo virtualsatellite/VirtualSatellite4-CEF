@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.extension.cef.excel.ExcelUpdater;
 
@@ -45,7 +46,7 @@ public class UiSnippetTableExcelCalculation extends AUiSnippetTableExcelCalculat
 		buttonUpdate.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ExcelUpdater.performUpdate((StructuralElementInstance) model);
+				ExcelUpdater.performUpdate((StructuralElementInstance) model, UserRegistry.getInstance());
 			}
 
 			@Override
