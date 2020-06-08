@@ -89,7 +89,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		Resource resSys = resourceSet.getStructuralElementInstanceResource(sys.getStructuralElementInstance());
 		resSys.getContents().add(sys.getStructuralElementInstance());
 		
-		resourceSet.saveAllResources(null);
+		resourceSet.saveAllResources(null, UserRegistry.getInstance());
 	}
 	
 	@After
