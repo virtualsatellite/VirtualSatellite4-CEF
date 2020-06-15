@@ -101,7 +101,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 	@Test
 	public void testParameterOutOfRange() throws Exception {
 
-		StructuralElementInstanceValidator seiValidator = new StructuralElementInstanceValidator();
+		CefxValidator seiValidator = new CefxValidator();
 
 		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
