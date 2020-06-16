@@ -63,6 +63,7 @@ import de.dlr.sc.virsat.project.structure.VirSatProjectCommons;
 public class ExcelUpdaterTest {
 
 	protected static final double TEST_EPSILON =  0.0001;
+	private static final String CORE_CONCEPT_ID = "de.dlr.sc.virsat.model.ext.core";
 	private static final String CONCEPT_ID = "de.dlr.sc.virsat.model.extension.cef";
 	private static final String FRAGMENT_ID = "de.dlr.sc.virsat.model.extension.cef.test";
 	
@@ -87,6 +88,7 @@ public class ExcelUpdaterTest {
 	
 	private ExcelCalculation excelCalc;
 	
+	private ActiveConceptConfigurationElement acceCore;
 	private ActiveConceptConfigurationElement acceCef;
 	private VirSatResourceSet rs;
 	private VirSatProjectCommons projectCommons;
@@ -103,6 +105,10 @@ public class ExcelUpdaterTest {
 		// Get the CEF concept
 	
 		//CHECKSTYLE:OFF
+		acceCore = new ActiveConceptConfigurationElement(null) {
+			public String getXmi() { return "concept/concept.xmi"; };
+			public String getId() { return CORE_CONCEPT_ID; };
+		};
 		acceCef = new ActiveConceptConfigurationElement(null) {
 			public String getXmi() { return "concept/concept.xmi"; };
 			public String getId() { return CONCEPT_ID; };
@@ -126,7 +132,9 @@ public class ExcelUpdaterTest {
 				// Create the repository and the folder structure for one SEI
 				resourceRepository.getContents().add(repository);
 				
-				Command command = acceCef.createAddActiveConceptCommand(editingDomain, repository);
+				Command command = acceCore.createAddActiveConceptCommand(editingDomain, repository);
+				command.execute();
+				command = acceCef.createAddActiveConceptCommand(editingDomain, repository);
 				command.execute();
 					    
 			    ActiveConceptHelper acHelper = new ActiveConceptHelper(repository);

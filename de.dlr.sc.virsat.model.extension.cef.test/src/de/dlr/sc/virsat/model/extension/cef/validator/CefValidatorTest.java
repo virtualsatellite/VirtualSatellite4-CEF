@@ -74,6 +74,7 @@ import org.junit.Before;
  */
 public class CefValidatorTest extends ACefValidatorTest {
 	
+	private static final String CORE_CONCEPT_ID = "de.dlr.sc.virsat.model.ext.core";
 	private static final String CONCEPT_ID_CEF = "de.dlr.sc.virsat.model.extension.cef";
 	private IResource fileSys;
 	
@@ -133,6 +134,10 @@ public class CefValidatorTest extends ACefValidatorTest {
 		resSet.getRepositoryResource().getContents().add(repository);
 
 		//CHECKSTYLE:OFF
+		ActiveConceptConfigurationElement acceCore = new ActiveConceptConfigurationElement(null) {
+			public String getXmi() { return "concept/concept.xmi"; };
+			public String getId() { return CORE_CONCEPT_ID; };
+		};
 		ActiveConceptConfigurationElement acceCef = new ActiveConceptConfigurationElement(null) {
 			public String getXmi() { return "concept/concept.xmi"; };
 			public String getId() { return CONCEPT_ID_CEF; };
@@ -143,6 +148,7 @@ public class CefValidatorTest extends ACefValidatorTest {
 		// Now load the PS and IF concept into the repository
 		// we need the full set of repository loaded concepts etc to provide
 		// correctly set up workspace resources for setting and detecting the markers
+		acceCore.createAddActiveConceptCommand(ed, repository).execute();
 		acceCef.createAddActiveConceptCommand(ed, repository).execute();
 		
 		ActiveConceptHelper acHelper = new ActiveConceptHelper(repository);
