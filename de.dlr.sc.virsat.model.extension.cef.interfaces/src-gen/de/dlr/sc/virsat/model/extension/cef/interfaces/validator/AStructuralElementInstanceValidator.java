@@ -10,7 +10,7 @@
 package de.dlr.sc.virsat.model.extension.cef.interfaces.validator;
 
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
-import de.dlr.sc.virsat.model.dvlm.validator.IStructuralElementInstanceValidator;
+import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValidator;
 
 
 // *****************************************************************
@@ -25,6 +25,7 @@ import de.dlr.sc.virsat.model.dvlm.validator.IStructuralElementInstanceValidator
  * Concept for Functional Interface Architecture in CEF
  * 
  */	
+@Deprecated
 public abstract class AStructuralElementInstanceValidator implements IStructuralElementInstanceValidator {
 
 	@Override

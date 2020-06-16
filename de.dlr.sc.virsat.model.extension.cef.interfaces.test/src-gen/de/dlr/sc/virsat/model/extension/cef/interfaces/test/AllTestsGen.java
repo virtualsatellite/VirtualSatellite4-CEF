@@ -24,6 +24,7 @@ import de.dlr.sc.virsat.model.extension.cef.interfaces.migrator.Migrator1v0Test;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.BusInterfaceTest;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.PointToPointInterfaceTest;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.migrator.Migrator1v1Test;
+import de.dlr.sc.virsat.model.extension.cef.interfaces.validator.InterfacesValidatorTest;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.DataInterfaceTypesTest;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.DataInterfaceTypeCollectionTest;
 import de.dlr.sc.virsat.model.extension.cef.interfaces.model.PowerInterfaceEndTest;
@@ -44,6 +45,7 @@ import de.dlr.sc.virsat.model.extension.cef.interfaces.model.DataInterfaceEndTes
 	DataInterfaceTypeCollectionTest.class,
 	Migrator1v0Test.class,
 	Migrator1v1Test.class,
+	InterfacesValidatorTest.class,
 				})
 
 /**
