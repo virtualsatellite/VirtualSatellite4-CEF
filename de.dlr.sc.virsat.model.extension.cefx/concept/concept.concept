@@ -13,7 +13,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 	description "VirSat DLR CEF Concept for extended Product Structures"
 	beta {
 		
-	Import de.dlr.sc.model.extension.ps.*;	
+	Import de.dlr.sc.virsat.model.extension.ps.*;	
 	
 	/** Basic categories for handling data in form of mode dependent parameters */
 	
