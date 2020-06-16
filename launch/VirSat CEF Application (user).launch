@@ -84,6 +84,12 @@
 <setEntry value="org.eclipse.pde:default"/>
 <setEntry value="org.eclipse.platform:default"/>
 <setEntry value="org.eclipse.rcp:default"/>
+<setEntry value="org.eclipse.swtbot.eclipse.gef:default"/>
+<setEntry value="org.eclipse.swtbot.eclipse:default"/>
+<setEntry value="org.eclipse.swtbot.forms:default"/>
+<setEntry value="org.eclipse.swtbot.generator.feature:default"/>
+<setEntry value="org.eclipse.swtbot.ide:default"/>
+<setEntry value="org.eclipse.swtbot:default"/>
 <setEntry value="org.eclipse.team.svn:default"/>
 <setEntry value="org.eclipse.xtext.redist:default"/>
 <setEntry value="org.eclipse.xtext.runtime:default"/>
