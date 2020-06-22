@@ -2,17 +2,17 @@
 <?eclipse version="3.4"?>
 <plugin>
 	<extension point="de.dlr.sc.virsat.model.Concept">
-	<concept
-	          id="de.dlr.sc.virsat.model.extension.cef"
-	          version="1.6"
-	          xmi="concept/concept.xmi">
-	    </concept>
+		<concept
+			id="de.dlr.sc.virsat.model.extension.cef"
+			version="1.6"
+			xmi="concept/concept.xmi">
+		</concept>
 	</extension>
 	<extension point="de.dlr.sc.virsat.model.DvlmValidator">
 		<dvlmValidator>
 			<seiValidator
 				id="de.dlr.sc.virsat.model.extension.cef"
-				class="de.dlr.sc.virsat.model.extension.cef.validator.StructuralElementInstanceValidator">
+				class="de.dlr.sc.virsat.model.extension.cef.validator.CefValidator">
 			</seiValidator>
 		</dvlmValidator>
 	</extension>

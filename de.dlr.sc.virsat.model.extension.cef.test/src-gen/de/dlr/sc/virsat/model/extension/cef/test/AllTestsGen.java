@@ -38,6 +38,7 @@ import de.dlr.sc.virsat.model.extension.cef.model.ParameterRangeTest;
 import de.dlr.sc.virsat.model.extension.cef.model.ValueTest;
 import de.dlr.sc.virsat.model.extension.cef.model.ParameterTest;
 import de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v2Test;
+import de.dlr.sc.virsat.model.extension.cef.validator.CefValidatorTest;
 import de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v1Test;
 import de.dlr.sc.virsat.model.extension.cef.migrator.Migrator1v6Test;
 import de.dlr.sc.virsat.model.extension.cef.model.EquipmentPowerParametersTest;
@@ -78,6 +79,7 @@ import de.dlr.sc.virsat.model.extension.cef.model.EquipmentMassParametersTest;
 	Migrator1v4Test.class,
 	Migrator1v5Test.class,
 	Migrator1v6Test.class,
+	CefValidatorTest.class,
 				})
 
 /**

@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import de.dlr.sc.virsat.model.extension.cef.excel.ExcelUpdaterTest;
 import de.dlr.sc.virsat.model.extension.cef.util.CefModeHelperTest;
-import de.dlr.sc.virsat.model.extension.cef.validator.ValidatorTest;
+import de.dlr.sc.virsat.model.extension.cef.validator.CefValidatorTest;
 import junit.framework.JUnit4TestAdapter;
 
 /**
@@ -28,7 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 
 @SuiteClasses({ 
 	ExcelUpdaterTest.class,
-	ValidatorTest.class,
+	CefValidatorTest.class,
 	CefModeHelperTest.class
 	})
 
