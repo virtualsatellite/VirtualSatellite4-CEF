@@ -75,10 +75,10 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 		colValue = (TreeViewerColumn) createDefaultColumn("Value");
 		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer);
 	
-		AProperty defaultValueProperty = acHelper.getProperty(PluginXml.concept.Concept.ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
+		AProperty defaultValueProperty = acHelper.getProperty(PluginXml.Concept.Extensioncefx1_0.ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
 		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
 	
-		AProperty valueProperty = acHelper.getProperty(PluginXml.concept.Concept.ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
+		AProperty valueProperty = acHelper.getProperty(PluginXml.Concept.Extensioncefx1_0.ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
 		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, valueProperty));
 		colValue.setEditingSupport(editingSupportValue);
 		
