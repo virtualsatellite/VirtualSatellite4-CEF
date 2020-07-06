@@ -20,7 +20,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.AProperty;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.general.GeneralPackage;
-import de.dlr.sc.virsat.model.extension.cef.PluginXml;
+import de.dlr.sc.virsat.model.extension.cef.Activator;
 import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cef.model.Value;
 import de.dlr.sc.virsat.model.extension.cef.ui.itemprovider.VirSatCefTreeLabelProvider;
@@ -75,10 +75,10 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 		colValue = (TreeViewerColumn) createDefaultColumn("Value");
 		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer);
 	
-		AProperty defaultValueProperty = acHelper.getProperty(PluginXml.concept.Concept.ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
+		AProperty defaultValueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
 		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
 	
-		AProperty valueProperty = acHelper.getProperty(PluginXml.concept.Concept.ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
+		AProperty valueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
 		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, valueProperty));
 		colValue.setEditingSupport(editingSupportValue);
 		
