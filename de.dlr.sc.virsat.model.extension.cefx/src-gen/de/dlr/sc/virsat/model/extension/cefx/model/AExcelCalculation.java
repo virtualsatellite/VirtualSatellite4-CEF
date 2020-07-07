@@ -13,6 +13,7 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
+import de.dlr.sc.virsat.model.concept.list.TypeSafeReferencePropertyBeanList;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import org.eclipse.emf.common.util.URI;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
@@ -21,10 +22,10 @@ import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ArrayInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ResourcePropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
 import de.dlr.sc.virsat.model.concept.list.TypeSafeReferencePropertyInstanceList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.common.command.Command;
-import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyResource;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
@@ -125,6 +126,19 @@ public abstract class AExcelCalculation extends GenericCategory implements IBean
 			safeAccessFromVirSat2Excel();
 			return fromVirSat2Excel;
 		}
+		
+		private IBeanList<BeanPropertyReference<Parameter>> fromVirSat2ExcelBean = new TypeSafeReferencePropertyBeanList<>();
+		
+		private void safeAccessFromVirSat2ExcelBean() {
+			if (fromVirSat2ExcelBean.getArrayInstance() == null) {
+				fromVirSat2ExcelBean.setArrayInstance((ArrayInstance) helper.getPropertyInstance("fromVirSat2Excel"));
+			}
+		}
+		
+		public IBeanList<BeanPropertyReference<Parameter>> getFromVirSat2ExcelBean() {
+			safeAccessFromVirSat2ExcelBean();
+			return fromVirSat2ExcelBean;
+		}
 	
 	// *****************************************************************
 	// * Array Attribute: fromExcel2VirSat
@@ -140,6 +154,19 @@ public abstract class AExcelCalculation extends GenericCategory implements IBean
 		public IBeanList<Parameter> getFromExcel2VirSat() {
 			safeAccessFromExcel2VirSat();
 			return fromExcel2VirSat;
+		}
+		
+		private IBeanList<BeanPropertyReference<Parameter>> fromExcel2VirSatBean = new TypeSafeReferencePropertyBeanList<>();
+		
+		private void safeAccessFromExcel2VirSatBean() {
+			if (fromExcel2VirSatBean.getArrayInstance() == null) {
+				fromExcel2VirSatBean.setArrayInstance((ArrayInstance) helper.getPropertyInstance("fromExcel2VirSat"));
+			}
+		}
+		
+		public IBeanList<BeanPropertyReference<Parameter>> getFromExcel2VirSatBean() {
+			safeAccessFromExcel2VirSatBean();
+			return fromExcel2VirSatBean;
 		}
 	
 	

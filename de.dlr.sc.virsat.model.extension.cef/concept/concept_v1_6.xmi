@@ -3,7 +3,7 @@
   <imports importedNamespace="de.dlr.sc.virsat.model.ext.core.*"/>
   <categories name="SystemMode" applicableFor="de.dlr.sc.virsat.model.extension.cef.System">
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the mode" defaultValue="no description"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="Parameter" applicableFor="de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
     <properties xsi:type="dvlm_cppd:FloatProperty" name="defaultValue" defaultValue="0"/>
@@ -14,17 +14,17 @@
       <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
     </properties>
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="A note for the Parameter"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="Value">
     <properties xsi:type="dvlm_cppd:FloatProperty" name="value" defaultValue="0"/>
     <properties xsi:type="dvlm_cppd:ReferenceProperty" name="mode" description="The Mode for which this Value is Valid. Leave unassigned if default Mode" referenceType="de.dlr.sc.virsat.model.extension.cef.SystemMode"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="SystemParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
     <properties xsi:type="dvlm_cppd:FloatProperty" name="systemMargin" description="Constant system margin" quantityKindName="Dimensionless" unitName="Percent" defaultValue="0"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="modeDuration" description="Duration of the modes" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Time" unitName="Second"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="SystemMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
     <equationDefinitions>
@@ -72,7 +72,7 @@
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massPropellant" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massLaunchMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massBuffer" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="SystemPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.System" cardinality="1">
     <equationDefinitions>
@@ -111,7 +111,7 @@
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithSystemMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithSystemMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="SubSystemMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.SubSystem" cardinality="1">
     <equationDefinitions>
@@ -145,7 +145,7 @@
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massMarginPercentage" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="SubSystemPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.SubSystem" cardinality="1">
     <equationDefinitions>
@@ -161,12 +161,12 @@
     </equationDefinitions>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerEnergyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Energy and Work" unitName="Joule"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="EquipmentParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
     <properties xsi:type="dvlm_cppd:FloatProperty" name="marginMaturity" description="Constant Equipment Margin" quantityKindName="Dimensionless" unitName="Percent" defaultValue="0"/>
     <properties xsi:type="dvlm_cppd:IntProperty" name="unitQuantity" description="Number of Equipments" quantityKindName="Dimensionless" unitName="No Unit" defaultValue="1"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="EquipmentMassParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
     <equationDefinitions>
@@ -204,7 +204,7 @@
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massPerUnit" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="EquipmentPowerParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
     <equationDefinitions>
@@ -269,26 +269,26 @@
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitStbyWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerPerUnitAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="EquipmentTemperatureParameters" applicableFor="de.dlr.sc.virsat.model.extension.cef.Equipment" cardinality="1">
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureNoOpsMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureNoOpsMin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureOpsMax" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="temperatureOpsMin" type="de.dlr.sc.virsat.model.extension.cef.Parameter" quantityKindName="Temperature" unitName="Degree Celsius"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="ParameterRange" cardinality="1">
     <properties xsi:type="dvlm_cppd:FloatProperty" name="minValue"/>
     <properties xsi:type="dvlm_cppd:FloatProperty" name="maxValue"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="Document" description="Category to describe documents such as specifications" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
     <properties xsi:type="dvlm_cppd:StringProperty" name="name" description="Name of the document"/>
     <properties xsi:type="dvlm_cppd:StringProperty" name="note" description="Some not of the document"/>
     <properties xsi:type="dvlm_cppd:StringProperty" name="url" description="A reference URL to the document"/>
     <properties xsi:type="dvlm_cppd:ResourceProperty" name="file" description="The actual file of the document"/>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="ExcelCalculation" applicableFor="de.dlr.sc.virsat.model.extension.cef.System de.dlr.sc.virsat.model.extension.cef.SubSystem de.dlr.sc.virsat.model.extension.cef.Equipment">
     <properties xsi:type="dvlm_cppd:ResourceProperty" name="excelFile"/>
@@ -298,7 +298,7 @@
     <properties xsi:type="dvlm_cppd:ReferenceProperty" name="fromExcel2VirSat" referenceType="de.dlr.sc.virsat.model.extension.cef.Parameter">
       <arrayModifier xsi:type="dvlm_cppd:DynamicArrayModifier"/>
     </properties>
-    <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
+    <extendsCategory href="platform:/resource/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <structuralElements name="SystemOfSystems" shortName="SysOfSys" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems" isRootStructuralElement="true"/>
   <structuralElements name="System" shortName="Sys" applicableFor="de.dlr.sc.virsat.model.extension.cef.SystemOfSystems" isRootStructuralElement="true"/>

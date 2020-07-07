@@ -14,7 +14,6 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // *****************************************************************
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cefx.model.ParameterRange;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ValuePropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.concept.list.IBeanList;
@@ -24,11 +23,12 @@ import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyString;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.common.command.Command;
+import de.dlr.sc.virsat.model.concept.list.TypeSafeComposedPropertyBeanList;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.UnitValuePropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
-import de.dlr.sc.virsat.model.extension.cefx.model.Value;
 import de.dlr.sc.virsat.model.concept.list.TypeSafeComposedPropertyInstanceList;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
@@ -134,6 +134,19 @@ public abstract class AParameter extends GenericCategory implements IBeanCategor
 		return modeValues;
 	}
 	
+	private IBeanList<BeanPropertyComposed<Value>> modeValuesBean = new TypeSafeComposedPropertyBeanList<>();
+	
+	private void safeAccessModeValuesBean() {
+		if (modeValuesBean.getArrayInstance() == null) {
+			modeValuesBean.setArrayInstance((ArrayInstance) helper.getPropertyInstance("modeValues"));
+		}
+	}
+	
+	public IBeanList<BeanPropertyComposed<Value>> getModeValuesBean() {
+		safeAccessModeValuesBean();
+		return modeValuesBean;
+	}
+	
 	// *****************************************************************
 	// * Array Attribute: rangeValues
 	// *****************************************************************
@@ -148,6 +161,19 @@ public abstract class AParameter extends GenericCategory implements IBeanCategor
 	public IBeanList<ParameterRange> getRangeValues() {
 		safeAccessRangeValues();
 		return rangeValues;
+	}
+	
+	private IBeanList<BeanPropertyComposed<ParameterRange>> rangeValuesBean = new TypeSafeComposedPropertyBeanList<>();
+	
+	private void safeAccessRangeValuesBean() {
+		if (rangeValuesBean.getArrayInstance() == null) {
+			rangeValuesBean.setArrayInstance((ArrayInstance) helper.getPropertyInstance("rangeValues"));
+		}
+	}
+	
+	public IBeanList<BeanPropertyComposed<ParameterRange>> getRangeValuesBean() {
+		safeAccessRangeValuesBean();
+		return rangeValuesBean;
 	}
 	
 	// *****************************************************************

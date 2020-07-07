@@ -15,10 +15,10 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
@@ -80,16 +80,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: powerUnitActive
 	// *****************************************************************
-	private Parameter powerUnitActive = new Parameter();
+	private BeanPropertyComposed<Parameter> powerUnitActive = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitActive() {
 		if (powerUnitActive.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitActive");
-			powerUnitActive.setTypeInstance(propertyInstance.getTypeInstance());
+			powerUnitActive.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerUnitActive () {
+	public Parameter getPowerUnitActive() {
+		safeAccessPowerUnitActive();
+		return powerUnitActive.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerUnitActiveBean() {
 		safeAccessPowerUnitActive();
 		return powerUnitActive;
 	}
@@ -97,16 +102,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: powerDutyCycle
 	// *****************************************************************
-	private Parameter powerDutyCycle = new Parameter();
+	private BeanPropertyComposed<Parameter> powerDutyCycle = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerDutyCycle() {
 		if (powerDutyCycle.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerDutyCycle");
-			powerDutyCycle.setTypeInstance(propertyInstance.getTypeInstance());
+			powerDutyCycle.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerDutyCycle () {
+	public Parameter getPowerDutyCycle() {
+		safeAccessPowerDutyCycle();
+		return powerDutyCycle.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerDutyCycleBean() {
 		safeAccessPowerDutyCycle();
 		return powerDutyCycle;
 	}
@@ -114,16 +124,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerPerUnitOn
 	// *****************************************************************
-	private Parameter PowerPerUnitOn = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerPerUnitOn = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerPerUnitOn() {
 		if (PowerPerUnitOn.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerPerUnitOn");
-			PowerPerUnitOn.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerPerUnitOn.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerPerUnitOn () {
+	public Parameter getPowerPerUnitOn() {
+		safeAccessPowerPerUnitOn();
+		return PowerPerUnitOn.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerPerUnitOnBean() {
 		safeAccessPowerPerUnitOn();
 		return PowerPerUnitOn;
 	}
@@ -131,16 +146,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerPerUnitStby
 	// *****************************************************************
-	private Parameter PowerPerUnitStby = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerPerUnitStby = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerPerUnitStby() {
 		if (PowerPerUnitStby.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerPerUnitStby");
-			PowerPerUnitStby.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerPerUnitStby.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerPerUnitStby () {
+	public Parameter getPowerPerUnitStby() {
+		safeAccessPowerPerUnitStby();
+		return PowerPerUnitStby.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerPerUnitStbyBean() {
 		safeAccessPowerPerUnitStby();
 		return PowerPerUnitStby;
 	}
@@ -148,16 +168,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerPerUnitOnWithMargin
 	// *****************************************************************
-	private Parameter PowerPerUnitOnWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerPerUnitOnWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerPerUnitOnWithMargin() {
 		if (PowerPerUnitOnWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerPerUnitOnWithMargin");
-			PowerPerUnitOnWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerPerUnitOnWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerPerUnitOnWithMargin () {
+	public Parameter getPowerPerUnitOnWithMargin() {
+		safeAccessPowerPerUnitOnWithMargin();
+		return PowerPerUnitOnWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerPerUnitOnWithMarginBean() {
 		safeAccessPowerPerUnitOnWithMargin();
 		return PowerPerUnitOnWithMargin;
 	}
@@ -165,16 +190,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerPerUnitStbyWithMargin
 	// *****************************************************************
-	private Parameter PowerPerUnitStbyWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerPerUnitStbyWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerPerUnitStbyWithMargin() {
 		if (PowerPerUnitStbyWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerPerUnitStbyWithMargin");
-			PowerPerUnitStbyWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerPerUnitStbyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerPerUnitStbyWithMargin () {
+	public Parameter getPowerPerUnitStbyWithMargin() {
+		safeAccessPowerPerUnitStbyWithMargin();
+		return PowerPerUnitStbyWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerPerUnitStbyWithMarginBean() {
 		safeAccessPowerPerUnitStbyWithMargin();
 		return PowerPerUnitStbyWithMargin;
 	}
@@ -182,16 +212,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerPerUnitAvgWithMargin
 	// *****************************************************************
-	private Parameter PowerPerUnitAvgWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerPerUnitAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerPerUnitAvgWithMargin() {
 		if (PowerPerUnitAvgWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerPerUnitAvgWithMargin");
-			PowerPerUnitAvgWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerPerUnitAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerPerUnitAvgWithMargin () {
+	public Parameter getPowerPerUnitAvgWithMargin() {
+		safeAccessPowerPerUnitAvgWithMargin();
+		return PowerPerUnitAvgWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerPerUnitAvgWithMarginBean() {
 		safeAccessPowerPerUnitAvgWithMargin();
 		return PowerPerUnitAvgWithMargin;
 	}
@@ -199,16 +234,21 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// *****************************************************************
 	// * Attribute: PowerAvgWithMargin
 	// *****************************************************************
-	private Parameter PowerAvgWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> PowerAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerAvgWithMargin() {
 		if (PowerAvgWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerAvgWithMargin");
-			PowerAvgWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			PowerAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerAvgWithMargin () {
+	public Parameter getPowerAvgWithMargin() {
+		safeAccessPowerAvgWithMargin();
+		return PowerAvgWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
 		safeAccessPowerAvgWithMargin();
 		return PowerAvgWithMargin;
 	}

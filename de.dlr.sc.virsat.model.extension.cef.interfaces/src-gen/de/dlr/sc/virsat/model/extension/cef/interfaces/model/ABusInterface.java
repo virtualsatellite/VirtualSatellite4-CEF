@@ -12,16 +12,16 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterface;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
 import de.dlr.sc.virsat.model.concept.list.TypeSafeReferencePropertyInstanceList;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
+import de.dlr.sc.virsat.model.concept.list.TypeSafeReferencePropertyBeanList;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.concept.list.IBeanList;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterfaceEnd;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ArrayInstance;
 
 
@@ -86,6 +86,19 @@ public abstract class ABusInterface extends AInterface implements IBeanCategoryA
 		public IBeanList<AInterfaceEnd> getConectedInterfaceEnds() {
 			safeAccessConectedInterfaceEnds();
 			return conectedInterfaceEnds;
+		}
+		
+		private IBeanList<BeanPropertyReference<AInterfaceEnd>> conectedInterfaceEndsBean = new TypeSafeReferencePropertyBeanList<>();
+		
+		private void safeAccessConectedInterfaceEndsBean() {
+			if (conectedInterfaceEndsBean.getArrayInstance() == null) {
+				conectedInterfaceEndsBean.setArrayInstance((ArrayInstance) helper.getPropertyInstance("conectedInterfaceEnds"));
+			}
+		}
+		
+		public IBeanList<BeanPropertyReference<AInterfaceEnd>> getConectedInterfaceEndsBean() {
+			safeAccessConectedInterfaceEndsBean();
+			return conectedInterfaceEndsBean;
 		}
 	
 	
