@@ -15,10 +15,10 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
@@ -80,16 +80,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massLaunch
 	// *****************************************************************
-	private Parameter massLaunch = new Parameter();
+	private BeanPropertyComposed<Parameter> massLaunch = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassLaunch() {
 		if (massLaunch.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massLaunch");
-			massLaunch.setTypeInstance(propertyInstance.getTypeInstance());
+			massLaunch.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassLaunch () {
+	public Parameter getMassLaunch() {
+		safeAccessMassLaunch();
+		return massLaunch.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassLaunchBean() {
 		safeAccessMassLaunch();
 		return massLaunch;
 	}
@@ -97,16 +102,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massTotal
 	// *****************************************************************
-	private Parameter massTotal = new Parameter();
+	private BeanPropertyComposed<Parameter> massTotal = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassTotal() {
 		if (massTotal.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotal");
-			massTotal.setTypeInstance(propertyInstance.getTypeInstance());
+			massTotal.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassTotal () {
+	public Parameter getMassTotal() {
+		safeAccessMassTotal();
+		return massTotal.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassTotalBean() {
 		safeAccessMassTotal();
 		return massTotal;
 	}
@@ -114,16 +124,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massTotalWithMargin
 	// *****************************************************************
-	private Parameter massTotalWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> massTotalWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassTotalWithMargin() {
 		if (massTotalWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMargin");
-			massTotalWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			massTotalWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassTotalWithMargin () {
+	public Parameter getMassTotalWithMargin() {
+		safeAccessMassTotalWithMargin();
+		return massTotalWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassTotalWithMarginBean() {
 		safeAccessMassTotalWithMargin();
 		return massTotalWithMargin;
 	}
@@ -131,16 +146,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massTotalWithMarginWithSystemMargin
 	// *****************************************************************
-	private Parameter massTotalWithMarginWithSystemMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> massTotalWithMarginWithSystemMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassTotalWithMarginWithSystemMargin() {
 		if (massTotalWithMarginWithSystemMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMarginWithSystemMargin");
-			massTotalWithMarginWithSystemMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			massTotalWithMarginWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassTotalWithMarginWithSystemMargin () {
+	public Parameter getMassTotalWithMarginWithSystemMargin() {
+		safeAccessMassTotalWithMarginWithSystemMargin();
+		return massTotalWithMarginWithSystemMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassTotalWithMarginWithSystemMarginBean() {
 		safeAccessMassTotalWithMarginWithSystemMargin();
 		return massTotalWithMarginWithSystemMargin;
 	}
@@ -148,16 +168,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massAdapter
 	// *****************************************************************
-	private Parameter massAdapter = new Parameter();
+	private BeanPropertyComposed<Parameter> massAdapter = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassAdapter() {
 		if (massAdapter.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massAdapter");
-			massAdapter.setTypeInstance(propertyInstance.getTypeInstance());
+			massAdapter.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassAdapter () {
+	public Parameter getMassAdapter() {
+		safeAccessMassAdapter();
+		return massAdapter.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassAdapterBean() {
 		safeAccessMassAdapter();
 		return massAdapter;
 	}
@@ -165,16 +190,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massPropellant
 	// *****************************************************************
-	private Parameter massPropellant = new Parameter();
+	private BeanPropertyComposed<Parameter> massPropellant = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassPropellant() {
 		if (massPropellant.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massPropellant");
-			massPropellant.setTypeInstance(propertyInstance.getTypeInstance());
+			massPropellant.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassPropellant () {
+	public Parameter getMassPropellant() {
+		safeAccessMassPropellant();
+		return massPropellant.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassPropellantBean() {
 		safeAccessMassPropellant();
 		return massPropellant;
 	}
@@ -182,16 +212,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massLaunchMax
 	// *****************************************************************
-	private Parameter massLaunchMax = new Parameter();
+	private BeanPropertyComposed<Parameter> massLaunchMax = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassLaunchMax() {
 		if (massLaunchMax.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massLaunchMax");
-			massLaunchMax.setTypeInstance(propertyInstance.getTypeInstance());
+			massLaunchMax.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassLaunchMax () {
+	public Parameter getMassLaunchMax() {
+		safeAccessMassLaunchMax();
+		return massLaunchMax.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassLaunchMaxBean() {
 		safeAccessMassLaunchMax();
 		return massLaunchMax;
 	}
@@ -199,16 +234,21 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	// *****************************************************************
 	// * Attribute: massBuffer
 	// *****************************************************************
-	private Parameter massBuffer = new Parameter();
+	private BeanPropertyComposed<Parameter> massBuffer = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassBuffer() {
 		if (massBuffer.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massBuffer");
-			massBuffer.setTypeInstance(propertyInstance.getTypeInstance());
+			massBuffer.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassBuffer () {
+	public Parameter getMassBuffer() {
+		safeAccessMassBuffer();
+		return massBuffer.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassBufferBean() {
 		safeAccessMassBuffer();
 		return massBuffer;
 	}

@@ -14,7 +14,6 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 // *****************************************************************
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
@@ -24,6 +23,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.UnitValuePropert
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
@@ -114,16 +114,21 @@ public abstract class ASystemParameters extends GenericCategory implements IBean
 	// *****************************************************************
 	// * Attribute: modeDuration
 	// *****************************************************************
-	private Parameter modeDuration = new Parameter();
+	private BeanPropertyComposed<Parameter> modeDuration = new BeanPropertyComposed<>();
 	
 	private void safeAccessModeDuration() {
 		if (modeDuration.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("modeDuration");
-			modeDuration.setTypeInstance(propertyInstance.getTypeInstance());
+			modeDuration.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getModeDuration () {
+	public Parameter getModeDuration() {
+		safeAccessModeDuration();
+		return modeDuration.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getModeDurationBean() {
 		safeAccessModeDuration();
 		return modeDuration;
 	}

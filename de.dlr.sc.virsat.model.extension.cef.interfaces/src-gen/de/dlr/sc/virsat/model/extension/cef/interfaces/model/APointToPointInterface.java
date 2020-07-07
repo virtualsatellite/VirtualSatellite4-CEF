@@ -12,21 +12,16 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
-import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import org.eclipse.core.runtime.CoreException;
-import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesPackage;
-import de.dlr.sc.virsat.model.dvlm.categories.Category;
-import de.dlr.sc.virsat.model.concept.types.factory.BeanCategoryAssignmentFactory;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterfaceEnd;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterface;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.command.SetCommand;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
+import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
 
 
 // *****************************************************************
@@ -80,97 +75,61 @@ public abstract class APointToPointInterface extends AInterface implements IBean
 	// *****************************************************************
 	// * Attribute: fromInterfaceEnd
 	// *****************************************************************
-	private AInterfaceEnd fromInterfaceEnd;
+	private BeanPropertyReference<AInterfaceEnd> fromInterfaceEnd = new BeanPropertyReference<>();
 	
 	private void safeAccessFromInterfaceEnd() {
 		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("fromInterfaceEnd");
-		CategoryAssignment ca = (CategoryAssignment) propertyInstance.getReference();
-		
-		if (ca != null) {
-			if (fromInterfaceEnd == null) {
-				createFromInterfaceEnd(ca);
-			}
-			fromInterfaceEnd.setTypeInstance(ca);
-		} else {
-			fromInterfaceEnd = null;
-		}
+		fromInterfaceEnd.setTypeInstance(propertyInstance);
 	}
 	
-	private void createFromInterfaceEnd(CategoryAssignment ca) {
-		try {
-			BeanCategoryAssignmentFactory beanFactory = new BeanCategoryAssignmentFactory();
-			fromInterfaceEnd = (AInterfaceEnd) beanFactory.getInstanceFor(ca);
-		} catch (CoreException e) {
-			
-		}
-	}
-					
 	public AInterfaceEnd getFromInterfaceEnd() {
 		safeAccessFromInterfaceEnd();
-		return fromInterfaceEnd;
+		return fromInterfaceEnd.getValue();
 	}
 	
 	public Command setFromInterfaceEnd(EditingDomain ed, AInterfaceEnd value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("fromInterfaceEnd");
-		CategoryAssignment ca = value.getTypeInstance();
-		return SetCommand.create(ed, propertyInstance, PropertyinstancesPackage.Literals.REFERENCE_PROPERTY_INSTANCE__REFERENCE, ca);
+		safeAccessFromInterfaceEnd();
+		return fromInterfaceEnd.setValue(ed, value);
 	}
 	
 	public void setFromInterfaceEnd(AInterfaceEnd value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("fromInterfaceEnd");
-		if (value != null) {
-			propertyInstance.setReference(value.getTypeInstance());
-		} else {
-			propertyInstance.setReference(null);
-		}
+		safeAccessFromInterfaceEnd();
+		fromInterfaceEnd.setValue(value);
+	}
+	
+	public BeanPropertyReference<AInterfaceEnd> getFromInterfaceEndBean() {
+		safeAccessFromInterfaceEnd();
+		return fromInterfaceEnd;
 	}
 	
 	// *****************************************************************
 	// * Attribute: toInterfceEnd
 	// *****************************************************************
-	private AInterfaceEnd toInterfceEnd;
+	private BeanPropertyReference<AInterfaceEnd> toInterfceEnd = new BeanPropertyReference<>();
 	
 	private void safeAccessToInterfceEnd() {
 		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("toInterfceEnd");
-		CategoryAssignment ca = (CategoryAssignment) propertyInstance.getReference();
-		
-		if (ca != null) {
-			if (toInterfceEnd == null) {
-				createToInterfceEnd(ca);
-			}
-			toInterfceEnd.setTypeInstance(ca);
-		} else {
-			toInterfceEnd = null;
-		}
+		toInterfceEnd.setTypeInstance(propertyInstance);
 	}
 	
-	private void createToInterfceEnd(CategoryAssignment ca) {
-		try {
-			BeanCategoryAssignmentFactory beanFactory = new BeanCategoryAssignmentFactory();
-			toInterfceEnd = (AInterfaceEnd) beanFactory.getInstanceFor(ca);
-		} catch (CoreException e) {
-			
-		}
-	}
-					
 	public AInterfaceEnd getToInterfceEnd() {
 		safeAccessToInterfceEnd();
-		return toInterfceEnd;
+		return toInterfceEnd.getValue();
 	}
 	
 	public Command setToInterfceEnd(EditingDomain ed, AInterfaceEnd value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("toInterfceEnd");
-		CategoryAssignment ca = value.getTypeInstance();
-		return SetCommand.create(ed, propertyInstance, PropertyinstancesPackage.Literals.REFERENCE_PROPERTY_INSTANCE__REFERENCE, ca);
+		safeAccessToInterfceEnd();
+		return toInterfceEnd.setValue(ed, value);
 	}
 	
 	public void setToInterfceEnd(AInterfaceEnd value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("toInterfceEnd");
-		if (value != null) {
-			propertyInstance.setReference(value.getTypeInstance());
-		} else {
-			propertyInstance.setReference(null);
-		}
+		safeAccessToInterfceEnd();
+		toInterfceEnd.setValue(value);
+	}
+	
+	public BeanPropertyReference<AInterfaceEnd> getToInterfceEndBean() {
+		safeAccessToInterfceEnd();
+		return toInterfceEnd;
 	}
 	
 	

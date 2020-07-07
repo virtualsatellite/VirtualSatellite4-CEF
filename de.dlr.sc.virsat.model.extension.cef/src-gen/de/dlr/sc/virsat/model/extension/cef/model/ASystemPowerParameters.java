@@ -15,10 +15,10 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
@@ -76,16 +76,21 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	// *****************************************************************
 	// * Attribute: powerAvgWithMargin
 	// *****************************************************************
-	private Parameter powerAvgWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> powerAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerAvgWithMargin() {
 		if (powerAvgWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithMargin");
-			powerAvgWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			powerAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerAvgWithMargin () {
+	public Parameter getPowerAvgWithMargin() {
+		safeAccessPowerAvgWithMargin();
+		return powerAvgWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
 		safeAccessPowerAvgWithMargin();
 		return powerAvgWithMargin;
 	}
@@ -93,16 +98,21 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	// *****************************************************************
 	// * Attribute: powerAvgWithSystemMargin
 	// *****************************************************************
-	private Parameter powerAvgWithSystemMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> powerAvgWithSystemMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerAvgWithSystemMargin() {
 		if (powerAvgWithSystemMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithSystemMargin");
-			powerAvgWithSystemMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			powerAvgWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerAvgWithSystemMargin () {
+	public Parameter getPowerAvgWithSystemMargin() {
+		safeAccessPowerAvgWithSystemMargin();
+		return powerAvgWithSystemMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerAvgWithSystemMarginBean() {
 		safeAccessPowerAvgWithSystemMargin();
 		return powerAvgWithSystemMargin;
 	}
@@ -110,16 +120,21 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	// *****************************************************************
 	// * Attribute: powerEnergyWithMargin
 	// *****************************************************************
-	private Parameter powerEnergyWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> powerEnergyWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerEnergyWithMargin() {
 		if (powerEnergyWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerEnergyWithMargin");
-			powerEnergyWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			powerEnergyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerEnergyWithMargin () {
+	public Parameter getPowerEnergyWithMargin() {
+		safeAccessPowerEnergyWithMargin();
+		return powerEnergyWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerEnergyWithMarginBean() {
 		safeAccessPowerEnergyWithMargin();
 		return powerEnergyWithMargin;
 	}
@@ -127,16 +142,21 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	// *****************************************************************
 	// * Attribute: powerEnergyWithSystemMargin
 	// *****************************************************************
-	private Parameter powerEnergyWithSystemMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> powerEnergyWithSystemMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerEnergyWithSystemMargin() {
 		if (powerEnergyWithSystemMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerEnergyWithSystemMargin");
-			powerEnergyWithSystemMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			powerEnergyWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getPowerEnergyWithSystemMargin () {
+	public Parameter getPowerEnergyWithSystemMargin() {
+		safeAccessPowerEnergyWithSystemMargin();
+		return powerEnergyWithSystemMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getPowerEnergyWithSystemMarginBean() {
 		safeAccessPowerEnergyWithSystemMargin();
 		return powerEnergyWithSystemMargin;
 	}
