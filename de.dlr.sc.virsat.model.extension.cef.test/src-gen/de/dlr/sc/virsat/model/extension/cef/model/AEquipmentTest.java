@@ -14,7 +14,6 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
-import de.dlr.sc.virsat.model.extension.cef.model.Equipment;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralFactory;
 import java.lang.Exception;
 

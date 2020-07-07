@@ -17,7 +17,6 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoriesFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.EquipmentDataParameters;
 import java.lang.Exception;
 
 
