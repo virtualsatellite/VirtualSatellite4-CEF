@@ -16,6 +16,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.eclipse.core.runtime.Status;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +33,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
+import de.dlr.sc.virsat.swtbot.test.Activator;
 import de.dlr.sc.virsat.swtbot.util.SwtBotDebugHelper;
 
 public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
@@ -71,6 +74,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		final int EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS = 3; // Documents folder, system parameters, child SEI
 		assertTrue(bot.checkBox("System Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
+		elementConfigurationEquipment.expand();
 		assertThat("There are documents, system parametes and child items now", configurationTreeSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS));
 		SwtBotDebugHelper.logCodeLine();
 		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
@@ -115,7 +119,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 	}
 	
 	@Test
-	public void testAddSubSystemParametersViaCheckBox() {
+	public void testAddRemoveSubSystemParametersViaCheckBox() {
 		
 		SwtBotDebugHelper.logCodeLine();
 		openEditor(elementConfigurationSubSystem);
@@ -123,11 +127,14 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Sub System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
 		SwtBotDebugHelper.logCodeLine();
+		openEditor(elementConfigurationSubSystem);
 		assertTrue(bot.checkBox("Sub System Mass Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
-		final int EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_MATH_PARAMETERS = 3; // Documents folder, system mass parameters, child SEI
-		assertThat("There are documents, subsystem mass parameters and child items now", configurationTreeSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_MATH_PARAMETERS));
+		elementConfigurationEquipment.expand();
+		final int EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM_MATH_PARAMETERS = 3; // Documents folder, system mass parameters, child SEI
+		assertThat("There are documents, subsystem mass parameters and child items now", elementConfigurationSubSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM_MATH_PARAMETERS));
 		SwtBotDebugHelper.logCodeLine();
 		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
 		
@@ -135,18 +142,19 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Sub System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
+		openEditor(elementConfigurationSubSystem);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Sub System Mass Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
-		assertThat("SubSystem parameters should not have been removed, mass paremeters yes", configurationTreeSystem.getItems(), arrayWithSize(2));
-		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
+		final int EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM = 2; // Documents folder, child SEI
+		assertThat("SubSystem parameters should not have been removed, mass paremeters yes", elementConfigurationSubSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM));
 		SwtBotDebugHelper.logCodeLine();
 		
 	}
 	
 	@Test
-	public void testAddEquipmentParametersViaCheckBox() {
+	public void testAddRemoveEquipmentParametersViaCheckBox() {
 		
 		SwtBotDebugHelper.logCodeLine();
 		openEditor(elementConfigurationEquipment);
@@ -154,53 +162,62 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
 		
 		SwtBotDebugHelper.logCodeLine();
-		final int EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS = 2; // Documents folder, system parameters
+		final int EXPECTED_NUMBER_TREE_CHILDREN_EQUIPMENT_PARAMETERS = 2; // Documents folder, system parameters
+		openEditor(elementConfigurationEquipment);
 		assertTrue(bot.checkBox("Equipment Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
-		assertThat("There are documents, equipment parametes and child items now", configurationTreeSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS));
-		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
+		elementConfigurationEquipment.expand();
+		assertThat("There are documents, equipment parametes and child items now", elementConfigurationEquipment.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_EQUIPMENT_PARAMETERS));
 		SwtBotDebugHelper.logCodeLine();
 		
 		SwtBotDebugHelper.logCodeLine();
 		bot.checkBox("Equipment Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
+		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Equipment Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
-		assertThat("Equipment parameters should have been removed", configurationTreeSystem.getItems(), arrayWithSize(2));
-		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
+		final int EXPECTED_NUMBER_TREE_CHILDREN_EQUIPMENT = 1; // Documents folder
+		assertThat("Equipment parameters should have been removed", elementConfigurationEquipment.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_EQUIPMENT));
 		
+	}
+	
+	@Test
+	public void testAddRemoveEquipmentParametersMassParametersViaCheckBox() {
+		
+		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		bot.checkBox("Equipment Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
+		openEditor(elementConfigurationEquipment);
+		
 		SwtBotDebugHelper.logCodeLine();
-		assertTrue(bot.checkBox("System Mass Parameters").isChecked());
+		assertTrue(bot.checkBox("Equipment Mass Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
 		final int EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_MATH_PARAMETERS = 3; // Documents folder, equipment parameters, equipment mass parameters
-		assertThat("There are documents, equipment parametes and equipment mass parametersnow", configurationTreeSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_MATH_PARAMETERS));
+		elementConfigurationEquipment.expand();
+		assertThat("There are documents, equipment parametes and equipment mass parameters now", elementConfigurationEquipment.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_MATH_PARAMETERS));
 		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
 		
 		SwtBotDebugHelper.logCodeLine();
 		bot.checkBox("Equipment Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
+		saveIfAsked();
+		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Equipment Mass Parameters").isChecked());
 		SwtBotDebugHelper.logCodeLine();
-		assertThat("Equipment parameters should not have been removed, mass paremeters yes", configurationTreeSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS));
+		final int EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS = 2; // Documents folder, system parameters
+		assertThat("Equipment parameters should not have been removed, mass paremeters yes", elementConfigurationEquipment.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SYSTEM_PARAMETERS));
 		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		SwtBotDebugHelper.logCodeLine();
-		
 	}
 	
 	@Test
@@ -316,6 +333,18 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
 		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
+	}
+	
+	private void saveIfAsked() {
+		try {
+			bot.button("Save").click();
+		} catch (WidgetNotFoundException e) {
+			Activator.getDefault().getLog().log(new Status(Status.INFO, Activator.getPluginId(), "Ask for save did not appear " + Thread.currentThread()));
+		}
+	}
+	
+	private String getAddCommandName(Class<?> beanClass) {
+		return "Add " +  beanClass.getSimpleName();
 	}
 	
 
