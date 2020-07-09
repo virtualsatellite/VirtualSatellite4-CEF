@@ -16,8 +16,6 @@ import static org.hamcrest.collection.IsArrayWithSize.arrayWithSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.core.runtime.Status;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +31,6 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
-import de.dlr.sc.virsat.swtbot.test.Activator;
 import de.dlr.sc.virsat.swtbot.util.SwtBotDebugHelper;
 
 public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
@@ -127,7 +124,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Sub System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		bot.button("Save").click();
 		SwtBotDebugHelper.logCodeLine();
 		openEditor(elementConfigurationSubSystem);
 		assertTrue(bot.checkBox("Sub System Mass Parameters").isChecked());
@@ -142,7 +139,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Sub System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		bot.button("Save").click();
 		openEditor(elementConfigurationSubSystem);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Sub System Mass Parameters").isChecked());
@@ -162,7 +159,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		bot.button("Save").click();
 		
 		SwtBotDebugHelper.logCodeLine();
 		final int EXPECTED_NUMBER_TREE_CHILDREN_EQUIPMENT_PARAMETERS = 2; // Documents folder, system parameters
@@ -177,7 +174,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		bot.button("Save").click();
 		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Equipment Parameters").isChecked());
@@ -195,7 +192,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		bot.button("Save").click();
 		openEditor(elementConfigurationEquipment);
 		
 		SwtBotDebugHelper.logCodeLine();
@@ -210,7 +207,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		saveIfAsked();
+		// Does not ask for save because equipment parameters are still there... So no hierarchy change happening
 		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Equipment Mass Parameters").isChecked());
@@ -333,14 +330,6 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
 		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
-	}
-	
-	private void saveIfAsked() {
-		try {
-			bot.button("Save").click();
-		} catch (WidgetNotFoundException e) {
-			Activator.getDefault().getLog().log(new Status(Status.INFO, Activator.getPluginId(), "Ask for save did not appear " + Thread.currentThread()));
-		}
 	}
 	
 	private String getAddCommandName(Class<?> beanClass) {
