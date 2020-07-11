@@ -16,10 +16,12 @@ import static org.hamcrest.collection.IsArrayWithSize.arrayWithSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.extension.cef.model.SubSystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
@@ -88,6 +90,7 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
 		
 		
+		//Adding system mass parameters automatically also adds system parameters
 		SwtBotDebugHelper.logCodeLine();
 		bot.checkBox("System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
@@ -224,51 +227,52 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		
 		// On configuration root level, the only the system CAs should be enabled
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
+		assertEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemParameters.class));
+		assertEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemMassParameters.class));
+		assertEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemPowerParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SubSystemPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SubSystemMassParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentTemperatureParameters.class));
 		
 		// On the second level System and Subsystem CAs should be enabled 
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemMassParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemPowerParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SubSystemPowerParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SubSystemMassParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentTemperatureParameters.class));
+		
 		
 		// On the third level all CA levels should be enabled
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemMassParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemPowerParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SubSystemPowerParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SubSystemMassParameters.class));
 		
 		SwtBotDebugHelper.logCodeLine();
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentMassParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentPowerParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentTemperatureParameters.class));
 		SwtBotDebugHelper.logCodeLine();
 
 	}
@@ -284,52 +288,56 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		SwtBotDebugHelper.logCodeLine();
 		
 		// Now only the system CAs should be enabled
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class))); // Cannot be assigned twice
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
-		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemParameters.class)); // Already applied
+		assertEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemMassParameters.class));
+		assertEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SystemPowerParameters.class));
 		
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SubSystemPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, SubSystemMassParameters.class));
 		
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
+		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(configurationTreeSystem, conceptCefX, EquipmentTemperatureParameters.class));
 		SwtBotDebugHelper.logCodeLine();
 		
 		// Now only subsystem CAs should be enabled on second level as system cannot be contained in a system
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
-		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SystemPowerParameters.class));
 		
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class))); // Cannot be assigned twice
-		assertEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
+		assertEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SubSystemPowerParameters.class)); 
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, SubSystemMassParameters.class)); // Cannot be assigned twice
 		
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertNotEnabled(elementConfigurationSubSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
+		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationSubSystem, conceptCefX, EquipmentTemperatureParameters.class));
 		SwtBotDebugHelper.logCodeLine();
 		
 		// On the third level all CA levels should be enabled
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemParameters.class)));
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemMassParameters.class)));
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SystemPowerParameters.class)));
-		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemMassParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SystemPowerParameters.class));
 		
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemPowerParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SubSystemPowerParameters.class));
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, SubSystemMassParameters.class));
 		
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentMassParameters.class))); // Cannot be assigned twice
-		assertNotEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentParameters.class))); // Automatically enabled with mass params
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentPowerParameters.class)));
-		assertEnabled(elementConfigurationEquipment.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(EquipmentTemperatureParameters.class)));
 		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentParameters.class)); // Cannot be assigned twice
+		assertNotEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentMassParameters.class)); // Automatically enabled with mass params
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentPowerParameters.class));
+		assertEnabled(contextMenuAddCommand(elementConfigurationEquipment, conceptCefX, EquipmentTemperatureParameters.class));
+		SwtBotDebugHelper.logCodeLine();
+	}
+	
+	protected SWTBotMenu contextMenuAddCommand(SWTBotTreeItem treeItem, Concept concept, Class<?> beanClass) {
+		return treeItem.contextMenu(concept.getDisplayName()).menu(getAddCommandName(beanClass));
 	}
 	
 	private String getAddCommandName(Class<?> beanClass) {
