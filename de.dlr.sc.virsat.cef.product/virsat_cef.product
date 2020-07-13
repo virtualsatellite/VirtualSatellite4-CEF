@@ -75,6 +75,7 @@ Germany
       <feature id="de.dlr.sc.virsat.uiengine.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.calculation.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.feature" installMode="root"/>
+      <feature id="de.dlr.sc.virsat.model.ext.core.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.extension.ps.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.extension.visualisation.feature" installMode="root"/>
       <feature id="de.dlr.sc.virsat.model.extension.cef.feature" installMode="root"/>
@@ -117,8 +118,11 @@ Germany
       <feature id="org.eclipse.emf.compare" installMode="root"/>
       <feature id="org.eclipse.emf.validation" installMode="root"/>
       <feature id="org.eclipse.egit" installMode="root"/>
-      <feature id="org.eclipse.jgit.ssh.apache" installMode="root"/>
       <feature id="org.eclipse.jgit" installMode="root"/>
+      <feature id="org.eclipse.jgit.ssh.apache" installMode="root"/>
+      <feature id="org.eclipse.jgit.http.apache" installMode="root"/>
+      <feature id="org.eclipse.jgit.gpg.bc" installMode="root"/>
+      <feature id="org.eclipse.jgit.ssh.jsch" installMode="root"/>
       <feature id="org.polarion.eclipse.team.svn.connector" installMode="root"/>
       <feature id="org.polarion.eclipse.team.svn.connector.svnkit18" installMode="root"/>
    </features>
