@@ -8,32 +8,32 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx;
+
 public class PluginXml {
-	public static class commands {
+	public static class Commands {
 	}
-	public static class conceptImages {
+	public static class ConceptImages {
 	}
-	public static class uiSnippets {
+	public static class UiSnippets {
 	}
-	public static class handlers {
+	public static class Handlers {
 	}
-	public static class conceptMigrators {
-		public static class Migrator1_0 {
+	public static class ConceptMigrators {
+		public static class Extensioncefx1_0 {
 			public static final String CLASSNAME = "de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0";
 			public static final String ID = "de.dlr.sc.virsat.model.extension.cefx";
 			public static final String VERSION = "1.0";
 			public static final String XMI = "concept/concept_v1_0.xmi";
-		}	
+		}
 	}
-	public static class concept {
-		public static class Concept {
+	public static class Concept {
+		public static class Extensioncefx1_0 {
 			public static final String ID = "de.dlr.sc.virsat.model.extension.cefx";
 			public static final String VERSION = "1.0";
 			public static final String XMI = "concept/concept.xmi";
-		}	
+		}
 	}
 	public static class ExtensionPoints {
-		
 	}
 }
 
