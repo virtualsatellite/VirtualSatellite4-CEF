@@ -188,13 +188,12 @@ jobs:
     # -----------------------------------------------------------
     # --- The Job for feature branches only. Assemble the product, but don't deploy
     - stage: build-assemble-deploy
-      if: branch NOT IN (integration, development, integration_snapshot, development_snapshot) AND NOT (branch =~ /^master/) AND NOT (tag =~ /^Release/)
+      if: branch NOT IN (integration, development, integration_snapshot, development_snapshot) AND NOT (tag =~ /^Release/)
       name: Build-Assemble-Deploy - Feature
       script:
       - bash/maven_build.sh -j assemble -p development   
 
-    # --- a push merge etc. on the master should try to assemble everything from the master
-    # --- but it should not deploy anythin
+    # For simulating the assemble steps but not actually deploying
     - stage: build-assemble-deploy
       if: (branch =~ /^master/) AND NOT (tag =~ /^Release/)
       name: Build-Assemble - Release (no Deploy)
@@ -226,16 +225,16 @@ jobs:
         # release is attached to the tag on the current commit.
         # -----------------------------------------------------------
       - provider: releases
-        token: $GITHUB_API_TOKEN
+        api_key: $GITHUB_API_TOKEN
         file_glob: true
         file:
         - deploy/unsecured/p2/**/zip/*_p2.zip
         - deploy/unsecured/bin/**/*.zip
         - deploy/unsecured/bin/**/*.tar.gz
         - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
-        cleanup: false
+        skip_cleanup: true
         name: Virtual Satellite 4 CEF Development Build
-        release_notes: Development build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
+        body: Development build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
         prerelease: true
         overwrite: true
         target_commitish: $TRAVIS_COMMIT
@@ -243,7 +242,7 @@ jobs:
           repo: virtualsatellite/VirtualSatellite4-CEF
           branch: development
       - provider: script
-        cleanup: false
+        skip_cleanup: true
         script: bash bash/deploy_sourceforge.sh -u development
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
@@ -275,16 +274,16 @@ jobs:
         # release is attached to the tag on the current commit.
         # -----------------------------------------------------------
       - provider: releases
-        token: $GITHUB_API_TOKEN
+        api_key: $GITHUB_API_TOKEN
         file_glob: true
         file: 
         - deploy/unsecured/p2/**/zip/*_p2.zip
         - deploy/unsecured/bin/**/*.zip
         - deploy/unsecured/bin/**/*.tar.gz
         - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
-        cleanup: false
+        skip_cleanup: true
         name: Virtual Satellite 4 CEF Integration Build
-        release_notes: Integration build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
+        body: Integration build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This release is subject to constant change.
         prerelease: true
         overwrite: true
         target_commitish: $TRAVIS_COMMIT
@@ -295,7 +294,7 @@ jobs:
       # push build to sourceforge repo for deployment
       # ---------------------------------------------    
       - provider: script
-        cleanup: false
+        skip_cleanup: true
         script: bash bash/deploy_sourceforge.sh -u integration
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
@@ -314,16 +313,16 @@ jobs:
         # Now attach the release to the Release Tag.
         # -----------------------------------------------------------
       - provider: releases
-        token: $GITHUB_API_TOKEN
+        api_key: $GITHUB_API_TOKEN
         file_glob: true
         file: 
         - deploy/secured/p2/**/zip/*_p2.zip
         - deploy/secured/bin/**/*.zip
         - deploy/secured/bin/**/*.tar.gz
         - de.dlr.sc.virsat.cef.docs.feature/docs/*.pdf
-        cleanup: false
+        skip_cleanup: true
         name: Virtual Satellite 4 CEF Release Build
-        release_notes: Release build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This is a stable release.
+        body: Release build on latest commit by Travis CI - $TRAVIS_BRANCH ($TRAVIS_COMMIT) - $(date +'%F %T %Z'). This is a stable release.
         prerelease: true
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
@@ -332,7 +331,7 @@ jobs:
       # push build to sourceforge repo for deployment
       # ---------------------------------------------    
       - provider: script
-        cleanup: false
+        skip_cleanup: true
         script: bash bash/deploy_sourceforge.sh -u release
         on:
           repo: virtualsatellite/VirtualSatellite4-CEF
