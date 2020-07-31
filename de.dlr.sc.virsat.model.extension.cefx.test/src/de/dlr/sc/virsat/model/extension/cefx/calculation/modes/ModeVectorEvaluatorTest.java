@@ -185,7 +185,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		List<Equation> equations = container.getEquationSection().getEquations();
 		
 		EquationHelper eqHelper = new EquationHelper();
-		eqHelper.evaluate(equations);
+		eqHelper.evaluate(equations, UserRegistry.getInstance());
 		
 		assertEquals("Default value correct", EXPECTED_DEFAULT, equipMassParams.getMassTotalWithMargin().getDefaultValue(), TEST_EPSILON);
 		assertEquals("Idle value correct", EXPECTED_IDLE, equipMassParams.getMassTotalWithMargin().getModeValues().get(0).getValue(), TEST_EPSILON);
@@ -217,7 +217,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		List<Equation> equations = container.getEquationSection().getEquations();
 		
 		EquationHelper eqHelper = new EquationHelper();
-		eqHelper.evaluate(equations);
+		eqHelper.evaluate(equations, UserRegistry.getInstance());
 		
 		assertEquals("Default value correct", EXPECTED_DEFAULT, equipPowerParams.getPowerPerUnitOnWithMargin().getDefaultValue(), TEST_EPSILON);
 		assertEquals("Idle value correct", EXPECTED_IDLE, equipPowerParams.getPowerPerUnitOnWithMargin().getModeValues().get(0).getValue(), TEST_EPSILON);
@@ -234,7 +234,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		List<Equation> equations = container.getEquationSection().getEquations();
 		
 		EquationHelper eqHelper = new EquationHelper();
-		eqHelper.evaluate(equations);
+		eqHelper.evaluate(equations, UserRegistry.getInstance());
 		
 		// Check if NaN has spread correctly
 		

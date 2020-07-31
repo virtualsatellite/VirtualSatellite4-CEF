@@ -25,6 +25,7 @@ import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValid
  * VirSat DLR CEF Concept for extended Product Structures
  * 
  */	
+@Deprecated
 public abstract class AStructuralElementInstanceValidator implements IStructuralElementInstanceValidator {
 
 	@Override

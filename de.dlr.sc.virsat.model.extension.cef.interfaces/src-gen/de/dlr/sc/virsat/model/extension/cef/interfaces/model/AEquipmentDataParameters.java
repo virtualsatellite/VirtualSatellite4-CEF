@@ -17,10 +17,11 @@ import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.concept.types.category.ABeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
 // *****************************************************************
@@ -35,7 +36,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.Category;
  * 
  * 
  */	
-public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment implements IBeanCategoryAssignment {
+public abstract class AEquipmentDataParameters extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters";
 	
@@ -79,16 +80,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataDutyCycle
 	// *****************************************************************
-	private Parameter DataDutyCycle = new Parameter();
+	private BeanPropertyComposed<Parameter> DataDutyCycle = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataDutyCycle() {
 		if (DataDutyCycle.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataDutyCycle");
-			DataDutyCycle.setTypeInstance(propertyInstance.getTypeInstance());
+			DataDutyCycle.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataDutyCycle () {
+	public Parameter getDataDutyCycle() {
+		safeAccessDataDutyCycle();
+		return DataDutyCycle.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataDutyCycleBean() {
 		safeAccessDataDutyCycle();
 		return DataDutyCycle;
 	}
@@ -96,16 +102,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataPerUnitOn
 	// *****************************************************************
-	private Parameter DataPerUnitOn = new Parameter();
+	private BeanPropertyComposed<Parameter> DataPerUnitOn = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataPerUnitOn() {
 		if (DataPerUnitOn.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataPerUnitOn");
-			DataPerUnitOn.setTypeInstance(propertyInstance.getTypeInstance());
+			DataPerUnitOn.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataPerUnitOn () {
+	public Parameter getDataPerUnitOn() {
+		safeAccessDataPerUnitOn();
+		return DataPerUnitOn.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataPerUnitOnBean() {
 		safeAccessDataPerUnitOn();
 		return DataPerUnitOn;
 	}
@@ -113,16 +124,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataPerUnitStby
 	// *****************************************************************
-	private Parameter DataPerUnitStby = new Parameter();
+	private BeanPropertyComposed<Parameter> DataPerUnitStby = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataPerUnitStby() {
 		if (DataPerUnitStby.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataPerUnitStby");
-			DataPerUnitStby.setTypeInstance(propertyInstance.getTypeInstance());
+			DataPerUnitStby.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataPerUnitStby () {
+	public Parameter getDataPerUnitStby() {
+		safeAccessDataPerUnitStby();
+		return DataPerUnitStby.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataPerUnitStbyBean() {
 		safeAccessDataPerUnitStby();
 		return DataPerUnitStby;
 	}
@@ -130,16 +146,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataPerUnitOnWithMargin
 	// *****************************************************************
-	private Parameter DataPerUnitOnWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> DataPerUnitOnWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataPerUnitOnWithMargin() {
 		if (DataPerUnitOnWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataPerUnitOnWithMargin");
-			DataPerUnitOnWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			DataPerUnitOnWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataPerUnitOnWithMargin () {
+	public Parameter getDataPerUnitOnWithMargin() {
+		safeAccessDataPerUnitOnWithMargin();
+		return DataPerUnitOnWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataPerUnitOnWithMarginBean() {
 		safeAccessDataPerUnitOnWithMargin();
 		return DataPerUnitOnWithMargin;
 	}
@@ -147,16 +168,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataPerUnitStbyWithMargin
 	// *****************************************************************
-	private Parameter DataPerUnitStbyWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> DataPerUnitStbyWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataPerUnitStbyWithMargin() {
 		if (DataPerUnitStbyWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataPerUnitStbyWithMargin");
-			DataPerUnitStbyWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			DataPerUnitStbyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataPerUnitStbyWithMargin () {
+	public Parameter getDataPerUnitStbyWithMargin() {
+		safeAccessDataPerUnitStbyWithMargin();
+		return DataPerUnitStbyWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataPerUnitStbyWithMarginBean() {
 		safeAccessDataPerUnitStbyWithMargin();
 		return DataPerUnitStbyWithMargin;
 	}
@@ -164,16 +190,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataPerUnitAvgWithMargin
 	// *****************************************************************
-	private Parameter DataPerUnitAvgWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> DataPerUnitAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataPerUnitAvgWithMargin() {
 		if (DataPerUnitAvgWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataPerUnitAvgWithMargin");
-			DataPerUnitAvgWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			DataPerUnitAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataPerUnitAvgWithMargin () {
+	public Parameter getDataPerUnitAvgWithMargin() {
+		safeAccessDataPerUnitAvgWithMargin();
+		return DataPerUnitAvgWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataPerUnitAvgWithMarginBean() {
 		safeAccessDataPerUnitAvgWithMargin();
 		return DataPerUnitAvgWithMargin;
 	}
@@ -181,16 +212,21 @@ public abstract class AEquipmentDataParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: DataAvgWithMargin
 	// *****************************************************************
-	private Parameter DataAvgWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> DataAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessDataAvgWithMargin() {
 		if (DataAvgWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("DataAvgWithMargin");
-			DataAvgWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			DataAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getDataAvgWithMargin () {
+	public Parameter getDataAvgWithMargin() {
+		safeAccessDataAvgWithMargin();
+		return DataAvgWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getDataAvgWithMarginBean() {
 		safeAccessDataAvgWithMargin();
 		return DataAvgWithMargin;
 	}

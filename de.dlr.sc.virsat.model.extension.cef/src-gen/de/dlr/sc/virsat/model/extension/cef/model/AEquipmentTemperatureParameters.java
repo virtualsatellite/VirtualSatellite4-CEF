@@ -15,12 +15,12 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.concept.types.category.ABeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
 // *****************************************************************
@@ -35,7 +35,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.Category;
  * 
  * 
  */	
-public abstract class AEquipmentTemperatureParameters extends ABeanCategoryAssignment implements IBeanCategoryAssignment {
+public abstract class AEquipmentTemperatureParameters extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cef.EquipmentTemperatureParameters";
 	
@@ -76,16 +76,21 @@ public abstract class AEquipmentTemperatureParameters extends ABeanCategoryAssig
 	// *****************************************************************
 	// * Attribute: temperatureNoOpsMax
 	// *****************************************************************
-	private Parameter temperatureNoOpsMax = new Parameter();
+	private BeanPropertyComposed<Parameter> temperatureNoOpsMax = new BeanPropertyComposed<>();
 	
 	private void safeAccessTemperatureNoOpsMax() {
 		if (temperatureNoOpsMax.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("temperatureNoOpsMax");
-			temperatureNoOpsMax.setTypeInstance(propertyInstance.getTypeInstance());
+			temperatureNoOpsMax.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getTemperatureNoOpsMax () {
+	public Parameter getTemperatureNoOpsMax() {
+		safeAccessTemperatureNoOpsMax();
+		return temperatureNoOpsMax.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getTemperatureNoOpsMaxBean() {
 		safeAccessTemperatureNoOpsMax();
 		return temperatureNoOpsMax;
 	}
@@ -93,16 +98,21 @@ public abstract class AEquipmentTemperatureParameters extends ABeanCategoryAssig
 	// *****************************************************************
 	// * Attribute: temperatureNoOpsMin
 	// *****************************************************************
-	private Parameter temperatureNoOpsMin = new Parameter();
+	private BeanPropertyComposed<Parameter> temperatureNoOpsMin = new BeanPropertyComposed<>();
 	
 	private void safeAccessTemperatureNoOpsMin() {
 		if (temperatureNoOpsMin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("temperatureNoOpsMin");
-			temperatureNoOpsMin.setTypeInstance(propertyInstance.getTypeInstance());
+			temperatureNoOpsMin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getTemperatureNoOpsMin () {
+	public Parameter getTemperatureNoOpsMin() {
+		safeAccessTemperatureNoOpsMin();
+		return temperatureNoOpsMin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getTemperatureNoOpsMinBean() {
 		safeAccessTemperatureNoOpsMin();
 		return temperatureNoOpsMin;
 	}
@@ -110,16 +120,21 @@ public abstract class AEquipmentTemperatureParameters extends ABeanCategoryAssig
 	// *****************************************************************
 	// * Attribute: temperatureOpsMax
 	// *****************************************************************
-	private Parameter temperatureOpsMax = new Parameter();
+	private BeanPropertyComposed<Parameter> temperatureOpsMax = new BeanPropertyComposed<>();
 	
 	private void safeAccessTemperatureOpsMax() {
 		if (temperatureOpsMax.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("temperatureOpsMax");
-			temperatureOpsMax.setTypeInstance(propertyInstance.getTypeInstance());
+			temperatureOpsMax.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getTemperatureOpsMax () {
+	public Parameter getTemperatureOpsMax() {
+		safeAccessTemperatureOpsMax();
+		return temperatureOpsMax.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getTemperatureOpsMaxBean() {
 		safeAccessTemperatureOpsMax();
 		return temperatureOpsMax;
 	}
@@ -127,16 +142,21 @@ public abstract class AEquipmentTemperatureParameters extends ABeanCategoryAssig
 	// *****************************************************************
 	// * Attribute: temperatureOpsMin
 	// *****************************************************************
-	private Parameter temperatureOpsMin = new Parameter();
+	private BeanPropertyComposed<Parameter> temperatureOpsMin = new BeanPropertyComposed<>();
 	
 	private void safeAccessTemperatureOpsMin() {
 		if (temperatureOpsMin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("temperatureOpsMin");
-			temperatureOpsMin.setTypeInstance(propertyInstance.getTypeInstance());
+			temperatureOpsMin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getTemperatureOpsMin () {
+	public Parameter getTemperatureOpsMin() {
+		safeAccessTemperatureOpsMin();
+		return temperatureOpsMin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getTemperatureOpsMinBean() {
 		safeAccessTemperatureOpsMin();
 		return temperatureOpsMin;
 	}

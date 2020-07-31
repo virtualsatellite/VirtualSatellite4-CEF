@@ -24,6 +24,7 @@ import de.dlr.sc.virsat.concept.unittest.util.test.AConceptProjectTestCase;
 import de.dlr.sc.virsat.model.dvlm.DVLMFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
+import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
@@ -82,7 +83,7 @@ public class WrongHierarchyValidatorTest extends AConceptProjectTestCase {
 		Resource resSys2 = resourceSet.getStructuralElementInstanceResource(sys2.getStructuralElementInstance());
 		resSys2.getContents().add(sys2.getStructuralElementInstance());
 		
-		resourceSet.saveAllResources(null);
+		resourceSet.saveAllResources(null, UserRegistry.getInstance());
 	}
 
 	@Test

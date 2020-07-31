@@ -42,10 +42,10 @@ public class InterfaceEndQuantityKindDecorator extends QuantityKindDecorator imp
 				if ((iBca != null) && (iBca instanceof DataInterfaceEnd)) {
 					DataInterfaceEnd dIfe = (DataInterfaceEnd) iBca;
 					String iftName = dIfe.getDataInterfaceType() != null ? dIfe.getDataInterfaceType().getName() : "N/A";
-					decorateQuantityAndType(decoration, dIfe.getQuantity(), iftName);
+					decorateQuantityAndType(decoration, dIfe.getQuantityBean().getValue(), iftName);
 				} else if ((iBca != null) && (iBca instanceof AInterfaceEnd)) {
 					AInterfaceEnd aIfe = (AInterfaceEnd) iBca;
-					decorateQuantity(decoration, aIfe.getQuantity());
+					decorateQuantity(decoration, aIfe.getQuantityBean().getValue());
 				}
 			} catch (CoreException e1) {
 			}
@@ -54,17 +54,14 @@ public class InterfaceEndQuantityKindDecorator extends QuantityKindDecorator imp
 	
 	/**
 	 * This method is doing the uniform decoration of the quantity and adds it as text
-	 * to the tree widget in the navigator in the way such as (x 4 Can) it also
-	 * adds the type in case it is given
+	 * to the tree widget in the navigator in the way such as ( x quantity type), e.g. ( x 4 Can)
 	 * @param decoration the decoration to be used to add the quantity
-	 * @param quantity the actual quantity to be added
-	 * @param type the interface type
+	 * @param quantity the actual quantity to be added. If null, the decoration will have "null" in quantity
+	 * @param type the interface type. If null, the decoration will have "null" in type
 	 */
-	protected void decorateQuantityAndType(IDecoration decoration, long quantity, String type) {
-		try {
-			decoration.addSuffix(String.format(" ( x %d %s)", quantity, type));
-		} catch (NumberFormatException e) {
-			decoration.addSuffix(" ( x NaN N/A)");
-		}
+	protected void decorateQuantityAndType(IDecoration decoration, Long quantity, String type) {
+		String suffixFormat = " ( x %d %s)";
+		String suffix = String.format(suffixFormat, quantity, type);
+		decoration.addSuffix(suffix);
 	}
 }

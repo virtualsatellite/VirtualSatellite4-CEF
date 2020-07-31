@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.After;
 import org.junit.Before;
@@ -25,8 +26,11 @@ import de.dlr.sc.virsat.concept.unittest.util.test.AConceptProjectTestCase;
 import de.dlr.sc.virsat.model.dvlm.DVLMFactory;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
+import de.dlr.sc.virsat.model.extension.cefx.model.ExcelCalculation;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.ParameterRange;
+import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
+import de.dlr.sc.virsat.model.extension.cefx.model.Value;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.project.resources.VirSatResourceSet;
 import de.dlr.sc.virsat.project.structure.VirSatProjectCommons;
@@ -89,7 +93,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		Resource resSys = resourceSet.getStructuralElementInstanceResource(sys.getStructuralElementInstance());
 		resSys.getContents().add(sys.getStructuralElementInstance());
 		
-		resourceSet.saveAllResources(null);
+		resourceSet.saveAllResources(null, UserRegistry.getInstance());
 	}
 	
 	@After
@@ -101,7 +105,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 	@Test
 	public void testParameterOutOfRange() throws Exception {
 
-		StructuralElementInstanceValidator seiValidator = new StructuralElementInstanceValidator();
+		CefxValidator seiValidator = new CefxValidator();
 
 		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
@@ -134,5 +138,78 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		validate = seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
+	
+	@Test
+	public void testParameterNoDefaultValue() throws Exception {
+		CefxValidator seiValidator = new CefxValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		paramOne.setDefaultValue(Double.NaN);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Default Value of Parameter is not defined", 1, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		paramOne.setDefaultValue(1);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
+	
+	@Test
+	public void testParameterNoModeValue() throws Exception {
+		CefxValidator seiValidator = new CefxValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		Value modeValue = new Value(conceptCEFX);
+		modeValue.getValueBean().unset();
+		modeValue.getModeBean().unset();
+		paramOne.getModeValues().add(modeValue);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Mode value not correctly defined", 2, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		modeValue.setValue(1);
+		modeValue.setMode(new SystemMode(conceptCEFX));
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
+	
+	@Test
+	public void testParameterNoExcelFile() throws Exception {
+		CefxValidator seiValidator = new CefxValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		ExcelCalculation excelCalc = new ExcelCalculation(conceptCEFX);
+		excelCalc.getExcelFileBean().unset();
+		sys.add(excelCalc);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Excel File not correctly defined", 1, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		URI uri = URI.createPlatformResourceURI("dummy", true);
+		excelCalc.setExcelFile(uri);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
 }

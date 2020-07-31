@@ -14,7 +14,6 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 // *****************************************************************
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
@@ -22,9 +21,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.common.command.Command;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.UnitValuePropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.concept.types.category.ABeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
+import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
 // *****************************************************************
@@ -39,7 +39,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedProperty
  * 
  * 
  */	
-public abstract class ASystemParameters extends ABeanCategoryAssignment implements IBeanCategoryAssignment {
+public abstract class ASystemParameters extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cef.SystemParameters";
 	
@@ -114,16 +114,21 @@ public abstract class ASystemParameters extends ABeanCategoryAssignment implemen
 	// *****************************************************************
 	// * Attribute: modeDuration
 	// *****************************************************************
-	private Parameter modeDuration = new Parameter();
+	private BeanPropertyComposed<Parameter> modeDuration = new BeanPropertyComposed<>();
 	
 	private void safeAccessModeDuration() {
 		if (modeDuration.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("modeDuration");
-			modeDuration.setTypeInstance(propertyInstance.getTypeInstance());
+			modeDuration.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getModeDuration () {
+	public Parameter getModeDuration() {
+		safeAccessModeDuration();
+		return modeDuration.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getModeDurationBean() {
 		safeAccessModeDuration();
 		return modeDuration;
 	}

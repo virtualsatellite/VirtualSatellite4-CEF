@@ -12,23 +12,19 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import org.eclipse.core.runtime.CoreException;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesPackage;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
-import de.dlr.sc.virsat.model.concept.types.factory.BeanCategoryAssignmentFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.common.command.Command;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.UnitValuePropertyInstance;
-import org.eclipse.emf.edit.command.SetCommand;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.concept.types.category.ABeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
+import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
 // *****************************************************************
@@ -43,7 +39,7 @@ import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
  * 
  * 
  */	
-public abstract class AValue extends ABeanCategoryAssignment implements IBeanCategoryAssignment {
+public abstract class AValue extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cefx.Value";
 	
@@ -118,49 +114,31 @@ public abstract class AValue extends ABeanCategoryAssignment implements IBeanCat
 	// *****************************************************************
 	// * Attribute: mode
 	// *****************************************************************
-	private SystemMode mode;
+	private BeanPropertyReference<SystemMode> mode = new BeanPropertyReference<>();
 	
 	private void safeAccessMode() {
 		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("mode");
-		CategoryAssignment ca = (CategoryAssignment) propertyInstance.getReference();
-		
-		if (ca != null) {
-			if (mode == null) {
-				createMode(ca);
-			}
-			mode.setTypeInstance(ca);
-		} else {
-			mode = null;
-		}
+		mode.setTypeInstance(propertyInstance);
 	}
 	
-	private void createMode(CategoryAssignment ca) {
-		try {
-			BeanCategoryAssignmentFactory beanFactory = new BeanCategoryAssignmentFactory();
-			mode = (SystemMode) beanFactory.getInstanceFor(ca);
-		} catch (CoreException e) {
-			
-		}
-	}
-					
 	public SystemMode getMode() {
 		safeAccessMode();
-		return mode;
+		return mode.getValue();
 	}
 	
 	public Command setMode(EditingDomain ed, SystemMode value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("mode");
-		CategoryAssignment ca = value.getTypeInstance();
-		return SetCommand.create(ed, propertyInstance, PropertyinstancesPackage.Literals.REFERENCE_PROPERTY_INSTANCE__REFERENCE, ca);
+		safeAccessMode();
+		return mode.setValue(ed, value);
 	}
 	
 	public void setMode(SystemMode value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("mode");
-		if (value != null) {
-			propertyInstance.setReference(value.getTypeInstance());
-		} else {
-			propertyInstance.setReference(null);
-		}
+		safeAccessMode();
+		mode.setValue(value);
+	}
+	
+	public BeanPropertyReference<SystemMode> getModeBean() {
+		safeAccessMode();
+		return mode;
 	}
 	
 	

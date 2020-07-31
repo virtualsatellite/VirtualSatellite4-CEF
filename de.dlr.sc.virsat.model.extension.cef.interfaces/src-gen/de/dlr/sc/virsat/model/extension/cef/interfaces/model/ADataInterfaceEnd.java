@@ -12,21 +12,16 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
-import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import org.eclipse.core.runtime.CoreException;
-import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesPackage;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.AInterfaceEnd;
-import de.dlr.sc.virsat.model.dvlm.categories.Category;
-import de.dlr.sc.virsat.model.concept.types.factory.BeanCategoryAssignmentFactory;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import de.dlr.sc.virsat.model.extension.cef.interfaces.model.DataInterfaceTypes;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.command.SetCommand;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
+import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
 
 
 // *****************************************************************
@@ -79,49 +74,31 @@ public abstract class ADataInterfaceEnd extends AInterfaceEnd implements IBeanCa
 	// *****************************************************************
 	// * Attribute: dataInterfaceType
 	// *****************************************************************
-	private DataInterfaceTypes dataInterfaceType;
+	private BeanPropertyReference<DataInterfaceTypes> dataInterfaceType = new BeanPropertyReference<>();
 	
 	private void safeAccessDataInterfaceType() {
 		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("dataInterfaceType");
-		CategoryAssignment ca = (CategoryAssignment) propertyInstance.getReference();
-		
-		if (ca != null) {
-			if (dataInterfaceType == null) {
-				createDataInterfaceType(ca);
-			}
-			dataInterfaceType.setTypeInstance(ca);
-		} else {
-			dataInterfaceType = null;
-		}
+		dataInterfaceType.setTypeInstance(propertyInstance);
 	}
 	
-	private void createDataInterfaceType(CategoryAssignment ca) {
-		try {
-			BeanCategoryAssignmentFactory beanFactory = new BeanCategoryAssignmentFactory();
-			dataInterfaceType = (DataInterfaceTypes) beanFactory.getInstanceFor(ca);
-		} catch (CoreException e) {
-			
-		}
-	}
-					
 	public DataInterfaceTypes getDataInterfaceType() {
 		safeAccessDataInterfaceType();
-		return dataInterfaceType;
+		return dataInterfaceType.getValue();
 	}
 	
 	public Command setDataInterfaceType(EditingDomain ed, DataInterfaceTypes value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("dataInterfaceType");
-		CategoryAssignment ca = value.getTypeInstance();
-		return SetCommand.create(ed, propertyInstance, PropertyinstancesPackage.Literals.REFERENCE_PROPERTY_INSTANCE__REFERENCE, ca);
+		safeAccessDataInterfaceType();
+		return dataInterfaceType.setValue(ed, value);
 	}
 	
 	public void setDataInterfaceType(DataInterfaceTypes value) {
-		ReferencePropertyInstance propertyInstance = (ReferencePropertyInstance) helper.getPropertyInstance("dataInterfaceType");
-		if (value != null) {
-			propertyInstance.setReference(value.getTypeInstance());
-		} else {
-			propertyInstance.setReference(null);
-		}
+		safeAccessDataInterfaceType();
+		dataInterfaceType.setValue(value);
+	}
+	
+	public BeanPropertyReference<DataInterfaceTypes> getDataInterfaceTypeBean() {
+		safeAccessDataInterfaceType();
+		return dataInterfaceType;
 	}
 	
 	

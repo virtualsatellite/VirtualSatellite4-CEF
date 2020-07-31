@@ -15,12 +15,12 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
-import de.dlr.sc.virsat.model.concept.types.category.ABeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 
 
 // *****************************************************************
@@ -35,7 +35,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.Category;
  * 
  * 
  */	
-public abstract class ASubSystemMassParameters extends ABeanCategoryAssignment implements IBeanCategoryAssignment {
+public abstract class ASubSystemMassParameters extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cef.SubSystemMassParameters";
 	
@@ -76,16 +76,21 @@ public abstract class ASubSystemMassParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: massTotal
 	// *****************************************************************
-	private Parameter massTotal = new Parameter();
+	private BeanPropertyComposed<Parameter> massTotal = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassTotal() {
 		if (massTotal.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotal");
-			massTotal.setTypeInstance(propertyInstance.getTypeInstance());
+			massTotal.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassTotal () {
+	public Parameter getMassTotal() {
+		safeAccessMassTotal();
+		return massTotal.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassTotalBean() {
 		safeAccessMassTotal();
 		return massTotal;
 	}
@@ -93,16 +98,21 @@ public abstract class ASubSystemMassParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: massTotalWithMargin
 	// *****************************************************************
-	private Parameter massTotalWithMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> massTotalWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassTotalWithMargin() {
 		if (massTotalWithMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMargin");
-			massTotalWithMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			massTotalWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassTotalWithMargin () {
+	public Parameter getMassTotalWithMargin() {
+		safeAccessMassTotalWithMargin();
+		return massTotalWithMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassTotalWithMarginBean() {
 		safeAccessMassTotalWithMargin();
 		return massTotalWithMargin;
 	}
@@ -110,16 +120,21 @@ public abstract class ASubSystemMassParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: massMarginPercentage
 	// *****************************************************************
-	private Parameter massMarginPercentage = new Parameter();
+	private BeanPropertyComposed<Parameter> massMarginPercentage = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassMarginPercentage() {
 		if (massMarginPercentage.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massMarginPercentage");
-			massMarginPercentage.setTypeInstance(propertyInstance.getTypeInstance());
+			massMarginPercentage.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassMarginPercentage () {
+	public Parameter getMassMarginPercentage() {
+		safeAccessMassMarginPercentage();
+		return massMarginPercentage.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassMarginPercentageBean() {
 		safeAccessMassMarginPercentage();
 		return massMarginPercentage;
 	}
@@ -127,16 +142,21 @@ public abstract class ASubSystemMassParameters extends ABeanCategoryAssignment i
 	// *****************************************************************
 	// * Attribute: massMargin
 	// *****************************************************************
-	private Parameter massMargin = new Parameter();
+	private BeanPropertyComposed<Parameter> massMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessMassMargin() {
 		if (massMargin.getTypeInstance() == null) {
 			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massMargin");
-			massMargin.setTypeInstance(propertyInstance.getTypeInstance());
+			massMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
-	public Parameter getMassMargin () {
+	public Parameter getMassMargin() {
+		safeAccessMassMargin();
+		return massMargin.getValue();
+	}
+	
+	public BeanPropertyComposed<Parameter> getMassMarginBean() {
 		safeAccessMassMargin();
 		return massMargin;
 	}

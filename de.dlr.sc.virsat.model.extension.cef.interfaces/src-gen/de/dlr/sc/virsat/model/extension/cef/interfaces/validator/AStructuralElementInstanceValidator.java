@@ -25,6 +25,7 @@ import de.dlr.sc.virsat.build.validator.external.IStructuralElementInstanceValid
  * Concept for Functional Interface Architecture in CEF
  * 
  */	
+@Deprecated
 public abstract class AStructuralElementInstanceValidator implements IStructuralElementInstanceValidator {
 
 	@Override

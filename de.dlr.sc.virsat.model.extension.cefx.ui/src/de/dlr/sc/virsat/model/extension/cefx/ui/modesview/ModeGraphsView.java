@@ -37,10 +37,10 @@ import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.swt.ChartComposite;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.jfree.experimental.chart.swt.ChartComposite;
 
 import de.dlr.sc.virsat.cef.calculation.modes.ModeVectorResult;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
