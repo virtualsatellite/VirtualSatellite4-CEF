@@ -4,6 +4,7 @@
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="4.12.0.r202007311110"/>
+		<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="4.12.0.r202007311110"/>
@@ -13,6 +14,7 @@
 		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="4.12.0.r202007311110"/>
+		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="4.12.0.r202007311110"/>
 		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="4.12.0.r202007311110"/>
