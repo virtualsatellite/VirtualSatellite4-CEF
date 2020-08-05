@@ -9,6 +9,30 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cef.validator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.Collections;
+
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceDescription;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.junit.After;
+import org.junit.Before;
+
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
@@ -35,34 +59,14 @@ import de.dlr.sc.virsat.model.dvlm.provider.DVLMItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.resource.provider.DVLMResourceItemProviderAdapterFactory;
 import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.dvlm.structural.provider.DVLMStructuralItemProviderAdapterFactory;
+import de.dlr.sc.virsat.model.extension.cef.model.ExcelCalculation;
 import de.dlr.sc.virsat.model.extension.cef.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cef.model.ParameterRange;
 import de.dlr.sc.virsat.model.extension.cef.model.System;
+import de.dlr.sc.virsat.model.extension.cef.model.SystemMode;
+import de.dlr.sc.virsat.model.extension.cef.model.Value;
 import de.dlr.sc.virsat.project.resources.VirSatResourceSet;
 import de.dlr.sc.virsat.project.structure.VirSatProjectCommons;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.Collections;
-
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceDescription;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Auto Generated Class inheriting from Generator Gap Class
@@ -249,4 +253,76 @@ public class CefValidatorTest extends ACefValidatorTest {
 		
 	}
 	
+	@Test
+	public void testParameterNoDefaultValue() throws Exception {
+		CefValidator seiValidator = new CefValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		paramOne.setDefaultValue(Double.NaN);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Default Value of Parameter is not defined", 1, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		paramOne.setDefaultValue(1);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
+	
+	@Test
+	public void testParameterNoModeValue() throws Exception {
+		CefValidator seiValidator = new CefValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		Value modeValue = new Value(conceptCef);
+		modeValue.getValueBean().unset();
+		modeValue.getModeBean().unset();
+		paramOne.getModeValues().add(modeValue);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Mode value not correctly defined", 2, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		modeValue.setValue(1);
+		modeValue.setMode(new SystemMode(conceptCef));
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
+	
+	@Test
+	public void testParameterNoExcelFile() throws Exception {
+		CefValidator seiValidator = new CefValidator();
+
+		Boolean validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers yet", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		ExcelCalculation excelCalc = new ExcelCalculation(conceptCef);
+		excelCalc.getExcelFileBean().unset();
+		sys.add(excelCalc);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertFalse("validator brings an error", validate);
+		assertEquals("Excel File not correctly defined", 1, fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);
+		
+		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		URI uri = URI.createPlatformResourceURI("dummy", true);
+		excelCalc.setExcelFile(uri);
+		
+		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
+		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
+	}
 }
