@@ -2,20 +2,19 @@
 		<?pde version="3.8"?><target name="targetForReferences" sequenceNumber="1">
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="0.0.0"/>
-		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="0.0.0"/>
+		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.budget.power.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.model.extension.funcelectrical.feature.feature.group" version="0.0.0"/>
@@ -32,7 +31,7 @@
 		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="0.0.0"/>
-		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"/>
+		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/integration/4.9.0/"/>
 		</location>
 		</locations>
 		<environment>
