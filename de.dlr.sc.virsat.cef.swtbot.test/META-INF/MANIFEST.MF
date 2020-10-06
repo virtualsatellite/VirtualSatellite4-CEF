@@ -14,7 +14,11 @@ Require-Bundle: org.eclipse.swtbot.go,
  de.dlr.sc.virsat.concept.unittest.util,
  de.dlr.sc.virsat.cef.branding.ui,
  org.eclipse.core.resources,
- de.dlr.sc.virsat.model
+ de.dlr.sc.virsat.model,
+ de.dlr.sc.virsat.model.extension.cef,
+ de.dlr.sc.virsat.model.extension.cefx,
+ de.dlr.sc.virsat.model.extension.cef.ui,
+ de.dlr.sc.virsat.model.extension.cefx.ui
 Automatic-Module-Name: de.dlr.sc.virsat.fdir.swtbot.test
 Export-Package: de.dlr.sc.virsat.cef.swtbot.test
 Import-Package: org.zeromq,
