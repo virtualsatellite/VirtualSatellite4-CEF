@@ -119,6 +119,41 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 	}
 	
 	@Test
+	public void testAddRemoveSubSystemParametersViaCheckBox() {
+		
+		SwtBotDebugHelper.logCodeLine();
+		openEditor(elementConfigurationSubSystem);
+		SwtBotDebugHelper.logCodeLine();
+		bot.checkBox("Sub System Mass Parameters").click();
+		SwtBotDebugHelper.logCodeLine();
+		waitForEditingDomainAndUiThread();
+		bot.button("Save").click();
+		SwtBotDebugHelper.logCodeLine();
+		openEditor(elementConfigurationSubSystem);
+		assertTrue(bot.checkBox("Sub System Mass Parameters").isChecked());
+		SwtBotDebugHelper.logCodeLine();
+		elementConfigurationEquipment.expand();
+		final int EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM_MATH_PARAMETERS = 3; // Documents folder, system mass parameters, child SEI
+		assertThat("There are documents, subsystem mass parameters and child items now", elementConfigurationSubSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM_MATH_PARAMETERS));
+		SwtBotDebugHelper.logCodeLine();
+		assertNotEnabled(configurationTreeSystem.contextMenu(conceptCefX.getDisplayName()).menu(getAddCommandName(SubSystemMassParameters.class)));
+		
+		SwtBotDebugHelper.logCodeLine();
+		bot.checkBox("Sub System Mass Parameters").click();
+		SwtBotDebugHelper.logCodeLine();
+		waitForEditingDomainAndUiThread();
+		bot.button("Save").click();
+		openEditor(elementConfigurationSubSystem);
+		SwtBotDebugHelper.logCodeLine();
+		assertFalse(bot.checkBox("Sub System Mass Parameters").isChecked());
+		SwtBotDebugHelper.logCodeLine();
+		final int EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM = 2; // Documents folder, child SEI
+		assertThat("SubSystem parameters should not have been removed, mass paremeters yes", elementConfigurationSubSystem.getItems(), arrayWithSize(EXPECTED_NUMBER_TREE_CHILDREN_SUB_SYSTEM));
+		SwtBotDebugHelper.logCodeLine();
+		
+	}
+	
+	@Test
 	public void testAddRemoveEquipmentParametersViaCheckBox() {
 		
 		SwtBotDebugHelper.logCodeLine();
