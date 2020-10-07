@@ -18,7 +18,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CEFStudyTemplateTest extends ACefSwtBotTestCase {
+public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 
 	SWTBotTreeItem repositoryNavigatorItem;
 	SWTBotTreeItem systemItem;
