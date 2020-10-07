@@ -14,7 +14,11 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +38,14 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		
 	}
 	
+	@After
+	public void tearDown() throws CoreException, IOException {
+		super.tearDown();
+		systemItem = null;
+		subSystemItem = null;
+		equipmentItem = null;
+	}
+	
 	@Test
 	public void testUseStudyTemplate() {
 		
@@ -41,6 +53,7 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		bot.menu("Templates").menu("Create New DLR/CEF Study").click();
 		
 		final int STUDY_REPOSITORY_ITEM_COUNT = 2; // apps + system
+		repositoryNavigatorItem.expand();
 		assertEquals(STUDY_REPOSITORY_ITEM_COUNT, repositoryNavigatorItem.getItems().length);
 		
 		systemItem = repositoryNavigatorItem.getNode("Sys: System");
@@ -58,6 +71,7 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		final int STUDY_SUB_SYSTEM_ITEM_COUNT = 4; // documents + equipment + subsystem mass parameters + subsystem power parameters
 		assertEquals(STUDY_SUB_SYSTEM_ITEM_COUNT, subSystemItem.getItems().length);
 		
+		subSystemItem.click();
 		equipmentItem = subSystemItem.getNode("Eqp: equipment ( x 1)");
 		assertNotNull(equipmentItem);
 		
@@ -72,6 +86,7 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		//Prepare project
 		repositoryNavigatorItem.click();
 		bot.menu("Templates").menu("Create New DLR/CEF Study").click();
+		repositoryNavigatorItem.click();
 		systemItem = repositoryNavigatorItem.getNode("Sys: System");
 		systemItem.expand();
 		subSystemItem = systemItem.getNode("SubSys: subSystem");
@@ -81,8 +96,9 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		
 		systemItem.click();
 		bot.menu("Templates").menu("Create New DLR/CEF SubSystem").click();
-		
+		systemItem.expand();
 		assertTrue("One more element in tree", systemItem.getItems().length > PREVIOUS_SYTEM_ITEM_COUNT);
+		systemItem.click();
 		SWTBotTreeItem newSubSystem = systemItem.getNode("SubSys: subSystem");
 		assertNotNull(newSubSystem);
 		assertNotEquals("New subsystem is not the initially exisitng one", subSystemItem, newSubSystem);
@@ -95,10 +111,12 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		//Prepare project
 		repositoryNavigatorItem.click();
 		bot.menu("Templates").menu("Create New DLR/CEF Study").click();
+		repositoryNavigatorItem.click();
 		systemItem = repositoryNavigatorItem.getNode("Sys: System");
 		systemItem.expand();
 		subSystemItem = systemItem.getNode("SubSys: subSystem");
 		subSystemItem.expand();
+		subSystemItem.click();
 		equipmentItem = subSystemItem.getNode("Eqp: equipment ( x 1)");
 		rename(equipmentItem, "InitialEquipment");
 		
@@ -106,8 +124,10 @@ public class CefStudyTemplateTest extends ACefSwtBotTestCase {
 		
 		subSystemItem.click();
 		bot.menu("Templates").menu("Create New DLR/CEF Equipment").click();
+		subSystemItem.expand();
 		
 		assertTrue("One more element in tree", subSystemItem.getItems().length > PREVIOUS_SUB_SYSTEM_ITEM_COUNT);
+		subSystemItem.click();
 		SWTBotTreeItem newEquipment = subSystemItem.getNode("Eqp: equipment ( x 1)");
 		assertNotNull(newEquipment);
 		assertNotEquals("New subsystem is not the initially exisitng one", equipmentItem, newEquipment);
