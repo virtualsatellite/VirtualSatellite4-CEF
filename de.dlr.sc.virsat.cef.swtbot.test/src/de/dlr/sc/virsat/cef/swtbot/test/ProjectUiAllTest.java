@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	SWTBotTestCaseStub.class,
 	CefHierarchyLevelTest.class,
+	CefStudyTemplateTest.class,
 	})
 
 public class ProjectUiAllTest {

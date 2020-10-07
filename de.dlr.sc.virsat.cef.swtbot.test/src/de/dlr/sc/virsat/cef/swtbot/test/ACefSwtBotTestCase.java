@@ -9,6 +9,13 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.cef.swtbot.test;
 
+import static org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory.withPartName;
+
+import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.IEditorReference;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.StringStartsWith;
 import org.junit.Before;
 
 import de.dlr.sc.virsat.concept.unittest.util.ConceptXmiLoader;
@@ -52,6 +59,20 @@ public class ACefSwtBotTestCase extends ASwtBotTestCase {
 		bot.table().select("CEF - X");
 		bot.button("Open").click();
 		waitForEditingDomainAndUiThread(); 
+	}
+	
+	@Override
+	protected void waitForEditor(SWTBotTreeItem item) {
+		String label = item.getText();
+		if (label.contains("( x")) {
+			// tree node contains quantity... ignore it
+			label = label.substring(0, label.indexOf("(") - 1);
+		} else if (label.contains("<<")) {
+			// tree node contains inheritance type... ignore it
+			label = label.substring(0, label.indexOf("<") - 1);
+		}
+		Matcher<IEditorReference> matcher = withPartName(StringStartsWith.startsWith(label + " -> "));
+		bot.waitUntil(Conditions.waitForEditor(matcher));
 	}
 
 }
