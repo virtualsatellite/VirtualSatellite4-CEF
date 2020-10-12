@@ -36,6 +36,8 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 	static final int SYSTEM_MARGIN_ROW_INDEX = 1;
 	static final int MODE_DURATION_ROW_INDEX = 0;
 	
+	static final int SYSTEM_ITEM_LEVEL = 1;
+
 	@Override
 	public void before() throws Exception {
 		super.before();
@@ -112,7 +114,8 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 	@Test
 	public void refreshTreeTablePropertyStructureTest() {
 		systemParameterItem = addElement(SystemParameters.class, conceptCef, systemItem);
-		SWTBotTree systemParametersTree = getSWTBotTree(systemItem, "Section for: SystemParameters");
+		SWTBotTree systemParametersTree = new SWTBotTree((Tree) bot.widget(WidgetMatcherFactory.widgetOfType(Tree.class), 
+				SYSTEM_ITEM_LEVEL));
 		systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].expand();
 
 		assertEquals("mode duration does not have system mode specific value", 0, 
