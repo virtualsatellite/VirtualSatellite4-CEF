@@ -11,6 +11,8 @@ package de.dlr.sc.virsat.cef.swtbot.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Test;
@@ -60,7 +62,10 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 		save();
 
 		openEditor(systemItem);
-		SWTBotTree systemParametersTree = getSWTBotTree(systemItem, "Section for: SystemParameters");
+		
+		final int SYSTEM_ITEM_LEVEL = 1;
+		SWTBotTree systemParametersTree = new SWTBotTree((Tree) bot.widget(WidgetMatcherFactory.widgetOfType(Tree.class), 
+				SYSTEM_ITEM_LEVEL));
 		String systemMarginValue = systemParametersTree.
 				getAllItems()[SYSTEM_MARGIN_ROW_INDEX].cell(VALUE_COLUMN_INDEX).toString();
 		String systemMarginUnit = systemParametersTree.
