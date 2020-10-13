@@ -64,8 +64,7 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 		save();
 
 		openEditor(systemItem);
-		
-		final int SYSTEM_ITEM_LEVEL = 1;
+
 		SWTBotTree systemParametersTree = new SWTBotTree((Tree) bot.widget(WidgetMatcherFactory.widgetOfType(Tree.class), 
 				SYSTEM_ITEM_LEVEL));
 		String systemMarginValue = systemParametersTree.
@@ -97,12 +96,11 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 		
 		openEditor(systemItem);
 		
-		String modeDurationName = systemParametersTree.
-				getAllItems()[MODE_DURATION_ROW_INDEX].cell(NAME_COLUMN_INDEX);
-		String modeDurationDefaultValue = systemParametersTree.
-				getAllItems()[MODE_DURATION_ROW_INDEX].cell(VALUE_COLUMN_INDEX);
-		String modeDurationUnit = systemParametersTree.
-				getAllItems()[MODE_DURATION_ROW_INDEX].cell(UNIT_COLUMN_INDEX);
+		final SWTBotTreeItem MODE_DURATION_ROW = systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX];
+		
+		String modeDurationName = MODE_DURATION_ROW.cell(NAME_COLUMN_INDEX);
+		String modeDurationDefaultValue = MODE_DURATION_ROW.cell(VALUE_COLUMN_INDEX);
+		String modeDurationUnit = MODE_DURATION_ROW.cell(UNIT_COLUMN_INDEX);
 		
 		final Double DELTA_DOUBLE = 0.00001;
 		
@@ -116,21 +114,21 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 		systemParameterItem = addElement(SystemParameters.class, conceptCef, systemItem);
 		SWTBotTree systemParametersTree = new SWTBotTree((Tree) bot.widget(WidgetMatcherFactory.widgetOfType(Tree.class), 
 				SYSTEM_ITEM_LEVEL));
-		systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].expand();
+		final SWTBotTreeItem MODE_DURATION_ROW = systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX];
+		MODE_DURATION_ROW.expand();
 
-		assertEquals("mode duration does not have system mode specific value", 0, 
-				systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].getItems().length);
+		assertEquals("mode duration does not have system mode specific value", 0, MODE_DURATION_ROW.getItems().length);
 
 		SWTBotTreeItem systemModeItem = addElement(SystemMode.class, conceptCef, systemItem);
 		final String EXP_SYSTEM_MODE_NAME = "Operational";
 		rename(systemModeItem, EXP_SYSTEM_MODE_NAME);
 		
 		openEditor(systemItem);
-		systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].expand();
+		MODE_DURATION_ROW.expand();
 		
 		assertEquals("mode duration has system mode specific value", 1, 
-				systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].getItems().length);
-		SWTBotTreeItem operationalModeDuration = systemParametersTree.getAllItems()[MODE_DURATION_ROW_INDEX].getItems()[0];
+				MODE_DURATION_ROW.getItems().length);
+		SWTBotTreeItem operationalModeDuration = MODE_DURATION_ROW.getItems()[0];
 		assertEquals(EXP_SYSTEM_MODE_NAME, operationalModeDuration.cell(NAME_COLUMN_INDEX));
 	}
 }
