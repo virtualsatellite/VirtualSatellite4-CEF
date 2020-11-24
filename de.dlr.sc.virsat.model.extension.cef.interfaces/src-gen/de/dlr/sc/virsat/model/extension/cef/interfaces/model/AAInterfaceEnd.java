@@ -12,12 +12,15 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
+import javax.xml.bind.annotation.XmlAccessorType;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ValuePropertyInstance;
+import javax.xml.bind.annotation.XmlRootElement;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyString;
+import javax.xml.bind.annotation.XmlAccessType;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.common.command.Command;
@@ -25,6 +28,7 @@ import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.UnitValuePropert
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
+import javax.xml.bind.annotation.XmlElement;
 
 
 // *****************************************************************
@@ -39,6 +43,8 @@ import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
  * 
  * 
  */	
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class AAInterfaceEnd extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cef.interfaces.AInterfaceEnd";
@@ -106,6 +112,7 @@ public abstract class AAInterfaceEnd extends GenericCategory implements IBeanCat
 		return quantity.isSet();
 	}
 	
+	@XmlElement
 	public BeanPropertyInt getQuantityBean() {
 		safeAccessQuantity();
 		return quantity;
@@ -137,6 +144,7 @@ public abstract class AAInterfaceEnd extends GenericCategory implements IBeanCat
 		return note.getValue();
 	}
 	
+	@XmlElement
 	public BeanPropertyString getNoteBean() {
 		safeAccessNote();
 		return note;
