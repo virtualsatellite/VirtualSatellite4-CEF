@@ -76,10 +76,10 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 		assertEquals(EXP_SYSTEM_PARAMETERS_MARGIN, systemMarginValue);
 		assertEquals(EXP_SYSTEM_PARAMETERS_UNIT, systemMarginUnit);
 
-		// set mode duration values
-		systemParameterItem.expand();
-		modeDurationItem = systemParameterItem.getNode(0).expand().getNode(0); // get mode duration editor
-
+		// set mode duration values and get the mode duration editor
+		modeDurationItem = systemParameterItem.expand().getNode(0);
+		modeDurationItem.expand();
+		
 		final String EXP_MODE_DURATION_NAME = "TestModeDuration";
 		final Double EXP_MODE_DURATION_DEFAULT_VALUE = 50.0;
 		final String EXP_MODE_DURATION_UNIT = "Minute: min";
