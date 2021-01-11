@@ -9,7 +9,7 @@ on:
   # By default uses the default branch. Runs at 03:00 UTC.
   # --------------------------------------------
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 5 * * *'
       
   # --------------------------------------------
   # Run this workflow every time a new commit pushed to the repository
