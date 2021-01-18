@@ -4,11 +4,11 @@ Virtual Satellite CEF is a DLR open source software for early phase modeling of 
 
 ## Project Status
 
-Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=development)](https://travis-ci.com/virtualsatellite/VirtualSatellite4-CEF) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/development/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/development/) for *Development* build.
+Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=development)](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/development/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/development/) for *Development* build.
 
-Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=integration)](https://travis-ci.com/virtualsatellite/VirtualSatellite4-CEF) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/integration/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/integration/) for *Integration* build.
+Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=integration)](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/integration/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/integration/) for *Integration* build.
 
-Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=master)](https://travis-ci.com/virtualsatellite/VirtualSatellite4-CEF) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/master/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/release/) for *Master* build.
+Status [![Build Status](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build/badge.svg?branch=master)](https://github.com/virtualsatellite/VirtualSatellite4-CEF/workflows/Build) [![Coverage Status](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF/branch/master/graph/badge.svg)](https://codecov.io/gh/virtualsatellite/VirtualSatellite4-CEF) [![Download virtualsatellite](https://img.shields.io/sourceforge/dt/virtualsatellite.svg)](https://sourceforge.net/projects/virtualsatellite/files/release/) for *Master* build.
 
 ## Purpose
 
@@ -76,9 +76,9 @@ If you did not receive this Content directly from German Aerospace Center (DLR),
 
 ## DLR trade mark and copyrighted material other than S/W
 
-The DLR trade mark (as the word mark DLR or as combination DLR with the DLR Logo) is a registered and protected trade mark and may not be used without DLR´s prior written permission. 
+The DLR trade mark (as the word mark DLR or as combination DLR with the DLR Logo) is a registered and protected trade mark and may not be used without DLRÂ´s prior written permission. 
 
-Copyrighted content other than the S/W provided under the indicated Eclipse License Conditions such as images, photographs, videos and texts which are indicated as being under DLR´s copyright through copyright notice (i.g. © DLR 2020) are provided for use under the Terms of use as provided for on DLRs webpage <https://www.dlr.de>.
+Copyrighted content other than the S/W provided under the indicated Eclipse License Conditions such as images, photographs, videos and texts which are indicated as being under DLRÂ´s copyright through copyright notice (i.g. Â© DLR 2020) are provided for use under the Terms of use as provided for on DLRs webpage <https://www.dlr.de>.
 
 ## Third Party Licenses
 
