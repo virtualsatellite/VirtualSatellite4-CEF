@@ -82,9 +82,9 @@
 				<build.deploy.release>true</build.deploy.release>
 				<target.platform.name>virsat_cef_release</target.platform.name>
 				<build.qualifier>'r'yyyyMMddHHmm</build.qualifier>
-				<build.folder.type>release/${build.version}/${TRAVIS_BUILD_NUMBER}</build.folder.type>
-				<build.file.win32>VirSat_CEF_Release_${build.version}_${TRAVIS_BUILD_NUMBER}_Win32.zip</build.file.win32>
-				<build.file.linux>VirSat_CEF_Release_${build.version}_${TRAVIS_BUILD_NUMBER}_Linux.tar.gz</build.file.linux>
+				<build.folder.type>release/${build.version}/${env.GITHUB_SHA}</build.folder.type>
+				<build.file.win32>VirSat_CEF_Release_${build.version}_${env.GITHUB_SHA}_Win32.zip</build.file.win32>
+				<build.file.linux>VirSat_CEF_Release_${build.version}_${env.GITHUB_SHA}_Linux.tar.gz</build.file.linux>
 			</properties>
 		</profile>
 		<profile>
