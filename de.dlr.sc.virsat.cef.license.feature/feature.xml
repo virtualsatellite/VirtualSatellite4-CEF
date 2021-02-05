@@ -2,7 +2,7 @@
 <feature
       id="de.dlr.sc.virsat.cef.license.feature"
       label="VirSat CEF License Feature"
-      version="4.12.0.qualifier"
+      version="4.12.2.qualifier"
       provider-name="DLR (German Aerospace Center)">
 
    <description>

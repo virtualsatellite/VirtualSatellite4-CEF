@@ -21,6 +21,6 @@ public class ManifestMf {
 	public static final String ECLIPSE_EXTENSIBLEAPI = "true";
 	public static final String EXPORT_PACKAGE = "de.dlr.sc.virsat.model.extension.cefx,de.dlr.sc.virsat.model.extension.cefx.excel,de.dlr.sc.virsat.model.extension.cefx.hierarchy,de.dlr.sc.virsat.model.extension.cefx.model,de.dlr.sc.virsat.model.extension.cefx.util,de.dlr.sc.virsat.model.extension.cefx.validator";
 	public static final String BUNDLE_NAME = "VirSat CEF Extended Model Extension Data Model";
-	public static final String BUNDLE_VERSION = "4.12.0.qualifier";
+	public static final String BUNDLE_VERSION = "4.12.2.qualifier";
 	public static final String BUNDLE_ACTIVATOR = "de.dlr.sc.virsat.model.extension.cefx.Activator";
 }
