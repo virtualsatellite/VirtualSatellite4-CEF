@@ -224,14 +224,14 @@ public class UiSnippetElements extends AUiSnippetTable {
 	 * @return the BeanCategory for the Visualization or null if it was not found
 	 */
 	private SystemMassParameters getSystemMassParameters(BeanStructuralElementInstance beanSei) {
-		IBeanStructuralElementInstance parentBeanSei = beanSei.getParentSeiBean(); 
+		IBeanStructuralElementInstance parentBeanSei = beanSei.getParent(); 
 		
 		while (parentBeanSei != null) {
 			SystemMassParameters systemMassParameters = parentBeanSei.getFirst(SystemMassParameters.class);
 			if (systemMassParameters != null) {
 				return systemMassParameters;
 			}
-			parentBeanSei = parentBeanSei.getParentSeiBean();
+			parentBeanSei = parentBeanSei.getParent();
 		}
 		
 		return null;

@@ -2,43 +2,43 @@
 		<?pde version="3.8"?><target name="virsat_cef_release" sequenceNumber="1">
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="4.12.0.r202007311110"/>
-		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="4.12.0.r202007311110"/>
-		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/release/4.12.0/4763/"/>
-		</location>              
+		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="4.13.0.r202104231408"/>
+		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="4.13.0.r202104231408"/>
+		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/release/4.13.0/08b129cb4888ebf263db82a60f3f06a7bab970b9/"/>
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201907151344"/>
 		<unit id="org.eclipse.nebula.widgets.tablecombo.feature.feature.group" version="1.2.0.201907151344"/>
 		<repository location="https://download.eclipse.org/nebula/releases/2.2.0/"/>
-		</location>              
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
 		<unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
 		<unit id="org.apache.commons.io.source" version="2.6.0.v20190123-2029"/>
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
-		</location>              
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="3.3.11.202005260905"/>
 		<unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="1.4.1.202002140949"/>
@@ -46,6 +46,7 @@
 		<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.12.0.201805140824"/>
 		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.800.v20200514-1529"/>
 		<unit id="org.eclipse.graphiti.sdk.feature.feature.group" version="0.17.0.202005151449"/>
+		<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.17.0.202005151449"/>
 		<unit id="org.eclipse.jdt.source.feature.group" version="3.18.400.v20200604-0540"/>
 		<unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.12.0.v20200608-1555"/>
 		<unit id="org.eclipse.pde.source.feature.group" version="3.14.400.v20200604-0540"/>
@@ -60,11 +61,11 @@
 		<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
 		<unit id="org.eclipse.egit.feature.group" version="5.8.0.202006091008-r"/>
 		<repository location="http://download.eclipse.org/releases/2020-06"/>
-		</location>              
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.team.svn.feature.group" version="4.0.5.I20170425-1700"/>
 		<repository location="https://download.eclipse.org/technology/subversive/4.0/update-site/"/>
-		</location>              
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="6.0.4.I20161211-1700"/>
 		<unit id="org.polarion.eclipse.team.svn.connector.source.feature.group" version="6.0.4.I20161211-1700"/>
@@ -72,7 +73,19 @@
 		<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="6.0.4.I20161211-1700"/>
 		<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.sources.feature.group" version="6.0.4.I20161211-1700"/>
 		<repository location="http://community.polarion.com/projects/subversive/download/eclipse/6.0/update-site/"/>
-		</location>              
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="org.eclipse.sphinx.core.feature.group" version="0.11.0.201706140911"/>
+		<unit id="org.eclipse.sphinx.emf.serialization.feature.group" version="0.11.0.201706140911"/>
+		<repository location="http://download.eclipse.org/sphinx/releases/0.11.x"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="org.eclipse.rmf.reqif10.feature.feature.group" version="0.13.0.201509161042"/>
+		<unit id="org.eclipse.rmf.reqif10.pror.feature.feature.group" version="0.13.0.201509161042"/>
+		<unit id="org.eclipse.rmf.reqif10.thirdparty.feature.feature.group" version="0.13.0.201509161042"/>
+		<unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
+		<repository location="http://download.eclipse.org/rmf/updates/releases"/>
+		</location>
 		</locations>
 		<environment>
 		<os>win32</os>
