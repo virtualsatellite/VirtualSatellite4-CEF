@@ -4,7 +4,7 @@ Bundle-Name: VirSat CEF Extended Model Extension Data Model Tests
 Bundle-SymbolicName: de.dlr.sc.virsat.model.extension.cefx.test
 Bundle-Version: 4.13.0.qualifier
 Fragment-Host: de.dlr.sc.virsat.model.extension.cefx
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: DLR (German Aerospace Center)
 Require-Bundle: org.junit,
  de.dlr.sc.virsat.model,
