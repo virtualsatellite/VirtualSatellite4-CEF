@@ -12,10 +12,13 @@ package de.dlr.sc.virsat.model.extension.cefx.excel;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -70,7 +73,7 @@ public class ExcelHelper {
 		Cell cell = row.getCell(cellCounter) == null ? row.createCell(cellCounter) : row.getCell(cellCounter);
 		if (cellValue != null) {
 			if (cellValue.matches("-?\\d+(\\.\\d+)?")) {
-				cell.setCellValue(new Double(cellValue));
+				cell.setCellValue(Double.valueOf(cellValue));
 			} else {
 				cell.setCellValue(createHelper.createRichTextString(cellValue));
 			}
@@ -128,30 +131,30 @@ public class ExcelHelper {
 
 		CellStyle style;
 		Font headerFont = wb.createFont();
-		headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerFont.setBold(true);
 		style = createBorderedStyle();
-		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setFont(headerFont);
 		styles.put(SC_HEADER, style);
 
 		style = createBorderedStyle();
-		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setFillForegroundColor(IndexedColors.GOLD.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setFont(headerFont);
 		styles.put(PARAM_HEADER, style);
 		
 		style = createBorderedStyle();
-		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setFillForegroundColor(IndexedColors.ORANGE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setFont(headerFont);
 		styles.put(CELL_NA, style);
 
 		style = createBorderedStyle();
-		style.setAlignment(CellStyle.ALIGN_LEFT);
+		style.setAlignment(HorizontalAlignment.LEFT);
 		style.setWrapText(false);
 		styles.put(CELL_NORMAL, style);
 
@@ -164,13 +167,13 @@ public class ExcelHelper {
 	 */
 	private CellStyle createBorderedStyle() {
 		CellStyle style = wb.createCellStyle();
-		style.setBorderRight(CellStyle.BORDER_THIN);
+		style.setBorderRight(BorderStyle.THIN);
 		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderBottom(BorderStyle.THIN);
 		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setBorderLeft(BorderStyle.THIN);
 		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setBorderTop(CellStyle.BORDER_THIN);
+		style.setBorderTop(BorderStyle.THIN);
 		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 		return style;
 	}

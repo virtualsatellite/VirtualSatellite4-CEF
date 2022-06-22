@@ -12,14 +12,17 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
+import javax.xml.bind.annotation.XmlAccessorType;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.list.TypeSafeReferencePropertyBeanList;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import org.eclipse.emf.common.util.URI;
+import javax.xml.bind.annotation.XmlRootElement;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
 import de.dlr.sc.virsat.model.concept.list.IBeanList;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ArrayInstance;
+import javax.xml.bind.annotation.XmlAccessType;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ResourcePropertyInstance;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyReference;
@@ -29,6 +32,7 @@ import org.eclipse.emf.common.command.Command;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyResource;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
+import javax.xml.bind.annotation.XmlElement;
 
 
 // *****************************************************************
@@ -43,6 +47,8 @@ import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
  * 
  * 
  */	
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class AExcelCalculation extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cefx.ExcelCalculation";
@@ -106,6 +112,7 @@ public abstract class AExcelCalculation extends GenericCategory implements IBean
 		return excelFile.getValue();
 	}
 	
+	@XmlElement
 	public BeanPropertyResource getExcelFileBean() {
 		safeAccessExcelFile();
 		return excelFile;
@@ -135,6 +142,7 @@ public abstract class AExcelCalculation extends GenericCategory implements IBean
 			}
 		}
 		
+		@XmlElement
 		public IBeanList<BeanPropertyReference<Parameter>> getFromVirSat2ExcelBean() {
 			safeAccessFromVirSat2ExcelBean();
 			return fromVirSat2ExcelBean;
@@ -164,6 +172,7 @@ public abstract class AExcelCalculation extends GenericCategory implements IBean
 			}
 		}
 		
+		@XmlElement
 		public IBeanList<BeanPropertyReference<Parameter>> getFromExcel2VirSatBean() {
 			safeAccessFromExcel2VirSatBean();
 			return fromExcel2VirSatBean;

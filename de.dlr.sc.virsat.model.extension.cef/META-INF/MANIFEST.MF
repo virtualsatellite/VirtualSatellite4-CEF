@@ -12,8 +12,10 @@ Require-Bundle: org.eclipse.ui,
  de.dlr.sc.virsat.model.edit,
  de.dlr.sc.virsat.project,
  de.dlr.sc.virsat.build,
- de.dlr.sc.virsat.model.ext.core;visibility:=reexport
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ de.dlr.sc.virsat.model.ext.core;visibility:=reexport,
+ javax.annotation,
+ jakarta.xml.bind
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.dlr.sc.virsat.model.extension.cef,
  de.dlr.sc.virsat.model.extension.cef.excel,
