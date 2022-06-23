@@ -51,7 +51,7 @@ jobs:
       # handed in by known users
       #---------------------------------------------
       - name: Verify - Authors Sanity Check
-        uses: virtualsatellite/ci-actions/ci-verify-authors-action@v5
+        uses: virtualsatellite/ci-actions/ci-verify-authors-action@v6-beta
           
   # -----------------------------------------------------
   # Build and Test - SpotBugs Job
@@ -87,7 +87,7 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v5
+        uses: virtualsatellite/ci-actions/ci-setup-action@v6-beta
         with:
            pkgs_file: apt_vtk_zmq_packages
            jdk: 11
@@ -97,13 +97,13 @@ jobs:
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v5
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6-beta
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Spotbugs
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v5
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6-beta
         with:
           build_job: spotbugs
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -142,7 +142,7 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v5
+        uses: virtualsatellite/ci-actions/ci-setup-action@v6-beta
         with:
            xvfb: -x
            pkgs_file: apt_vtk_zmq_packages
@@ -153,13 +153,13 @@ jobs:
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v5
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6-beta
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Surefire
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v5
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6-beta
         with:
           build_job: sureheadless
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -220,7 +220,7 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v5
+        uses: virtualsatellite/ci-actions/ci-setup-action@v6-beta
         with:
            pkgs_file: apt_vtk_zmq_packages
            jdk: 11
@@ -230,13 +230,13 @@ jobs:
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v5
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6-beta
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Checkstyle
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v5
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6-beta
         with:
           build_job: checkstyle
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -275,7 +275,7 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v5
+        uses: virtualsatellite/ci-actions/ci-setup-action@v6-beta
         with:
            pkgs_file: apt_vtk_zmq_packages
            jdk: 11
@@ -285,13 +285,13 @@ jobs:
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v5
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6-beta
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Assemble
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v5
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6-beta
         with:
           build_job: assemble
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -300,7 +300,7 @@ jobs:
       # Deploying to github releases
       # --------------------------------------------
       - name: Build - Deploy GH
-        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@v5
+        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@v6-beta
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
@@ -310,7 +310,7 @@ jobs:
       # SF Deploy still to be done
       # ----------------------------------------------
       - name: Build - Deploy SF
-        uses: virtualsatellite/ci-actions/ci-deploy-sf-product-action@v5
+        uses: virtualsatellite/ci-actions/ci-deploy-sf-product-action@v6-beta
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
           openssl_pass: ${{ secrets.SF_SSH_KEY_OPENSSL_PASS }}
