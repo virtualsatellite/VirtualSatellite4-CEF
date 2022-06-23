@@ -97,13 +97,13 @@ jobs:
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v2
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v5
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Spotbugs
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v2
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v5
         with:
           build_job: spotbugs
           build_profile: ${{ steps.build_decision.outputs.build_type }}
