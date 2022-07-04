@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.dlr.sc.virsat.cef.branding.ui;singleton:=true
 Bundle-Version: 4.13.0.qualifier
 Bundle-Activator: de.dlr.sc.virsat.cef.branding.ui.BrandingPlugin
 Bundle-Vendor: DLR (German Aerospace Center)
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.jface,

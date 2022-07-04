@@ -28,11 +28,11 @@ import junit.framework.JUnit4TestAdapter;
 @RunWith(Suite.class)
 
 @SuiteClasses({
-				ModeVectorResultTest.class,
-				ParameterSetterTest.class, 
-				ParameterGetterTest.class,
-				ModeVectorEvaluatorTest.class
-			  })
+	ModeVectorResultTest.class,
+	ParameterSetterTest.class, 
+	ParameterGetterTest.class,
+	ModeVectorEvaluatorTest.class
+})
 
 public class AllTests {
 	

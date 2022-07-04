@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.navigator,
  de.dlr.sc.virsat.model.calculation.ui,
  de.dlr.sc.virsat.cef.branding.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider,
  de.dlr.sc.virsat.model.extension.cefx.ui.masssummary,

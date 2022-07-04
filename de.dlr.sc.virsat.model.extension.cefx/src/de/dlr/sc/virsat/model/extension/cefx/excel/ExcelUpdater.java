@@ -27,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -521,7 +522,7 @@ public class ExcelUpdater {
 				// If there are access rights to the referenced output parameter try to get the value
 				Row rowParameter = xlSheetParamsXl2VirSat.getRow(rowIndex);
 				Cell cellDefaultValue = rowParameter.getCell(PARAMETER_VALUE_COLUMN);
-				if (cellDefaultValue != null && (cellDefaultValue.getCellType() == Cell.CELL_TYPE_NUMERIC || cellDefaultValue.getCellType() == Cell.CELL_TYPE_FORMULA)) {
+				if (cellDefaultValue != null && (cellDefaultValue.getCellType() == CellType.NUMERIC || cellDefaultValue.getCellType() == CellType.FORMULA)) {
 					double value = cellDefaultValue.getNumericCellValue();
 					parameter.setDefaultValue(value);
 				}
@@ -532,7 +533,7 @@ public class ExcelUpdater {
 					String systemModeName = systemMode.getName();
 					int modeColumnIndex = getModeColumnIndex(systemModeName);
 					Cell cellModeValue = rowParameter.getCell(modeColumnIndex);
-					if (cellModeValue != null && (cellModeValue.getCellType() == Cell.CELL_TYPE_NUMERIC || cellModeValue.getCellType() == Cell.CELL_TYPE_FORMULA)) {
+					if (cellModeValue != null && (cellModeValue.getCellType() == CellType.NUMERIC || cellModeValue.getCellType() == CellType.FORMULA)) {
 						double value = cellModeValue.getNumericCellValue();
 						modeValue.setValue(value);
 					}
