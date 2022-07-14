@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF UI Tests with SwtBot
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.swtbot.test
-Bundle-Version: 4.13.0.qualifier
+Bundle-Version: 4.15.0.qualifier
 Bundle-Vendor: 
  DLR (German Aerospace Center)
 Bundle-RequiredExecutionEnvironment: JavaSE-11
