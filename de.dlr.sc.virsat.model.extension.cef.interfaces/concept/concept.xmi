@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v8/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v8/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v8/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef.interfaces" description="Concept for Functional Interface Architecture in CEF" version="1.1" displayName="CEF Data and Interfaces">
+<dvlm_c:Concept xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dvlm_c="http://www.virsat.sc.dlr.de/dvlm/v9/c" xmlns:dvlm_calc="http://www.virsat.sc.dlr.de/dvlm/v9/calc" xmlns:dvlm_cppd="http://www.virsat.sc.dlr.de/dvlm/v9/cp/cppd" name="de.dlr.sc.virsat.model.extension.cef.interfaces" description="Concept for Functional Interface Architecture in CEF" version="1.1" displayName="CEF Data and Interfaces">
   <imports importedNamespace="de.dlr.sc.virsat.model.extension.cef.*"/>
   <imports importedNamespace="de.dlr.sc.virsat.model.ext.core.*"/>
   <categories name="EquipmentDataParameters" cardinality="1">
@@ -39,20 +39,20 @@
         </left>
         <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataDutyCycle"/>
       </expression>
-      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="55099af5-8138-4316-bbfc-bc57de0322ec" name="DataCombinedDutyCycle"/>
+      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="ad261a29-606b-4f8b-bea3-dccd888eb234" name="DataCombinedDutyCycle"/>
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
         <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOnWithMargin"/>
-          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="55099af5-8138-4316-bbfc-bc57de0322ec"/>
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="ad261a29-606b-4f8b-bea3-dccd888eb234"/>
         </left>
         <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStbyWithMargin"/>
           <right xsi:type="dvlm_calc:Parenthesis">
             <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
               <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
-              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="55099af5-8138-4316-bbfc-bc57de0322ec"/>
+              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="ad261a29-606b-4f8b-bea3-dccd888eb234"/>
             </right>
           </right>
         </right>
