@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.cef.ui.modesview;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -77,7 +78,7 @@ class ModeTableLabelProvider extends LabelProvider implements ITableLabelProvide
 			}
 			
 			if (!Double.isNaN(displayValue)) {
-				return new BigDecimal(displayValue).setScale(TABLE_DISPLAY_DECIMALS, BigDecimal.ROUND_HALF_UP).toPlainString();
+				return new BigDecimal(displayValue).setScale(TABLE_DISPLAY_DECIMALS, RoundingMode.HALF_UP).toPlainString();
 			} else {
 				return Double.toString(displayValue);
 			}

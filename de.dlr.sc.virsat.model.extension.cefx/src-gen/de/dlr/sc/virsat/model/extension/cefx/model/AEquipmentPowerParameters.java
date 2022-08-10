@@ -12,15 +12,19 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import javax.xml.bind.annotation.XmlAccessorType;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import javax.xml.bind.annotation.XmlRootElement;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
+import de.dlr.sc.virsat.model.dvlm.categories.Category;
+import javax.xml.bind.annotation.XmlAccessType;
+import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
 import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
-import de.dlr.sc.virsat.model.dvlm.categories.Category;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
+import javax.xml.bind.annotation.XmlElement;
 
 
 // *****************************************************************
@@ -35,6 +39,8 @@ import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
  * 
  * 
  */	
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class AEquipmentPowerParameters extends GenericCategory implements IBeanCategoryAssignment {
 
 	public static final String FULL_QUALIFIED_CATEGORY_NAME = "de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters";
@@ -89,6 +95,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerUnitActive() {
 		safeAccessPowerUnitActive();
 		return powerUnitActive.getValue();
@@ -111,6 +118,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerDutyCycle() {
 		safeAccessPowerDutyCycle();
 		return powerDutyCycle.getValue();
@@ -133,6 +141,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerPerUnitOn() {
 		safeAccessPowerPerUnitOn();
 		return PowerPerUnitOn.getValue();
@@ -155,6 +164,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerPerUnitStby() {
 		safeAccessPowerPerUnitStby();
 		return PowerPerUnitStby.getValue();
@@ -177,6 +187,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerPerUnitOnWithMargin() {
 		safeAccessPowerPerUnitOnWithMargin();
 		return PowerPerUnitOnWithMargin.getValue();
@@ -199,6 +210,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerPerUnitStbyWithMargin() {
 		safeAccessPowerPerUnitStbyWithMargin();
 		return PowerPerUnitStbyWithMargin.getValue();
@@ -221,6 +233,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerPerUnitAvgWithMargin() {
 		safeAccessPowerPerUnitAvgWithMargin();
 		return PowerPerUnitAvgWithMargin.getValue();
@@ -243,6 +256,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 		}
 	}
 	
+	@XmlElement(nillable = true)
 	public Parameter getPowerAvgWithMargin() {
 		safeAccessPowerAvgWithMargin();
 		return PowerAvgWithMargin.getValue();

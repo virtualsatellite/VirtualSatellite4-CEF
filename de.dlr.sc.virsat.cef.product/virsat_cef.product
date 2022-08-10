@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.13.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.15.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_256x330.gif"/>
       <text>
          Virtual Satellite 4 - CEF
 
-Version 4.13.0
+Version 4.15.0
 
 © Copyright by DLR (Deutsches Zentrum fuer Luft- und Raumfahrt e. V., German Aerospace Center) 2020. 
 
@@ -58,7 +58,7 @@ Germany
    <intro introId="de.dlr.sc.virsat.cef.branding.ui.intro"/>
 
    <vm>
-      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <plugins>
@@ -111,7 +111,6 @@ Germany
       <feature id="org.eclipse.rcp" installMode="root"/>
       <feature id="org.eclipse.equinox.p2.rcp.feature" installMode="root"/>
       <feature id="org.eclipse.ecf.filetransfer.feature" installMode="root"/>
-      <feature id="org.eclipse.ecf.filetransfer.httpclient45.feature" installMode="root"/>
       <feature id="org.eclipse.emf.workspace" installMode="root"/>
       <feature id="org.eclipse.platform" installMode="root"/>
       <feature id="org.eclipse.emf.databinding" installMode="root"/>
@@ -128,9 +127,9 @@ Germany
       <feature id="org.eclipse.jgit.ssh.apache" installMode="root"/>
       <feature id="org.eclipse.jgit.http.apache" installMode="root"/>
       <feature id="org.eclipse.jgit.gpg.bc" installMode="root"/>
-      <feature id="org.eclipse.jgit.ssh.jsch" installMode="root"/>
       <feature id="org.polarion.eclipse.team.svn.connector" installMode="root"/>
       <feature id="org.polarion.eclipse.team.svn.connector.svnkit18" installMode="root"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient5.feature" installMode="root"/>
    </features>
 
    <configurations>
