@@ -128,8 +128,8 @@ Germany
       <feature id="org.eclipse.jgit.http.apache" installMode="root"/>
       <feature id="org.eclipse.jgit.gpg.bc" installMode="root"/>
       <feature id="org.polarion.eclipse.team.svn.connector" installMode="root"/>
-      <feature id="org.polarion.eclipse.team.svn.connector.svnkit18" installMode="root"/>
       <feature id="org.eclipse.ecf.filetransfer.httpclient5.feature" installMode="root"/>
+      <feature id="org.polarion.eclipse.team.svn.connector.svnkit1_10" installMode="root"/>
    </features>
 
    <configurations>
