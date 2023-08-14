@@ -82,6 +82,7 @@ public class ParameterSetter implements IResultSetter {
 		
 		UnitValuePropertyInstance pviDefault = (UnitValuePropertyInstance) parameter.getDefaultValueBean().getTypeInstance();
 		setProblems.addAll(nls.set(pviDefault, result));
+		pviDefault.setOverride(true);
 		
 		// Assign the value to the additional modes
 		
