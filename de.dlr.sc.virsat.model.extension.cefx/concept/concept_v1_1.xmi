@@ -220,8 +220,8 @@
       </expression>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentMassParameters.massTotalWithMargin"/>
     </equationDefinitions>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="mass" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="mass" description="Mass of the unit." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotal" description="Mass of the unit including the mass of the child elements." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="massTotalWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Mass" unitName="Kilogram"/>
     <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>

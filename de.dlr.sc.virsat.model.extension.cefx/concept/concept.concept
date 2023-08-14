@@ -123,8 +123,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
 		Cardinality 1;
 				
-		Type mass of Category Parameter quantityKind "Mass" unit "Kilogram";
-		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram";
+		Type mass of Category Parameter quantityKind "Mass" unit "Kilogram" description "Mass of the unit.";
+		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram" description "Mass of the unit including the mass of the child elements.";
 		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
 		Ref: massTotal = mass + summary{massTotal, 1};
