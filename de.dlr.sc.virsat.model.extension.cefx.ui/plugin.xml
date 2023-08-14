@@ -302,6 +302,41 @@
 				</visibleWhen>
 			</menu>
 		</menuContribution>
+		<menuContribution
+            allPopups="false"
+            locationURI="popup:de.dlr.sc.virsat.project.ui.navigator.menu#PopupMenu?after=group.edit">
+         <command
+               commandId="org.eclipse.ui.edit.rename"
+               style="push"
+               label="Rename"
+               tooltip="Rename">
+               <visibleWhen
+                     checkEnabled="true">
+                     <with
+                     	variable="selection">
+		             	<iterate 
+		             		ifEmpty="false"
+		             		operator="and">
+			             	<instanceof
+			                    value="de.dlr.sc.virsat.model.dvlm.general.IName">
+			             	</instanceof>
+		             	</iterate>
+	       			 </with>
+              </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.project.ui.navigator.view">
+         <command
+               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ui.file.refresh"
+               style="push">
+         </command>
+      </menuContribution>
 		<menuContribution allPopups="false"
 			locationURI="popup:de.dlr.sc.virsat.model.extension.cefx.menu?after=categories">
 		<command
@@ -1132,7 +1167,8 @@
             <possibleDropTargets></possibleDropTargets>
          </dropAssistant>
          <commonSorter
-               class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter">
+               class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter"
+               id="de.dlr.sc.virsat.model.extension.cefx.ui.provider.ProductTreeContentProvider.sorter">
             <parentExpression>
                <or>
                   <instanceof
@@ -1187,24 +1223,24 @@
                  </instanceof>
               </or>
            </triggerPoints>
-           <commonSorter
-                 class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter">
-              <parentExpression>
-                 <or>
-                    <instanceof
-                          value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
-                    </instanceof>
-                    <instanceof
-                          value="de.dlr.sc.virsat.model.dvlm.Repository">
-                    </instanceof>
-                 </or>
-              </parentExpression>
-           </commonSorter>
            <dropAssistant
                  class="de.dlr.sc.virsat.project.ui.navigator.dropAssist.DVLMDelegateDropAdapterAssistant"
                  id="de.dlr.sc.virsat.project.ui.navigator.dropAssistant">
               <possibleDropTargets></possibleDropTargets>
            </dropAssistant>
+           <commonSorter
+                 class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter"
+                 id="de.dlr.sc.virsat.model.extension.cefx.ui.provider.ConfigurationTreeContentProvider.sorter">
+            <parentExpression>
+               <or>
+                  <instanceof
+                        value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
+                  </instanceof>
+                  <instanceof
+                        value="de.dlr.sc.virsat.model.dvlm.Repository">
+                  </instanceof>
+               </or></parentExpression>
+         </commonSorter>
         </navigatorContent>
   </extension>
   <extension
@@ -1238,6 +1274,37 @@
           advertisementMessage="Start a CEF-X session..."
           perspectiveID="de.dlr.sc.virsat.model.extension.cefx.perspective">
     </IntroPerspectiveAdvertisement>
+ </extension>
+ <extension
+       point="org.eclipse.ui.handlers">
+    <handler 
+      		commandId="org.eclipse.ui.edit.rename"
+      		class="de.dlr.sc.virsat.project.ui.navigator.handler.RenameHandler">
+     	<activeWhen>
+	        <with
+	              variable="selection">
+	        	<with
+                	variable="activePartId">
+                	<or>
+                		<equals
+	                    	value="de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
+		              	</equals>
+		              	<equals
+		                    value="de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
+		              	</equals>
+                	</or>
+	        	</with>
+	        	<count value="1"/>
+             	<iterate 
+             		ifEmpty="false"
+             		operator="and">
+	             	<instanceof
+	                    value="de.dlr.sc.virsat.model.dvlm.general.IName">
+	             	</instanceof>
+             	</iterate>
+	        </with>
+     	</activeWhen>
+     </handler>
  </extension>
 	<!-- Plugin.XML Protected Region End -->
 </plugin>
