@@ -173,13 +173,13 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		equipment.add(equipParams);
 		equipment.add(equipMassParams);
 		
-		equipMassParams.getMassPerUnit().setDefaultValue(DEFAULT_VALUE);
+		equipMassParams.getMass().setDefaultValue(DEFAULT_VALUE);
 		equipParams.setMarginMaturity(DEFAULT_MARGIN);
 		
 		Value idleValue = new Value(conceptCEFX);
 		idleValue.setMode(idleMode);
 		idleValue.setValue(IDLE_VALUE);
-		equipMassParams.getMassPerUnit().getModeValues().add(idleValue);
+		equipMassParams.getMass().getModeValues().add(idleValue);
 		
 		IEquationSectionContainer container = (IEquationSectionContainer) equipMassParams.getATypeInstance();
 		List<Equation> equations = container.getEquationSection().getEquations();
