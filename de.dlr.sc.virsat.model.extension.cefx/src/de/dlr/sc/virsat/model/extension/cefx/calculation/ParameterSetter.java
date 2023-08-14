@@ -89,6 +89,7 @@ public class ParameterSetter implements IResultSetter {
 			UnitValuePropertyInstance vpi = value.getValueBean().getTypeInstance();
 			
 			vpi.setUnit(pviDefault.getUnit());
+			vpi.setOverride(true);
 			setProblems.addAll(nls.set(vpi, result));
 		});
 		
@@ -111,6 +112,7 @@ public class ParameterSetter implements IResultSetter {
 		
 		UnitValuePropertyInstance pviDefault = parameter.getDefaultValueBean().getTypeInstance();
 		setProblems.addAll(nls.set(pviDefault, result.getResult(ModeVectorResult.DEFAULT_MODE)));
+		pviDefault.setOverride(true);
 		
 		// Assign the values to the other modes
 		Collection<CategoryAssignment> modes = result.getResults().values();
@@ -138,6 +140,7 @@ public class ParameterSetter implements IResultSetter {
 				NumberLiteralResult literalResult = result.getResult(mode);
 				if (literalResult != null) {
 					vpi.setUnit(pviDefault.getUnit());
+					vpi.setOverride(true);
 					setProblems.addAll(nls.set(vpi, literalResult));
 				}
 			}
