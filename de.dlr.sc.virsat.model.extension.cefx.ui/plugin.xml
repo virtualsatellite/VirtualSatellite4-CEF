@@ -302,53 +302,6 @@
 				</visibleWhen>
 			</menu>
 		</menuContribution>
-		<menuContribution
-            allPopups="false"
-            locationURI="popup:de.dlr.sc.virsat.project.ui.navigator.menu#PopupMenu?after=group.edit">
-         <command
-               commandId="org.eclipse.ui.edit.rename"
-               style="push"
-               label="Rename"
-               tooltip="Rename">
-               <visibleWhen
-                     checkEnabled="true">
-                     <with
-                     	variable="selection">
-		             	<iterate 
-		             		ifEmpty="false"
-		             		operator="and">
-			             	<instanceof
-			                    value="de.dlr.sc.virsat.model.dvlm.general.IName">
-			             	</instanceof>
-		             	</iterate>
-	       			 </with>
-              </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
-         <command
-               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
-               style="push">
-         </command>
-         <command
-               commandId="org.eclipse.ui.file.refresh"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
-         <command
-               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
-               style="push">
-         </command>
-         <command
-               commandId="org.eclipse.ui.file.refresh"
-               style="push">
-         </command>
-      </menuContribution>
 		<menuContribution allPopups="false"
 			locationURI="popup:de.dlr.sc.virsat.model.extension.cefx.menu?after=categories">
 		<command
@@ -834,6 +787,87 @@
 		</uiSnippet>
 	</extension>
 	<!-- Plugin.XML Protected Region Start -->
+<extension point="org.eclipse.ui.menus">
+	<menuContribution
+            allPopups="false"
+            locationURI="popup:de.dlr.sc.virsat.project.ui.navigator.menu#PopupMenu?after=group.edit">
+         <command
+               commandId="org.eclipse.ui.edit.rename"
+               style="push"
+               label="Rename"
+               tooltip="Rename">
+               <visibleWhen
+                     checkEnabled="true">
+                     <with
+                     	variable="selection">
+		             	<iterate 
+		             		ifEmpty="false"
+		             		operator="and">
+			             	<instanceof
+			                    value="de.dlr.sc.virsat.model.dvlm.general.IName">
+			             	</instanceof>
+		             	</iterate>
+	       			 </with>
+              </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
+         <command
+               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ui.file.refresh"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
+         <command
+               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ui.file.refresh"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
+         <command
+               commandId="de.dlr.sc.virsat.team.ui.command.commit"
+               icon="resources/icons/commit.gif"
+               label="Commit Project to Repository"
+               style="push">
+         </command>
+         <command
+               commandId="de.dlr.sc.virsat.team.ui.command.update"
+               icon="resources/icons/update.gif"
+               label="Update Project from Repository"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
+         <command
+               commandId="de.dlr.sc.virsat.team.ui.command.commit"
+               icon="resources/icons/commit.gif"
+               label="Commit Project to Repository"
+               style="push">
+         </command>
+         <command
+               commandId="de.dlr.sc.virsat.team.ui.command.update"
+               icon="resources/icons/update.gif"
+               label="Update Project from Repository"
+               style="push">
+         </command>
+      </menuContribution>
+</extension>
 <extension point="org.eclipse.ui.views">
 		<category 
 			id="de.dlr.sc.virsat.project.ui.view.category.cefx"
