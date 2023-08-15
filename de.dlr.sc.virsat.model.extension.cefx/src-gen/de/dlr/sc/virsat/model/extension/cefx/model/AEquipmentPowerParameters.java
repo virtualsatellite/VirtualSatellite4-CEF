@@ -54,7 +54,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	}
 	
 	// property name constants
-	public static final String PROPERTY_POWERUNITISACTIVE = "powerUnitIsActive";
+	public static final String PROPERTY_POWERUNITISINACTIVE = "powerUnitIsInactive";
 	public static final String PROPERTY_POWERDUTYCYCLE = "powerDutyCycle";
 	public static final String PROPERTY_POWERUNITON = "PowerUnitOn";
 	public static final String PROPERTY_POWERUNITSTBY = "PowerUnitStby";
@@ -84,26 +84,26 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	
 	
 	// *****************************************************************
-	// * Attribute: powerUnitIsActive
+	// * Attribute: powerUnitIsInactive
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitIsActive = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerUnitIsInactive = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerUnitIsActive() {
-		if (powerUnitIsActive.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitIsActive");
-			powerUnitIsActive.setTypeInstance(propertyInstance);
+	private void safeAccessPowerUnitIsInactive() {
+		if (powerUnitIsInactive.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitIsInactive");
+			powerUnitIsInactive.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerUnitIsActive() {
-		safeAccessPowerUnitIsActive();
-		return powerUnitIsActive.getValue();
+	public Parameter getPowerUnitIsInactive() {
+		safeAccessPowerUnitIsInactive();
+		return powerUnitIsInactive.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerUnitIsActiveBean() {
-		safeAccessPowerUnitIsActive();
-		return powerUnitIsActive;
+	public BeanPropertyComposed<Parameter> getPowerUnitIsInactiveBean() {
+		safeAccessPowerUnitIsInactive();
+		return powerUnitIsInactive;
 	}
 	
 	// *****************************************************************
