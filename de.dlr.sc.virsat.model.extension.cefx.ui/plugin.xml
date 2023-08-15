@@ -1167,7 +1167,7 @@
             <possibleDropTargets></possibleDropTargets>
          </dropAssistant>
          <commonSorter
-               class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter"
+               class="de.dlr.sc.virsat.model.extension.cefx.ui.provider.VirSatNavigatorSeiIndexSorter"
                id="de.dlr.sc.virsat.model.extension.cefx.ui.provider.ProductTreeContentProvider.sorter">
             <parentExpression>
                <or>
@@ -1229,7 +1229,7 @@
               <possibleDropTargets></possibleDropTargets>
            </dropAssistant>
            <commonSorter
-                 class="de.dlr.sc.virsat.project.ui.navigator.commonSorter.VirSatNavigatorSeiSorter"
+                 class="de.dlr.sc.virsat.model.extension.cefx.ui.provider.VirSatNavigatorSeiIndexSorter"
                  id="de.dlr.sc.virsat.model.extension.cefx.ui.provider.ConfigurationTreeContentProvider.sorter">
             <parentExpression>
                <or>
