@@ -54,7 +54,7 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	}
 	
 	// property name constants
-	public static final String PROPERTY_POWERUNITACTIVE = "powerUnitActive";
+	public static final String PROPERTY_POWERUNITISACTIVE = "powerUnitIsActive";
 	public static final String PROPERTY_POWERDUTYCYCLE = "powerDutyCycle";
 	public static final String PROPERTY_POWERUNITON = "PowerUnitOn";
 	public static final String PROPERTY_POWERUNITSTBY = "PowerUnitStby";
@@ -84,26 +84,26 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	
 	
 	// *****************************************************************
-	// * Attribute: powerUnitActive
+	// * Attribute: powerUnitIsActive
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitActive = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerUnitIsActive = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerUnitActive() {
-		if (powerUnitActive.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitActive");
-			powerUnitActive.setTypeInstance(propertyInstance);
+	private void safeAccessPowerUnitIsActive() {
+		if (powerUnitIsActive.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitIsActive");
+			powerUnitIsActive.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerUnitActive() {
-		safeAccessPowerUnitActive();
-		return powerUnitActive.getValue();
+	public Parameter getPowerUnitIsActive() {
+		safeAccessPowerUnitIsActive();
+		return powerUnitIsActive.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerUnitActiveBean() {
-		safeAccessPowerUnitActive();
-		return powerUnitActive;
+	public BeanPropertyComposed<Parameter> getPowerUnitIsActiveBean() {
+		safeAccessPowerUnitIsActive();
+		return powerUnitIsActive;
 	}
 	
 	// *****************************************************************

@@ -280,11 +280,11 @@
             <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin" depth="1"/>
           </right>
         </left>
-        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitActive"/>
+        <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitIsActive"/>
       </expression>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin"/>
     </equationDefinitions>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitActive" description="Should be 1 if the equipment is active in the given mode, 0 in case it is totally off." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitIsActive" description="Should be 1 if the equipment is active in the given mode, 0 in case it is totally off." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerDutyCycle" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitOn" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitStby" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
