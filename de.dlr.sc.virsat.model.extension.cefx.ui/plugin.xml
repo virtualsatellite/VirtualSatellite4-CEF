@@ -327,7 +327,19 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:de.dlr.sc.virsat.project.ui.navigator.view">
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
+         <command
+               commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ui.file.refresh"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
          <command
                commandId="de.dlr.sc.virsat.project.ui.command.newVirSatProject"
                style="push">
