@@ -1115,6 +1115,42 @@
             popupMenuId="de.dlr.sc.virsat.project.ui.navigator.menu#PopupMenu"
             viewerId="de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
       </viewer>
+      <viewerActionBinding
+            viewerId="de.dlr.sc.virsat.model.extension.cefx.ui.ProductTreeView">
+    
+       
+         <includes>
+          <actionExtension
+                  pattern="de.dlr.sc.virsat.project.ui.navigator.*">
+            </actionExtension>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+              <excludes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.UndoRedoActionProvider">
+            </actionExtension>
+         </excludes>
+      </viewerActionBinding>
+      <viewerActionBinding
+            viewerId="de.dlr.sc.virsat.model.extension.cefx.ui.ConfigurationTreeView">
+    
+       
+         <includes>
+          <actionExtension
+                  pattern="de.dlr.sc.virsat.project.ui.navigator.*">
+            </actionExtension>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+              <excludes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.UndoRedoActionProvider">
+            </actionExtension>
+         </excludes>
+      </viewerActionBinding>
    </extension>
   <extension
         point="org.eclipse.ui.navigator.navigatorContent">
@@ -1180,6 +1216,13 @@
                </or></parentExpression>
          </commonSorter>
       </navigatorContent>
+      <actionProvider
+            class="de.dlr.sc.virsat.project.ui.navigator.actionProvider.VirSatNavigatorActionProvider"
+            id="de.dlr.sc.virsat.project.ui.navigator.actionProvider">
+         <enablement>
+            <or></or>
+         </enablement>
+      </actionProvider>
         <navigatorContent
               activeByDefault="true"
               contentProvider="de.dlr.sc.virsat.model.extension.cefx.ui.provider.ConfigurationTreeContentProvider"
