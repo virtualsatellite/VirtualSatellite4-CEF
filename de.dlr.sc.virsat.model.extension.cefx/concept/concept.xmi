@@ -289,7 +289,7 @@
       </expression>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin"/>
     </equationDefinitions>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitIsInactive" description="Should be 1 if the equipment is active in the given mode, 0 in case it is totally off." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitIsInactive" description="Should be 1 if the equipment is not active in the given mode, 0 in case it is active." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerDutyCycle" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitOn" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitStby" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
