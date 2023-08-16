@@ -135,7 +135,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementDefinition, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
 		Cardinality 1;
 
-		Type powerUnitIsInactive of Category Parameter quantityKind "Dimensionless"  unit "No Unit" description "Should be 1 if the equipment is not active in the given mode, 0 in case it is active."; 
+		Type powerUnitIsInactive of Category Parameter quantityKind "Dimensionless"  unit "No Unit" description "Should be 1 if the equipment is inactive in the given mode, meaning it is totally off."; 
  
 		Type powerDutyCycle of Category Parameter quantityKind "Dimensionless" unit "Percent";
 		Type PowerUnitOn of Category Parameter quantityKind "Power" unit "Watt";
