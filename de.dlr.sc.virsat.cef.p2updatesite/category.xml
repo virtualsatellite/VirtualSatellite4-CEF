@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.dlr.sc.virsat.cef.branding.feature_4.15.0.qualifier.jar" id="de.dlr.sc.virsat.cef.branding.feature" version="4.15.0.qualifier">
+   <feature url="features/de.dlr.sc.virsat.cef.branding.feature_4.16.0.qualifier.jar" id="de.dlr.sc.virsat.cef.branding.feature" version="4.16.0.qualifier">
       <category name="VirSat_CEF_Features"/>
    </feature>
-   <feature url="features/de.dlr.sc.virsat.model.extension.cef.feature_4.15.0.qualifier.jar" id="de.dlr.sc.virsat.model.extension.cef.feature" version="4.15.0.qualifier">
+   <feature url="features/de.dlr.sc.virsat.model.extension.cef.feature_4.16.0.qualifier.jar" id="de.dlr.sc.virsat.model.extension.cef.feature" version="4.16.0.qualifier">
       <category name="VirSat_CEF_Features"/>
    </feature>
-   <feature url="features/de.dlr.sc.virsat.cef.license.feature_4.15.0.qualifier.jar" id="de.dlr.sc.virsat.cef.license.feature" version="4.15.0.qualifier">
+   <feature url="features/de.dlr.sc.virsat.cef.license.feature_4.16.0.qualifier.jar" id="de.dlr.sc.virsat.cef.license.feature" version="4.16.0.qualifier">
       <category name="VirSat_CEF_Features"/>
    </feature>
-   <feature url="features/de.dlr.sc.virsat.model.extension.cef.interfaces.feature_4.15.0.qualifier.jar" id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature" version="4.15.0.qualifier">
+   <feature url="features/de.dlr.sc.virsat.model.extension.cef.interfaces.feature_4.16.0.qualifier.jar" id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature" version="4.16.0.qualifier">
       <category name="VirSat_CEF_Features"/>
    </feature>
    <feature id="de.dlr.sc.virsat.model.extension.cefx.feature">
