@@ -173,13 +173,13 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		equipment.add(equipParams);
 		equipment.add(equipMassParams);
 		
-		equipMassParams.getMassPerUnit().setDefaultValue(DEFAULT_VALUE);
+		equipMassParams.getMass().setDefaultValue(DEFAULT_VALUE);
 		equipParams.setMarginMaturity(DEFAULT_MARGIN);
 		
 		Value idleValue = new Value(conceptCEFX);
 		idleValue.setMode(idleMode);
 		idleValue.setValue(IDLE_VALUE);
-		equipMassParams.getMassPerUnit().getModeValues().add(idleValue);
+		equipMassParams.getMass().getModeValues().add(idleValue);
 		
 		IEquationSectionContainer container = (IEquationSectionContainer) equipMassParams.getATypeInstance();
 		List<Equation> equations = container.getEquationSection().getEquations();
@@ -202,7 +202,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		EquipmentPowerParameters equipPowerParams = new EquipmentPowerParameters(conceptCEFX);
 		SystemMode idleMode = new SystemMode(conceptCEFX);
 		
-		equipPowerParams.getPowerPerUnitOn().setDefaultValue(DEFAULT_VALUE);
+		equipPowerParams.getPowerUnitOn().setDefaultValue(DEFAULT_VALUE);
 		equipParams.setMarginMaturity(DEFAULT_MARGIN);
 		
 		equipment.add(equipParams);
@@ -211,7 +211,7 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		Value idleValue = new Value(conceptCEFX);
 		idleValue.setMode(idleMode);
 		idleValue.setValue(IDLE_VALUE);
-		equipPowerParams.getPowerPerUnitOn().getModeValues().add(idleValue);
+		equipPowerParams.getPowerUnitOn().getModeValues().add(idleValue);
 		
 		IEquationSectionContainer container = (IEquationSectionContainer) equipPowerParams.getATypeInstance();
 		List<Equation> equations = container.getEquationSection().getEquations();
@@ -219,8 +219,8 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		EquationHelper eqHelper = new EquationHelper();
 		eqHelper.evaluate(equations, UserRegistry.getInstance());
 		
-		assertEquals("Default value correct", EXPECTED_DEFAULT, equipPowerParams.getPowerPerUnitOnWithMargin().getDefaultValue(), TEST_EPSILON);
-		assertEquals("Idle value correct", EXPECTED_IDLE, equipPowerParams.getPowerPerUnitOnWithMargin().getModeValues().get(0).getValue(), TEST_EPSILON);
+		assertEquals("Default value correct", EXPECTED_DEFAULT, equipPowerParams.getPowerUnitOnWithMargin().getDefaultValue(), TEST_EPSILON);
+		assertEquals("Idle value correct", EXPECTED_IDLE, equipPowerParams.getPowerUnitOnWithMargin().getModeValues().get(0).getValue(), TEST_EPSILON);
 	}
 	
 	@Test
