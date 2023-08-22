@@ -35,6 +35,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
+import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
 
 /**
  * Test class for CefxHierarchyLevelChecker
@@ -88,6 +89,20 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		// third can be any level
 		assertCanAddSystemCAs(ec3, true);
 		assertCanAddSubSystemCAs(ec3, true);
+		assertCanAddEquipmentCAs(ec3, true);
+	}
+	
+	@Test
+	public void testElementsInProductTree() {
+		ElementDefinition ec1 = new ElementDefinition(conceptPS);
+		ElementDefinition ec2 = new ElementDefinition(conceptPS);
+		ElementDefinition ec3 = new ElementDefinition(conceptPS);
+		ec1.add(ec2);
+		ec2.add(ec3);
+		
+		// In product tree everything's possible :)
+		assertCanAddEquipmentCAs(ec1, true);
+		assertCanAddEquipmentCAs(ec2, true);
 		assertCanAddEquipmentCAs(ec3, true);
 	}
 
