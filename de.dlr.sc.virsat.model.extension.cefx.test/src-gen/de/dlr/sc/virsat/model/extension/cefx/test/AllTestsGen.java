@@ -26,7 +26,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemModeTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.ParameterTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParametersTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentPowerParametersTest;
-//import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v1Test;
+import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v1Test;
 import de.dlr.sc.virsat.model.extension.cefx.validator.CefxValidatorTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.ExcelCalculationTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParametersTest;
@@ -35,7 +35,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParametersTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.ValueTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParametersTest;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParametersTest;
-// import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0Test;
+import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0Test;
 
 /**
  * 
@@ -57,8 +57,8 @@ import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameter
 	EquipmentTemperatureParametersTest.class,
 	ParameterRangeTest.class,
 	ExcelCalculationTest.class,
-	// Migrator1v0Test.class,
-	// Migrator1v1Test.class,
+	Migrator1v0Test.class,
+	Migrator1v1Test.class,
 	CefxValidatorTest.class,
 				})
 
