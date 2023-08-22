@@ -96,7 +96,6 @@ public class CefxHierarchyLevelChecker {
 	 * @return true if a system related category assignment can be added
 	 */
 	public boolean canAddSystemCategory(IBeanStructuralElementInstance bean) {
-		
 		try {
 			return levelChecker.checkApplicable(bean, systemLevel);
 		} catch (IllegalArgumentException e) {
@@ -115,7 +114,6 @@ public class CefxHierarchyLevelChecker {
 	 * @return true if a sub system related category assignment can be added
 	 */
 	public boolean canAddSubSystemCategory(IBeanStructuralElementInstance bean) {
-		
 		try {
 			return levelChecker.checkApplicable(bean, subSystemLevel);
 		} catch (IllegalArgumentException e) {
