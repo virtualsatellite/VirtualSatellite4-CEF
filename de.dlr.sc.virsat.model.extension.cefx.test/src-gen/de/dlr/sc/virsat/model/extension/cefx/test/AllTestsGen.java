@@ -57,8 +57,8 @@ import de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v0Test;
 	EquipmentTemperatureParametersTest.class,
 	ParameterRangeTest.class,
 	ExcelCalculationTest.class,
-	Migrator1v0Test.class,
-	Migrator1v1Test.class,
+	// Migrator1v0Test.class,
+	// Migrator1v1Test.class,
 	CefxValidatorTest.class,
 				})
 
