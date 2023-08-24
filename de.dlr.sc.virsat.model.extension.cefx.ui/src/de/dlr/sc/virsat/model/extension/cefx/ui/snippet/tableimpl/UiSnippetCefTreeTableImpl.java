@@ -48,7 +48,7 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 	protected TreeViewerColumn colName;
 	protected TreeViewerColumn colUnit;
 	protected TreeViewerColumn colValue;
-	protected TreeViewerColumn colOverwrite;
+	protected TreeViewerColumn colOverride;
 	protected AUiSnippetGenericTable thisTable;
 	public static final int OVERRIDE_COLUMN_SIZE = 100;
 	public static final int NAME_COLUMN_SIZE = 300;
@@ -78,9 +78,9 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 			}
 		});
 		
-		colOverwrite = (TreeViewerColumn) createDefaultColumn("Overwrite");
-		colOverwrite.getColumn().setWidth(0);
-		colOverwrite.setEditingSupport(new EBooleanCellEditingSupport(editingDomain, columnViewer, InheritancePackage.Literals.IOVERRIDABLE_INHERITANCE_LINK__OVERRIDE) {
+		colOverride = (TreeViewerColumn) createDefaultColumn("Override");
+		colOverride.getColumn().setWidth(0);
+		colOverride.setEditingSupport(new EBooleanCellEditingSupport(editingDomain, columnViewer, InheritancePackage.Literals.IOVERRIDABLE_INHERITANCE_LINK__OVERRIDE) {
 			@Override
 			protected Object getValue(Object element) {
 				if (element instanceof ComposedPropertyInstance) {
@@ -139,6 +139,6 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 	protected ITableLabelProvider getTableLabelProvider() {
 		ColumnViewer columnViewer = getColumnViewer();
 		ComposedAdapterFactory adapterFactory = getAdapterFactory();
-		return new VirSatCefTreeLabelProvider(adapterFactory, columnViewer, colName,  colOverwrite, colValue, colUnit, emip);
+		return new VirSatCefTreeLabelProvider(adapterFactory, columnViewer, colName,  colOverride, colValue, colUnit, emip);
 	}
 }

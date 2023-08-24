@@ -56,7 +56,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	TreeViewerColumn colOne;
 	TreeViewerColumn colTwo;
 	TreeViewerColumn colThree;
-	TreeViewerColumn colOverwrite;
+	TreeViewerColumn colOverrie;
 	
 	
 	/**
@@ -68,11 +68,11 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	 * @param colThree  
 	 * @param emip 
 	 */
-	public VirSatCefTreeLabelProvider(AdapterFactory adapterFactory, ColumnViewer columnViewer, TreeViewerColumn colOne, TreeViewerColumn colOverwrite, TreeViewerColumn colTwo, TreeViewerColumn colThree, EsfMarkerImageProvider emip) {
+	public VirSatCefTreeLabelProvider(AdapterFactory adapterFactory, ColumnViewer columnViewer, TreeViewerColumn colOne, TreeViewerColumn colOverride, TreeViewerColumn colTwo, TreeViewerColumn colThree, EsfMarkerImageProvider emip) {
 		super(adapterFactory);
 		this.columnViewer = columnViewer;
 		this.colOne = colOne;
-		this.colOverwrite = colOverwrite;
+		this.colOverrie = colOverride;
 		this.colTwo = colTwo;
 		this.colThree = colThree;
 		this.emip = emip;
@@ -88,7 +88,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		redirectNotification(ca, object);
 		
 		if (ca.getSuperTis().isEmpty()) {
-			colOverwrite.getColumn().setWidth(0);
+			colOverrie.getColumn().setWidth(0);
 		}
 		
 		if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
@@ -101,7 +101,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			} else if (column == colThree.getColumn()) {
 				AUnit unit = parameterBean.getDefaultValueBean().getTypeInstance().getUnit();
 				return super.getText(unit);
-			} else if (column == colOverwrite.getColumn()) {
+			} else if (column == colOverrie.getColumn()) {
 				column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
 				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
 				return overwrite.toString();
