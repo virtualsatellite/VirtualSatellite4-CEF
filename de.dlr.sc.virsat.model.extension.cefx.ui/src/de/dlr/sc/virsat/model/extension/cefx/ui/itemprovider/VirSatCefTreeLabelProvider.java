@@ -87,11 +87,14 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		CategoryAssignment ca = getCategoryAssignment(object);
 		redirectNotification(ca, object);
 		
-		if (ca.getSuperTis().isEmpty()) {
-			colOverrie.getColumn().setWidth(0);
+		if (ca == null || ca.getType() == null) {
+			return null;
 		}
 		
 		if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
+			if (ca.getSuperTis().isEmpty()) {
+				colOverrie.getColumn().setWidth(0);
+			}
 			Parameter parameterBean = new Parameter(ca);
 			redirectNotification(parameterBean.getDefaultValueBean().getTypeInstance(), ca);
 			if (column == colOne.getColumn()) {
@@ -104,6 +107,9 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			} else if (column == colOverrie.getColumn()) {
 				column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
 				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
+				if (parameterBean.getDefaultValueBean().getIsCalculated()) {
+					return "<<calculated>>";
+				}
 				return overwrite.toString();
 			}
 		} else if (ca.getType().getFullQualifiedName().equals(Value.FULL_QUALIFIED_CATEGORY_NAME)) {
@@ -197,13 +203,17 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			if (problemImage != null) {
 				return problemImage;
 			} else {
-				PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
-				return piHelper.isCalculated(ca) ? imageCalculated : super.getColumnImage(ca, columnIndex);
+				return super.getColumnImage(ca, columnIndex);
 			}
 		} else if (columnIndex == 1) {
 			APropertyInstance propertyInstance = ca.getPropertyInstances().get(0);
+			PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
 			Image problemImage = mip.getProblemImageForEObject(propertyInstance);
-			return (problemImage != null) ? problemImage : 	null;
+			if (problemImage != null) {
+				return problemImage;
+			} else if (piHelper.isCalculated(ca)) {
+				return imageCalculated;
+			} 
 		}
 		return null;
 	}

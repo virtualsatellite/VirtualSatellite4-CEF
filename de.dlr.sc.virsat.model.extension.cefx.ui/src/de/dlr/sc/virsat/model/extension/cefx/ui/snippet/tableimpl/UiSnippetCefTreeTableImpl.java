@@ -50,8 +50,10 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 	protected TreeViewerColumn colValue;
 	protected TreeViewerColumn colOverride;
 	protected AUiSnippetGenericTable thisTable;
-	public static final int OVERRIDE_COLUMN_SIZE = 100;
+	public static final int OVERRIDE_COLUMN_SIZE = 140;
 	public static final int NAME_COLUMN_SIZE = 300;
+	public static final String NAME_OVERRIDE = "Override";
+	public static final String DESCRIPTION_OVERRIDE = "Specifies if the property is inherited from the prodcut tree or overritten here";
 
 	/**
 	 * Constructor of the CEF Tree Table Implementation
@@ -77,8 +79,25 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 				return false;
 			}
 		});
+	
+		colValue = (TreeViewerColumn) createDefaultColumn("Value");
+		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer);
+	
+		AProperty defaultValueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
+		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
+	
+		AProperty valueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
+		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, valueProperty));
+		colValue.setEditingSupport(editingSupportValue);
+		
+		colUnit = (TreeViewerColumn) createDefaultColumn("Unit");
+		MultiPropertyEditingSupport editingSupportUnit = new MultiPropertyEditingSupport(columnViewer);
+		editingSupportUnit.registerEditingSupport(new QudvUnitCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
+		editingSupportUnit.registerEditingSupport(new QudvUnitCellEditingSupport(editingDomain, columnViewer, valueProperty));
+		colUnit.setEditingSupport(editingSupportUnit);
 		
 		colOverride = (TreeViewerColumn) createDefaultColumn("Override");
+		colOverride.getColumn().setToolTipText(DESCRIPTION_OVERRIDE);
 		colOverride.getColumn().setWidth(0);
 		colOverride.setEditingSupport(new EBooleanCellEditingSupport(editingDomain, columnViewer, InheritancePackage.Literals.IOVERRIDABLE_INHERITANCE_LINK__OVERRIDE) {
 			@Override
@@ -111,22 +130,6 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 				return false;
 			}
 		});
-	
-		colValue = (TreeViewerColumn) createDefaultColumn("Value");
-		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer);
-	
-		AProperty defaultValueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
-		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
-	
-		AProperty valueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Value.class.getSimpleName(), Value.PROPERTY_VALUE);
-		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, valueProperty));
-		colValue.setEditingSupport(editingSupportValue);
-		
-		colUnit = (TreeViewerColumn) createDefaultColumn("Unit");
-		MultiPropertyEditingSupport editingSupportUnit = new MultiPropertyEditingSupport(columnViewer);
-		editingSupportUnit.registerEditingSupport(new QudvUnitCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));
-		editingSupportUnit.registerEditingSupport(new QudvUnitCellEditingSupport(editingDomain, columnViewer, valueProperty));
-		colUnit.setEditingSupport(editingSupportUnit);
 	}
 
 	@Override
