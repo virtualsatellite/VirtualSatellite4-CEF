@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -32,6 +33,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
+import de.dlr.sc.virsat.model.extension.cefx.ui.Activator;
 import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.UiSnippetCefTreeTableImpl;
 import de.dlr.sc.virsat.project.markers.VirSatProblemMarkerHelper;
 import de.dlr.sc.virsat.project.ui.labelProvider.VirSatTransactionalAdapterFactoryLabelProvider;
@@ -50,8 +52,14 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	private MarkerImageProvider mip = new MarkerImageProvider(new VirSatProblemMarkerHelper());
 	private EsfMarkerImageProvider emip;
 	private static final String NO_MODE_SELECTED = "[No Mode Selected]";
+	private static final String CALCULATED_STRING = "<<calculated>>";
+	private static final String OVERRIDE_IMAGE_PATH = "resources/icons/Override.gif";
+	private static final String INHERIT_IMAGE_PATH = "resources/icons/Inherit.gif";
+	private static final int OVERRIDE_COLUMN = 3;
 	private ColumnViewer columnViewer;
 	private Image imageCalculated;
+	private Image imageOverride;
+	private Image imageInherited;
 	
 	TreeViewerColumn colOne;
 	TreeViewerColumn colTwo;
@@ -76,7 +84,8 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		this.colTwo = colTwo;
 		this.colThree = colThree;
 		this.emip = emip;
-		
+		imageOverride = ExtendedImageRegistry.INSTANCE.getImage(Activator.getImageDescriptor(OVERRIDE_IMAGE_PATH));
+		imageInherited = ExtendedImageRegistry.INSTANCE.getImage(Activator.getImageDescriptor(INHERIT_IMAGE_PATH));
 		imageCalculated = DVLMEditorPlugin.getPlugin().getImageRegistry().get(DVLMEditorPlugin.IMAGE_CALCULATED);
 	}
 
@@ -108,7 +117,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 				column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
 				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
 				if (parameterBean.getDefaultValueBean().getIsCalculated()) {
-					return "<<calculated>>";
+					return CALCULATED_STRING;
 				}
 				return overwrite.toString();
 			}
@@ -198,6 +207,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	 * @return image problem image or null image
 	 */
 	private Image getColumnImageForParameter(CategoryAssignment ca, int columnIndex) {
+		PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
 		if (columnIndex == 0) {
 			Image problemImage = emip.getProblemImageForStructuralFeatureInEobject(ca, GeneralPackage.Literals.INAME__NAME);
 			if (problemImage != null) {
@@ -207,13 +217,22 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			}
 		} else if (columnIndex == 1) {
 			APropertyInstance propertyInstance = ca.getPropertyInstances().get(0);
-			PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
+			
 			Image problemImage = mip.getProblemImageForEObject(propertyInstance);
 			if (problemImage != null) {
 				return problemImage;
 			} else if (piHelper.isCalculated(ca)) {
 				return imageCalculated;
 			} 
+		} else if (columnIndex == OVERRIDE_COLUMN) {
+			if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
+				Parameter parameterBean = new Parameter(ca);
+				Boolean override = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
+				if (!piHelper.isCalculated(ca)) {
+					return (override) ? imageOverride : imageInherited;
+				}
+			}
+			
 		}
 		return null;
 	}
