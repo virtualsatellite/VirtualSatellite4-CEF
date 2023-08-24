@@ -100,10 +100,8 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			return null;
 		}
 		
+		
 		if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
-			if (ca.getSuperTis().isEmpty()) {
-				colOverrie.getColumn().setWidth(0);
-			}
 			Parameter parameterBean = new Parameter(ca);
 			redirectNotification(parameterBean.getDefaultValueBean().getTypeInstance(), ca);
 			if (column == colOne.getColumn()) {
@@ -114,7 +112,11 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 				AUnit unit = parameterBean.getDefaultValueBean().getTypeInstance().getUnit();
 				return super.getText(unit);
 			} else if (column == colOverrie.getColumn()) {
-				column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
+				if (ca.getSuperTis().isEmpty()) {
+					column.setWidth(0);
+				} else {
+					column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
+				}
 				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
 				if (parameterBean.getDefaultValueBean().getIsCalculated()) {
 					return CALCULATED_STRING;
