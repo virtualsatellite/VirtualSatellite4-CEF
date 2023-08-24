@@ -32,6 +32,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
+import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.UiSnippetCefTreeTableImpl;
 import de.dlr.sc.virsat.project.markers.VirSatProblemMarkerHelper;
 import de.dlr.sc.virsat.project.ui.labelProvider.VirSatTransactionalAdapterFactoryLabelProvider;
 import de.dlr.sc.virsat.uieingine.ui.DVLMEditorPlugin;
@@ -55,6 +56,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	TreeViewerColumn colOne;
 	TreeViewerColumn colTwo;
 	TreeViewerColumn colThree;
+	TreeViewerColumn colOverwrite;
 	
 	
 	/**
@@ -66,10 +68,11 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	 * @param colThree  
 	 * @param emip 
 	 */
-	public VirSatCefTreeLabelProvider(AdapterFactory adapterFactory, ColumnViewer columnViewer, TreeViewerColumn colOne, TreeViewerColumn colTwo, TreeViewerColumn colThree, EsfMarkerImageProvider emip) {
+	public VirSatCefTreeLabelProvider(AdapterFactory adapterFactory, ColumnViewer columnViewer, TreeViewerColumn colOne, TreeViewerColumn colOverwrite, TreeViewerColumn colTwo, TreeViewerColumn colThree, EsfMarkerImageProvider emip) {
 		super(adapterFactory);
 		this.columnViewer = columnViewer;
 		this.colOne = colOne;
+		this.colOverwrite = colOverwrite;
 		this.colTwo = colTwo;
 		this.colThree = colThree;
 		this.emip = emip;
@@ -84,6 +87,10 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		CategoryAssignment ca = getCategoryAssignment(object);
 		redirectNotification(ca, object);
 		
+		if (ca.getSuperTis().isEmpty()) {
+			colOverwrite.getColumn().setWidth(0);
+		}
+		
 		if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
 			Parameter parameterBean = new Parameter(ca);
 			redirectNotification(parameterBean.getDefaultValueBean().getTypeInstance(), ca);
@@ -94,7 +101,11 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			} else if (column == colThree.getColumn()) {
 				AUnit unit = parameterBean.getDefaultValueBean().getTypeInstance().getUnit();
 				return super.getText(unit);
-			} 
+			} else if (column == colOverwrite.getColumn()) {
+				column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
+				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
+				return overwrite.toString();
+			}
 		} else if (ca.getType().getFullQualifiedName().equals(Value.FULL_QUALIFIED_CATEGORY_NAME)) {
 			Value valueBean = new Value(ca);
 			redirectNotification(valueBean, ca, true);
