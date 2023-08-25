@@ -34,6 +34,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
 import de.dlr.sc.virsat.model.extension.cefx.ui.Activator;
+import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.OverrideFlagCellEditingSupport;
 import de.dlr.sc.virsat.model.extension.cefx.ui.snippet.tableimpl.UiSnippetCefTreeTableImpl;
 import de.dlr.sc.virsat.project.markers.VirSatProblemMarkerHelper;
 import de.dlr.sc.virsat.project.ui.labelProvider.VirSatTransactionalAdapterFactoryLabelProvider;
@@ -55,11 +56,13 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	private static final String CALCULATED_STRING = "<<calculated>>";
 	private static final String OVERRIDE_IMAGE_PATH = "resources/icons/Override.gif";
 	private static final String INHERIT_IMAGE_PATH = "resources/icons/Inherit.gif";
+	private static final String FLOAT_PROP_IMAGE_PATH = "resources/icons/FloatProperty.gif";
 	private static final int OVERRIDE_COLUMN = 3;
 	private ColumnViewer columnViewer;
 	private Image imageCalculated;
 	private Image imageOverride;
 	private Image imageInherited;
+	private Image imageFloat;
 	
 	TreeViewerColumn colOne;
 	TreeViewerColumn colTwo;
@@ -87,6 +90,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		imageOverride = ExtendedImageRegistry.INSTANCE.getImage(Activator.getImageDescriptor(OVERRIDE_IMAGE_PATH));
 		imageInherited = ExtendedImageRegistry.INSTANCE.getImage(Activator.getImageDescriptor(INHERIT_IMAGE_PATH));
 		imageCalculated = DVLMEditorPlugin.getPlugin().getImageRegistry().get(DVLMEditorPlugin.IMAGE_CALCULATED);
+		imageFloat = ExtendedImageRegistry.INSTANCE.getImage(Activator.getImageDescriptor(FLOAT_PROP_IMAGE_PATH));
 	}
 
 	@Override
@@ -120,8 +124,12 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 				Boolean overwrite = parameterBean.getDefaultValueBean().getTypeInstance().isOverride();
 				if (parameterBean.getDefaultValueBean().getIsCalculated()) {
 					return CALCULATED_STRING;
+				} 
+				if (overwrite) {
+					return OverrideFlagCellEditingSupport.OVERRIDE_LITERALS[1];
+				} else {
+					return OverrideFlagCellEditingSupport.OVERRIDE_LITERALS[0];
 				}
-				return overwrite.toString();
 			}
 		} else if (ca.getType().getFullQualifiedName().equals(Value.FULL_QUALIFIED_CATEGORY_NAME)) {
 			Value valueBean = new Value(ca);
@@ -225,7 +233,9 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 				return problemImage;
 			} else if (piHelper.isCalculated(ca)) {
 				return imageCalculated;
-			} 
+			} else {
+				return imageFloat;
+			}
 		} else if (columnIndex == OVERRIDE_COLUMN) {
 			if (ca.getType().getFullQualifiedName().equals(Parameter.FULL_QUALIFIED_CATEGORY_NAME)) {
 				Parameter parameterBean = new Parameter(ca);
