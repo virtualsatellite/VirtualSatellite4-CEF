@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.AProperty;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.general.GeneralPackage;
 import de.dlr.sc.virsat.model.dvlm.inheritance.InheritancePackage;
@@ -30,7 +29,6 @@ import de.dlr.sc.virsat.model.extension.cefx.ui.util.CefUiHelper;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.MultiPropertyEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.QudvUnitCellEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.ValuePropertyCellEditingSupport;
-import de.dlr.sc.virsat.uiengine.ui.cellEditor.emfattributes.EBooleanCellEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.emfattributes.EStringCellEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.AUiSnippetGenericCategoryAssignmentTable;
 import de.dlr.sc.virsat.uiengine.ui.editor.snippets.AUiSnippetGenericTable;
@@ -99,37 +97,7 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 		colOverride = (TreeViewerColumn) createDefaultColumn("Override");
 		colOverride.getColumn().setToolTipText(DESCRIPTION_OVERRIDE);
 		colOverride.getColumn().setWidth(0);
-		colOverride.setEditingSupport(new EBooleanCellEditingSupport(editingDomain, columnViewer, InheritancePackage.Literals.IOVERRIDABLE_INHERITANCE_LINK__OVERRIDE) {
-			@Override
-			protected Object getValue(Object element) {
-				if (element instanceof ComposedPropertyInstance) {
-					Parameter param = new Parameter(((ComposedPropertyInstance) element).getTypeInstance());
-					return super.getValue(param.getDefaultValueBean().getTypeInstance());
-				}
-				return super.getValue(element);
-			}
-			
-			@Override
-			protected void setValue(Object element, Object userInputValue) {
-				if (element instanceof ComposedPropertyInstance) {
-					Parameter param = new Parameter(((ComposedPropertyInstance) element).getTypeInstance());
-					super.setValue(param.getDefaultValueBean().getTypeInstance(), userInputValue);
-				} else {
-					super.setValue(element, userInputValue);
-				}
-			}
-			@Override
-			protected boolean canEdit(Object element) {
-				if (element instanceof ComposedPropertyInstance) {
-					Parameter param = new Parameter(((ComposedPropertyInstance) element).getTypeInstance());
-					if (param.getDefaultValueBean().getIsCalculated()) {
-						return false;
-					}
-					return super.canEdit(param.getDefaultValueBean().getTypeInstance());
-				}
-				return false;
-			}
-		});
+		colOverride.setEditingSupport(new OverrideFlagCellEditingSupport(editingDomain, columnViewer, InheritancePackage.Literals.IOVERRIDABLE_INHERITANCE_LINK__OVERRIDE));
 	}
 
 	@Override
