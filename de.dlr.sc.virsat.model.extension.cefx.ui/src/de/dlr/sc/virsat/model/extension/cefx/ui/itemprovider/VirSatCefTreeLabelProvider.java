@@ -14,6 +14,7 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeColumn;
 
@@ -57,6 +58,7 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 	private static final String OVERRIDE_IMAGE_PATH = "resources/icons/Override.gif";
 	private static final String INHERIT_IMAGE_PATH = "resources/icons/Inherit.gif";
 	private static final String FLOAT_PROP_IMAGE_PATH = "resources/icons/FloatProperty.gif";
+	private static final Color COLOR_READ_ONLY = new Color(96, 96, 96);
 	private static final int OVERRIDE_COLUMN = 3;
 	private ColumnViewer columnViewer;
 	private Image imageCalculated;
@@ -146,6 +148,22 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			} else if (column == colThree.getColumn()) {
 				AUnit unit = valuePropertyBean.getTypeInstance().getUnit();
 				return super.getText(unit);
+			} else if (column == colOverrie.getColumn()) {
+				if (ca.getSuperTis().isEmpty()) {
+					column.setWidth(0);
+				} else {
+					column.setWidth(UiSnippetCefTreeTableImpl.OVERRIDE_COLUMN_SIZE);
+				}
+				Boolean overwrite = valueBean.getValueBean().getTypeInstance().isOverride()
+						|| valueBean.getModeBean().getTypeInstance().isOverride();
+				if (valueBean.getModeBean().getIsCalculated()) {
+					return CALCULATED_STRING;
+				} 
+				if (overwrite) {
+					return OverrideFlagCellEditingSupport.OVERRIDE_LITERALS[1];
+				} else {
+					return OverrideFlagCellEditingSupport.OVERRIDE_LITERALS[0];
+				}
 			}
 		}	else if (ca.getType().getFullQualifiedName().equals(SystemParameters.FULL_QUALIFIED_CATEGORY_NAME)) {
 			UnitValuePropertyInstance uvi = (UnitValuePropertyInstance) object;
@@ -244,7 +262,6 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 					return (override) ? imageOverride : imageInherited;
 				}
 			}
-			
 		}
 		return null;
 	}
@@ -281,8 +298,16 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 		} else if (columnIndex == 1) {
 			APropertyInstance propertyInstance = ca.getPropertyInstances().get(0);
 			Image problemImage = mip.getProblemImageForEObject(propertyInstance);
-			return (problemImage != null) ? problemImage : 	null;
-		} 
+			return (problemImage != null) ? problemImage : 	imageFloat;
+		} else if (columnIndex == OVERRIDE_COLUMN) {
+			Value valueBean = new Value(ca);
+			Boolean override = valueBean.getValueBean().getTypeInstance().isOverride()
+					|| valueBean.getModeBean().getTypeInstance().isOverride();
+			if (valueBean.getModeBean().getIsCalculated()) {
+				return imageCalculated;
+			} 
+			return (override) ? imageOverride : imageInherited;
+		}
 		return null;
 	}
 	
@@ -302,6 +327,18 @@ public class VirSatCefTreeLabelProvider extends VirSatTransactionalAdapterFactor
 			return (problemImage != null) ? problemImage : 	null;
 		} 
 		return null;
+	}
+	
+	@Override
+	public Color getForeground(Object object) {
+		CategoryAssignment ca = getCategoryAssignment(object);
+		PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
+		redirectNotification(ca, object);
+		if (piHelper.isCalculated(ca)) {
+			return COLOR_READ_ONLY;
+		}
+		
+		return super.getForeground(object);
 	}
 
 }
