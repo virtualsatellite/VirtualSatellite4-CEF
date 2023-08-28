@@ -9,10 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.util;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -23,8 +24,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
+import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
+import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMode;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
@@ -208,6 +213,34 @@ public class CefModeHelperTest extends AConceptTestCase {
 		assertEquals("Found the correct mode value", param.getDefaultValue(), modeValueDefault, EPS);
 		assertEquals("Found the correct mode value", value1.getValue(), modeValue1, EPS);
 		assertEquals("Found the correct mode value", value2.getValue(), modeValue2, EPS);
+	}
+	
+	@Test
+	public void testIsValueCalculated() {
+		CefModeHelper helper = new CefModeHelper();
+		
+		ElementConfiguration subSystem = new ElementConfiguration(conceptPS);
+		EquipmentMassParameters paramsMass = new EquipmentMassParameters(conceptCEFX);
+		EquipmentParameters params = new EquipmentParameters(conceptCEFX);
+		subSystem.add(params);
+		subSystem.add(paramsMass);
+		BeanPropertyComposed<Parameter> beanNotComputed = paramsMass.getMassBean();
+		BeanPropertyComposed<Parameter> beanComputed = paramsMass.getMassTotalBean();
+		
+		Value valueNotComputed = new Value(conceptCEFX);
+		Value valueComputed = new Value(conceptCEFX);
+		
+		SystemMode systemMode1 = new SystemMode(conceptCEFX);
+		SystemMode systemMode2 = new SystemMode(conceptCEFX);
+		
+		valueNotComputed.setMode(systemMode1);
+		valueComputed.setMode(systemMode2);
+		
+		beanNotComputed.getValue().getModeValues().add(valueNotComputed);
+		beanComputed.getValue().getModeValues().add(valueComputed);
+		
+		assertTrue(helper.isValueCalculated((CategoryAssignment) valueComputed.getTypeInstance()));
+		assertFalse(helper.isValueCalculated((CategoryAssignment) valueNotComputed.getTypeInstance()));
 	}
 
 }

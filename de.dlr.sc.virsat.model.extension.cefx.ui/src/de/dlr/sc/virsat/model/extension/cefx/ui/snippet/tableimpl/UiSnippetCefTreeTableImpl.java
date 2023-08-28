@@ -26,6 +26,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
 import de.dlr.sc.virsat.model.extension.cefx.model.Value;
 import de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider.VirSatCefTreeLabelProvider;
 import de.dlr.sc.virsat.model.extension.cefx.ui.util.CefUiHelper;
+import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelper;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.MultiPropertyEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.QudvUnitCellEditingSupport;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.aproperties.ValuePropertyCellEditingSupport;
@@ -79,7 +80,19 @@ public class UiSnippetCefTreeTableImpl extends UiSnippetGenericTreeTableImpl {
 		});
 	
 		colValue = (TreeViewerColumn) createDefaultColumn("Value");
-		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer);
+		MultiPropertyEditingSupport editingSupportValue = new MultiPropertyEditingSupport(columnViewer) {
+			@Override
+			protected boolean canEdit(Object element) {
+				if (element instanceof CategoryAssignment 
+						&&  ((CategoryAssignment) element).getType().getFullQualifiedName().equals(Value.FULL_QUALIFIED_CATEGORY_NAME)) {
+					if (new CefModeHelper().isValueCalculated((CategoryAssignment) element)) {
+						return false;
+					}
+					
+				}
+				return super.canEdit(element);
+			}
+		};
 	
 		AProperty defaultValueProperty = acHelper.getProperty(Activator.PLUGIN_ID, Parameter.class.getSimpleName(), Parameter.PROPERTY_DEFAULTVALUE); //Parameter.class.getSimpleName() = non fully qualified name, e.g. "Parameter"
 		editingSupportValue.registerEditingSupport(new ValuePropertyCellEditingSupport(editingDomain, columnViewer, defaultValueProperty));

@@ -19,6 +19,11 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.BeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.ATypeInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.impl.ArrayInstanceImpl;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.util.PropertyInstanceHelper;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.qudv.AUnit;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
@@ -171,5 +176,29 @@ public class CefModeHelper {
 		}
 		
 		return null;
+	}
+	
+	
+	/**
+	 * Checking if a mode value is calculated by going up the tree and checking if the 
+	 * actual composed property is calculated
+	 * @param caValue the CA of the value
+	 * @return true if calculated
+	 */
+	public boolean isValueCalculated(CategoryAssignment caValue) {
+		PropertyInstanceHelper piHelper = new PropertyInstanceHelper();
+		if (caValue.eContainer() != null && caValue.eContainer() instanceof ComposedPropertyInstance) {
+			ComposedPropertyInstance modeValuesCP = (ComposedPropertyInstance) caValue.eContainer();
+			if (modeValuesCP.eContainer() != null 
+					&& modeValuesCP.eContainer() instanceof ArrayInstanceImpl) {
+				ArrayInstanceImpl modeValesAi = (ArrayInstanceImpl) modeValuesCP.eContainer();
+				if (modeValesAi.eContainer() != null 
+						&& modeValesAi.eContainer() instanceof CategoryAssignment
+						&& piHelper.isCalculated((ATypeInstance) modeValesAi.eContainer())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
