@@ -16,8 +16,11 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
+import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
+import de.dlr.sc.virsat.model.extension.cefx.model.Value;
+import de.dlr.sc.virsat.model.extension.cefx.util.CefModeHelper;
 import de.dlr.sc.virsat.uiengine.ui.cellEditor.emfattributes.EBooleanCellEditingSupport;
 
 public class OverrideFlagCellEditingSupport extends EBooleanCellEditingSupport {
@@ -35,6 +38,9 @@ public class OverrideFlagCellEditingSupport extends EBooleanCellEditingSupport {
 		if (element instanceof ComposedPropertyInstance) {
 			Parameter param = new Parameter(((ComposedPropertyInstance) element).getTypeInstance());
 			return super.getValue(param.getDefaultValueBean().getTypeInstance());
+		} else if (element instanceof CategoryAssignment) {
+			Value value = new Value((CategoryAssignment) element);
+			return super.getValue(value.getValueBean().getTypeInstance());
 		}
 		return super.getValue(element);
 	}
@@ -44,6 +50,9 @@ public class OverrideFlagCellEditingSupport extends EBooleanCellEditingSupport {
 		if (element instanceof ComposedPropertyInstance) {
 			Parameter param = new Parameter(((ComposedPropertyInstance) element).getTypeInstance());
 			super.setValue(param.getDefaultValueBean().getTypeInstance(), userInputValue);
+		} else if (element instanceof CategoryAssignment) {
+			Value value = new Value((CategoryAssignment) element);
+			super.setValue(value.getValueBean().getTypeInstance(), userInputValue);
 		} else {
 			super.setValue(element, userInputValue);
 		}
@@ -56,6 +65,12 @@ public class OverrideFlagCellEditingSupport extends EBooleanCellEditingSupport {
 				return false;
 			}
 			return super.canEdit(param.getDefaultValueBean().getTypeInstance());
+		} else if (element instanceof CategoryAssignment 
+					&&  ((CategoryAssignment) element).getType().getFullQualifiedName().equals(Value.FULL_QUALIFIED_CATEGORY_NAME)) {
+			if (!(new CefModeHelper().isValueCalculated((CategoryAssignment) element))) {
+				return true;
+			}
+				
 		}
 		return false;
 	}
