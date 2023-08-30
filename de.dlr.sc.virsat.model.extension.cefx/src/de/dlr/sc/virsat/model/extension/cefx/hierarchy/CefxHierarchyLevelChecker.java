@@ -26,6 +26,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
+import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
 
 /**
  * Class to check the model tree hierarchy of SYSTEM, SUBSYSTEM and EQUIPMENT
@@ -65,6 +66,13 @@ public class CefxHierarchyLevelChecker {
 	 */
 	public boolean canAdd(IBeanStructuralElementInstance bean,
 			Class<? extends IBeanCategoryAssignment> categoryBeanClass) {
+		
+		// In product tree levels don't make sense
+		if (bean.getStructuralElementInstance().getType().getFullQualifiedName().equals(ElementDefinition.FULL_QUALIFIED_STRUCTURAL_ELEMENT_NAME)
+				&& equipmentLevel.categoryBelongsToLevel(categoryBeanClass)) {
+			return true;
+		}
+				
 		try {
 			for (IHierarchyLevel level : levelChecker.getApplicableLevels(bean)) {
 				if (((CefxHierarchyLevel) level).categoryBelongsToLevel(categoryBeanClass)) {
@@ -124,6 +132,12 @@ public class CefxHierarchyLevelChecker {
 	 * @return true if a equipment related category assignment can be added
 	 */
 	public boolean canAddEquipmentCategory(IBeanStructuralElementInstance bean) {
+		
+		// In product tree levels don't make sense
+		if (bean.getStructuralElementInstance().getType().getFullQualifiedName().equals(ElementDefinition.FULL_QUALIFIED_STRUCTURAL_ELEMENT_NAME)) {
+			return true;
+		}
+		
 		try {
 			return levelChecker.checkApplicable(bean, equipmentLevel);
 		} catch (IllegalArgumentException e) {
@@ -213,5 +227,9 @@ public class CefxHierarchyLevelChecker {
 		CefxHierarchyLevel equipmentLevel = new CefxHierarchyLevel(beanClassList);
 		equipmentLevel.setCanBeNested(true);
 		return equipmentLevel;
+	}
+	
+	public void setLevelChecker(HierarchyLevelChecker levelChecker) {
+		this.levelChecker = levelChecker;
 	}
 }

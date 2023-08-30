@@ -54,7 +54,7 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	}
 	
 	// property name constants
-	public static final String PROPERTY_MASSPERUNIT = "massPerUnit";
+	public static final String PROPERTY_MASS = "mass";
 	public static final String PROPERTY_MASSTOTAL = "massTotal";
 	public static final String PROPERTY_MASSTOTALWITHMARGIN = "massTotalWithMargin";
 	
@@ -79,26 +79,26 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	
 	
 	// *****************************************************************
-	// * Attribute: massPerUnit
+	// * Attribute: mass
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> massPerUnit = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> mass = new BeanPropertyComposed<>();
 	
-	private void safeAccessMassPerUnit() {
-		if (massPerUnit.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massPerUnit");
-			massPerUnit.setTypeInstance(propertyInstance);
+	private void safeAccessMass() {
+		if (mass.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("mass");
+			mass.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getMassPerUnit() {
-		safeAccessMassPerUnit();
-		return massPerUnit.getValue();
+	public Parameter getMass() {
+		safeAccessMass();
+		return mass.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getMassPerUnitBean() {
-		safeAccessMassPerUnit();
-		return massPerUnit;
+	public BeanPropertyComposed<Parameter> getMassBean() {
+		safeAccessMass();
+		return mass;
 	}
 	
 	// *****************************************************************

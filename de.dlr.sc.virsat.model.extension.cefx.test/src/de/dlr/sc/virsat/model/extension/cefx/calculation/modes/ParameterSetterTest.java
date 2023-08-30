@@ -70,6 +70,7 @@ public class ParameterSetterTest extends ATestCase {
 		assertEquals("Case parameter = numberLiteral: Default Value Set Correctly", Double.valueOf(nl.getValue()), parameter.getDefaultValue(), TEST_EPSILON);
 		double newIdleValue = parameter.getModeValues().get(0).getValue();
 		assertEquals("Case parameter = numberLiteral: Idle Value Set Correctly", Double.valueOf(nl.getValue()), newIdleValue, TEST_EPSILON);
+		assertEquals("Make sure equation engine sets overwrite flag", parameter.getDefaultValueBean().getOverride(), true);
 	}
 	
 	@Test
