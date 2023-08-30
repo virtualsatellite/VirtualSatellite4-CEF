@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -21,6 +22,8 @@ import org.junit.Test;
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.level.HierarchyLevelChecker;
+import de.dlr.sc.virsat.model.concept.types.structural.level.IHierarchyLevel;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
@@ -66,6 +69,20 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		ElementConfiguration ec = new ElementConfiguration(conceptPS);
 		assertFalse(checker.beanHasAmbiguousLevel(ec));
 		assertFalse(checker.beanHasInapplicableLevel(ec));
+	}
+	
+	@Test
+	public void testExceptionHandling() {
+		HierarchyLevelChecker newExceptionThrowingChecker = new HierarchyLevelChecker(Collections.emptyList()) {
+			@Override
+			public boolean checkApplicable(IBeanStructuralElementInstance bean, IHierarchyLevel level) {
+				throw new IllegalArgumentException();
+			}
+		};
+		checker.setLevelChecker(newExceptionThrowingChecker);
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSystemCategory(null));
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSubSystemCategory(null));
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddEquipmentCategory(null));
 	}
 	
 	@Test

@@ -228,4 +228,8 @@ public class CefxHierarchyLevelChecker {
 		equipmentLevel.setCanBeNested(true);
 		return equipmentLevel;
 	}
+	
+	public void setLevelChecker(HierarchyLevelChecker levelChecker) {
+		this.levelChecker = levelChecker;
+	}
 }
