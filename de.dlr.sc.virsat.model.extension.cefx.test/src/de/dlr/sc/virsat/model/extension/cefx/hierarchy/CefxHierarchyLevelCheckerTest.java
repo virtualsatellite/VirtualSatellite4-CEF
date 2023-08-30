@@ -80,9 +80,10 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 			}
 		};
 		checker.setLevelChecker(newExceptionThrowingChecker);
+		ElementConfiguration ec = new ElementConfiguration(conceptPS);
 		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSystemCategory(null));
 		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSubSystemCategory(null));
-		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddEquipmentCategory(null));
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddEquipmentCategory(ec));
 	}
 	
 	@Test
