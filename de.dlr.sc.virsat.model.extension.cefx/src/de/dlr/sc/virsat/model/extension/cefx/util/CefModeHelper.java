@@ -109,7 +109,7 @@ public class CefModeHelper {
 	 */
 	public Value getModeValue(Parameter parameter, SystemMode systemMode) {
 		for (Value modeValue : parameter.getModeValues()) {
-			if (systemMode.equals(modeValue.getMode())) {
+			if (systemMode.getName().equals(modeValue.getMode().getName())) {
 				return modeValue;
 			}
 		}
