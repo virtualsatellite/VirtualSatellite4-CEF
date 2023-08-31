@@ -3,7 +3,30 @@ VirSat CEF Release Notes
 
 VirSat CEF is based on VirSat Core. Please don't forget to read the Release Notes of VirSat Core as well!
 
+Release 4.15.0 (09th August 2022)
+----------------------------------
+
+New Features:
+	Migrated to Java 11 #159 Build
+	Migrated to Eclipse 2022-03 #160 Build
+
 Release 4.13.0 (27th April 2021)
+----------------------------------
+
+New Features:
+	CEF concept supports being used on VirSat Server - #140 Feature
+	
+Usability Updates:
+	Naming of parameters was improved #180
+	Enable renaming in product and configuration editors with F2 #179
+	Improved UI to show overwrite flag for parameters #186
+
+Fixed Bugs:
+	Looping when overwriting parameter values on Configuration Tree #178
+	Undo was not working in the tree views
+	Ordering of customized navigator views
+
+Release 4.16.0 (30th August 2023)
 ----------------------------------
 
 New Features:

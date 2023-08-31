@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -21,6 +22,8 @@ import org.junit.Test;
 import de.dlr.sc.virsat.concept.unittest.util.test.AConceptTestCase;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
+import de.dlr.sc.virsat.model.concept.types.structural.level.HierarchyLevelChecker;
+import de.dlr.sc.virsat.model.concept.types.structural.level.IHierarchyLevel;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
@@ -35,6 +38,7 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
+import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
 
 /**
  * Test class for CefxHierarchyLevelChecker
@@ -68,6 +72,21 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 	}
 	
 	@Test
+	public void testExceptionHandling() {
+		HierarchyLevelChecker newExceptionThrowingChecker = new HierarchyLevelChecker(Collections.emptyList()) {
+			@Override
+			public boolean checkApplicable(IBeanStructuralElementInstance bean, IHierarchyLevel level) {
+				throw new IllegalArgumentException();
+			}
+		};
+		checker.setLevelChecker(newExceptionThrowingChecker);
+		ElementConfiguration ec = new ElementConfiguration(conceptPS);
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSystemCategory(null));
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddSubSystemCategory(null));
+		assertTrue("If model is broken, everything should be allowed; warnings are thrown", checker.canAddEquipmentCategory(ec));
+	}
+	
+	@Test
 	public void testElementsWithoutLevels() {
 		ElementConfiguration ec1 = new ElementConfiguration(conceptPS);
 		ElementConfiguration ec2 = new ElementConfiguration(conceptPS);
@@ -88,6 +107,20 @@ public class CefxHierarchyLevelCheckerTest extends AConceptTestCase {
 		// third can be any level
 		assertCanAddSystemCAs(ec3, true);
 		assertCanAddSubSystemCAs(ec3, true);
+		assertCanAddEquipmentCAs(ec3, true);
+	}
+	
+	@Test
+	public void testElementsInProductTree() {
+		ElementDefinition ec1 = new ElementDefinition(conceptPS);
+		ElementDefinition ec2 = new ElementDefinition(conceptPS);
+		ElementDefinition ec3 = new ElementDefinition(conceptPS);
+		ec1.add(ec2);
+		ec2.add(ec3);
+		
+		// In product tree everything's possible :)
+		assertCanAddEquipmentCAs(ec1, true);
+		assertCanAddEquipmentCAs(ec2, true);
 		assertCanAddEquipmentCAs(ec3, true);
 	}
 
