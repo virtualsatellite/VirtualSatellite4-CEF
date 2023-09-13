@@ -66,6 +66,9 @@ class ModeTableLabelProvider extends LabelProvider implements ITableLabelProvide
 				CefModeHelper cefModeHelper = new CefModeHelper();
 				
 				List<SystemMode> modes = cefModeHelper.getAllModes(param);
+				if (columnMode >= modes.size()) {
+					return "";
+				}
 				SystemMode mode = modes.get(columnMode);
 			
 				Value modeValue = cefModeHelper.getModeValue(param, mode);

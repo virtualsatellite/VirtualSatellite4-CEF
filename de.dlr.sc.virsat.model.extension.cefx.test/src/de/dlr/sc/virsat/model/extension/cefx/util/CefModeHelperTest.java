@@ -171,9 +171,12 @@ public class CefModeHelperTest extends AConceptTestCase {
 		
 		SystemMode systemMode1 = new SystemMode(conceptCEFX);
 		SystemMode systemMode2 = new SystemMode(conceptCEFX);
+		systemMode1.setName("MODE_1");
+		systemMode2.setName("MODE_2");
 		
 		value1.setMode(systemMode1);
 		value2.setMode(systemMode2);
+		
 		
 		param.getModeValues().add(value1);
 		param.getModeValues().add(value2);
@@ -193,6 +196,8 @@ public class CefModeHelperTest extends AConceptTestCase {
 		
 		SystemMode systemMode1 = new SystemMode(conceptCEFX);
 		SystemMode systemMode2 = new SystemMode(conceptCEFX);
+		systemMode1.setName("MODE_1");
+		systemMode2.setName("MODE_2");
 		
 		value1.setMode(systemMode1);
 		value2.setMode(systemMode2);
