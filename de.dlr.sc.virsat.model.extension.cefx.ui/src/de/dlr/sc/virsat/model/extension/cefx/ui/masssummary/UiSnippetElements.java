@@ -154,7 +154,7 @@ public class UiSnippetElements extends AUiSnippetTable {
 						case COLUMN_MARGIN_KG:
 							return printParameter(subSystemMassParameters.getMassMargin(), KILOGRAM);
 						case COLUMN_MWMARGINKG:
-							return printParameter(subSystemMassParameters.getMassTotal(), KILOGRAM);
+							return printParameter(subSystemMassParameters.getMassTotalWithMargin(), KILOGRAM);
 						case COLUMN_PERCENT_DRY_MASS:
 							SystemMassParameters systemMassParameters = getSystemMassParameters(beanSei);
 
