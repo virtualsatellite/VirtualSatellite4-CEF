@@ -9,6 +9,8 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 
+import javax.xml.bind.annotation.XmlType;
+
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 // *****************************************************************
@@ -21,6 +23,7 @@ import de.dlr.sc.virsat.model.extension.cef.model.EquipmentParameters;
 // * Class Declaration
 // *****************************************************************
 
+@XmlType(name = AAInterfaceEnd.FULL_QUALIFIED_CATEGORY_NAME)
 /**
  * Auto Generated Class inheriting from Generator Gap Class
  * 
