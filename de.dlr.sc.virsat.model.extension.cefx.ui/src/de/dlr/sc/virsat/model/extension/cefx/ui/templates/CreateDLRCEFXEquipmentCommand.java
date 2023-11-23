@@ -54,7 +54,6 @@ public class CreateDLRCEFXEquipmentCommand {
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(concept, equipment);
 	        }
 	    });
-
 	    // Return the CompoundCommand representing the overall operation
 	    return cmd;
 	}
