@@ -17,7 +17,7 @@
 
    <launcher name="VirSat4_CEF_Server">
       <win useIco="true">
-         <ico path="../de.dlr.sc.virsat.branding.ui/resources/images/Branding/VirSat_MultiRes.ico"/>
+         <ico path="../de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_MultiRes.ico"/>
          <bmp/>
       </win>
    </launcher>
