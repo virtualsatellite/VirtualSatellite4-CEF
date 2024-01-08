@@ -2124,6 +2124,141 @@
 			category="de.dlr.sc.virsat.project.ui.view.category.cefx"
 			class="de.dlr.sc.virsat.model.extension.cefx.ui.masssummary.MassSummaryView"/>
 	</extension>
+	
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXStudyHandler"
+			commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXStudyCommand">
+	         <activeWhen>
+				<with
+					variable="selection">
+					<iterate
+							ifEmpty="false"
+							operator="and">
+							<test 
+								property="de.dlr.sc.virsat.model.extension.cefx.ui.propertyTester.conceptEnabled"
+								value="true" 
+								forcePluginActivation="true">
+							</test>		
+							<or>
+		                		<instanceof
+		                       		value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
+		                 		</instanceof>
+		                 		<instanceof
+		                    	   value="de.dlr.sc.virsat.model.dvlm.Repository">
+		                	 	</instanceof>
+	                	 	</or>
+						</iterate>
+					</with>
+	    	 </activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXSubSystemHandler"
+			commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXSubSystemCommand">
+	         <activeWhen>
+				<with
+					variable="selection">
+					<iterate
+							ifEmpty="false"
+							operator="and">
+							<test 
+								property="de.dlr.sc.virsat.model.extension.cef.ui.propertyTester.conceptEnabled"
+								value="true" 
+								forcePluginActivation="true">
+							</test>		
+		                		<instanceof
+		                       		value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
+		                 		</instanceof>
+						</iterate>
+					</with>
+	    	 </activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXEquipmentHandler"
+			commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXEquipmentCommand">
+	         <activeWhen>
+				<with
+					variable="selection">
+					<iterate
+							ifEmpty="false"
+							operator="and">
+							<test 
+								property="de.dlr.sc.virsat.model.extension.cef.ui.propertyTester.conceptEnabled"
+								value="true" 
+								forcePluginActivation="true">
+							</test>	
+		                		<instanceof
+		                       		value="de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance">
+		                 		</instanceof>
+						</iterate>
+					</with>
+	    	 </activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.commands">
+	<command
+	    id="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXStudyCommand"
+	    name="Create New DLR/CEFX Study">
+	</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			  locationURI="menu:org.eclipse.ui.main.menu">
+	   		<menu
+		    	 id="de.dlr.sc.virsat.model.extension.cef.ui.templates.templates"
+	    	 	label="Templates">
+	       		<command
+	        		commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXStudyCommand"
+	            	tooltip="Create DLR/CEFX standard abiding study data in System."
+	            	style="push">
+	       		</command>
+			</menu>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.commands">
+	<command
+	    id="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXSubSystemCommand"
+	    name="Create New DLR/CEFX SubSystem">
+	</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			  locationURI="menu:org.eclipse.ui.main.menu">
+	   		<menu
+		    	 id="de.dlr.sc.virsat.model.extension.cef.ui.templates.templates"
+	    	 	label="Templates">
+	       		<command
+	        		commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXSubSystemCommand"
+	            	tooltip="Create DLR/CEFX standard abiding study data in SubSystem."
+	            	style="push">
+	       		</command>
+			</menu>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.commands">
+	<command
+	    id="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXEquipmentCommand"
+	    name="Create New DLR/CEFX Equipment">
+	</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			  locationURI="menu:org.eclipse.ui.main.menu">
+	   		<menu
+		    	 id="de.dlr.sc.virsat.model.extension.cef.ui.templates.templates"
+	    	 	label="Templates">
+	       		<command
+	        		commandId="de.dlr.sc.virsat.model.extension.cefx.ui.templates.CreateDLRCEFXEquipmentCommand"
+	            	tooltip="Create DLR/CEFX standard abiding study data in Equipment."
+	            	style="push">
+	       		</command>
+			</menu>
+		</menuContribution>
+	</extension>
 		
 	<extension
 	       point="de.dlr.sc.virsat.uiengine.ui.EditorSection">
