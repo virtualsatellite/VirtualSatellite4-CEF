@@ -53,13 +53,19 @@ public class DLRCEFXStudyCommandHelper {
 	 * @param domain the domain
 	 * @return the cefx concept
 	 */
-	public static Concept getCefConcept(VirSatTransactionalEditingDomain domain) {
+	public static Concept getCefxConcept(VirSatTransactionalEditingDomain domain) {
 		Repository currentRepository = domain.getResourceSet().getRepository();
 		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
 		Concept activeConcept = acHelper.getConcept(Activator.PLUGIN_ID);
 		return activeConcept;
 	}
 
+	public static Concept getPsConcept(VirSatTransactionalEditingDomain domain) {
+		Repository currentRepository = domain.getResourceSet().getRepository();
+		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
+		Concept activeConcept = acHelper.getConcept(de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId());
+		return activeConcept;
+	}
 	/**
 	 * 
 	 * @param conceptPs

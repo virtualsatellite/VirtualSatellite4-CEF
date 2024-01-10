@@ -2164,7 +2164,7 @@
 							ifEmpty="false"
 							operator="and">
 							<test 
-								property="de.dlr.sc.virsat.model.extension.cef.ui.propertyTester.conceptEnabled"
+								property="de.dlr.sc.virsat.model.extension.cefx.ui.propertyTester.conceptEnabled"
 								value="true" 
 								forcePluginActivation="true">
 							</test>		
@@ -2187,7 +2187,7 @@
 							ifEmpty="false"
 							operator="and">
 							<test 
-								property="de.dlr.sc.virsat.model.extension.cef.ui.propertyTester.conceptEnabled"
+								property="de.dlr.sc.virsat.model.extension.cefx.ui.propertyTester.conceptEnabled"
 								value="true" 
 								forcePluginActivation="true">
 							</test>	

@@ -37,9 +37,9 @@ public class CreateDLRCEFXEquipmentCommand {
 	 * @param domain The VirSatTransactionalEditingDomain in which the command will be executed.
 	 * @return A CompoundCommand representing the operation.
 	 */
-	public static CompoundCommand create(EObject parent, Concept concept, VirSatTransactionalEditingDomain domain) {
+	public static CompoundCommand create(EObject parent, Concept conceptCefx, Concept conceptPs, VirSatTransactionalEditingDomain domain) {
 	    // Create ElementConfiguration for the given Concept
-	    ElementConfiguration equipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(concept);
+	    ElementConfiguration equipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
 
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
@@ -51,7 +51,7 @@ public class CreateDLRCEFXEquipmentCommand {
 	    cmd.append(new RecordingCommand(domain) {
 	        @Override
 	        protected void doExecute() {
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(concept, equipment);
+	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, equipment);
 	        }
 	    });
 	    // Return the CompoundCommand representing the overall operation

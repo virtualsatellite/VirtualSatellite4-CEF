@@ -19,6 +19,6 @@ import org.eclipse.emf.common.command.Command;
 public class CreateDLRCEFXSubSystemHandler extends CreateDLRCEFXTemplateHandler {
 	@Override
 	protected Command getCommand() {
-		return CreateDLRCEFXSubSystemCommand.create(firstSelectedEObject, activeConcept, ed);
+		return CreateDLRCEFXSubSystemCommand.create(firstSelectedEObject, activeConceptPs, activeConceptCefx, ed);
 	}
 }

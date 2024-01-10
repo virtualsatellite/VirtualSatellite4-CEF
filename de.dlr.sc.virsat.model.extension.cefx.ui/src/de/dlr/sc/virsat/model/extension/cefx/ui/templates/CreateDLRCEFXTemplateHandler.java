@@ -19,14 +19,16 @@ import de.dlr.sc.virsat.project.ui.editingDomain.handler.AEditingDomainCommandHa
 
 public abstract class CreateDLRCEFXTemplateHandler extends AEditingDomainCommandHandler {
 	
-	protected Concept activeConcept;
+	protected Concept activeConceptCefx;
+	protected Concept activeConceptPs;
 	
 	@Override
 	protected void initializeFieldsFromSelection(ISelection selection) {
 		super.initializeFieldsFromSelection(selection);
-		activeConcept = DLRCEFXStudyCommandHelper.getCefConcept(ed);
+		activeConceptCefx = DLRCEFXStudyCommandHelper.getCefxConcept(ed);
+		activeConceptPs = DLRCEFXStudyCommandHelper.getPsConcept(ed);
 	}
-	
+
 	@Override
 	public void execute() {
 		ed.getCommandStack().execute(getCommand());
@@ -34,14 +36,14 @@ public abstract class CreateDLRCEFXTemplateHandler extends AEditingDomainCommand
 	
 	@Override
 	public boolean isEnabled() {
+		
 		ISelectionService  selectionService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		ISelection selection = selectionService.getSelection();
 		initializeFieldsFromSelection(selection);
 		
-		if (activeConcept == null) {
+		if (activeConceptCefx == null || activeConceptPs == null) {
 			return false;
 		}
-
 		return getCommand().canExecute();
 	}
 	

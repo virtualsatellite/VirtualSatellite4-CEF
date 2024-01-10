@@ -51,11 +51,11 @@ public class CreateDLRCEFXStudyCommand {
 	 * @see DLRCEFXStudyCommandHelper#addSubSystemParameters(Concept, ElementConfiguration)
 	 * @see DLRCEFXStudyCommandHelper#addEquipmentParameters(Concept, ElementConfiguration)
 	 */
-	public static CompoundCommand create(EObject parent, Concept concept, VirSatTransactionalEditingDomain domain) {
+	public static CompoundCommand create(EObject parent, Concept conceptPs, Concept conceptCefx, VirSatTransactionalEditingDomain domain) {
 	    // Create system structure elements
-	    ConfigurationTree system = DLRCEFXStudyCommandHelper.createSystemAsConfigurationTree(concept);
-	    ElementConfiguration subSystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(concept);
-	    ElementConfiguration equipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(concept);
+	    ConfigurationTree system = DLRCEFXStudyCommandHelper.createSystemAsConfigurationTree(conceptPs);
+	    ElementConfiguration subSystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
+	    ElementConfiguration equipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
 
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
@@ -69,9 +69,9 @@ public class CreateDLRCEFXStudyCommand {
 	    cmd.append(new RecordingCommand(domain) {
 	        @Override
 	        protected void doExecute() {
-	            DLRCEFXStudyCommandHelper.addSystemParameters(concept, system);
-	            DLRCEFXStudyCommandHelper.addSubSystemParameters(concept, subSystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(concept, equipment);
+	            DLRCEFXStudyCommandHelper.addSystemParameters(conceptCefx, system);
+	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, subSystem);
+	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, equipment);
 	        }
 	    });
 

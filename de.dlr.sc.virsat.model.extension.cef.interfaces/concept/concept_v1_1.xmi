@@ -39,20 +39,20 @@
         </left>
         <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataDutyCycle"/>
       </expression>
-      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="3f731f0d-ea6f-4d4e-a4e5-5b85833bdf5e" name="DataCombinedDutyCycle"/>
+      <result xsi:type="dvlm_calc:EquationIntermediateResult" uuid="dfbf09a4-3a14-4c15-a1f8-5dc58a56d056" name="DataCombinedDutyCycle"/>
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
         <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitOnWithMargin"/>
-          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="3f731f0d-ea6f-4d4e-a4e5-5b85833bdf5e"/>
+          <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="dfbf09a4-3a14-4c15-a1f8-5dc58a56d056"/>
         </left>
         <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
           <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cef.interfaces.EquipmentDataParameters.DataPerUnitStbyWithMargin"/>
           <right xsi:type="dvlm_calc:Parenthesis">
             <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
               <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
-              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="3f731f0d-ea6f-4d4e-a4e5-5b85833bdf5e"/>
+              <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="dfbf09a4-3a14-4c15-a1f8-5dc58a56d056"/>
             </right>
           </right>
         </right>
