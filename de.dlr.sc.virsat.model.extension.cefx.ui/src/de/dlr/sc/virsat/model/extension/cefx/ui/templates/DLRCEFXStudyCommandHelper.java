@@ -10,17 +10,26 @@
 package de.dlr.sc.virsat.model.extension.cefx.ui.templates;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 
 
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.AddCommand;
 
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.general.IAssignedDiscipline;
 import de.dlr.sc.virsat.model.dvlm.roles.Discipline;
+import de.dlr.sc.virsat.model.dvlm.roles.RoleManagement;
+import de.dlr.sc.virsat.model.dvlm.roles.RolesFactory;
+import de.dlr.sc.virsat.model.dvlm.roles.RolesPackage;
+import de.dlr.sc.virsat.model.dvlm.roles.UserRegistry;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.command.CreateAddStructuralElementInstanceCommand;
 import de.dlr.sc.virsat.model.extension.cefx.Activator;
@@ -35,6 +44,9 @@ import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
+import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
+import de.dlr.sc.virsat.model.extension.ps.model.ProductTree;
+import de.dlr.sc.virsat.model.extension.ps.model.ProductTreeDomain;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
 import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileCommand;
 /**
@@ -81,6 +93,29 @@ public class DLRCEFXStudyCommandHelper {
 	/**
 	 * 
 	 * @param conceptPs
+	 * @return create the system as the product tree.
+	 */
+	public static ProductTree createSystemAsProductTree(Concept conceptPs) {
+		
+		ProductTree system = new ProductTree(conceptPs);
+		system.setName("ProductTree");
+		return system;
+	}
+	
+	/**
+	 * 
+	 * @param conceptPs
+	 * @return create Sub-system as product tree domain
+	 */
+	public static ProductTreeDomain createSubSystemAsProductTreeDomain(Concept conceptPs) {
+		ProductTreeDomain productTreeDomain = new ProductTreeDomain(conceptPs);
+		productTreeDomain.setName("PTD");
+		return productTreeDomain;
+	}
+	
+	/**
+	 * 
+	 * @param conceptPs
 	 * @return create Sub-system as element configuration
 	 */
 	public static ElementConfiguration createSubSystemAsElementConfiguration(Concept conceptPs) {
@@ -89,6 +124,16 @@ public class DLRCEFXStudyCommandHelper {
 		return subSystem;
 	}
 
+	/**
+	 * @param conceptPs
+	 * @return create an equipment as element definition.
+	 */
+	public static ElementDefinition createEquipmentAsElementDefinition(Concept conceptPs) {
+		ElementDefinition equipment = new ElementDefinition(conceptPs);
+		equipment.setName("ReactionWheel");
+		return equipment;
+	}
+	
 	/**
 	 * @param conceptPs
 	 * @return create an equipment as element configuration.
@@ -107,6 +152,8 @@ public class DLRCEFXStudyCommandHelper {
 		systemParameters.setSystemMargin(20);  
 		system.add(systemParameters);
 		
+		
+		
 		SystemMassParameters systemMassParameters = new SystemMassParameters(conceptCEFX);
 		systemMassParameters.setName("massParameters");
 		systemMassParameters.getMassAdapter().setDefaultValue(100);
@@ -119,6 +166,13 @@ public class DLRCEFXStudyCommandHelper {
 		system.add(systemPowerParameters);
 	}
 
+	public static void addProductTreeParameters(Concept conceptCEFX, ProductTree productTree) {
+
+	}
+	
+	public static void addProductTreeDomainParameters(Concept conceptCEFX, ProductTreeDomain productTreeDomain) {
+
+	}
 	public static void addSubSystemParameters(Concept conceptCEFX, ElementConfiguration subSystem) {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(conceptCEFX);
 		subSystemMassParameters.setName("massParameters");
@@ -151,6 +205,36 @@ public class DLRCEFXStudyCommandHelper {
 		temperatureParameters.getTemperatureOpsMin().setDefaultValue(15);
 		equipment.add(temperatureParameters);
 	}
+	public static void addElementDefinitionParameters(Concept conceptCEFX, ElementDefinition elementDefinition) {
+		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
+		equipmentParams.setMarginMaturity(20);
+		elementDefinition.add(equipmentParams);
+		
+		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
+		equipmentMassParameters.setName("EquipmentMassParameters");
+		equipmentMassParameters.getMass().setDefaultValue(10);
+		elementDefinition.add(equipmentMassParameters);
+		
+
+	}
+	
+	// Keep track of created disciplines
+	private static Set<String> createdDisciplines = new HashSet<>();
+
+	public static void createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
+	    if (!createdDisciplines.contains(disciplineName)) {
+	        RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
+	        Discipline newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+	        newDiscipline.setName(disciplineName);
+	        newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+	        Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
+	        domain.getCommandStack().execute(addCommand);
+
+	        // Add discipline name to the set to avoid creating it again
+	        createdDisciplines.add(disciplineName);
+	    }
+	}
+
 	//CHECKSTYLE:ON
 
 	/**
@@ -166,7 +250,11 @@ public class DLRCEFXStudyCommandHelper {
 			discipline = ((IAssignedDiscipline) parent).getAssignedDiscipline();
 		}
 		child.setAssignedDiscipline(discipline);
+
+		//AddCommand.create(domain, roleManagement, RolesPackage.ROLE_MANAGEMENT__DISCIPLINES, newDiscipline);
 		
+		//roleManagement.getDisciplines().add(newDiscipline);
+					
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.append(new CreateSeiResourceAndFileCommand(domain.getResourceSet(), child));
 		cmd.append(CreateAddStructuralElementInstanceCommand.create(domain, parent, child));

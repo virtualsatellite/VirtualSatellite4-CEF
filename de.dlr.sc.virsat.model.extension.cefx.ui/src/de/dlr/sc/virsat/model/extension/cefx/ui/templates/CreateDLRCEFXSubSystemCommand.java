@@ -41,12 +41,7 @@ public class CreateDLRCEFXSubSystemCommand {
 	 * @param concept The Concept used to create the DLR/CEFX study template structure.
 	 * @param domain The VirSatTransactionalEditingDomain in which the command will be executed.
 	 * @return A CompoundCommand representing the operation to create the DLR/CEFX study template structure.
-	 * 
-	 * @see DLRCEFXStudyCommandHelper#createSubSystemAsElementConfiguration(Concept)
-	 * @see DLRCEFXStudyCommandHelper#createEquipmentAsElementConfiguration(Concept)
-	 * @see DLRCEFXStudyCommandHelper#createAddChildSEICommand(EObject, EObject, VirSatTransactionalEditingDomain)
-	 * @see DLRCEFXStudyCommandHelper#addSubSystemParameters(Concept, ElementConfiguration)
-	 * @see DLRCEFXStudyCommandHelper#addEquipmentParameters(Concept, ElementConfiguration)
+
 	 */
 	public static CompoundCommand create(EObject parent, Concept conceptPs, Concept conceptCefx, VirSatTransactionalEditingDomain domain) {
 	    // Create sub-system and equipment elements
