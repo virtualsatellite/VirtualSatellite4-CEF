@@ -42,14 +42,6 @@ public class CreateDLRCEFXStudyCommand {
 	 * @param concept The Concept used to create the system structure.
 	 * @param domain The VirSatTransactionalEditingDomain in which the command will be executed.
 	 * @return A CompoundCommand representing the operation to create the system structure.
-	 * 
-	 * @see DLRCEFXStudyCommandHelper#createSystemAsConfigurationTree(Concept)
-	 * @see DLRCEFXStudyCommandHelper#createSubSystemAsElementConfiguration(Concept)
-	 * @see DLRCEFXStudyCommandHelper#createEquipmentAsElementConfiguration(Concept)
-	 * @see DLRCEFXStudyCommandHelper#createAddChildSEICommand(EObject, EObject, VirSatTransactionalEditingDomain)
-	 * @see DLRCEFXStudyCommandHelper#addSystemParameters(Concept, ConfigurationTree)
-	 * @see DLRCEFXStudyCommandHelper#addSubSystemParameters(Concept, ElementConfiguration)
-	 * @see DLRCEFXStudyCommandHelper#addEquipmentParameters(Concept, ElementConfiguration)
 	 */
 	public static CompoundCommand create(EObject parent, Concept conceptPs, Concept conceptCefx, VirSatTransactionalEditingDomain domain) {
 	    // Create system structure elements
