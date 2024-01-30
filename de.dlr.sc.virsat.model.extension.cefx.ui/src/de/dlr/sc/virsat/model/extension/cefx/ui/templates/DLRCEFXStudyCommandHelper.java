@@ -21,6 +21,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 
+import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
@@ -55,15 +56,26 @@ import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileComman
  */
 public class DLRCEFXStudyCommandHelper {
 	
+	static final int DEFAULT_SYSTEM_MAGRIN = 20;
+	static final int DEFAULT_MASS_ADAPTER = 100;
+	static final int DEFAULT_MASS_LAUNCH_MAX = 850;
+	static final int DEFAULT_MASS_PROPELLANT = 35;
+	static final int DEFAULT_TEMPERATURE_NO_OPS_MAX = 30;
+	static final int DEFAULT_TEMPERATURE_NO_OPS_MIN = 5;
+	static final int DEFAULT_TEMPERATURE_OPS_MAX = 60;
+	static final int DEFAULT_TEMPERATURE_OPS_MIN = 15;
+	static final int DEFAULT_MARGIN_MATURITY = 20;
+	static final int DEFAULT_EQUIPMENT_MASS_PARAMETERS = 10;
 	/**
 	 * private Constructor
 	 */
 	private DLRCEFXStudyCommandHelper() {
 	}
 	/**
-	 * Get the cefx concept from the domain
-	 * @param domain the domain
-	 * @return the cefx concept
+	 * Retrieves the CEFX concept associated with the provided domain.
+	 * 
+	 * @param domain the VirSatTransactionalEditingDomain instance representing the domain
+	 * @return the CEFX concept associated with the domain
 	 */
 	public static Concept getCefxConcept(VirSatTransactionalEditingDomain domain) {
 		Repository currentRepository = domain.getResourceSet().getRepository();
@@ -72,6 +84,12 @@ public class DLRCEFXStudyCommandHelper {
 		return activeConcept;
 	}
 
+	/**
+	 * Retrieves the PS (possibly Particle Swarm Optimization) concept associated with the provided domain.
+	 * 
+	 * @param domain the VirSatTransactionalEditingDomain instance representing the domain
+	 * @return the PS concept associated with the domain
+	 */
 	public static Concept getPsConcept(VirSatTransactionalEditingDomain domain) {
 		Repository currentRepository = domain.getResourceSet().getRepository();
 		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
@@ -149,16 +167,16 @@ public class DLRCEFXStudyCommandHelper {
 		//default unit in concept is percent 
 		SystemParameters systemParameters = new SystemParameters(conceptCEFX);
 		systemParameters.setName("systemParameters");
-		systemParameters.setSystemMargin(20);  
+		systemParameters.setSystemMargin(DEFAULT_SYSTEM_MAGRIN);  
 		system.add(systemParameters);
 		
 		
 		
 		SystemMassParameters systemMassParameters = new SystemMassParameters(conceptCEFX);
 		systemMassParameters.setName("massParameters");
-		systemMassParameters.getMassAdapter().setDefaultValue(100);
-		systemMassParameters.getMassLaunchMax().setDefaultValue(850);
-		systemMassParameters.getMassPropellant().setDefaultValue(35);
+		systemMassParameters.getMassAdapter().setDefaultValue(DEFAULT_MASS_ADAPTER);
+		systemMassParameters.getMassLaunchMax().setDefaultValue(DEFAULT_MASS_LAUNCH_MAX);
+		systemMassParameters.getMassPropellant().setDefaultValue(DEFAULT_MASS_PROPELLANT);
 		system.add(systemMassParameters);
 		
 		SystemPowerParameters systemPowerParameters = new SystemPowerParameters(conceptCEFX);
@@ -185,12 +203,12 @@ public class DLRCEFXStudyCommandHelper {
 
 	public static void addEquipmentParameters(Concept conceptCEFX, ElementConfiguration equipment) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
-		equipmentParams.setMarginMaturity(20);
+		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
 		equipment.add(equipmentParams);
 		
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
 		equipmentMassParameters.setName("EquipmentMassParameters");
-		equipmentMassParameters.getMass().setDefaultValue(10);
+		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		equipment.add(equipmentMassParameters);
 		
 		EquipmentPowerParameters powerParameters = new EquipmentPowerParameters(conceptCEFX);
@@ -199,20 +217,20 @@ public class DLRCEFXStudyCommandHelper {
 		
 		EquipmentTemperatureParameters temperatureParameters = new EquipmentTemperatureParameters(conceptCEFX);
 		temperatureParameters.setName("temperatureParameters");
-		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(30);
-		temperatureParameters.getTemperatureNoOpsMin().setDefaultValue(5);
-		temperatureParameters.getTemperatureOpsMax().setDefaultValue(60);
-		temperatureParameters.getTemperatureOpsMin().setDefaultValue(15);
+		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MAX);
+		temperatureParameters.getTemperatureNoOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MIN);
+		temperatureParameters.getTemperatureOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MAX);
+		temperatureParameters.getTemperatureOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MIN);
 		equipment.add(temperatureParameters);
 	}
 	public static void addElementDefinitionParameters(Concept conceptCEFX, ElementDefinition elementDefinition) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
-		equipmentParams.setMarginMaturity(20);
+		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
 		elementDefinition.add(equipmentParams);
 		
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
 		equipmentMassParameters.setName("EquipmentMassParameters");
-		equipmentMassParameters.getMass().setDefaultValue(10);
+		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		elementDefinition.add(equipmentMassParameters);
 		
 
@@ -221,10 +239,11 @@ public class DLRCEFXStudyCommandHelper {
 	// Keep track of created disciplines
 	private static Set<String> createdDisciplines = new HashSet<>();
 
-	public static void createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
+	public static BeanDiscipline createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
+		Discipline newDiscipline;
 	    if (!createdDisciplines.contains(disciplineName)) {
 	        RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
-	        Discipline newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+	        newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
 	        newDiscipline.setName(disciplineName);
 	        newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
 	        Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
@@ -232,16 +251,22 @@ public class DLRCEFXStudyCommandHelper {
 
 	        // Add discipline name to the set to avoid creating it again
 	        createdDisciplines.add(disciplineName);
+	        
 	    }
+	    else {
+	    	newDiscipline= null;
+	    }
+	    if (newDiscipline != null) {
+            return new BeanDiscipline(newDiscipline);
+        } else {
+            return null;
+        }
 	}
 
 	//CHECKSTYLE:ON
 
 	/**
 	 * Set child discipline to parent (if any) and create a command to add child
-	 * @param parent 
-	 * @param child 
-	 * @param domain 
 	 * @return command that will create file structure for a child and add it to the parent
 	 */
 	public static CompoundCommand createAddChildSEICommand(EObject parent, StructuralElementInstance child, VirSatTransactionalEditingDomain domain) {
@@ -250,11 +275,6 @@ public class DLRCEFXStudyCommandHelper {
 			discipline = ((IAssignedDiscipline) parent).getAssignedDiscipline();
 		}
 		child.setAssignedDiscipline(discipline);
-
-		//AddCommand.create(domain, roleManagement, RolesPackage.ROLE_MANAGEMENT__DISCIPLINES, newDiscipline);
-		
-		//roleManagement.getDisciplines().add(newDiscipline);
-					
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.append(new CreateSeiResourceAndFileCommand(domain.getResourceSet(), child));
 		cmd.append(CreateAddStructuralElementInstanceCommand.create(domain, parent, child));

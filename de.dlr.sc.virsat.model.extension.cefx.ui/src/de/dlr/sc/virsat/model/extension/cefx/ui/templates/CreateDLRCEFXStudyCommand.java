@@ -13,6 +13,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 
+import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
@@ -64,7 +65,8 @@ public class CreateDLRCEFXStudyCommand {
 	    ElementDefinition payloadElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
 	    ElementDefinition dataHandlingElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
 
-	 // Create default subsystems
+	 // Create default subsystems and assign disciplines
+
 	    
 	    ProductTreeDomain powerProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
 	    powerProductTreeDomain.setName("Power");
@@ -88,11 +90,21 @@ public class CreateDLRCEFXStudyCommand {
 	    ElementConfiguration dataHandlingSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
 	    dataHandlingSubsystem.setName("DataHandling");
 	    
-	    DLRCEFXStudyCommandHelper.createDiscipline(domain, "Power");
-	    DLRCEFXStudyCommandHelper.createDiscipline(domain, "Structure");
-	    DLRCEFXStudyCommandHelper.createDiscipline(domain, "AOCS");
-	    DLRCEFXStudyCommandHelper.createDiscipline(domain, "Payload");
-	    DLRCEFXStudyCommandHelper.createDiscipline(domain, "DataHandling");
+	    BeanDiscipline powerBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Power");
+	    powerEquipment.setAssignedDiscipline(powerBeanDiscipline);
+	    powerElementDefinition.setAssignedDiscipline(powerBeanDiscipline);
+	    BeanDiscipline strucureBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Structure");
+	    structureElementDefinition.setAssignedDiscipline(strucureBeanDiscipline);
+	    structureEquipment.setAssignedDiscipline(strucureBeanDiscipline);
+	    BeanDiscipline aocsBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "AOCS");
+	    aocsEquipment.setAssignedDiscipline(aocsBeanDiscipline);
+	    aocsElementDefinition.setAssignedDiscipline(aocsBeanDiscipline);
+	    BeanDiscipline payloadBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Payload");
+	    payloadEquipment.setAssignedDiscipline(payloadBeanDiscipline);
+	    payloadElementDefinition.setAssignedDiscipline(payloadBeanDiscipline);
+	    BeanDiscipline dataHandlingBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "DataHandling");
+	    dataHandlingEquipment.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    dataHandlingElementDefinition.setAssignedDiscipline(dataHandlingBeanDiscipline);
 	    
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
@@ -104,23 +116,31 @@ public class CreateDLRCEFXStudyCommand {
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), powerProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerProductTreeDomain.getStructuralElementInstance(), powerElementDefinition.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), aocsProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(aocsProductTreeDomain.getStructuralElementInstance(), aocsElementDefinition.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), payloadProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(payloadProductTreeDomain.getStructuralElementInstance(), payloadElementDefinition.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), structureProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(structureProductTreeDomain.getStructuralElementInstance(), structureElementDefinition.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), dataHandlingProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingProductTreeDomain.getStructuralElementInstance(), dataHandlingElementDefinition.getStructuralElementInstance(), domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), powerSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerSubsystem.getStructuralElementInstance(), powerEquipment.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), aocsSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(aocsSubsystem.getStructuralElementInstance(), aocsEquipment.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), payloadSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(payloadSubsystem.getStructuralElementInstance(), payloadEquipment.getStructuralElementInstance(), domain));
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), structureSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(structureSubsystem.getStructuralElementInstance(), structureEquipment.getStructuralElementInstance(), domain));    
+	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), dataHandlingSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingSubsystem.getStructuralElementInstance(), dataHandlingEquipment.getStructuralElementInstance(), domain));
 	    
@@ -130,31 +150,26 @@ public class CreateDLRCEFXStudyCommand {
 	        @Override
 	        protected void doExecute() {
 	            DLRCEFXStudyCommandHelper.addSystemParameters(conceptCefx, system);
-	            //DLRCEFXStudyCommandHelper.addProductTreeParameters(conceptCefx, productTree);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, powerSubsystem);
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, powerEquipment);	            	   
-	            //DLRCEFXStudyCommandHelper.addProductTreeDomainParameters(conceptCefx, powerProductTreeDomain);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, powerElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, aocsSubsystem);
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, aocsEquipment);
-	            //DLRCEFXStudyCommandHelper.addProductTreeDomainParameters(conceptCefx, aocsProductTreeDomain);
+
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, aocsElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, payloadSubsystem);
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, payloadEquipment);
-	            //DLRCEFXStudyCommandHelper.addProductTreeDomainParameters(conceptCefx, payloadProductTreeDomain);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, payloadElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, structureSubsystem);
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, structureEquipment);
-	            //DLRCEFXStudyCommandHelper.addProductTreeDomainParameters(conceptCefx, structureProductTreeDomain);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, structureElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, dataHandlingSubsystem);
 	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, dataHandlingEquipment);
-	            //DLRCEFXStudyCommandHelper.addProductTreeDomainParameters(conceptCefx, dataHandlingProductTreeDomain);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, dataHandlingElementDefinition);
 	        }
 	    });
