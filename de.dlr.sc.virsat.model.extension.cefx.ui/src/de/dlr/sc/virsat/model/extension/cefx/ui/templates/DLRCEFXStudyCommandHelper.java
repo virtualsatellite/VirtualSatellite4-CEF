@@ -85,7 +85,7 @@ public class DLRCEFXStudyCommandHelper {
 	}
 
 	/**
-	 * Retrieves the PS (possibly Particle Swarm Optimization) concept associated with the provided domain.
+	 * Retrieves the PS concept associated with the provided domain.
 	 * 
 	 * @param domain the VirSatTransactionalEditingDomain instance representing the domain
 	 * @return the PS concept associated with the domain
@@ -162,15 +162,15 @@ public class DLRCEFXStudyCommandHelper {
 		return equipment;
 	}
 
-	//CHECKSTYLE:OFF
+	/**
+	 * @param conceptCEFX,  system
+	 */
 	public static void addSystemParameters(Concept conceptCEFX, ConfigurationTree system) {
 		//default unit in concept is percent 
 		SystemParameters systemParameters = new SystemParameters(conceptCEFX);
 		systemParameters.setName("systemParameters");
 		systemParameters.setSystemMargin(DEFAULT_SYSTEM_MAGRIN);  
-		system.add(systemParameters);
-		
-		
+		system.add(systemParameters);	
 		
 		SystemMassParameters systemMassParameters = new SystemMassParameters(conceptCEFX);
 		systemMassParameters.setName("massParameters");
@@ -191,6 +191,10 @@ public class DLRCEFXStudyCommandHelper {
 	public static void addProductTreeDomainParameters(Concept conceptCEFX, ProductTreeDomain productTreeDomain) {
 
 	}
+	
+	/**
+	 * @param conceptCEFX,  subSystem
+	 */
 	public static void addSubSystemParameters(Concept conceptCEFX, ElementConfiguration subSystem) {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(conceptCEFX);
 		subSystemMassParameters.setName("massParameters");
@@ -201,6 +205,9 @@ public class DLRCEFXStudyCommandHelper {
 		subSystem.add(subSystemPowerParameters);
 	}
 
+	/**
+	 * @param conceptCEFX,  equipment
+	 */
 	public static void addEquipmentParameters(Concept conceptCEFX, ElementConfiguration equipment) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
 		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
@@ -223,6 +230,10 @@ public class DLRCEFXStudyCommandHelper {
 		temperatureParameters.getTemperatureOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MIN);
 		equipment.add(temperatureParameters);
 	}
+	
+	/**
+	 * @param conceptCEFX,  elementDefinition
+	 */
 	public static void addElementDefinitionParameters(Concept conceptCEFX, ElementDefinition elementDefinition) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
 		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
