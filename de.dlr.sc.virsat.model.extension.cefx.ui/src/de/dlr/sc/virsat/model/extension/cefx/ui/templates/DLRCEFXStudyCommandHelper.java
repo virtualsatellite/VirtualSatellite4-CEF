@@ -249,29 +249,30 @@ public class DLRCEFXStudyCommandHelper {
 	
 	// Keep track of created disciplines
 	private static Set<String> createdDisciplines = new HashSet<>();
-
+	
+	/**
+	 * @param conceptCEFX,  disciplineName
+	 */
 	public static BeanDiscipline createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
 		Discipline newDiscipline;
-	    if (!createdDisciplines.contains(disciplineName)) {
-	        RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
-	        newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
-	        newDiscipline.setName(disciplineName);
-	        newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
-	        Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
-	        domain.getCommandStack().execute(addCommand);
+		if (!createdDisciplines.contains(disciplineName)) {
+			RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
+			newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+			newDiscipline.setName(disciplineName);
+			newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+			Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
+			domain.getCommandStack().execute(addCommand);
 
-	        // Add discipline name to the set to avoid creating it again
-	        createdDisciplines.add(disciplineName);
-	        
-	    }
-	    else {
-	    	newDiscipline= null;
-	    }
-	    if (newDiscipline != null) {
-            return new BeanDiscipline(newDiscipline);
-        } else {
-            return null;
-        }
+			// Add discipline name to the set to avoid creating it again
+			createdDisciplines.add(disciplineName);
+		} else {
+			newDiscipline = null;
+		}
+		if (newDiscipline != null) {
+			return new BeanDiscipline(newDiscipline);
+		} else {
+			return null;
+		}
 	}
 
 	//CHECKSTYLE:ON
