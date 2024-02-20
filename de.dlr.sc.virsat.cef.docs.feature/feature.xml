@@ -2,7 +2,7 @@
 <feature
       id="de.dlr.sc.virsat.cef.docs.feature"
       label="VirSat CEF Documents and Release Notes Feature"
-      version="4.16.0.qualifier"
+      version="4.16.1.qualifier"
       provider-name="DLR (German Aerospace Center)"
       plugin="de.dlr.sc.virsat.cef.branding.ui"
       license-feature="de.dlr.sc.virsat.cef.license.feature">
@@ -10,11 +10,11 @@
    <description>
       Feature for documentation and release notes.
 German Aerospace Center (DLR e.V.)
-Simulation and Software Technology
+Institute for Software Technology
    </description>
 
    <copyright>
-      Copyright 2018
+      Copyright 2024
 by German Aerospace Center (DLR e.V.)
    </copyright>
 

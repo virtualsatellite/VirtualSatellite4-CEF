@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.16.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.16.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_256x330.gif"/>
       <text>
          Virtual Satellite 4 - CEF
 
-Version 4.16.0
+Version 4.16.1
 
-© Copyright by DLR (Deutsches Zentrum fuer Luft- und Raumfahrt e. V., German Aerospace Center) 2020. 
+© Copyright by DLR (Deutsches Zentrum fuer Luft- und Raumfahrt e. V., German Aerospace Center) 2024. 
 
 The DLR trade mark (as  the word mark DLR or as combination DLR with the DLR Logo)  is a registered and protected trade mark and may not be used without DLR´s prior written permission. 
 
-Copyrighted content other than the S/W provided under the indicated Eclipse License Conditions such as the images, photographs, videos and texts which are indicated as being under DLR´s copyright through copyright notice (i. g. © DLR 2020)  are provided for use under the Terms of use as provided for on DLRs webpage www.dlr.de
+Copyrighted content other than the S/W provided under the indicated Eclipse License Conditions such as the images, photographs, videos and texts which are indicated as being under DLR´s copyright through copyright notice (i. g. © DLR 2024)  are provided for use under the Terms of use as provided for on DLRs webpage www.dlr.de
 
 The CEF logo and images cannot be altered or used without DLR&apos;s permission.
 
