@@ -59,7 +59,7 @@ public abstract class AEquipmentParameters extends GenericCategory implements IB
 	// property name constants
 	public static final String PROPERTY_MARGINMATURITY = "marginMaturity";
 	public static final String PROPERTY_UNITQUANTITY = "unitQuantity";
-	
+	public static final String EQUIPMENT_PARAMETERS = "EquipmentParameters";
 	
 	
 	// *****************************************************************
@@ -70,8 +70,8 @@ public abstract class AEquipmentParameters extends GenericCategory implements IB
 	}
 	
 	public AEquipmentParameters(Concept concept) {
-		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, "EquipmentParameters");
-		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, "EquipmentParameters");
+		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, EQUIPMENT_PARAMETERS);
+		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, EQUIPMENT_PARAMETERS);
 		setTypeInstance(categoryAssignement);
 	}
 	
@@ -87,7 +87,7 @@ public abstract class AEquipmentParameters extends GenericCategory implements IB
 	
 	private void safeAccessMarginMaturity() {
 		if (marginMaturity.getTypeInstance() == null) {
-			marginMaturity.setTypeInstance((UnitValuePropertyInstance) helper.getPropertyInstance("marginMaturity"));
+			marginMaturity.setTypeInstance((UnitValuePropertyInstance) helper.getPropertyInstance(PROPERTY_MARGINMATURITY));
 		}
 	}
 	
@@ -124,7 +124,7 @@ public abstract class AEquipmentParameters extends GenericCategory implements IB
 	
 	private void safeAccessUnitQuantity() {
 		if (unitQuantity.getTypeInstance() == null) {
-			unitQuantity.setTypeInstance((UnitValuePropertyInstance) helper.getPropertyInstance("unitQuantity"));
+			unitQuantity.setTypeInstance((UnitValuePropertyInstance) helper.getPropertyInstance(PROPERTY_UNITQUANTITY));
 		}
 	}
 	

@@ -62,9 +62,8 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	public static final String PROPERTY_MASSPROPELLANT = "massPropellant";
 	public static final String PROPERTY_MASSLAUNCHMAX = "massLaunchMax";
 	public static final String PROPERTY_MASSBUFFER = "massBuffer";
-	
-	
-	
+	public static final String SYSTEM_MASS_PARAMETERS = "SystemMassParameters";
+
 	// *****************************************************************
 	// * Class Constructors
 	// *****************************************************************
@@ -73,8 +72,8 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	}
 	
 	public ASystemMassParameters(Concept concept) {
-		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, "SystemMassParameters");
-		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, "SystemMassParameters");
+		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, SYSTEM_MASS_PARAMETERS);
+		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, SYSTEM_MASS_PARAMETERS);
 		setTypeInstance(categoryAssignement);
 	}
 	
@@ -90,7 +89,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassLaunch() {
 		if (massLaunch.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massLaunch");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSLAUNCH);
 			massLaunch.setTypeInstance(propertyInstance);
 		}
 	}
@@ -113,7 +112,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassTotal() {
 		if (massTotal.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotal");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSTOTAL);
 			massTotal.setTypeInstance(propertyInstance);
 		}
 	}
@@ -136,7 +135,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassTotalWithMargin() {
 		if (massTotalWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMargin");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSTOTALWITHMARGIN);
 			massTotalWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
@@ -159,7 +158,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassTotalWithMarginWithSystemMargin() {
 		if (massTotalWithMarginWithSystemMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMarginWithSystemMargin");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSTOTALWITHMARGINWITHSYSTEMMARGIN);
 			massTotalWithMarginWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
@@ -182,7 +181,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassAdapter() {
 		if (massAdapter.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massAdapter");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSADAPTER);
 			massAdapter.setTypeInstance(propertyInstance);
 		}
 	}
@@ -205,7 +204,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassPropellant() {
 		if (massPropellant.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massPropellant");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSPROPELLANT);
 			massPropellant.setTypeInstance(propertyInstance);
 		}
 	}
@@ -228,7 +227,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassLaunchMax() {
 		if (massLaunchMax.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massLaunchMax");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSLAUNCHMAX);
 			massLaunchMax.setTypeInstance(propertyInstance);
 		}
 	}
@@ -251,7 +250,7 @@ public abstract class ASystemMassParameters extends GenericCategory implements I
 	
 	private void safeAccessMassBuffer() {
 		if (massBuffer.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massBuffer");
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSBUFFER);
 			massBuffer.setTypeInstance(propertyInstance);
 		}
 	}
