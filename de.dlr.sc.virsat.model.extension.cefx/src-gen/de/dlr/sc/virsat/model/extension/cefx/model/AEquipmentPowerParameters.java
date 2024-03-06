@@ -56,12 +56,12 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	// property name constants
 	public static final String PROPERTY_POWERUNITISINACTIVE = "powerUnitIsInactive";
 	public static final String PROPERTY_POWERDUTYCYCLE = "powerDutyCycle";
-	public static final String PROPERTY_POWERUNITON = "powerUnitOn";
-	public static final String PROPERTY_POWERUNITSTBY = "powerUnitStby";
-	public static final String PROPERTY_POWERUNITONWITHMARGIN = "powerUnitOnWithMargin";
-	public static final String PROPERTY_POWERUNITSTBYWITHMARGIN = "powerUnitStbyWithMargin";
-	public static final String PROPERTY_POWERUNITAVGWITHMARGIN = "powerUnitAvgWithMargin";
-	public static final String PROPERTY_POWERAVGWITHMARGIN = "powerAvgWithMargin";
+	public static final String PROPERTY_POWERUNITON = "PowerUnitOn";
+	public static final String PROPERTY_POWERUNITSTBY = "PowerUnitStby";
+	public static final String PROPERTY_POWERUNITONWITHMARGIN = "PowerUnitOnWithMargin";
+	public static final String PROPERTY_POWERUNITSTBYWITHMARGIN = "PowerUnitStbyWithMargin";
+	public static final String PROPERTY_POWERUNITAVGWITHMARGIN = "PowerUnitAvgWithMargin";
+	public static final String PROPERTY_POWERAVGWITHMARGIN = "PowerAvgWithMargin";
 	
 	
 	
@@ -130,141 +130,141 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerUnitOn
+	// * Attribute: PowerUnitOn
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitOn = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerUnitOn = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitOn() {
-		if (powerUnitOn.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitOn");
-			powerUnitOn.setTypeInstance(propertyInstance);
+		if (PowerUnitOn.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerUnitOn");
+			PowerUnitOn.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerUnitOn() {
 		safeAccessPowerUnitOn();
-		return powerUnitOn.getValue();
+		return PowerUnitOn.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerUnitOnBean() {
 		safeAccessPowerUnitOn();
-		return powerUnitOn;
+		return PowerUnitOn;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerUnitStby
+	// * Attribute: PowerUnitStby
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitStby = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerUnitStby = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitStby() {
-		if (powerUnitStby.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitStby");
-			powerUnitStby.setTypeInstance(propertyInstance);
+		if (PowerUnitStby.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerUnitStby");
+			PowerUnitStby.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerUnitStby() {
 		safeAccessPowerUnitStby();
-		return powerUnitStby.getValue();
+		return PowerUnitStby.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerUnitStbyBean() {
 		safeAccessPowerUnitStby();
-		return powerUnitStby;
+		return PowerUnitStby;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerUnitOnWithMargin
+	// * Attribute: PowerUnitOnWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitOnWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerUnitOnWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitOnWithMargin() {
-		if (powerUnitOnWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitOnWithMargin");
-			powerUnitOnWithMargin.setTypeInstance(propertyInstance);
+		if (PowerUnitOnWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerUnitOnWithMargin");
+			PowerUnitOnWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerUnitOnWithMargin() {
 		safeAccessPowerUnitOnWithMargin();
-		return powerUnitOnWithMargin.getValue();
+		return PowerUnitOnWithMargin.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerUnitOnWithMarginBean() {
 		safeAccessPowerUnitOnWithMargin();
-		return powerUnitOnWithMargin;
+		return PowerUnitOnWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerUnitStbyWithMargin
+	// * Attribute: PowerUnitStbyWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitStbyWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerUnitStbyWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitStbyWithMargin() {
-		if (powerUnitStbyWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitStbyWithMargin");
-			powerUnitStbyWithMargin.setTypeInstance(propertyInstance);
+		if (PowerUnitStbyWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerUnitStbyWithMargin");
+			PowerUnitStbyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerUnitStbyWithMargin() {
 		safeAccessPowerUnitStbyWithMargin();
-		return powerUnitStbyWithMargin.getValue();
+		return PowerUnitStbyWithMargin.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerUnitStbyWithMarginBean() {
 		safeAccessPowerUnitStbyWithMargin();
-		return powerUnitStbyWithMargin;
+		return PowerUnitStbyWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerUnitAvgWithMargin
+	// * Attribute: PowerUnitAvgWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerUnitAvgWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerUnitAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerUnitAvgWithMargin() {
-		if (powerUnitAvgWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitAvgWithMargin");
-			powerUnitAvgWithMargin.setTypeInstance(propertyInstance);
+		if (PowerUnitAvgWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerUnitAvgWithMargin");
+			PowerUnitAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerUnitAvgWithMargin() {
 		safeAccessPowerUnitAvgWithMargin();
-		return powerUnitAvgWithMargin.getValue();
+		return PowerUnitAvgWithMargin.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerUnitAvgWithMarginBean() {
 		safeAccessPowerUnitAvgWithMargin();
-		return powerUnitAvgWithMargin;
+		return PowerUnitAvgWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerAvgWithMargin
+	// * Attribute: PowerAvgWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerAvgWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> PowerAvgWithMargin = new BeanPropertyComposed<>();
 	
 	private void safeAccessPowerAvgWithMargin() {
-		if (powerAvgWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithMargin");
-			powerAvgWithMargin.setTypeInstance(propertyInstance);
+		if (PowerAvgWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("PowerAvgWithMargin");
+			PowerAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
 	public Parameter getPowerAvgWithMargin() {
 		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin.getValue();
+		return PowerAvgWithMargin.getValue();
 	}
 	
 	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
 		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin;
+		return PowerAvgWithMargin;
 	}
 	
 	
