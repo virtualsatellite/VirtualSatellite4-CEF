@@ -41,7 +41,14 @@ import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileComman
  *
  */
 public class DLRCEFStudyCommandHelper {
-	
+	public static final String POWER_PARAMETERS = "PowerParameters";
+	public static final String MASS_PARAMETERS = "MassParameters";
+	public static final String SYSTEM_PARAMETERS = "SystemParameters";
+	public static final String EQUIPMENT_MASS_PARAMETERS = "EquipmentMassParameters";
+	public static final String TEMPERATURE_PARAMETERS = "TemperatureParameters";
+	public static final String SYSTEM_NAME = "System";
+	public static final String SUB_SYSTEM_NAME = "SubSystem";
+	public static final String EQUIPMENT_NAME = "Equipment";
 	/**
 	 * private Constructor
 	 */
@@ -65,17 +72,15 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static System createSystemBean(Concept concept) {
 		System system = new System(concept);
-		system.setName("System");
+		system.setName(SYSTEM_NAME);
 		return system;
 	}
-	
 	/**
-	 * @param concept the cef concept
-	 * @return new subSystem bean
+	 * @param concept the cef concept	 * @return new subSystem bean
 	 */
 	public static SubSystem createSubSystemBean(Concept concept) {
 		SubSystem subSystem = new SubSystem(concept);
-		subSystem.setName("subSystem");
+		subSystem.setName(SUB_SYSTEM_NAME);
 		return subSystem;
 	}
 
@@ -85,7 +90,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static Equipment createEquipmentBean(Concept concept) {
 		Equipment equipment = new Equipment(concept);
-		equipment.setName("equipment");
+		equipment.setName(EQUIPMENT_NAME);
 		return equipment;
 	}
 
@@ -96,7 +101,7 @@ public class DLRCEFStudyCommandHelper {
 		systemParameters.setName("systemParameters");
 		systemParameters.setSystemMargin(20);  
 		system.add(systemParameters);
-		
+
 		SystemMassParameters systemMassParameters = new SystemMassParameters(concept);
 		systemMassParameters.setName("massParameters");
 		systemMassParameters.getMassAdapter().setDefaultValue(100);
