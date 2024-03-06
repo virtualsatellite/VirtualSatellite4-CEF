@@ -42,14 +42,14 @@ import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileComman
  */
 public class DLRCEFStudyCommandHelper {
 	
-	public static final String POWER_PARAMETERS = "powerParameters";
-	public static final String MASS_PARAMETERS = "massParameters";
-	public static final String SYSTEM_PARAMETERS = "systemParameters";
+	public static final String POWER_PARAMETERS = "PowerParameters";
+	public static final String MASS_PARAMETERS = "MassParameters";
+	public static final String SYSTEM_PARAMETERS = "SystemParameters";
 	public static final String EQUIPMENT_MASS_PARAMETERS = "EquipmentMassParameters";
-	public static final String TEMPERATURE_PARAMETERS = "temperatureParameters";
-	public static final String SYSTEM = "System";
-	public static final String SUB_SYSTEM = "subSystem";
-	public static final String EQUIPMENT = "equipment";
+	public static final String TEMPERATURE_PARAMETERS = "TemperatureParameters";
+	public static final String SYSTEM_NAME = "System";
+	public static final String SUB_SYSTEM_NAME = "SubSystem";
+	public static final String EQUIPMENT_NAME = "Equipment";
 	
 	/**
 	 * private Constructor
@@ -74,7 +74,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static System createSystemBean(Concept concept) {
 		System system = new System(concept);
-		system.setName(SYSTEM);
+		system.setName(SYSTEM_NAME);
 		return system;
 	}
 	
@@ -84,7 +84,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static SubSystem createSubSystemBean(Concept concept) {
 		SubSystem subSystem = new SubSystem(concept);
-		subSystem.setName(SUB_SYSTEM);
+		subSystem.setName(SUB_SYSTEM_NAME);
 		return subSystem;
 	}
 
@@ -94,7 +94,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static Equipment createEquipmentBean(Concept concept) {
 		Equipment equipment = new Equipment(concept);
-		equipment.setName(EQUIPMENT);
+		equipment.setName(EQUIPMENT_NAME);
 		return equipment;
 	}
 
