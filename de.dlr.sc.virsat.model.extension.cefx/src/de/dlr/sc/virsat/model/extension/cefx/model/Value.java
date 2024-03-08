@@ -13,6 +13,7 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import javax.xml.bind.annotation.XmlType;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropertyInstance;
 
@@ -20,15 +21,16 @@ import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ReferencePropert
 // * Class Declaration
 // *****************************************************************
 
+@XmlType(name = AValue.FULL_QUALIFIED_CATEGORY_NAME)
 /**
- * Auto Generated Abstract Generator Gap Class
+ * Auto Generated Class inheriting from Generator Gap Class
  * 
- * Don't Manually modify this class
+ * This class is generated once, do your changes here
  * 
  * 
  * 
- */	
-public class Value extends AValue {
+ */
+public  class Value extends AValue {
 	
 	/**
 	 * Constructor of Concept Class

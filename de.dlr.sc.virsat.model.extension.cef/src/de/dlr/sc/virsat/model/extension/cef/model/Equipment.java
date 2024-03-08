@@ -14,19 +14,21 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import javax.xml.bind.annotation.XmlType;
 
 // *****************************************************************
 // * Class Declaration
 // *****************************************************************
 
 /**
- * Auto Generated Abstract Generator Gap Class
+ * Auto Generated Class inheriting from Generator Gap Class
  * 
- * Don't Manually modify this class
+ * This class is generated once, do your changes here
  * 
  * 
  * 
- */	
+ */
+@XmlType(name = AEquipment.FULL_QUALIFIED_STRUCTURAL_ELEMENT_NAME)
 public class Equipment extends AEquipment {
 	
 	/**

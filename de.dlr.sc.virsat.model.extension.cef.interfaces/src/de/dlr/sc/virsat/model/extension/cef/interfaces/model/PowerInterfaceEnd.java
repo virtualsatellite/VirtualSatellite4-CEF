@@ -13,12 +13,14 @@ package de.dlr.sc.virsat.model.extension.cef.interfaces.model;
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import javax.xml.bind.annotation.XmlType;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 
 // *****************************************************************
 // * Class Declaration
 // *****************************************************************
 
+@XmlType(name = APowerInterfaceEnd.FULL_QUALIFIED_CATEGORY_NAME)
 /**
  * Auto Generated Class inheriting from Generator Gap Class
  * 
