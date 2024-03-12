@@ -149,8 +149,7 @@ public class CreateDLRCEFXStudyCommand {
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), dataHandlingSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingSubsystem.getStructuralElementInstance(), dataHandlingEquipment.getStructuralElementInstance(), domain));
-	    
-	    
+	        
 	    // Append recording command to add system, sub-system, and equipment parameters
 	    cmd.append(new RecordingCommand(domain) {
 	        @Override

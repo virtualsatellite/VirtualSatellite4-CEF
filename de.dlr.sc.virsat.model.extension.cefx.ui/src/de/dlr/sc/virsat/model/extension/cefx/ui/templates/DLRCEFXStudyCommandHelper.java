@@ -54,8 +54,7 @@ import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileComman
  * Set the parameter for the Concepts (System, SubSystem, Equipment)
  *
  */
-public class DLRCEFXStudyCommandHelper {
-	
+public class DLRCEFXStudyCommandHelper {	
 	static final int DEFAULT_SYSTEM_MAGRIN = 20;
 	static final int DEFAULT_MASS_ADAPTER = 100;
 	static final int DEFAULT_MASS_LAUNCH_MAX = 850;
