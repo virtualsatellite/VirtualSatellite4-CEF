@@ -66,6 +66,17 @@ public class DLRCEFXStudyCommandHelper {
 	static final int DEFAULT_TEMPERATURE_OPS_MIN = 15;
 	static final int DEFAULT_MARGIN_MATURITY = 20;
 	static final int DEFAULT_EQUIPMENT_MASS_PARAMETERS = 10;
+	
+	static final String SYSTEM_NAME = "System";
+	static final String PRODUCT_TREE_NAME = "ProductTree";
+	static final String PRODUCT_TREE_DOMAIN_NAME = "PTD";
+	static final String SUB_SYSTEM_NAME = "SubSystem";
+	static final String EQUIPMENT_NAME = "Equipment";
+	static final String SYSTEM_PARAMETERS_NAME = "SystemParameters";
+	static final String MASS_PARAMETERS_NAME = "MassParameters";
+	static final String POWER_PARAMETERS_NAME = "PowerParameters";
+	static final String EQUIPMENT_MASS_PARAMETERS_NAME = "EquipmentMassParameters";
+	static final String TEMPERATURE_PARAMETERS_NAME = "TemperatureParameters";
 	/**
 	 * private Constructor
 	 */
@@ -104,7 +115,7 @@ public class DLRCEFXStudyCommandHelper {
 	public static ConfigurationTree createSystemAsConfigurationTree(Concept conceptPs) {
 		
 		ConfigurationTree system = new ConfigurationTree(conceptPs);
-		system.setName("System");
+		system.setName(SYSTEM_NAME);
 		return system;
 	}
 	
@@ -116,7 +127,7 @@ public class DLRCEFXStudyCommandHelper {
 	public static ProductTree createSystemAsProductTree(Concept conceptPs) {
 		
 		ProductTree system = new ProductTree(conceptPs);
-		system.setName("ProductTree");
+		system.setName(PRODUCT_TREE_NAME);
 		return system;
 	}
 	
@@ -127,7 +138,7 @@ public class DLRCEFXStudyCommandHelper {
 	 */
 	public static ProductTreeDomain createSubSystemAsProductTreeDomain(Concept conceptPs) {
 		ProductTreeDomain productTreeDomain = new ProductTreeDomain(conceptPs);
-		productTreeDomain.setName("PTD");
+		productTreeDomain.setName(PRODUCT_TREE_DOMAIN_NAME);
 		return productTreeDomain;
 	}
 	
@@ -138,7 +149,7 @@ public class DLRCEFXStudyCommandHelper {
 	 */
 	public static ElementConfiguration createSubSystemAsElementConfiguration(Concept conceptPs) {
 		ElementConfiguration subSystem = new ElementConfiguration(conceptPs);
-		subSystem.setName("subSystem");
+		subSystem.setName(SUB_SYSTEM_NAME);
 		return subSystem;
 	}
 
@@ -148,7 +159,7 @@ public class DLRCEFXStudyCommandHelper {
 	 */
 	public static ElementDefinition createEquipmentAsElementDefinition(Concept conceptPs) {
 		ElementDefinition equipment = new ElementDefinition(conceptPs);
-		equipment.setName("ReactionWheel");
+		equipment.setName(EQUIPMENT_NAME);
 		return equipment;
 	}
 	
@@ -158,7 +169,7 @@ public class DLRCEFXStudyCommandHelper {
 	 */
 	public static ElementConfiguration createEquipmentAsElementConfiguration(Concept conceptPs) {
 		ElementConfiguration equipment = new ElementConfiguration(conceptPs);
-		equipment.setName("equipment");
+		equipment.setName(EQUIPMENT_NAME);
 		return equipment;
 	}
 
@@ -168,19 +179,19 @@ public class DLRCEFXStudyCommandHelper {
 	public static void addSystemParameters(Concept conceptCEFX, ConfigurationTree system) {
 		//default unit in concept is percent 
 		SystemParameters systemParameters = new SystemParameters(conceptCEFX);
-		systemParameters.setName("systemParameters");
+		systemParameters.setName(SYSTEM_PARAMETERS_NAME);
 		systemParameters.setSystemMargin(DEFAULT_SYSTEM_MAGRIN);  
 		system.add(systemParameters);	
 		
 		SystemMassParameters systemMassParameters = new SystemMassParameters(conceptCEFX);
-		systemMassParameters.setName("massParameters");
+		systemMassParameters.setName(MASS_PARAMETERS_NAME);
 		systemMassParameters.getMassAdapter().setDefaultValue(DEFAULT_MASS_ADAPTER);
 		systemMassParameters.getMassLaunchMax().setDefaultValue(DEFAULT_MASS_LAUNCH_MAX);
 		systemMassParameters.getMassPropellant().setDefaultValue(DEFAULT_MASS_PROPELLANT);
 		system.add(systemMassParameters);
 		
 		SystemPowerParameters systemPowerParameters = new SystemPowerParameters(conceptCEFX);
-		systemPowerParameters.setName("powerParameters");
+		systemPowerParameters.setName(POWER_PARAMETERS_NAME);
 		system.add(systemPowerParameters);
 	}
 
@@ -197,11 +208,11 @@ public class DLRCEFXStudyCommandHelper {
 	 */
 	public static void addSubSystemParameters(Concept conceptCEFX, ElementConfiguration subSystem) {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(conceptCEFX);
-		subSystemMassParameters.setName("massParameters");
+		subSystemMassParameters.setName(MASS_PARAMETERS_NAME);
 		subSystem.add(subSystemMassParameters);
 		
 		SubSystemPowerParameters subSystemPowerParameters = new SubSystemPowerParameters(conceptCEFX);
-		subSystemPowerParameters.setName("powerParameters");
+		subSystemPowerParameters.setName(POWER_PARAMETERS_NAME);
 		subSystem.add(subSystemPowerParameters);
 	}
 
@@ -214,16 +225,16 @@ public class DLRCEFXStudyCommandHelper {
 		equipment.add(equipmentParams);
 		
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
-		equipmentMassParameters.setName("EquipmentMassParameters");
+		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		equipment.add(equipmentMassParameters);
 		
 		EquipmentPowerParameters powerParameters = new EquipmentPowerParameters(conceptCEFX);
-		powerParameters.setName("powerParameters");
+		powerParameters.setName(POWER_PARAMETERS_NAME);
 		equipment.add(powerParameters);
 		
 		EquipmentTemperatureParameters temperatureParameters = new EquipmentTemperatureParameters(conceptCEFX);
-		temperatureParameters.setName("temperatureParameters");
+		temperatureParameters.setName(TEMPERATURE_PARAMETERS_NAME);
 		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MAX);
 		temperatureParameters.getTemperatureNoOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MIN);
 		temperatureParameters.getTemperatureOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MAX);
@@ -240,7 +251,7 @@ public class DLRCEFXStudyCommandHelper {
 		elementDefinition.add(equipmentParams);
 		
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
-		equipmentMassParameters.setName("EquipmentMassParameters");
+		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		elementDefinition.add(equipmentMassParameters);
 		
@@ -259,7 +270,7 @@ public class DLRCEFXStudyCommandHelper {
 			RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
 			newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
 			newDiscipline.setName(disciplineName);
-			newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+			newDiscipline.setUser(UserRegistry.getInstance().getUserName());
 			Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
 			domain.getCommandStack().execute(addCommand);
 

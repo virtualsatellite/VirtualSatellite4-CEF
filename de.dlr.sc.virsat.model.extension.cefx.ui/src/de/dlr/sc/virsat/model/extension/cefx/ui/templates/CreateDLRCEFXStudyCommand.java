@@ -28,6 +28,12 @@ import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
  */
 public class CreateDLRCEFXStudyCommand {
 	
+	static final String POWER_NAME = "Power";
+	static final String STRUCTURE_NAME = "Structure";
+	static final String AOCS_NAME = "AOCS";
+	static final String PAYLOAD_NAME = "Payload";
+	static final String DATAHANDLING_NAME = "DataHandling";
+
 	/**
 	 * Private constructor.
 	 */
@@ -69,40 +75,40 @@ public class CreateDLRCEFXStudyCommand {
 
 	    
 	    ProductTreeDomain powerProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
-	    powerProductTreeDomain.setName("Power");
+	    powerProductTreeDomain.setName(POWER_NAME);
 	    ProductTreeDomain structureProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
-	    structureProductTreeDomain.setName("Structure");
+	    structureProductTreeDomain.setName(STRUCTURE_NAME);
 	    ProductTreeDomain aocsProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
-	    aocsProductTreeDomain.setName("AOCS");
+	    aocsProductTreeDomain.setName(AOCS_NAME);
 	    ProductTreeDomain payloadProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
-	    payloadProductTreeDomain.setName("Payload");
+	    payloadProductTreeDomain.setName(PAYLOAD_NAME);
 	    ProductTreeDomain dataHandlingProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
-	    dataHandlingProductTreeDomain.setName("DataHandling");
+	    dataHandlingProductTreeDomain.setName(DATAHANDLING_NAME);
 	    
 	    ElementConfiguration powerSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    powerSubsystem.setName("Power");    
+	    powerSubsystem.setName(POWER_NAME);    
 	    ElementConfiguration structureSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    structureSubsystem.setName("Structure");
+	    structureSubsystem.setName(STRUCTURE_NAME);
 	    ElementConfiguration aocsSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    aocsSubsystem.setName("AOCS");
+	    aocsSubsystem.setName(AOCS_NAME);
 	    ElementConfiguration payloadSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    payloadSubsystem.setName("Payload");    
+	    payloadSubsystem.setName(PAYLOAD_NAME);    
 	    ElementConfiguration dataHandlingSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    dataHandlingSubsystem.setName("DataHandling");
+	    dataHandlingSubsystem.setName(DATAHANDLING_NAME);
 	    
-	    BeanDiscipline powerBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Power");
+	    BeanDiscipline powerBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, POWER_NAME);
 	    powerEquipment.setAssignedDiscipline(powerBeanDiscipline);
 	    powerElementDefinition.setAssignedDiscipline(powerBeanDiscipline);
-	    BeanDiscipline strucureBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Structure");
+	    BeanDiscipline strucureBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, STRUCTURE_NAME);
 	    structureElementDefinition.setAssignedDiscipline(strucureBeanDiscipline);
 	    structureEquipment.setAssignedDiscipline(strucureBeanDiscipline);
-	    BeanDiscipline aocsBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "AOCS");
+	    BeanDiscipline aocsBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, AOCS_NAME);
 	    aocsEquipment.setAssignedDiscipline(aocsBeanDiscipline);
 	    aocsElementDefinition.setAssignedDiscipline(aocsBeanDiscipline);
-	    BeanDiscipline payloadBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "Payload");
+	    BeanDiscipline payloadBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, PAYLOAD_NAME);
 	    payloadEquipment.setAssignedDiscipline(payloadBeanDiscipline);
 	    payloadElementDefinition.setAssignedDiscipline(payloadBeanDiscipline);
-	    BeanDiscipline dataHandlingBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, "DataHandling");
+	    BeanDiscipline dataHandlingBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, DATAHANDLING_NAME);
 	    dataHandlingEquipment.setAssignedDiscipline(dataHandlingBeanDiscipline);
 	    dataHandlingElementDefinition.setAssignedDiscipline(dataHandlingBeanDiscipline);
 	    
