@@ -71,9 +71,7 @@ public class CreateDLRCEFXStudyCommand {
 	    ElementDefinition payloadElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
 	    ElementDefinition dataHandlingElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
 
-	 // Create default subsystems and assign disciplines
-
-	    
+	 // Create default subsystems and assign disciplines    
 	    ProductTreeDomain powerProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);
 	    powerProductTreeDomain.setName(POWER_NAME);
 	    ProductTreeDomain structureProductTreeDomain = DLRCEFXStudyCommandHelper.createSubSystemAsProductTreeDomain(conceptPs);

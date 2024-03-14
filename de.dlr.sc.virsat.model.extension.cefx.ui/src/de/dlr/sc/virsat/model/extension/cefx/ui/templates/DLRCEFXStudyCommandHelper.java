@@ -9,14 +9,11 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.templates;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-
-
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
