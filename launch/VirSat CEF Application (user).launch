@@ -51,6 +51,7 @@
         <setEntry value="de.dlr.sc.virsat.model.extension.cef.interfaces.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.model.extension.cefx.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.model.extension.ps.feature:default"/>
+        <setEntry value="de.dlr.sc.virsat.model.extension.requirements.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.model.extension.visualisation.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.model.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.project.feature:default"/>
