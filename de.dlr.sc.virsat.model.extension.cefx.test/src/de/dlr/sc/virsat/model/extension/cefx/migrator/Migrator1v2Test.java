@@ -34,13 +34,13 @@ import org.junit.Test;
 public class Migrator1v2Test extends AMigrator1v2Test {		
 	
 	@Test
-	public void testMigrator1v1() {
-		Migrator1v1 testMigrator1v1 = new Migrator1v1();
+	public void testMigrator1v2() {
+		Migrator1v2 testMigrator1v2 = new Migrator1v2();
 		
 		Repository repository = DVLMFactory.eINSTANCE.createRepository();
 		repository.getActiveConcepts().add(conceptMigrateFromRepository);
 				
-		testMigrator1v1.migrate(conceptMigrateFrom, conceptMigrateFromRepository, conceptMigrateTo);
+		testMigrator1v2.migrate(conceptMigrateFrom, conceptMigrateFromRepository, conceptMigrateTo);
 	}
 	
 }

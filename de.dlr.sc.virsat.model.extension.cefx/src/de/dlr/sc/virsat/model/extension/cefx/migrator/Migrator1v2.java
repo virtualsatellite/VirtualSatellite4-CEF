@@ -27,8 +27,4 @@ import de.dlr.sc.virsat.model.concept.migrator.IMigrator;
  */
 public class Migrator1v2 extends AMigrator1v2 implements IMigrator {
 
-	@Override
-	public void migrate(Concept concept, IMigrator previousMigrator) {
-		super.migrate(concept, previousMigrator);
-	}
 }
