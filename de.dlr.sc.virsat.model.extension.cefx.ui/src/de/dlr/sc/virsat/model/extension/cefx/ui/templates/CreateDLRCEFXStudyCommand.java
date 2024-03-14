@@ -114,9 +114,10 @@ public class CreateDLRCEFXStudyCommand {
 	    CompoundCommand cmd = new CompoundCommand();
 
 	    // Append commands to add child structural elements
+	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, system.getStructuralElementInstance(), domain));
 	    
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
+	   
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), powerProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerProductTreeDomain.getStructuralElementInstance(), powerElementDefinition.getStructuralElementInstance(), domain));
@@ -134,19 +135,11 @@ public class CreateDLRCEFXStudyCommand {
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingProductTreeDomain.getStructuralElementInstance(), dataHandlingElementDefinition.getStructuralElementInstance(), domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), powerSubsystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerSubsystem.getStructuralElementInstance(), powerEquipment.getStructuralElementInstance(), domain));
-	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), aocsSubsystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(aocsSubsystem.getStructuralElementInstance(), aocsEquipment.getStructuralElementInstance(), domain));
-	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), payloadSubsystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(payloadSubsystem.getStructuralElementInstance(), payloadEquipment.getStructuralElementInstance(), domain));
-	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), structureSubsystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(structureSubsystem.getStructuralElementInstance(), structureEquipment.getStructuralElementInstance(), domain));    
-	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), dataHandlingSubsystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingSubsystem.getStructuralElementInstance(), dataHandlingEquipment.getStructuralElementInstance(), domain));
+	    
 	        
 	    // Append recording command to add system, sub-system, and equipment parameters
 	    cmd.append(new RecordingCommand(domain) {
@@ -154,25 +147,19 @@ public class CreateDLRCEFXStudyCommand {
 	        protected void doExecute() {
 	            DLRCEFXStudyCommandHelper.addSystemParameters(conceptCefx, system);
 	            
-	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, powerSubsystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, powerEquipment);	            	   
+	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, powerSubsystem);	            	   
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, powerElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, aocsSubsystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, aocsEquipment);
-
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, aocsElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, payloadSubsystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, payloadEquipment);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, payloadElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, structureSubsystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, structureEquipment);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, structureElementDefinition);
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, dataHandlingSubsystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, dataHandlingEquipment);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, dataHandlingElementDefinition);
 	        }
 	    });
