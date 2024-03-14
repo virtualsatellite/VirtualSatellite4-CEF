@@ -7,4 +7,3 @@ JAmmermann-DLR
 christoph-pietsch-DLR
 dellerDLR
 pchrszon-dlr
-DimitriDiantos
