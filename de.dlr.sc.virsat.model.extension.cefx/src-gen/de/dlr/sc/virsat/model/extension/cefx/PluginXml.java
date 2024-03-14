@@ -31,17 +31,11 @@ public class PluginXml {
 			public static final String VERSION = "1.1";
 			public static final String XMI = "concept/concept_v1_1.xmi";
 		}
-		public static class Extensioncefx1_2 {
-			public static final String CLASSNAME = "de.dlr.sc.virsat.model.extension.cefx.migrator.Migrator1v2";
-			public static final String ID = "de.dlr.sc.virsat.model.extension.cefx";
-			public static final String VERSION = "1.2";
-			public static final String XMI = "concept/concept_v1_2.xmi";
-		}
 	}
 	public static class Concept {
-		public static class Extensioncefx1_2 {
+		public static class Extensioncefx1_1 {
 			public static final String ID = "de.dlr.sc.virsat.model.extension.cefx";
-			public static final String VERSION = "1.2";
+			public static final String VERSION = "1.1";
 			public static final String XMI = "concept/concept.xmi";
 		}
 	}

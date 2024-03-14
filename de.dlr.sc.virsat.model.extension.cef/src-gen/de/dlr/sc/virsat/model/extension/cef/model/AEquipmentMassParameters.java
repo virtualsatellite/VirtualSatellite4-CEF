@@ -57,7 +57,7 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	public static final String PROPERTY_MASSPERUNIT = "massPerUnit";
 	public static final String PROPERTY_MASSTOTAL = "massTotal";
 	public static final String PROPERTY_MASSTOTALWITHMARGIN = "massTotalWithMargin";
-	public static final String EQUIPMENT_MASS_PARAMETERS = "EquipmentMassParameters";
+	
 	
 	
 	// *****************************************************************
@@ -68,8 +68,8 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	}
 	
 	public AEquipmentMassParameters(Concept concept) {
-		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, EQUIPMENT_MASS_PARAMETERS);
-		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, EQUIPMENT_MASS_PARAMETERS);
+		Category categoryFromActiveCategories = ActiveConceptHelper.getCategory(concept, "EquipmentMassParameters");
+		CategoryAssignment categoryAssignement = new CategoryInstantiator().generateInstance(categoryFromActiveCategories, "EquipmentMassParameters");
 		setTypeInstance(categoryAssignement);
 	}
 	
@@ -85,7 +85,7 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	
 	private void safeAccessMassPerUnit() {
 		if (massPerUnit.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSPERUNIT);
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massPerUnit");
 			massPerUnit.setTypeInstance(propertyInstance);
 		}
 	}
@@ -108,7 +108,7 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	
 	private void safeAccessMassTotal() {
 		if (massTotal.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSTOTAL);
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotal");
 			massTotal.setTypeInstance(propertyInstance);
 		}
 	}
@@ -131,7 +131,7 @@ public abstract class AEquipmentMassParameters extends GenericCategory implement
 	
 	private void safeAccessMassTotalWithMargin() {
 		if (massTotalWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance(PROPERTY_MASSTOTALWITHMARGIN);
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("massTotalWithMargin");
 			massTotalWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
