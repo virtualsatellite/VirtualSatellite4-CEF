@@ -249,9 +249,7 @@ public class DLRCEFXStudyCommandHelper {
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
 		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
-		elementDefinition.add(equipmentMassParameters);
-		
-
+		elementDefinition.add(equipmentMassParameters);	
 	}
 	
 	// Keep track of created disciplines
