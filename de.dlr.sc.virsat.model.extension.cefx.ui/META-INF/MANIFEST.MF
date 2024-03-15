@@ -22,7 +22,9 @@ Require-Bundle: org.eclipse.ui,
  de.dlr.sc.virsat.model.extension.cefx,
  org.eclipse.ui.navigator,
  de.dlr.sc.virsat.model.calculation.ui,
- de.dlr.sc.virsat.cef.branding.ui
+ de.dlr.sc.virsat.cef.branding.ui,
+ org.eclipse.equinox.security,
+ de.dlr.sc.virsat.external.lib.comet.sdkj.servicedal
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.dlr.sc.virsat.model.extension.cefx.ui.itemprovider,

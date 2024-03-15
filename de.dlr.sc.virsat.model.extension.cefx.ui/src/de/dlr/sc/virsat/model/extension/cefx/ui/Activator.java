@@ -9,7 +9,6 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui;
 
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -30,7 +29,7 @@ public class Activator extends AbstractUIPlugin {
 		super();
 	}
 
-	private static Plugin plugin;
+	private static Activator plugin;
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -43,7 +42,7 @@ public class Activator extends AbstractUIPlugin {
 	 * get Default plugin for access to Logger etc
 	 * @return the default plugin of thei activator
 	 */
-	public static Plugin getDefault() {
+	public static Activator getDefault() {
 		return plugin;
 	}
 	
