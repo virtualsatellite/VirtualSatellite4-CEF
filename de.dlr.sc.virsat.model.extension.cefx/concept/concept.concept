@@ -47,7 +47,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		FloatProperty systemMargin description "Constant system margin" default 0 quantityKind "Dimensionless" unit "Percent";		
 		Type modeDuration of Category Parameter description "Duration of the modes" quantityKind "Time" unit "Second";
 	}
-	
+		
 	Category SystemMassParameters {
 		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		Cardinality 1;
@@ -61,9 +61,9 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massLaunchMax of Category Parameter quantityKind "Mass" unit "Kilogram";
 		Type massBuffer of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = summary{SubSystemMassParameters.massTotal};
+		Ref: massTotal = summary{SubSystemMassParameters.massTotal, 0};
 		Ref: massTotalWithMargin = summary{SubSystemMassParameters.massTotalWithMargin};
-		Ref: massTotalWithMarginWithSystemMargin = massTotalWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: massTotalWithMarginWithSystemMargin = massTotalWithMargin * (0 + SystemParameters.systemMargin);
 		Ref: massLaunch = massTotalWithMarginWithSystemMargin + massPropellant + massAdapter;
 		Ref: massBuffer = massLaunchMax - massLaunch;
 	}
@@ -77,10 +77,10 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		Type powerEnergyWithSystemMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin};
-		Ref: powerAvgWithSystemMargin = powerAvgWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin, 0};
+		Ref: powerAvgWithSystemMargin = powerAvgWithMargin * (0 + SystemParameters.systemMargin);
 		Ref: powerEnergyWithMargin = summary{SubSystemPowerParameters.powerEnergyWithMargin};
-		Ref: powerEnergyWithSystemMargin = powerEnergyWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: powerEnergyWithSystemMargin = powerEnergyWithMargin * (0 + SystemParameters.systemMargin);
 	}
 	
 	/** SubSystem level specific collections of data and parameters */
@@ -94,8 +94,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massMarginPercentage of Category Parameter quantityKind "Dimensionless" unit "Percent";
 		Type massMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = summary{EquipmentMassParameters.massTotal};
-		Ref: massTotalWithMargin = summary{EquipmentMassParameters.massTotalWithMargin, 1};
+		Ref: massTotal = summary{EquipmentMassParameters.massTotal, 0};
+		Ref: massTotalWithMargin = summary{EquipmentMassParameters.massTotalWithMargin, 0};
 		Ref: massMargin = massTotalWithMargin - massTotal;
 		Ref: massMarginPercentage = (massTotalWithMargin / massTotal) - 1;
 	}
@@ -107,7 +107,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
 		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.powerAvgWithMargin};
+		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.powerAvgWithMargin, 0};
 		Ref: powerEnergyWithMargin = powerAvgWithMargin * SystemParameters.modeDuration; 
 	}
 	
@@ -127,8 +127,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram" description "Mass of the unit including the mass of the child elements.";
 		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = mass + summary{massTotal, 1};
-		Ref: massTotalWithMargin = mass + (mass * EquipmentParameters.marginMaturity) + summary{massTotalWithMargin, 1}; 
+		Ref: massTotal = mass + summary{massTotal, 0};
+		Ref: massTotalWithMargin = mass + (mass * EquipmentParameters.marginMaturity) + summary{massTotalWithMargin, 0}; 
 	}
 	
 	Category EquipmentPowerParameters {
@@ -148,7 +148,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Ref: powerUnitOnWithMargin = powerUnitOn + (powerUnitOn * EquipmentParameters.marginMaturity);
 		Ref: powerUnitStbyWithMargin = powerUnitStby + (powerUnitStby * EquipmentParameters.marginMaturity);
 		Ref: powerUnitAvgWithMargin = powerUnitOnWithMargin * powerDutyCycle + powerUnitStbyWithMargin * (1 - powerDutyCycle);
-		Ref: powerAvgWithMargin = (powerUnitAvgWithMargin + summary{powerAvgWithMargin, 1}) * ( 1 - powerUnitIsInactive);
+		Ref: powerAvgWithMargin = (powerUnitAvgWithMargin + summary{powerAvgWithMargin, 0}) * ( 1 - powerUnitIsInactive);
 	}
 	
 	Category EquipmentTemperatureParameters {
