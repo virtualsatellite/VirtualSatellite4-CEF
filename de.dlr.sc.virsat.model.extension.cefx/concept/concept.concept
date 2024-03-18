@@ -61,8 +61,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massLaunchMax of Category Parameter quantityKind "Mass" unit "Kilogram";
 		Type massBuffer of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = summary{SubSystemMassParameters.massTotal};
-		Ref: massTotalWithMargin = summary{SubSystemMassParameters.massTotalWithMargin};
+		Ref: massTotal = summary{SubSystemMassParameters.massTotal, 0};
+		Ref: massTotalWithMargin = summary{SubSystemMassParameters.massTotalWithMargin, 0};
 		Ref: massTotalWithMarginWithSystemMargin = massTotalWithMargin * (1 + SystemParameters.systemMargin);
 		Ref: massLaunch = massTotalWithMarginWithSystemMargin + massPropellant + massAdapter;
 		Ref: massBuffer = massLaunchMax - massLaunch;
@@ -77,9 +77,9 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		Type powerEnergyWithSystemMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin};
+		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin, 0};
 		Ref: powerAvgWithSystemMargin = powerAvgWithMargin * (1 + SystemParameters.systemMargin);
-		Ref: powerEnergyWithMargin = summary{SubSystemPowerParameters.powerEnergyWithMargin};
+		Ref: powerEnergyWithMargin = summary{SubSystemPowerParameters.powerEnergyWithMargin, 0};
 		Ref: powerEnergyWithSystemMargin = powerEnergyWithMargin * (1 + SystemParameters.systemMargin);
 	}
 	
@@ -94,8 +94,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massMarginPercentage of Category Parameter quantityKind "Dimensionless" unit "Percent";
 		Type massMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = summary{EquipmentMassParameters.massTotal, 1};
-		Ref: massTotalWithMargin = summary{EquipmentMassParameters.massTotalWithMargin, 1};
+		Ref: massTotal = summary{EquipmentMassParameters.massTotal, 0};
+		Ref: massTotalWithMargin = summary{EquipmentMassParameters.massTotalWithMargin, 0};
 		Ref: massMargin = massTotalWithMargin - massTotal;
 		Ref: massMarginPercentage = (massTotalWithMargin / massTotal) - 1;
 	}
@@ -107,7 +107,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
 		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.powerAvgWithMargin, 1};
+		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.powerAvgWithMargin, 0};
 		Ref: powerEnergyWithMargin = powerAvgWithMargin * SystemParameters.modeDuration; 
 	}
 	
@@ -127,8 +127,8 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Type massTotal of Category Parameter quantityKind "Mass" unit "Kilogram" description "Mass of the unit including the mass of the child elements.";
 		Type massTotalWithMargin of Category Parameter quantityKind "Mass" unit "Kilogram";
 		
-		Ref: massTotal = mass + summary{massTotal, 1};
-		Ref: massTotalWithMargin = mass + (mass * EquipmentParameters.marginMaturity) + summary{massTotalWithMargin, 1}; 
+		Ref: massTotal = mass + summary{massTotal, 0};
+		Ref: massTotalWithMargin = mass + (mass * EquipmentParameters.marginMaturity) + summary{massTotalWithMargin, 0}; 
 	}
 	
 	Category EquipmentPowerParameters {
@@ -148,7 +148,7 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Ref: powerUnitOnWithMargin = powerUnitOn + (powerUnitOn * EquipmentParameters.marginMaturity);
 		Ref: powerUnitStbyWithMargin = powerUnitStby + (powerUnitStby * EquipmentParameters.marginMaturity);
 		Ref: powerUnitAvgWithMargin = powerUnitOnWithMargin * powerDutyCycle + powerUnitStbyWithMargin * (1 - powerDutyCycle);
-		Ref: powerAvgWithMargin = (powerUnitAvgWithMargin + summary{powerAvgWithMargin, 1}) * ( 1 - powerUnitIsInactive);
+		Ref: powerAvgWithMargin = (powerUnitAvgWithMargin + summary{powerAvgWithMargin, 0}) * ( 1 - powerUnitIsInactive);
 	}
 	
 	Category EquipmentTemperatureParameters {
