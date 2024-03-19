@@ -264,7 +264,7 @@ public class DLRCEFXStudyCommandHelper {
 			RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
 			newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
 			newDiscipline.setName(disciplineName);
-			newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+			newDiscipline.setUser(UserRegistry.getInstance().getUserName());
 			Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
 			domain.getCommandStack().execute(addCommand);
 
