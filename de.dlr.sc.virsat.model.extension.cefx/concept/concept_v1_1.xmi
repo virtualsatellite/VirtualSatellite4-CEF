@@ -171,7 +171,7 @@
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementOccurence"/>
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementRealization"/>
     <equationDefinitions>
-      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerAvgWithMargin" depth="1"/>
+      <expression xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin" depth="1"/>
       <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.SubSystemPowerParameters.powerAvgWithMargin"/>
     </equationDefinitions>
     <equationDefinitions>
@@ -232,36 +232,36 @@
     <applicableFor href="platform:/resource/de.dlr.sc.virsat.model.extension.ps/concept.concept#de.dlr.sc.virsat.model.extension.ps.ElementRealization"/>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
-        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitOn"/>
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitOn"/>
         <right xsi:type="dvlm_calc:Parenthesis">
           <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
-            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitOn"/>
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitOn"/>
             <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentParameters.marginMaturity"/>
           </right>
         </right>
       </expression>
-      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitOnWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitOnWithMargin"/>
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
-        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitStby"/>
+        <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitStby"/>
         <right xsi:type="dvlm_calc:Parenthesis">
           <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
-            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitStby"/>
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitStby"/>
             <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentParameters.marginMaturity"/>
           </right>
         </right>
       </expression>
-      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitStbyWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitStbyWithMargin"/>
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:AdditionAndSubtraction">
         <left xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
-          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitOnWithMargin"/>
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitOnWithMargin"/>
           <right xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerDutyCycle"/>
         </left>
         <right xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
-          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitStbyWithMargin"/>
+          <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitStbyWithMargin"/>
           <right xsi:type="dvlm_calc:Parenthesis">
             <right xsi:type="dvlm_calc:AdditionAndSubtraction" operator="-">
               <left xsi:type="dvlm_calc:NumberLiteral" value="1"/>
@@ -270,14 +270,14 @@
           </right>
         </right>
       </expression>
-      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitAvgWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitAvgWithMargin"/>
     </equationDefinitions>
     <equationDefinitions>
       <expression xsi:type="dvlm_calc:MultiplicationAndDivision" operator="*">
         <left xsi:type="dvlm_calc:Parenthesis">
           <right xsi:type="dvlm_calc:AdditionAndSubtraction">
-            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerUnitAvgWithMargin"/>
-            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerAvgWithMargin" depth="1"/>
+            <left xsi:type="dvlm_calc:ReferencedDefinitionInput" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerUnitAvgWithMargin"/>
+            <right xsi:type="dvlm_calc:SetFunction" operator="summary" typeDefinition="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin" depth="1"/>
           </right>
         </left>
         <right xsi:type="dvlm_calc:Parenthesis">
@@ -287,16 +287,16 @@
           </right>
         </right>
       </expression>
-      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.powerAvgWithMargin"/>
+      <result xsi:type="dvlm_calc:TypeDefinitionResult" reference="de.dlr.sc.virsat.model.extension.cefx.EquipmentPowerParameters.PowerAvgWithMargin"/>
     </equationDefinitions>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitIsInactive" description="Should be 1 if the equipment is inactive in the given mode, meaning it is totally off." type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="No Unit"/>
     <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerDutyCycle" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Dimensionless" unitName="Percent"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitOn" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitStby" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitOnWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitStbyWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerUnitAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
-    <properties xsi:type="dvlm_cppd:ComposedProperty" name="powerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitOn" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitStby" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitOnWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitStbyWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerUnitAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
+    <properties xsi:type="dvlm_cppd:ComposedProperty" name="PowerAvgWithMargin" type="de.dlr.sc.virsat.model.extension.cefx.Parameter" quantityKindName="Power" unitName="Watt"/>
     <extendsCategory href="platform:/plugin/de.dlr.sc.virsat.model.ext.core/concept/concept.xmi#de.dlr.sc.virsat.model.ext.core.GenericCategory"/>
   </categories>
   <categories name="EquipmentTemperatureParameters" cardinality="1">
