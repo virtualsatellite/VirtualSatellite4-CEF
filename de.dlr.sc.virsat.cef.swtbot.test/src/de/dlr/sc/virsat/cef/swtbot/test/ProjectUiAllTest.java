@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
-	//SWTBotTestCaseStub.class,
+	SWTBotTestCaseStub.class,
 	//CefHierarchyLevelTest.class,
 	//CefRefreshValueAndStructureTest.class,
 	})
