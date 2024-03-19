@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Extended Model Extension Data Model
 Bundle-SymbolicName: de.dlr.sc.virsat.model.extension.cefx;singleton:=true
-Bundle-Version: 4.16.1.qualifier
+Bundle-Version: 4.16.2.qualifier
 Bundle-Vendor: DLR (German Aerospace Center)
 Eclipse-ExtensibleAPI: true
 Require-Bundle: org.eclipse.ui,
