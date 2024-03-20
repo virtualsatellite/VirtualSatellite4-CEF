@@ -33,13 +33,9 @@ import de.dlr.sc.virsat.model.dvlm.structural.command.CreateAddStructuralElement
 import de.dlr.sc.virsat.model.extension.cefx.Activator;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
-import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentPowerParameters;
-import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentTemperatureParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
-import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.SystemParameters;
-import de.dlr.sc.virsat.model.extension.cefx.model.SystemPowerParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
@@ -185,10 +181,6 @@ public class DLRCEFXStudyCommandHelper {
 		systemMassParameters.getMassLaunchMax().setDefaultValue(DEFAULT_MASS_LAUNCH_MAX);
 		systemMassParameters.getMassPropellant().setDefaultValue(DEFAULT_MASS_PROPELLANT);
 		system.add(systemMassParameters);
-		
-		SystemPowerParameters systemPowerParameters = new SystemPowerParameters(conceptCEFX);
-		systemPowerParameters.setName(POWER_PARAMETERS_NAME);
-		system.add(systemPowerParameters);
 	}
 
 	public static void addProductTreeParameters(Concept conceptCEFX, ProductTree productTree) {
@@ -206,10 +198,6 @@ public class DLRCEFXStudyCommandHelper {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(conceptCEFX);
 		subSystemMassParameters.setName(MASS_PARAMETERS_NAME);
 		subSystem.add(subSystemMassParameters);
-		
-		SubSystemPowerParameters subSystemPowerParameters = new SubSystemPowerParameters(conceptCEFX);
-		subSystemPowerParameters.setName(POWER_PARAMETERS_NAME);
-		subSystem.add(subSystemPowerParameters);
 	}
 
 	/**
@@ -224,18 +212,7 @@ public class DLRCEFXStudyCommandHelper {
 		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		equipment.add(equipmentMassParameters);
-		
-		EquipmentPowerParameters powerParameters = new EquipmentPowerParameters(conceptCEFX);
-		powerParameters.setName(POWER_PARAMETERS_NAME);
-		equipment.add(powerParameters);
-		
-		EquipmentTemperatureParameters temperatureParameters = new EquipmentTemperatureParameters(conceptCEFX);
-		temperatureParameters.setName(TEMPERATURE_PARAMETERS_NAME);
-		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MAX);
-		temperatureParameters.getTemperatureNoOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MIN);
-		temperatureParameters.getTemperatureOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MAX);
-		temperatureParameters.getTemperatureOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MIN);
-		equipment.add(temperatureParameters);
+
 	}
 	
 	/**

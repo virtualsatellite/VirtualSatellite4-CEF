@@ -46,21 +46,17 @@ public class CreateDLRCEFXSubSystemCommand {
 	public static CompoundCommand create(EObject parent, Concept conceptPs, Concept conceptCefx, VirSatTransactionalEditingDomain domain) {
 	    // Create sub-system and equipment elements
 	    ElementConfiguration subSystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
-	    ElementConfiguration equipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
 
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
 
 	    // Append commands to add child structural elements
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, subSystem.getStructuralElementInstance(), domain));
-	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(subSystem.getStructuralElementInstance(), equipment.getStructuralElementInstance(), domain));
-
 	    // Append recording command to add sub-system and equipment parameters
 	    cmd.append(new RecordingCommand(domain) {
 	        @Override
 	        protected void doExecute() {
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, subSystem);
-	            DLRCEFXStudyCommandHelper.addEquipmentParameters(conceptCefx, equipment);
 	        }
 	    });
 
