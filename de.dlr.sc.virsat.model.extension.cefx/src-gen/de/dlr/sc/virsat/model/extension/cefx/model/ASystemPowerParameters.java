@@ -54,10 +54,10 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	}
 	
 	// property name constants
-	public static final String PROPERTY_POWERAVGWITHMARGIN = "powerAvgWithMargin";
-	public static final String PROPERTY_POWERAVGWITHSYSTEMMARGIN = "powerAvgWithSystemMargin";
-	public static final String PROPERTY_POWERENERGYWITHMARGIN = "powerEnergyWithMargin";
-	public static final String PROPERTY_POWERENERGYWITHSYSTEMMARGIN = "powerEnergyWithSystemMargin";
+	public static final String PROPERTY_POWERTOTALAVGWITHMARGIN = "powerTotalAvgWithMargin";
+	public static final String PROPERTY_POWERTOTALAVGWITHSYSTEMMARGIN = "powerTotalAvgWithSystemMargin";
+	public static final String PROPERTY_POWERTOTALENERGYWITHMARGIN = "powerTotalEnergyWithMargin";
+	public static final String PROPERTY_POWERTOTALENERGYWITHSYSTEMMARGIN = "powerTotalEnergyWithSystemMargin";
 	
 	
 	
@@ -80,95 +80,95 @@ public abstract class ASystemPowerParameters extends GenericCategory implements 
 	
 	
 	// *****************************************************************
-	// * Attribute: powerAvgWithMargin
+	// * Attribute: powerTotalAvgWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerAvgWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalAvgWithMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerAvgWithMargin() {
-		if (powerAvgWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithMargin");
-			powerAvgWithMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalAvgWithMargin() {
+		if (powerTotalAvgWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalAvgWithMargin");
+			powerTotalAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerAvgWithMargin() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin.getValue();
+	public Parameter getPowerTotalAvgWithMargin() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalAvgWithMarginBean() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerAvgWithSystemMargin
+	// * Attribute: powerTotalAvgWithSystemMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerAvgWithSystemMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalAvgWithSystemMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerAvgWithSystemMargin() {
-		if (powerAvgWithSystemMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithSystemMargin");
-			powerAvgWithSystemMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalAvgWithSystemMargin() {
+		if (powerTotalAvgWithSystemMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalAvgWithSystemMargin");
+			powerTotalAvgWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerAvgWithSystemMargin() {
-		safeAccessPowerAvgWithSystemMargin();
-		return powerAvgWithSystemMargin.getValue();
+	public Parameter getPowerTotalAvgWithSystemMargin() {
+		safeAccessPowerTotalAvgWithSystemMargin();
+		return powerTotalAvgWithSystemMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerAvgWithSystemMarginBean() {
-		safeAccessPowerAvgWithSystemMargin();
-		return powerAvgWithSystemMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalAvgWithSystemMarginBean() {
+		safeAccessPowerTotalAvgWithSystemMargin();
+		return powerTotalAvgWithSystemMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerEnergyWithMargin
+	// * Attribute: powerTotalEnergyWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerEnergyWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalEnergyWithMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerEnergyWithMargin() {
-		if (powerEnergyWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerEnergyWithMargin");
-			powerEnergyWithMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalEnergyWithMargin() {
+		if (powerTotalEnergyWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalEnergyWithMargin");
+			powerTotalEnergyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerEnergyWithMargin() {
-		safeAccessPowerEnergyWithMargin();
-		return powerEnergyWithMargin.getValue();
+	public Parameter getPowerTotalEnergyWithMargin() {
+		safeAccessPowerTotalEnergyWithMargin();
+		return powerTotalEnergyWithMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerEnergyWithMarginBean() {
-		safeAccessPowerEnergyWithMargin();
-		return powerEnergyWithMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalEnergyWithMarginBean() {
+		safeAccessPowerTotalEnergyWithMargin();
+		return powerTotalEnergyWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerEnergyWithSystemMargin
+	// * Attribute: powerTotalEnergyWithSystemMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerEnergyWithSystemMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalEnergyWithSystemMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerEnergyWithSystemMargin() {
-		if (powerEnergyWithSystemMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerEnergyWithSystemMargin");
-			powerEnergyWithSystemMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalEnergyWithSystemMargin() {
+		if (powerTotalEnergyWithSystemMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalEnergyWithSystemMargin");
+			powerTotalEnergyWithSystemMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerEnergyWithSystemMargin() {
-		safeAccessPowerEnergyWithSystemMargin();
-		return powerEnergyWithSystemMargin.getValue();
+	public Parameter getPowerTotalEnergyWithSystemMargin() {
+		safeAccessPowerTotalEnergyWithSystemMargin();
+		return powerTotalEnergyWithSystemMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerEnergyWithSystemMarginBean() {
-		safeAccessPowerEnergyWithSystemMargin();
-		return powerEnergyWithSystemMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalEnergyWithSystemMarginBean() {
+		safeAccessPowerTotalEnergyWithSystemMargin();
+		return powerTotalEnergyWithSystemMargin;
 	}
 	
 	

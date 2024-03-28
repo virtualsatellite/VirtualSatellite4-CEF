@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2024 German Aerospace Center (DLR), Institute for Software Technology, Germany.
+ * Copyright (c) 2008-2019 German Aerospace Center (DLR), Simulation and Software Technology, Germany.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
@@ -14,7 +14,7 @@ public class ManifestMf {
 	public static final String BUNDLE_MANIFESTVERSION = "2";
 	public static final String BUNDLE_NAME = "VirSat CEF Extended Model Extension Data Model";
 	public static final String BUNDLE_SYMBOLICNAME = "de.dlr.sc.virsat.model.extension.cefx";
-	public static final String BUNDLE_VERSION = "4.16.1.qualifier";
+	public static final String BUNDLE_VERSION = "4.16.2.qualifier";
 	public static final String BUNDLE_VENDOR = "DLR (German Aerospace Center)";
 	public static final String ECLIPSE_EXTENSIBLEAPI = "true";
 	public static final String REQUIRE_BUNDLE = "org.eclipse.ui,org.eclipse.core.runtime,de.dlr.sc.virsat.external.lib.apache.poi,de.dlr.sc.virsat.model,de.dlr.sc.virsat.model.edit,de.dlr.sc.virsat.project,de.dlr.sc.virsat.build,de.dlr.sc.virsat.commons,de.dlr.sc.virsat.model.extension.ps";
