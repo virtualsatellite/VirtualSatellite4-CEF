@@ -106,52 +106,14 @@ public class CreateDLRCEFXStudyCommand {
 	    
 	    // Create the disciplines or get references, if they already exist
 	    
-	    var roleManagement = domain.getResourceSet().getRoleManagement();
-	    var existingDisciplines = roleManagement.getDisciplines();
+	
 	    
-	    var index = getIndexOfDisciplineAlreadyExists(existingDisciplines, POWER_NAME);
-	    
-	    var powerBeanDiscipline = index == -1
-	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, POWER_NAME)
-	    		: new BeanDiscipline(existingDisciplines.get(index));
-	    
-	    if (index == -1) {
-	    	cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, powerBeanDiscipline));
-	    }
-	    
-		index = getIndexOfDisciplineAlreadyExists(existingDisciplines, STRUCTURE_NAME);
-		var strucureBeanDiscipline = index == -1
-		    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, STRUCTURE_NAME)
-		    		: new BeanDiscipline(existingDisciplines.get(index));
-		if (index == -1) {
-		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, strucureBeanDiscipline));
-		}     
-		
-	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, AOCS_NAME);
-	    var aocsBeanDiscipline = index == -1
-	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, AOCS_NAME)
-	    		: new BeanDiscipline(existingDisciplines.get(index));
-	    if (index == -1) {
-		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, aocsBeanDiscipline));
-		} 
-	        
-	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, PAYLOAD_NAME);
-	    var payloadBeanDiscipline = index == -1
-	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, PAYLOAD_NAME)
-	    		: new BeanDiscipline(existingDisciplines.get(index));
-	    if (index == -1) {
-		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, payloadBeanDiscipline));
-		} 
-	    
-	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, DATAHANDLING_NAME);
-	    var dataHandlingBeanDiscipline = index == -1
-	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, DATAHANDLING_NAME)
-	    		: new BeanDiscipline(existingDisciplines.get(index));
-	    if (index == -1) {
-		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, dataHandlingBeanDiscipline));
-		} 
+	    var powerBeanDiscipline = handleDisciplineCreation(domain, POWER_NAME, cmd);
+		var strucureBeanDiscipline = handleDisciplineCreation(domain, STRUCTURE_NAME, cmd);
+	    var aocsBeanDiscipline = handleDisciplineCreation(domain, AOCS_NAME, cmd);
+	    var payloadBeanDiscipline = handleDisciplineCreation(domain, PAYLOAD_NAME, cmd);
+	    var dataHandlingBeanDiscipline = handleDisciplineCreation(domain, DATAHANDLING_NAME, cmd);
 
-	    
 	    // Append commands to add child structural elements
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, system.getStructuralElementInstance(), domain));
@@ -236,5 +198,26 @@ public class CreateDLRCEFXStudyCommand {
 	     .filter(i -> list.get(i).getName().equals(disciplineName))
 	     .findFirst()
 	     .orElse(-1);
+	}
+	/**
+	 * Handles the aggregation of a discipline
+	 * @param domain current virsat doamin
+	 * @param disciplineName name of the discipline which should be aggregated
+	 * @param cmd compoundcommand to add to if a discipline has to be created
+	 * @return a new discipline if the name is not already existing, if not it creates a new one and appends a add command
+	 */
+	private static BeanDiscipline handleDisciplineCreation(VirSatTransactionalEditingDomain domain, String disciplineName, CompoundCommand cmd) {
+	    var roleManagement = domain.getResourceSet().getRoleManagement();
+	    var existingDisciplines = roleManagement.getDisciplines();
+	    var index = getIndexOfDisciplineAlreadyExists(existingDisciplines, POWER_NAME);
+	    
+		BeanDiscipline discipline = index == -1
+				?  DLRCEFXStudyCommandHelper.createDiscipline(domain, disciplineName)
+				: new BeanDiscipline(existingDisciplines.get(index));
+
+		if (index == -1) {
+			cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, discipline));
+		}
+		return discipline;
 	}
 }
