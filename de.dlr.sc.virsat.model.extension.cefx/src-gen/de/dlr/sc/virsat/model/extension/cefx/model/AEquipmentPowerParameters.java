@@ -55,13 +55,13 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	
 	// property name constants
 	public static final String PROPERTY_POWERUNITISINACTIVE = "powerUnitIsInactive";
-	public static final String PROPERTY_POWERDUTYCYCLE = "powerDutyCycle";
+	public static final String PROPERTY_POWERUNITDUTYCYCLE = "powerUnitDutyCycle";
 	public static final String PROPERTY_POWERUNITON = "powerUnitOn";
 	public static final String PROPERTY_POWERUNITSTBY = "powerUnitStby";
 	public static final String PROPERTY_POWERUNITONWITHMARGIN = "powerUnitOnWithMargin";
 	public static final String PROPERTY_POWERUNITSTBYWITHMARGIN = "powerUnitStbyWithMargin";
 	public static final String PROPERTY_POWERUNITAVGWITHMARGIN = "powerUnitAvgWithMargin";
-	public static final String PROPERTY_POWERAVGWITHMARGIN = "powerAvgWithMargin";
+	public static final String PROPERTY_POWERTOTALAVGWITHMARGIN = "powerTotalAvgWithMargin";
 	
 	
 	
@@ -107,26 +107,26 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerDutyCycle
+	// * Attribute: powerUnitDutyCycle
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerDutyCycle = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerUnitDutyCycle = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerDutyCycle() {
-		if (powerDutyCycle.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerDutyCycle");
-			powerDutyCycle.setTypeInstance(propertyInstance);
+	private void safeAccessPowerUnitDutyCycle() {
+		if (powerUnitDutyCycle.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerUnitDutyCycle");
+			powerUnitDutyCycle.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerDutyCycle() {
-		safeAccessPowerDutyCycle();
-		return powerDutyCycle.getValue();
+	public Parameter getPowerUnitDutyCycle() {
+		safeAccessPowerUnitDutyCycle();
+		return powerUnitDutyCycle.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerDutyCycleBean() {
-		safeAccessPowerDutyCycle();
-		return powerDutyCycle;
+	public BeanPropertyComposed<Parameter> getPowerUnitDutyCycleBean() {
+		safeAccessPowerUnitDutyCycle();
+		return powerUnitDutyCycle;
 	}
 	
 	// *****************************************************************
@@ -245,26 +245,26 @@ public abstract class AEquipmentPowerParameters extends GenericCategory implemen
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerAvgWithMargin
+	// * Attribute: powerTotalAvgWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerAvgWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalAvgWithMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerAvgWithMargin() {
-		if (powerAvgWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithMargin");
-			powerAvgWithMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalAvgWithMargin() {
+		if (powerTotalAvgWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalAvgWithMargin");
+			powerTotalAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerAvgWithMargin() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin.getValue();
+	public Parameter getPowerTotalAvgWithMargin() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalAvgWithMarginBean() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin;
 	}
 	
 	

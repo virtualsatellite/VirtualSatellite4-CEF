@@ -72,15 +72,15 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Applicable For [de.dlr.sc.virsat.model.extension.ps.ConfigurationTree, de.dlr.sc.virsat.model.extension.ps.AssemblyTree, de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence];
 		Cardinality 1;
 				
-		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
-		Type powerAvgWithSystemMargin of Category Parameter quantityKind "Power" unit "Watt";
-		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
-		Type powerEnergyWithSystemMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		Type powerTotalAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type powerTotalAvgWithSystemMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type powerTotalEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		Type powerTotalEnergyWithSystemMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{SubSystemPowerParameters.powerAvgWithMargin, 0};
-		Ref: powerAvgWithSystemMargin = powerAvgWithMargin * (1 + SystemParameters.systemMargin);
-		Ref: powerEnergyWithMargin = summary{SubSystemPowerParameters.powerEnergyWithMargin, 0};
-		Ref: powerEnergyWithSystemMargin = powerEnergyWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: powerTotalAvgWithMargin = summary{SubSystemPowerParameters.powerTotalAvgWithMargin, 0};
+		Ref: powerTotalAvgWithSystemMargin = powerTotalAvgWithMargin * (1 + SystemParameters.systemMargin);
+		Ref: powerTotalEnergyWithMargin = summary{SubSystemPowerParameters.powerTotalEnergyWithMargin, 0};
+		Ref: powerTotalEnergyWithSystemMargin = powerTotalEnergyWithMargin * (1 + SystemParameters.systemMargin);
 	}
 	
 	/** SubSystem level specific collections of data and parameters */
@@ -100,15 +100,15 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 		Ref: massMarginPercentage = (massTotalWithMargin / massTotal) - 1;
 	}
 	
-	Category SubSystemPowerParameters {
+	Category SubSystemPowerParameters  {
 		Applicable For [de.dlr.sc.virsat.model.extension.ps.ElementConfiguration, de.dlr.sc.virsat.model.extension.ps.ElementOccurence, de.dlr.sc.virsat.model.extension.ps.ElementRealization];
 		Cardinality 1;
 				
-		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
-		Type powerEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
+		Type powerTotalAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt"; 
+		Type powerTotalEnergyWithMargin of Category Parameter quantityKind "Energy and Work" unit "Joule";
 		
-		Ref: powerAvgWithMargin = summary{EquipmentPowerParameters.powerAvgWithMargin, 0};
-		Ref: powerEnergyWithMargin = powerAvgWithMargin * SystemParameters.modeDuration; 
+		Ref: powerTotalAvgWithMargin = summary{EquipmentPowerParameters.powerTotalAvgWithMargin, 0};
+		Ref: powerTotalEnergyWithMargin = powerTotalAvgWithMargin * SystemParameters.modeDuration; 
 	}
 	
 	/** Equipment level specific collections of data and parameters */
@@ -137,18 +137,18 @@ Concept de.dlr.sc.virsat.model.extension.cefx
 
 		Type powerUnitIsInactive of Category Parameter quantityKind "Dimensionless"  unit "No Unit" description "Should be 1 if the equipment is inactive in the given mode, meaning it is totally off."; 
  
-		Type powerDutyCycle of Category Parameter quantityKind "Dimensionless" unit "Percent";
+		Type powerUnitDutyCycle of Category Parameter quantityKind "Dimensionless" unit "Percent";
 		Type powerUnitOn of Category Parameter quantityKind "Power" unit "Watt";
 		Type powerUnitStby of Category Parameter quantityKind "Power" unit "Watt";
 		Type powerUnitOnWithMargin of Category Parameter quantityKind "Power" unit "Watt";
 		Type powerUnitStbyWithMargin of Category Parameter quantityKind "Power" unit "Watt";
 		Type powerUnitAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
-		Type powerAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
+		Type powerTotalAvgWithMargin of Category Parameter quantityKind "Power" unit "Watt";
 				
 		Ref: powerUnitOnWithMargin = powerUnitOn + (powerUnitOn * EquipmentParameters.marginMaturity);
 		Ref: powerUnitStbyWithMargin = powerUnitStby + (powerUnitStby * EquipmentParameters.marginMaturity);
-		Ref: powerUnitAvgWithMargin = powerUnitOnWithMargin * powerDutyCycle + powerUnitStbyWithMargin * (1 - powerDutyCycle);
-		Ref: powerAvgWithMargin = (powerUnitAvgWithMargin + summary{powerAvgWithMargin, 0}) * ( 1 - powerUnitIsInactive);
+		Ref: powerUnitAvgWithMargin = powerUnitOnWithMargin * powerUnitDutyCycle + powerUnitStbyWithMargin * (1 - powerUnitDutyCycle);
+		Ref: powerTotalAvgWithMargin = (powerUnitAvgWithMargin + summary{powerTotalAvgWithMargin, 0}) * ( 1 - powerUnitIsInactive);
 	}
 	
 	Category EquipmentTemperatureParameters {
