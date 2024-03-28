@@ -13,8 +13,8 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 
-import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.dvlm.roles.Discipline;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
@@ -33,7 +33,6 @@ public class CreateDLRCEFXStudyCommand {
 	static final String AOCS_NAME = "AOCS";
 	static final String PAYLOAD_NAME = "Payload";
 	static final String DATAHANDLING_NAME = "DataHandling";
-
 	/**
 	 * Private constructor.
 	 */
@@ -43,10 +42,10 @@ public class CreateDLRCEFXStudyCommand {
 	/**
 	 * Creates a CompoundCommand for adding a new system structure based on the given Concept.
 	 *
-	 * <p>This method generates a system structure consisting of a ConfigurationTree, a SubSystem,
+	 * This method generates a system structure consisting of a ConfigurationTree, a SubSystem,
 	 * and an Equipment. It then creates commands to add these structural elements as child elements
 	 * in a hierarchical manner. Finally, it records commands to add system, sub-system, and equipment
-	 * parameters using the DLRCEFXStudyCommandHelper.</p>
+	 * parameters using the DLRCEFXStudyCommandHelper.
 	 *
 	 * @param parent The parent EObject to which the system structure will be added.
 	 * @param concept The Concept used to create the system structure.
@@ -58,12 +57,6 @@ public class CreateDLRCEFXStudyCommand {
 	    ConfigurationTree system = DLRCEFXStudyCommandHelper.createSystemAsConfigurationTree(conceptPs);
 	    
 	    ProductTree productTree = DLRCEFXStudyCommandHelper.createSystemAsProductTree(conceptPs);
-	    
-	    ElementConfiguration powerEquipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
-	    ElementConfiguration structureEquipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
-	    ElementConfiguration aocsEquipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
-	    ElementConfiguration payloadEquipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
-	    ElementConfiguration dataHandlingEquipment = DLRCEFXStudyCommandHelper.createEquipmentAsElementConfiguration(conceptPs);
 	    
 	    ElementDefinition powerElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
 	    ElementDefinition structureElementDefinition = DLRCEFXStudyCommandHelper.createEquipmentAsElementDefinition(conceptPs);
@@ -94,21 +87,25 @@ public class CreateDLRCEFXStudyCommand {
 	    ElementConfiguration dataHandlingSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
 	    dataHandlingSubsystem.setName(DATAHANDLING_NAME);
 	    
-	    BeanDiscipline powerBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, POWER_NAME);
-	    powerEquipment.setAssignedDiscipline(powerBeanDiscipline);
-	    powerElementDefinition.setAssignedDiscipline(powerBeanDiscipline);
-	    BeanDiscipline strucureBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, STRUCTURE_NAME);
-	    structureElementDefinition.setAssignedDiscipline(strucureBeanDiscipline);
-	    structureEquipment.setAssignedDiscipline(strucureBeanDiscipline);
-	    BeanDiscipline aocsBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, AOCS_NAME);
-	    aocsEquipment.setAssignedDiscipline(aocsBeanDiscipline);
-	    aocsElementDefinition.setAssignedDiscipline(aocsBeanDiscipline);
-	    BeanDiscipline payloadBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, PAYLOAD_NAME);
-	    payloadEquipment.setAssignedDiscipline(payloadBeanDiscipline);
-	    payloadElementDefinition.setAssignedDiscipline(payloadBeanDiscipline);
-	    BeanDiscipline dataHandlingBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, DATAHANDLING_NAME);
-	    dataHandlingEquipment.setAssignedDiscipline(dataHandlingBeanDiscipline);
-	    dataHandlingElementDefinition.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    Discipline powerDiscipline = DLRCEFXStudyCommandHelper.createAndAssignDisciplineToChild(powerProductTreeDomain.getStructuralElementInstance(), POWER_NAME);
+	    powerElementDefinition.getStructuralElementInstance().setAssignedDiscipline(powerDiscipline);
+	    powerSubsystem.getStructuralElementInstance().setAssignedDiscipline(powerDiscipline);
+	    
+	    Discipline strucureDiscipline = DLRCEFXStudyCommandHelper.createAndAssignDisciplineToChild(structureProductTreeDomain.getStructuralElementInstance(), STRUCTURE_NAME);	    
+	    structureElementDefinition.getStructuralElementInstance().setAssignedDiscipline(strucureDiscipline);
+	    structureSubsystem.getStructuralElementInstance().setAssignedDiscipline(strucureDiscipline);
+	    
+	    Discipline aocsDiscipline = DLRCEFXStudyCommandHelper.createAndAssignDisciplineToChild(aocsProductTreeDomain.getStructuralElementInstance(), AOCS_NAME);
+	    aocsElementDefinition.getStructuralElementInstance().setAssignedDiscipline(aocsDiscipline);
+	    aocsSubsystem.getStructuralElementInstance().setAssignedDiscipline(aocsDiscipline);
+	    
+	    Discipline payloadDiscipline = DLRCEFXStudyCommandHelper.createAndAssignDisciplineToChild(payloadProductTreeDomain.getStructuralElementInstance(), PAYLOAD_NAME);
+	    payloadElementDefinition.getStructuralElementInstance().setAssignedDiscipline(payloadDiscipline);
+	    payloadSubsystem.getStructuralElementInstance().setAssignedDiscipline(payloadDiscipline);
+	    
+	    Discipline dataHandlingDiscipline = DLRCEFXStudyCommandHelper.createAndAssignDisciplineToChild(powerProductTreeDomain.getStructuralElementInstance(), DATAHANDLING_NAME);
+	    dataHandlingElementDefinition.getStructuralElementInstance().setAssignedDiscipline(dataHandlingDiscipline);
+	    dataHandlingSubsystem.getStructuralElementInstance().setAssignedDiscipline(dataHandlingDiscipline);
 	    
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
@@ -117,22 +114,25 @@ public class CreateDLRCEFXStudyCommand {
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, system.getStructuralElementInstance(), domain));
 	    
-	   
-	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), powerProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerProductTreeDomain.getStructuralElementInstance(), powerElementDefinition.getStructuralElementInstance(), domain));
+	    cmd.append(DLRCEFXStudyCommandHelper.createOrAssignDiscipline(powerProductTreeDomain.getStructuralElementInstance(), POWER_NAME, domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), aocsProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(aocsProductTreeDomain.getStructuralElementInstance(), aocsElementDefinition.getStructuralElementInstance(), domain));
+	    cmd.append(DLRCEFXStudyCommandHelper.createOrAssignDiscipline(aocsProductTreeDomain.getStructuralElementInstance(), AOCS_NAME, domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), payloadProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(payloadProductTreeDomain.getStructuralElementInstance(), payloadElementDefinition.getStructuralElementInstance(), domain));
+	    cmd.append(DLRCEFXStudyCommandHelper.createOrAssignDiscipline(payloadProductTreeDomain.getStructuralElementInstance(), PAYLOAD_NAME, domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), structureProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(structureProductTreeDomain.getStructuralElementInstance(), structureElementDefinition.getStructuralElementInstance(), domain));
+	    cmd.append(DLRCEFXStudyCommandHelper.createOrAssignDiscipline(structureProductTreeDomain.getStructuralElementInstance(), STRUCTURE_NAME, domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), dataHandlingProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(dataHandlingProductTreeDomain.getStructuralElementInstance(), dataHandlingElementDefinition.getStructuralElementInstance(), domain));
+	    cmd.append(DLRCEFXStudyCommandHelper.createOrAssignDiscipline(dataHandlingProductTreeDomain.getStructuralElementInstance(), DATAHANDLING_NAME, domain));
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), powerSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), aocsSubsystem.getStructuralElementInstance(), domain));

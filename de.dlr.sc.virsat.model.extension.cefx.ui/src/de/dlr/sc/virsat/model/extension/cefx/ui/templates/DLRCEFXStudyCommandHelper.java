@@ -9,16 +9,12 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.templates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 
-import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
@@ -200,6 +196,7 @@ public class DLRCEFXStudyCommandHelper {
 		subSystem.add(subSystemMassParameters);
 	}
 
+	
 	/**
 	 * @param conceptCEFX,  equipment
 	 */
@@ -229,34 +226,66 @@ public class DLRCEFXStudyCommandHelper {
 		elementDefinition.add(equipmentMassParameters);	
 	}
 	
-	// Keep track of created disciplines
-	private static Set<String> createdDisciplines = new HashSet<>();
 	
 	/**
-	 * @param conceptCEFX,  disciplineName
+	 * Creates a new discipline and assigns it to the specified child.
+	 * 
+	 * @param child          The child to whom the discipline will be assigned.
+	 * @param disciplineName The name of the discipline to be created and assigned.
+	 * @return The newly created discipline.
 	 */
-	public static BeanDiscipline createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
-		Discipline newDiscipline;
-		if (!createdDisciplines.contains(disciplineName)) {
-			RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
-			newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
-			newDiscipline.setName(disciplineName);
-			newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
-			Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
-			domain.getCommandStack().execute(addCommand);
-
-			// Add discipline name to the set to avoid creating it again
-			createdDisciplines.add(disciplineName);
-		} else {
-			newDiscipline = null;
-		}
-		if (newDiscipline != null) {
-			return new BeanDiscipline(newDiscipline);
-		} else {
-			return null;
-		}
+	public static Discipline createAndAssignDisciplineToChild(StructuralElementInstance child, String disciplineName) {
+	    // Create a new discipline instance
+	    Discipline newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+	    
+	    // Set the name of the new discipline
+	    newDiscipline.setName(disciplineName);
+	    
+	    // Add the current user to the list of users for the new discipline
+	    newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+	    
+	    // Assign the new discipline to the specified child
+	    child.setAssignedDiscipline(newDiscipline);
+	    
+	    // Return the newly created discipline
+	    return newDiscipline;
 	}
 
+	
+	/**
+	 * Creates a new discipline if it doesn't already exist.
+	 *
+	 * @param child The StructuralElementInstance to which the discipline is associated.
+	 * @param disciplineName The name of the discipline to be created.
+	 * @param domain The VirSatTransactionalEditingDomain to perform the creation operation.
+	 */
+
+	public static Command createOrAssignDiscipline(StructuralElementInstance child, String disciplineName, VirSatTransactionalEditingDomain domain) {
+	    Discipline newDiscipline;
+	    Command addCommand = null;
+
+	    // Check if the discipline already exists in the RoleManagement table
+	    RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
+	    boolean disciplineExists = false;
+	    for (Discipline existingDiscipline : roleManagement.getDisciplines()) {
+	        if (existingDiscipline.getName().equals(disciplineName)) {
+	            disciplineExists = true;
+	            break;
+	        }
+	    }
+
+	    // If the discipline doesn't exist yet, create it
+	    if (!disciplineExists) {
+	        newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+	        newDiscipline.setName(disciplineName);
+	        newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
+	        child.setAssignedDiscipline(newDiscipline);
+	        addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
+	    }
+
+	    return addCommand;
+	}
+	
 	//CHECKSTYLE:ON
 
 	/**
