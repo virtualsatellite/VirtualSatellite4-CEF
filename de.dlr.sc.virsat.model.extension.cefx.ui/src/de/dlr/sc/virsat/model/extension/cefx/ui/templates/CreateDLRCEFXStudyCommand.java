@@ -9,12 +9,16 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.templates;
 
+import java.util.stream.IntStream;
+
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 
 import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.dvlm.roles.Discipline;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementDefinition;
@@ -94,37 +98,63 @@ public class CreateDLRCEFXStudyCommand {
 	    ElementConfiguration dataHandlingSubsystem = DLRCEFXStudyCommandHelper.createSubSystemAsElementConfiguration(conceptPs);
 	    dataHandlingSubsystem.setName(DATAHANDLING_NAME);
 	    
-	    BeanDiscipline powerBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, POWER_NAME);
-	    powerEquipment.setAssignedDiscipline(powerBeanDiscipline);
-	    powerElementDefinition.setAssignedDiscipline(powerBeanDiscipline);
-	    BeanDiscipline strucureBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, STRUCTURE_NAME);
-	    structureElementDefinition.setAssignedDiscipline(strucureBeanDiscipline);
-	    structureEquipment.setAssignedDiscipline(strucureBeanDiscipline);
-	    BeanDiscipline aocsBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, AOCS_NAME);
-	    aocsEquipment.setAssignedDiscipline(aocsBeanDiscipline);
-	    aocsElementDefinition.setAssignedDiscipline(aocsBeanDiscipline);
-	    BeanDiscipline payloadBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, PAYLOAD_NAME);
-	    payloadEquipment.setAssignedDiscipline(payloadBeanDiscipline);
-	    payloadElementDefinition.setAssignedDiscipline(payloadBeanDiscipline);
-	    BeanDiscipline dataHandlingBeanDiscipline = DLRCEFXStudyCommandHelper.createDiscipline(domain, DATAHANDLING_NAME);
-	    dataHandlingEquipment.setAssignedDiscipline(dataHandlingBeanDiscipline);
-	    dataHandlingElementDefinition.setAssignedDiscipline(dataHandlingBeanDiscipline);
+
 	    
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
+	    
+	    
+	    // Create the disciplines or get references, if they already exist
+	    
+	    var roleManagement = domain.getResourceSet().getRoleManagement();
+	    var existingDisciplines = roleManagement.getDisciplines();
+	    
+	    var index = getIndexOfDisciplineAlreadyExists(existingDisciplines, POWER_NAME);
+	    
+	    var powerBeanDiscipline = index == -1
+	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, POWER_NAME)
+	    		: new BeanDiscipline(existingDisciplines.get(index));
+	    
+	    if (index == -1) {
+	    	cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, powerBeanDiscipline));
+	    }
+	    
+		index = getIndexOfDisciplineAlreadyExists(existingDisciplines, STRUCTURE_NAME);
+		var strucureBeanDiscipline = index == -1
+		    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, STRUCTURE_NAME)
+		    		: new BeanDiscipline(existingDisciplines.get(index));
+		if (index == -1) {
+		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, strucureBeanDiscipline));
+		}     
+		
+	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, AOCS_NAME);
+	    var aocsBeanDiscipline = index == -1
+	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, AOCS_NAME)
+	    		: new BeanDiscipline(existingDisciplines.get(index));
+	    if (index == -1) {
+		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, aocsBeanDiscipline));
+		} 
+	        
+	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, PAYLOAD_NAME);
+	    var payloadBeanDiscipline = index == -1
+	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, PAYLOAD_NAME)
+	    		: new BeanDiscipline(existingDisciplines.get(index));
+	    if (index == -1) {
+		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, payloadBeanDiscipline));
+		} 
+	    
+	    index = getIndexOfDisciplineAlreadyExists(existingDisciplines, DATAHANDLING_NAME);
+	    var dataHandlingBeanDiscipline = index == -1
+	    		?  DLRCEFXStudyCommandHelper.createDiscipline(domain, DATAHANDLING_NAME)
+	    		: new BeanDiscipline(existingDisciplines.get(index));
+	    if (index == -1) {
+		    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, dataHandlingBeanDiscipline));
+		} 
 
-	    // Append commands to add discipline elements
-	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, powerBeanDiscipline));
-	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, strucureBeanDiscipline));
-	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, aocsBeanDiscipline));
-	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, payloadBeanDiscipline));
-	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, dataHandlingBeanDiscipline));
 	    
 	    // Append commands to add child structural elements
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, system.getStructuralElementInstance(), domain));
-	    
-	   
 	    
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(productTree.getStructuralElementInstance(), powerProductTreeDomain.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(powerProductTreeDomain.getStructuralElementInstance(), powerElementDefinition.getStructuralElementInstance(), domain));
@@ -147,7 +177,6 @@ public class CreateDLRCEFXStudyCommand {
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), structureSubsystem.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(system.getStructuralElementInstance(), dataHandlingSubsystem.getStructuralElementInstance(), domain));
 	    
-	        
 	    // Append recording command to add system, sub-system, and equipment parameters
 	    cmd.append(new RecordingCommand(domain) {
 	        @Override
@@ -168,6 +197,33 @@ public class CreateDLRCEFXStudyCommand {
 	            
 	            DLRCEFXStudyCommandHelper.addSubSystemParameters(conceptCefx, dataHandlingSubsystem);
 	            DLRCEFXStudyCommandHelper.addElementDefinitionParameters(conceptCefx, dataHandlingElementDefinition);
+	            
+	            // Assign Disciplines
+	            powerProductTreeDomain.setAssignedDiscipline(powerBeanDiscipline);
+	            powerSubsystem.setAssignedDiscipline(powerBeanDiscipline);
+	            powerEquipment.setAssignedDiscipline(powerBeanDiscipline);
+	    		powerElementDefinition.setAssignedDiscipline(powerBeanDiscipline);
+	    		
+	    		aocsProductTreeDomain.setAssignedDiscipline(aocsBeanDiscipline);
+	    		aocsSubsystem.setAssignedDiscipline(aocsBeanDiscipline);
+	    	    aocsEquipment.setAssignedDiscipline(aocsBeanDiscipline);
+	    	    aocsElementDefinition.setAssignedDiscipline(aocsBeanDiscipline);
+	    		
+	    	    structureProductTreeDomain.setAssignedDiscipline(strucureBeanDiscipline);
+	    	    structureSubsystem.setAssignedDiscipline(strucureBeanDiscipline);
+	    		structureElementDefinition.setAssignedDiscipline(strucureBeanDiscipline);
+	    	    structureEquipment.setAssignedDiscipline(strucureBeanDiscipline);
+	    	    
+	    	    payloadProductTreeDomain.setAssignedDiscipline(payloadBeanDiscipline);
+	    	    payloadSubsystem.setAssignedDiscipline(payloadBeanDiscipline);
+	    	    payloadEquipment.setAssignedDiscipline(payloadBeanDiscipline);
+	    	    payloadElementDefinition.setAssignedDiscipline(payloadBeanDiscipline);
+	    	    
+	    	    dataHandlingProductTreeDomain.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    	    dataHandlingSubsystem.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    	    dataHandlingEquipment.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    	    dataHandlingElementDefinition.setAssignedDiscipline(dataHandlingBeanDiscipline);
+	    	    
 	        }
 	    });
 
@@ -175,4 +231,10 @@ public class CreateDLRCEFXStudyCommand {
 	    return cmd;
 	}
 
+	private static int getIndexOfDisciplineAlreadyExists(EList<Discipline> list, String disciplineName) {
+		return IntStream.range(0, list.size())
+	     .filter(i -> list.get(i).getName().equals(disciplineName))
+	     .findFirst()
+	     .orElse(-1);
+	}
 }
