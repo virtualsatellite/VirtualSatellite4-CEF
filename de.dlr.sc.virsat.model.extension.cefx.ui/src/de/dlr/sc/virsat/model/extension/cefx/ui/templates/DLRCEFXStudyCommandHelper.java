@@ -9,15 +9,10 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.templates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
-
 import de.dlr.sc.virsat.model.concept.types.roles.BeanDiscipline;
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
