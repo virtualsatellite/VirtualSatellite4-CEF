@@ -113,6 +113,13 @@ public class CreateDLRCEFXStudyCommand {
 	    // Create a CompoundCommand to store sub-commands
 	    CompoundCommand cmd = new CompoundCommand();
 
+	    // Append commands to add discipline elements
+	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, powerBeanDiscipline));
+	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, strucureBeanDiscipline));
+	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, aocsBeanDiscipline));
+	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, payloadBeanDiscipline));
+	    cmd.append(DLRCEFXStudyCommandHelper.createDisciplineCommand(domain, dataHandlingBeanDiscipline));
+	    
 	    // Append commands to add child structural elements
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, productTree.getStructuralElementInstance(), domain));
 	    cmd.append(DLRCEFXStudyCommandHelper.createAddChildSEICommand(parent, system.getStructuralElementInstance(), domain));

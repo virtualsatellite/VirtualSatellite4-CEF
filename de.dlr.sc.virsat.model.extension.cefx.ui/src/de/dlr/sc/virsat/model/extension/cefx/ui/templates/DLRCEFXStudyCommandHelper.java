@@ -251,35 +251,24 @@ public class DLRCEFXStudyCommandHelper {
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		elementDefinition.add(equipmentMassParameters);	
 	}
-	
-	// Keep track of created disciplines
-	private static Set<String> createdDisciplines = new HashSet<>();
-	
+		
 	/**
 	 * @param conceptCEFX,  disciplineName
 	 */
 	public static BeanDiscipline createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
 		Discipline newDiscipline;
-		if (!createdDisciplines.contains(disciplineName)) {
-			RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
-			newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
-			newDiscipline.setName(disciplineName);
-			newDiscipline.setUser(UserRegistry.getInstance().getUserName());
-			Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline);
-			domain.getCommandStack().execute(addCommand);
-
-			// Add discipline name to the set to avoid creating it again
-			createdDisciplines.add(disciplineName);
-		} else {
-			newDiscipline = null;
-		}
-		if (newDiscipline != null) {
-			return new BeanDiscipline(newDiscipline);
-		} else {
-			return null;
-		}
+		newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
+		newDiscipline.setName(disciplineName);
+		newDiscipline.setUser(UserRegistry.getInstance().getUserName());
+		return new BeanDiscipline(newDiscipline);
 	}
 
+	public static Command createDisciplineCommand(VirSatTransactionalEditingDomain domain, BeanDiscipline newDiscipline) {
+		RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
+		Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline.getDiscipline());
+		return addCommand;
+	}
+	
 	//CHECKSTYLE:ON
 
 	/**
