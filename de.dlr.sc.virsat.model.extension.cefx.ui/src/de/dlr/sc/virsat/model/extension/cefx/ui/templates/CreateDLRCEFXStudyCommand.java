@@ -212,7 +212,7 @@ public class CreateDLRCEFXStudyCommand {
 	    var index = getIndexOfDisciplineAlreadyExists(existingDisciplines, POWER_NAME);
 	    
 		BeanDiscipline discipline = index == -1
-				?  DLRCEFXStudyCommandHelper.createDiscipline(domain, disciplineName)
+				? DLRCEFXStudyCommandHelper.createDiscipline(domain, disciplineName)
 				: new BeanDiscipline(existingDisciplines.get(index));
 
 		if (index == -1) {

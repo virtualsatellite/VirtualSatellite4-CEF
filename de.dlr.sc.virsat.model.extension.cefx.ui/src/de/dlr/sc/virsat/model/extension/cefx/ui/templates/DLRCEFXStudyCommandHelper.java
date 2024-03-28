@@ -42,11 +42,12 @@ import de.dlr.sc.virsat.model.extension.ps.model.ProductTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ProductTreeDomain;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
 import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileCommand;
+
 /**
  * Set the parameter for the Concepts (System, SubSystem, Equipment)
  *
  */
-public class DLRCEFXStudyCommandHelper {	
+public class DLRCEFXStudyCommandHelper {
 	static final int DEFAULT_SYSTEM_MAGRIN = 20;
 	static final int DEFAULT_MASS_ADAPTER = 100;
 	static final int DEFAULT_MASS_LAUNCH_MAX = 850;
@@ -57,7 +58,7 @@ public class DLRCEFXStudyCommandHelper {
 	static final int DEFAULT_TEMPERATURE_OPS_MIN = 15;
 	static final int DEFAULT_MARGIN_MATURITY = 20;
 	static final int DEFAULT_EQUIPMENT_MASS_PARAMETERS = 10;
-	
+
 	static final String SYSTEM_NAME = "System";
 	static final String PRODUCT_TREE_NAME = "ProductTree";
 	static final String PRODUCT_TREE_DOMAIN_NAME = "PTD";
@@ -68,15 +69,18 @@ public class DLRCEFXStudyCommandHelper {
 	static final String POWER_PARAMETERS_NAME = "PowerParameters";
 	static final String EQUIPMENT_MASS_PARAMETERS_NAME = "EquipmentMassParameters";
 	static final String TEMPERATURE_PARAMETERS_NAME = "TemperatureParameters";
+
 	/**
 	 * private Constructor
 	 */
 	private DLRCEFXStudyCommandHelper() {
 	}
+
 	/**
 	 * Retrieves the CEFX concept associated with the provided domain.
 	 * 
-	 * @param domain the VirSatTransactionalEditingDomain instance representing the domain
+	 * @param domain the VirSatTransactionalEditingDomain instance representing the
+	 *               domain
 	 * @return the CEFX concept associated with the domain
 	 */
 	public static Concept getCefxConcept(VirSatTransactionalEditingDomain domain) {
@@ -89,7 +93,8 @@ public class DLRCEFXStudyCommandHelper {
 	/**
 	 * Retrieves the PS concept associated with the provided domain.
 	 * 
-	 * @param domain the VirSatTransactionalEditingDomain instance representing the domain
+	 * @param domain the VirSatTransactionalEditingDomain instance representing the
+	 *               domain
 	 * @return the PS concept associated with the domain
 	 */
 	public static Concept getPsConcept(VirSatTransactionalEditingDomain domain) {
@@ -98,30 +103,31 @@ public class DLRCEFXStudyCommandHelper {
 		Concept activeConcept = acHelper.getConcept(de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId());
 		return activeConcept;
 	}
+
 	/**
 	 * 
 	 * @param conceptPs
 	 * @return create the system as the configuration tree.
 	 */
 	public static ConfigurationTree createSystemAsConfigurationTree(Concept conceptPs) {
-		
+
 		ConfigurationTree system = new ConfigurationTree(conceptPs);
 		system.setName(SYSTEM_NAME);
 		return system;
 	}
-	
+
 	/**
 	 * 
 	 * @param conceptPs
 	 * @return create the system as the product tree.
 	 */
 	public static ProductTree createSystemAsProductTree(Concept conceptPs) {
-		
+
 		ProductTree system = new ProductTree(conceptPs);
 		system.setName(PRODUCT_TREE_NAME);
 		return system;
 	}
-	
+
 	/**
 	 * 
 	 * @param conceptPs
@@ -132,7 +138,7 @@ public class DLRCEFXStudyCommandHelper {
 		productTreeDomain.setName(PRODUCT_TREE_DOMAIN_NAME);
 		return productTreeDomain;
 	}
-	
+
 	/**
 	 * 
 	 * @param conceptPs
@@ -153,7 +159,7 @@ public class DLRCEFXStudyCommandHelper {
 		equipment.setName(EQUIPMENT_NAME);
 		return equipment;
 	}
-	
+
 	/**
 	 * @param conceptPs
 	 * @return create an equipment as element configuration.
@@ -165,22 +171,22 @@ public class DLRCEFXStudyCommandHelper {
 	}
 
 	/**
-	 * @param conceptCEFX,  system
+	 * @param conceptCEFX, system
 	 */
 	public static void addSystemParameters(Concept conceptCEFX, ConfigurationTree system) {
-		//default unit in concept is percent 
+		// default unit in concept is percent
 		SystemParameters systemParameters = new SystemParameters(conceptCEFX);
 		systemParameters.setName(SYSTEM_PARAMETERS_NAME);
-		systemParameters.setSystemMargin(DEFAULT_SYSTEM_MAGRIN);  
-		system.add(systemParameters);	
-		
+		systemParameters.setSystemMargin(DEFAULT_SYSTEM_MAGRIN);
+		system.add(systemParameters);
+
 		SystemMassParameters systemMassParameters = new SystemMassParameters(conceptCEFX);
 		systemMassParameters.setName(MASS_PARAMETERS_NAME);
 		systemMassParameters.getMassAdapter().setDefaultValue(DEFAULT_MASS_ADAPTER);
 		systemMassParameters.getMassLaunchMax().setDefaultValue(DEFAULT_MASS_LAUNCH_MAX);
 		systemMassParameters.getMassPropellant().setDefaultValue(DEFAULT_MASS_PROPELLANT);
 		system.add(systemMassParameters);
-		
+
 		SystemPowerParameters systemPowerParameters = new SystemPowerParameters(conceptCEFX);
 		systemPowerParameters.setName(POWER_PARAMETERS_NAME);
 		system.add(systemPowerParameters);
@@ -189,41 +195,41 @@ public class DLRCEFXStudyCommandHelper {
 	public static void addProductTreeParameters(Concept conceptCEFX, ProductTree productTree) {
 
 	}
-	
+
 	public static void addProductTreeDomainParameters(Concept conceptCEFX, ProductTreeDomain productTreeDomain) {
 
 	}
-	
+
 	/**
-	 * @param conceptCEFX,  subSystem
+	 * @param conceptCEFX, subSystem
 	 */
 	public static void addSubSystemParameters(Concept conceptCEFX, ElementConfiguration subSystem) {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(conceptCEFX);
 		subSystemMassParameters.setName(MASS_PARAMETERS_NAME);
 		subSystem.add(subSystemMassParameters);
-		
+
 		SubSystemPowerParameters subSystemPowerParameters = new SubSystemPowerParameters(conceptCEFX);
 		subSystemPowerParameters.setName(POWER_PARAMETERS_NAME);
 		subSystem.add(subSystemPowerParameters);
 	}
 
 	/**
-	 * @param conceptCEFX,  equipment
+	 * @param conceptCEFX, equipment
 	 */
 	public static void addEquipmentParameters(Concept conceptCEFX, ElementConfiguration equipment) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
 		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
 		equipment.add(equipmentParams);
-		
+
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
 		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
 		equipment.add(equipmentMassParameters);
-		
+
 		EquipmentPowerParameters powerParameters = new EquipmentPowerParameters(conceptCEFX);
 		powerParameters.setName(POWER_PARAMETERS_NAME);
 		equipment.add(powerParameters);
-		
+
 		EquipmentTemperatureParameters temperatureParameters = new EquipmentTemperatureParameters(conceptCEFX);
 		temperatureParameters.setName(TEMPERATURE_PARAMETERS_NAME);
 		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(DEFAULT_TEMPERATURE_NO_OPS_MAX);
@@ -232,23 +238,23 @@ public class DLRCEFXStudyCommandHelper {
 		temperatureParameters.getTemperatureOpsMin().setDefaultValue(DEFAULT_TEMPERATURE_OPS_MIN);
 		equipment.add(temperatureParameters);
 	}
-	
+
 	/**
-	 * @param conceptCEFX,  elementDefinition
+	 * @param conceptCEFX, elementDefinition
 	 */
 	public static void addElementDefinitionParameters(Concept conceptCEFX, ElementDefinition elementDefinition) {
 		EquipmentParameters equipmentParams = new EquipmentParameters(conceptCEFX);
 		equipmentParams.setMarginMaturity(DEFAULT_MARGIN_MATURITY);
 		elementDefinition.add(equipmentParams);
-		
+
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(conceptCEFX);
 		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS_NAME);
 		equipmentMassParameters.getMass().setDefaultValue(DEFAULT_EQUIPMENT_MASS_PARAMETERS);
-		elementDefinition.add(equipmentMassParameters);	
+		elementDefinition.add(equipmentMassParameters);
 	}
-		
+
 	/**
-	 * @param conceptCEFX,  disciplineName
+	 * @param conceptCEFX, disciplineName
 	 */
 	public static BeanDiscipline createDiscipline(VirSatTransactionalEditingDomain domain, String disciplineName) {
 		Discipline newDiscipline;
@@ -258,19 +264,24 @@ public class DLRCEFXStudyCommandHelper {
 		return new BeanDiscipline(newDiscipline);
 	}
 
-	public static Command createDisciplineCommand(VirSatTransactionalEditingDomain domain, BeanDiscipline newDiscipline) {
+	public static Command createDisciplineCommand(VirSatTransactionalEditingDomain domain,
+			BeanDiscipline newDiscipline) {
 		RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
-		Command addCommand = AddCommand.create(domain, roleManagement, RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline.getDiscipline());
+		Command addCommand = AddCommand.create(domain, roleManagement,
+				RolesPackage.eINSTANCE.getRoleManagement_Disciplines(), newDiscipline.getDiscipline());
 		return addCommand;
 	}
-	
-	//CHECKSTYLE:ON
+
+	// CHECKSTYLE:ON
 
 	/**
 	 * Set child discipline to parent (if any) and create a command to add child
-	 * @return command that will create file structure for a child and add it to the parent
+	 * 
+	 * @return command that will create file structure for a child and add it to the
+	 *         parent
 	 */
-	public static CompoundCommand createAddChildSEICommand(EObject parent, StructuralElementInstance child, VirSatTransactionalEditingDomain domain) {
+	public static CompoundCommand createAddChildSEICommand(EObject parent, StructuralElementInstance child,
+			VirSatTransactionalEditingDomain domain) {
 		Discipline discipline = null;
 		if (parent instanceof IAssignedDiscipline) {
 			discipline = ((IAssignedDiscipline) parent).getAssignedDiscipline();
