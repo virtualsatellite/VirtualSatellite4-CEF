@@ -40,12 +40,6 @@ public class CreateDLRCEFXStudyCommand {
 	private CreateDLRCEFXStudyCommand() {
 	}
 	
-	public static void appendIfNotNull(CompoundCommand cc, Command command) {
-		if (command != null) {
-			cc.append(command);
-		} 
-	}
-
 	/**
 	 * Creates a CompoundCommand for adding a new system structure based on the given Concept.
 	 *
@@ -192,5 +186,17 @@ public class CreateDLRCEFXStudyCommand {
 	    // Return the CompoundCommand representing the overall operation
 	    return cmd;
 	}
+	
+	/**
+	 * Check if command to be added is valid - and do so
+	 * @param cc the Compound command
+	 * @param command the command to be added 
+	 */
+	protected static void appendIfNotNull(CompoundCommand cc, Command command) {
+		if (command != null && command.canExecute()) {
+			cc.append(command);
+		} 
+	}
+
 
 }

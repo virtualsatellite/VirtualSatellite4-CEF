@@ -228,7 +228,7 @@ public class DLRCEFXStudyCommandHelper {
 	
 	
 	/**
-	 * Creates a new discipline and assigns it to the specified child.
+	 * Creates a new discipline (or return an existing one) of a given discipline name 
 	 * 
 	 * @param disciplineName The name of the discipline to be created and assigned.
 	 * @return The newly created discipline.
@@ -256,7 +256,7 @@ public class DLRCEFXStudyCommandHelper {
 
 	
 	/**
-	 * Creates a new discipline if it doesn't already exist.
+	 * Creates a command for adding a new discipline if it doesn't already exist.
 	 *
 	 * @param disciplineName The name of the discipline to be created.
 	 * @param domain The VirSatTransactionalEditingDomain to perform the creation operation.
@@ -282,7 +282,7 @@ public class DLRCEFXStudyCommandHelper {
 	 * @param domain
 	 * @return
 	 */
-	public static Discipline getExistingDiscipline(String disciplineName, VirSatTransactionalEditingDomain domain) {
+	protected static Discipline getExistingDiscipline(String disciplineName, VirSatTransactionalEditingDomain domain) {
 		RoleManagement roleManagement = domain.getResourceSet().getRoleManagement();
 	    for (Discipline existingDiscipline : roleManagement.getDisciplines()) {
 	        if (existingDiscipline.getName().equals(disciplineName)) {
@@ -298,7 +298,7 @@ public class DLRCEFXStudyCommandHelper {
 	 * Set child discipline to parent (if any) and create a command to add child
 	 * @return command that will create file structure for a child and add it to the parent
 	 */
-	public static CompoundCommand createAddChildSEICommand(EObject parent, StructuralElementInstance child, VirSatTransactionalEditingDomain domain) {
+	protected static CompoundCommand createAddChildSEICommand(EObject parent, StructuralElementInstance child, VirSatTransactionalEditingDomain domain) {
 		Discipline discipline = null;
 		if (parent instanceof IAssignedDiscipline) {
 			discipline = ((IAssignedDiscipline) parent).getAssignedDiscipline();
