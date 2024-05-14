@@ -2705,7 +2705,7 @@
           class="de.dlr.sc.virsat.model.extension.cefx.ui.importWizards.CometImportWizard"
           icon="icons/sample.png"
           id="de.dlr.sc.virsat.model.extension.cefx.ui.importWizards.CometImportWizard"
-          name="Comet Import Wizard">
+          name="Comet Import Wizards">
        <description>
           Import a file from the local file system into the workspace.
        </description>

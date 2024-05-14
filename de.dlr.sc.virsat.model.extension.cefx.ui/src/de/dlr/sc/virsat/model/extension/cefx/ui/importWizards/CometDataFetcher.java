@@ -53,8 +53,6 @@ public class CometDataFetcher {
    
     }
 
-  
-
     /**
      * Fetches data from the Comet server and populates the provided SWT Tree.
      *

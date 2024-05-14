@@ -145,9 +145,11 @@ public class CometImportWizardPage extends WizardPage {
         CometDataFetcher fetcher = new CometDataFetcher(url, login, password, proxySettings);
         fetcher.fetchData(targetTree);
     }
+
     /**
-     * I will implement it later.
+     * I will implement this class later.
      */
+    
 	public boolean performFinish() {
 		
 		return false;

@@ -18,7 +18,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ISharedImages;
 import cdp4common.dto.Thing;
 import java.util.List;
-
 /**
  * Utility class to populate an SWT Tree with data represented by Thing objects.
  */
