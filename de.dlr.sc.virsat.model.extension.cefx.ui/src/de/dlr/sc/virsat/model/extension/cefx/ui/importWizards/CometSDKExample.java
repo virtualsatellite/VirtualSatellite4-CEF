@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * This class demonstrates the use of the COMET SDK to interact with engineering model data and display it in a GUI.
+ * This class demonstrates the use of the COMET SDK to interact with engineering model data and display it in a GUI.(doesn't work for the moment because of the empty element definition)
  */
 public class CometSDKExample {
     private final Session session;
