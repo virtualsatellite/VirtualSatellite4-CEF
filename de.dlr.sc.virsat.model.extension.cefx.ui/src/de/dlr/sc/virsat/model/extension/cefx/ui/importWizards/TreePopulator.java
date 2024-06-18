@@ -16,110 +16,243 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ISharedImages;
-import cdp4common.dto.Thing;
-import java.util.List;
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Base64;
+
 /**
- * Utility class to populate an SWT Tree with data represented by Thing objects.
+ * Utility class to populate a SWT Tree widget with data fetched from a server.
  */
 public class TreePopulator {
 
-    // Constants
-    private static final String ROOT_ITEM_TEXT = "Comet Data";
-    private static Image nodeImage;  // Image used for non-leaf tree nodes
+    private static final String ROOT_ITEM_TEXT = "System";
+    private static final int HTTP_OK = 200;
+    private static Image nodeImage;
+    private static String baseUrl;
+    private static String username;
+    private static String password;
 
     /**
-     * Private constructor to prevent instantiation of this utility class.
+     * Private constructor to prevent instantiation.
      */
     private TreePopulator() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     /**
-     * Initializes images for the tree nodes from Eclipse's shared image repository.
+     * Initializes the images used for the tree items.
      */
     private static void initImages() {
         nodeImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
     }
 
     /**
-     * Populates the given SWT Tree with data from a list of Thing objects.
-     * It creates a root item and attaches child items representing each Thing.
+     * Populates the given tree with data from the specified JSON array.
      *
-     * @param tree The SWT Tree to populate.
-     * @param things The list of Thing objects retrieved from the Comet server.
+     * @param tree     the tree to populate
+     * @param jsonArray the JSON array containing the data
+     * @param url      the base URL for fetching additional data
+     * @param user     the username for authentication
+     * @param pass     the password for authentication
      */
-    public static void populateTree(Tree tree, List<Thing> things) {
-        initImages(); // Initialize images before populating the tree
-        tree.removeAll(); // Clear previous items if any
-        TreeItem rootItem = new TreeItem(tree, SWT.NONE);
+    public static void populateTree(Tree tree, JsonArray jsonArray, String url, String user, String pass) {
+        baseUrl = url;
+        username = user;
+        password = pass;
+        initImages();
+        tree.removeAll();
+
+        // Create root item
+        TreeItem rootItem = new TreeItem(tree, SWT.CHECK);
         rootItem.setText(ROOT_ITEM_TEXT);
-        rootItem.setImage(nodeImage);  // Set the image for the root node
-        for (Thing thing : things) {
-            TreeItem item = createTreeItem(rootItem, thing);
-            // Recursively add child items
-            populateTreeItem(item, thing);
+        rootItem.setImage(nodeImage);
+
+        // Create tree items from JSON array
+        for (Object obj : jsonArray) {
+            JsonObject jsonObject = (JsonObject) obj;
+            TreeItem item = createTreeItem(rootItem, jsonObject);
+            if (item != null) {
+                addChildren(item, jsonObject);
+            }
         }
-        expandAll(tree.getItems());  // Optionally expand all nodes.
+
+        // Expand all items
+        expandAll(tree.getItems());
     }
 
     /**
-     * Creates a tree item for a given Thing and attaches it to the specified parent item.
-     * Each tree item represents a Thing object, displaying a string representation of it.
+     * Creates a tree item from a JSON object and adds it to the parent item.
      *
-     * @param parentItem The parent TreeItem under which the new item will be created.
-     * @param thing The Thing object to create a tree item for.
-     * @return The created TreeItem.
+     * @param parentItem the parent tree item
+     * @param jsonObject the JSON object containing the data
+     * @return the created tree item, or null if the JSON object is invalid
      */
-    private static TreeItem createTreeItem(TreeItem parentItem, Thing thing) {
-        TreeItem item = new TreeItem(parentItem, SWT.NONE);
-        item.setText(thing.toString());
-        if (!isLeaf(thing)) {
-            item.setImage(nodeImage);  // Set the image for non-leaf nodes
+    private static TreeItem createTreeItem(TreeItem parentItem, JsonObject jsonObject) {
+        String name = (String) jsonObject.get("name");
+        if (name == null) {
+            System.err.println("Warning: 'name' key is missing or null in JSON object: " + jsonObject.toJson());
+            return null; // Skip this item
         }
+        TreeItem item = new TreeItem(parentItem, SWT.CHECK);
+        item.setText(name);
+        item.setImage(nodeImage);
         return item;
     }
 
     /**
-     * Populates a tree item with child items representing the contained Things.
+     * Adds children to the parent item based on the JSON object.
      *
-     * @param parentItem The parent TreeItem.
-     * @param parentThing The parent Thing object.
+     * @param parentItem the parent tree item
+     * @param parentJson the JSON object containing the data
      */
-    private static void populateTreeItem(TreeItem parentItem, Thing parentThing) {
-        for (List<?> containerList : parentThing.getContainerLists()) {
-            for (Object obj : containerList) {
-                if (obj instanceof Thing) {
-                    Thing childThing = (Thing) obj;
-                    TreeItem childItem = createTreeItem(parentItem, childThing);
-                    // Recursively add child items
-                    populateTreeItem(childItem, childThing);
+    private static void addChildren(TreeItem parentItem, JsonObject parentJson) {
+        try {
+            if (parentJson.containsKey("containedElement")) {
+                JsonArray children = (JsonArray) parentJson.get("containedElement");
+                for (Object obj : children) {
+                    String childId = (String) obj;
+                    String childUrl = baseUrl + "/containedElement/" + childId;
+                    System.out.println("Fetching child URL: " + childUrl);
+                    JsonObject childJson = fetchData(childUrl);
+                    if (childJson != null && !childJson.isEmpty()) {
+                        TreeItem childItem = createTreeItem(parentItem, childJson);
+                        if (childItem != null) {
+                            addChildren(childItem, childJson);
+                        }
+                    } else {
+                        System.out.println("Fetched data is empty for child URL: " + childUrl);
+                    }
                 }
+            } else {
+                System.out.println("No 'containedElement' key found in JSON object: " + parentJson.toJson());
             }
+
+            if (parentJson.containsKey("elementDefinition")) {
+                String elementDefinitionId = (String) parentJson.get("elementDefinition");
+                String elementDefinitionUrl = baseUrl.substring(0, baseUrl.lastIndexOf("/element/")) + "/element/" + elementDefinitionId + "/containedElement";
+                System.out.println("Fetching element definition URL: " + elementDefinitionUrl);
+                JsonArray elementDefinitionArray = fetchDataArray(elementDefinitionUrl);
+                if (elementDefinitionArray != null && !elementDefinitionArray.isEmpty()) {
+                    for (Object obj : elementDefinitionArray) {
+                        JsonObject elementDefinitionJson = (JsonObject) obj;
+                        TreeItem elementDefinitionItem = createTreeItem(parentItem, elementDefinitionJson);
+                        if (elementDefinitionItem != null) {
+                            addChildren(elementDefinitionItem, elementDefinitionJson);
+                        }
+                    }
+                } else {
+                    System.out.println("Failed to fetch element definition data for: " + elementDefinitionId);
+                }
+            } else {
+                System.out.println("No 'elementDefinition' key found in JSON object: " + parentJson.toJson());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     /**
-     * Determines if this Thing is a leaf node in the hierarchy.
-     * A leaf node is defined as not having any other Thing in its container properties.
+     * Fetches data from the specified URL and returns it as a JSON object.
      *
-     * @param thing The Thing object to check.
-     * @return true if this Thing is a leaf, false otherwise.
+     * @param urlString the URL to fetch data from
+     * @return the fetched JSON object, or null if an error occurred
      */
-    private static boolean isLeaf(Thing thing) {
-        // Check if all container lists are empty, which would indicate no children
-        for (List<?> containerList : thing.getContainerLists()) {
-            if (!containerList.isEmpty()) {
-                return false; // Found a non-empty container list, hence it's not a leaf
+    private static JsonObject fetchData(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            String auth = username + ":" + password;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+            connection.setRequestProperty("Authorization", "Basic " + encodedAuth);
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+            if (responseCode == HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder content = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                JsonObject jsonResponse = (JsonObject) Jsoner.deserialize(content.toString(), new JsonObject());
+                System.out.println("Fetched data: " + jsonResponse.toJson());
+                return jsonResponse;
+            } else {
+                System.out.println("Failed to fetch data: " + responseCode);
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                StringBuilder errorContent = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    errorContent.append(inputLine);
+                }
+                in.close();
+                System.out.println("Response Body: " + errorContent.toString());
+                return null;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return true; // No children found, it's a leaf
     }
 
     /**
-     * Recursively expands all nodes in the tree to ensure that all items are visible.
-     * This method iterates through each TreeItem and if it has children, recursively expands them.
+     * Fetches data from the specified URL and returns it as a JSON array.
      *
-     * @param items An array of TreeItem objects to be expanded.
+     * @param urlString the URL to fetch data from
+     * @return the fetched JSON array, or null if an error occurred
+     */
+    private static JsonArray fetchDataArray(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            String auth = username + ":" + password;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+            connection.setRequestProperty("Authorization", "Basic " + encodedAuth);
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+            if (responseCode == HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder content = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                JsonArray jsonResponse = (JsonArray) Jsoner.deserialize(content.toString(), new JsonArray());
+                System.out.println("Fetched data array: " + jsonResponse.toJson());
+                return jsonResponse;
+            } else {
+                System.out.println("Failed to fetch data: " + responseCode);
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                StringBuilder errorContent = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    errorContent.append(inputLine);
+                }
+                in.close();
+                System.out.println("Response Body: " + errorContent.toString());
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Expands all tree items recursively.
+     *
+     * @param items the array of tree items to expand
      */
     private static void expandAll(TreeItem[] items) {
         for (TreeItem item : items) {
@@ -131,7 +264,7 @@ public class TreePopulator {
     }
 
     /**
-     * Disposes of the resources used by the TreePopulator.
+     * Disposes of resources held by this class.
      */
     public static void dispose() {
         if (nodeImage != null) {

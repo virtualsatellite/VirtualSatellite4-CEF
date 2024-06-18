@@ -11,74 +11,122 @@
 package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
 import org.eclipse.swt.SWT;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Tree;
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.Jsoner;
 
-import cdp4common.dto.Thing;
-import cdp4dal.Session;
-import cdp4dal.SessionImpl;
-import cdp4dal.dal.Credentials;
-import cdp4dal.dal.ProxySettings;
-import cdp4servicesdal.CdpServicesDal;
-
-import java.net.URI;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Base64;
 
 /**
- * Responsible for fetching data from a Comet server using provided credentials and populating an SWT Tree with the data.
+ * Class to fetch comet data from a server and populate a SWT Tree.
  */
 public class CometDataFetcher {
 
-
-    private URI serverUri;
-    private Credentials credentials;
-    private Session session;
+    private static final int HTTP_OK = 200;
+    private static final String CONTAINED_ELEMENT_PATH = "/containedElement";
+    private final String baseUrl;
+    private final String username;
+    private final String password;
 
     /**
-     * Constructs a new CometDataFetcher.
+     * Constructor to initialize the data fetcher with server details.
      *
-     * @param url Server URL.
-     * @param username User's login name.
-     * @param password User's password.
-     * @param proxySettings proxy settings
+     * @param url      the base URL of the server
+     * @param username the username for authentication
+     * @param password the password for authentication
      */
-    public CometDataFetcher(String url, String username, String password, ProxySettings proxySettings) {
-        this.serverUri = URI.create(url);
-        this.credentials = new Credentials(username, password, serverUri, proxySettings);
-        this.session = new SessionImpl(new CdpServicesDal(), this.credentials);
-   
+    public CometDataFetcher(String url, String username, String password) {
+        this.baseUrl = url;
+        this.username = username;
+        this.password = password;
     }
 
     /**
-     * Fetches data from the Comet server and populates the provided SWT Tree.
+     * Fetches data from the server and populates the given tree.
      *
-     * @param tree The tree to populate with data.
+     * @param tree the tree to populate with data
      */
     public void fetchData(Tree tree) {
-        try {
-            List<Thing> things = session.getDal().open(credentials, new AtomicBoolean()).get();
+        new Thread(() -> {
+            try {
+                String urlString = baseUrl + CONTAINED_ELEMENT_PATH;
+                System.out.println("Fetching URL: " + urlString);
+                String response = fetch(urlString);
+                if (response != null) {
+                    JsonArray jsonArray = (JsonArray) Jsoner.deserialize(response, new JsonArray());
+                    Display.getDefault().asyncExec(() -> TreePopulator.populateTree(tree, jsonArray, baseUrl, username, password));
+                } else {
+                    showErrorMessage(tree, "Failed to fetch data from server.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                showErrorMessage(tree, "An error occurred: " + e.getMessage());
+            }
+        }).start();
+    }
 
-            Display.getDefault().asyncExec(() -> TreePopulator.populateTree(tree, things));
-        } catch (InterruptedException e) {
-            Display.getDefault().asyncExec(() -> showMessage("Data fetch interrupted.", SWT.ICON_WARNING));
-        } catch (ExecutionException e) {
-            Display.getDefault().asyncExec(() -> showMessage("Failed to fetch data from the server. Check server availability and credentials.", SWT.ICON_ERROR));
+    /**
+     * Fetches data from the given URL.
+     *
+     * @param urlString the URL to fetch data from
+     * @return the response data as a string, or null if an error occurred
+     */
+    private String fetch(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            String auth = username + ":" + password;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+            connection.setRequestProperty("Authorization", "Basic " + encodedAuth);
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+            if (responseCode == HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder content = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                return content.toString();
+            } else {
+                System.out.println("Failed to fetch data: " + responseCode);
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                StringBuilder errorContent = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    errorContent.append(inputLine);
+                }
+                in.close();
+                System.out.println("Response Body: " + errorContent.toString());
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     /**
-     * Displays a message box with a specified message and icon.
+     * Shows an error message in a message box.
      *
-     * @param message The message to display.
-     * @param iconType The type of icon to display 
+     * @param tree    the tree to use for getting the display
+     * @param message the error message to show
      */
-    private void showMessage(String message, int iconType) {
-        MessageBox messageBox = new MessageBox(Display.getDefault().getActiveShell(), iconType | SWT.OK);
-        messageBox.setMessage(message);
-        messageBox.open();
+    private void showErrorMessage(Tree tree, String message) {
+        Display.getDefault().asyncExec(() -> {
+            MessageBox messageBox = new MessageBox(tree.getShell(), SWT.ICON_ERROR);
+            messageBox.setMessage(message);
+            messageBox.open();
+        });
     }
 }
+
