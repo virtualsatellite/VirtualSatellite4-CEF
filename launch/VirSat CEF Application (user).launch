@@ -25,7 +25,7 @@
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -forcedUser fisc_ph -consoleLog -console"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -forcedUser fisc_ph -consoleLog -console -data /workspace"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dosgi.requiredJavaVersion=11 -Xms256m -Xmx1024m"/>
     <stringAttribute key="pde.version" value="3.3"/>
@@ -38,6 +38,7 @@
         <setEntry value="de.dlr.sc.virsat.cef.branding.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.cef.docs.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.cef.license.feature:default"/>
+        <setEntry value="de.dlr.sc.virsat.cef.loadtest.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.cef.test.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.commons.feature:default"/>
         <setEntry value="de.dlr.sc.virsat.dependencies.feature:default"/>

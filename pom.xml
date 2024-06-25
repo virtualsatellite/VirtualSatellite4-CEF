@@ -59,6 +59,9 @@
 				<!-- The Extension for the CEF calculations -->
 				<module>de.dlr.sc.virsat.cef.calculation</module>
 				<module>de.dlr.sc.virsat.cef.calculation.test</module>
+				
+				<!-- The Extension for the CEF Load Test -->
+				<module>de.dlr.sc.virsat.cef.loadtest</module>
 			</modules>
 		</profile>
 		<profile>
@@ -80,7 +83,8 @@
 
 				<module>de.dlr.sc.virsat.cef.product</module>
 				<module>de.dlr.sc.virsat.cef.p2updatesite</module>
-
+				
+				<module>de.dlr.sc.virsat.cef.loadtest.feature</module>
 			</modules>
 		</profile>
 	</profiles>

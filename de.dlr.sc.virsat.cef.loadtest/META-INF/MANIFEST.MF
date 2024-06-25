@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Loadtest
+Bundle-SymbolicName: de.dlr.sc.virsat.cef.loadtest;singleton:=true
+Bundle-Version: 4.16.1.qualifier
+Automatic-Module-Name: de.dlr.sc.virsat.cef.loadtest.Activator
+Bundle-Vendor: DLR (German Aerospace Center)
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.apache.commons.io,
+ org.eclipse.ui,
+ de.dlr.sc.virsat.cef.swtbot.test;bundle-version="4.16.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Eclipse-ExtensibleAPI: true
+Import-Package: de.dlr.sc.virsat.model.dvlm,
+ de.dlr.sc.virsat.project.editingDomain,
+ de.dlr.sc.virsat.project.editingDomain.commands,
+ de.dlr.sc.virsat.team.ui.util,
+ org.eclipse.swtbot.eclipse.finder,
+ org.eclipse.swtbot.eclipse.finder.widgets,
+ org.eclipse.swtbot.swt.finder,
+ org.eclipse.swtbot.swt.finder.exceptions,
+ org.eclipse.swtbot.swt.finder.widgets,
+ org.eclipse.ui

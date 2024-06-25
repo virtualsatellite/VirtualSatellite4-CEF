@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.dlr.sc.virsat.cef.loadtest.feature"
+      label="Virsat CEF Loadtest Feature"
+      version="4.16.1.qualifier"
+      provider-name="DLR (German Aerospace Center)"
+      license-feature="de.dlr.sc.virsat.license.feature">
+
+   <description>
+      Feature for Loadtest Execution
+German Aerospace Center (DLR e.V.)
+Institute for Software Technology
+   </description>
+
+   <copyright>
+      Copyright 2024
+
+by German Aerospace Center (DLR e.V.)
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.junit" version="4.12.0" match="greaterOrEqual"/>
+      <import plugin="de.dlr.sc.virsat.cef.calculation" version="4.0.4" match="greaterOrEqual"/>
+      <import plugin="de.dlr.sc.virsat.model.extension.cef"/>
+      <import feature="de.dlr.sc.virsat.model.feature" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="de.dlr.sc.virsat.project.feature" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="de.dlr.sc.virsat.uiengine.feature" version="0.0.0" match="greaterOrEqual"/>
+      <import plugin="de.dlr.sc.virsat.commons"/>
+   </requires>
+
+   <plugin
+         id="de.dlr.sc.virsat.cef.loadtest"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
