@@ -9,14 +9,23 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.apache.commons.io,
  org.eclipse.ui,
- de.dlr.sc.virsat.cef.swtbot.test;bundle-version="4.16.1"
+ de.dlr.sc.virsat.cef.swtbot.test;bundle-version="4.16.1",
+ de.dlr.sc.virsat.team;bundle-version="4.16.0",
+ de.dlr.sc.virsat.model.extension.ps,
+ de.dlr.sc.virsat.concept.unittest.util,
+ de.dlr.sc.virsat.model.edit,
+ org.hamcrest.core,
+ org.eclipse.swtbot.eclipse.finder,
+ de.dlr.sc.virsat.model.extension.cefx,
+ de.dlr.sc.virsat.model.extension.cef,
+ de.dlr.sc.virsat.team.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Eclipse-ExtensibleAPI: true
 Import-Package: de.dlr.sc.virsat.model.dvlm,
  de.dlr.sc.virsat.project.editingDomain,
  de.dlr.sc.virsat.project.editingDomain.commands,
- de.dlr.sc.virsat.team.ui.util,
+ de.dlr.sc.virsat.team,
  org.eclipse.swtbot.eclipse.finder,
  org.eclipse.swtbot.eclipse.finder.widgets,
  org.eclipse.swtbot.swt.finder,
