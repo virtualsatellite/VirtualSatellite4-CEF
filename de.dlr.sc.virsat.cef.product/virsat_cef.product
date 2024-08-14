@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.16.1.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="VirSat CEF Edition" uid="de.dlr.virsat.cef.product" id="de.dlr.sc.virsat.cef.branding.ui.VirSat_CEF" application="org.eclipse.ui.ide.workbench" version="4.17.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.dlr.sc.virsat.cef.branding.ui/resources/images/Branding/CEF_256x330.gif"/>
       <text>
          Virtual Satellite 4 - CEF
 
-Version 4.16.1
+Version 4.17.0
 
 © Copyright by DLR (Deutsches Zentrum fuer Luft- und Raumfahrt e. V., German Aerospace Center) 2024. 
 
@@ -58,7 +58,7 @@ Germany
    <intro introId="de.dlr.sc.virsat.cef.branding.ui.intro"/>
 
    <vm>
-      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17</windows>
    </vm>
 
    <plugins>

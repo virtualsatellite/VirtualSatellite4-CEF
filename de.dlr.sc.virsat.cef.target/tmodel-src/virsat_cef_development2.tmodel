@@ -1,4 +1,4 @@
-Target virsat_cef_development extends virsat_windows {
+Target virsat_cef_development2 extends virsat_windows {
 	Import core_development 
 	
 	ReferencedTarget RepositoryLocation VirSat4CoreDevelopment url "https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"{	
