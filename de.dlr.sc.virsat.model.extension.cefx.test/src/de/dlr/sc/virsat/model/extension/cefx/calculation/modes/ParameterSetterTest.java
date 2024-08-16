@@ -67,9 +67,9 @@ public class ParameterSetterTest extends ATestCase {
 		NumberLiteralResult nlr = new NumberLiteralResult(nl);
 		
 		parameterSetter.set(parameter.getTypeInstance(), nlr);
-		assertEquals("Case parameter = numberLiteral: Default Value Set Correctly", Double.valueOf(nl.getValue()), parameter.getDefaultValue(), TEST_EPSILON);
+		assertEquals("Case parameter = numberLiteral: Default Value Set Correctly", Double.parseDouble(nl.getValue()), parameter.getDefaultValue(), TEST_EPSILON);
 		double newIdleValue = parameter.getModeValues().get(0).getValue();
-		assertEquals("Case parameter = numberLiteral: Idle Value Set Correctly", Double.valueOf(nl.getValue()), newIdleValue, TEST_EPSILON);
+		assertEquals("Case parameter = numberLiteral: Idle Value Set Correctly", Double.parseDouble(nl.getValue()), newIdleValue, TEST_EPSILON);
 		assertEquals("Make sure equation engine sets overwrite flag", parameter.getDefaultValueBean().getOverride(), true);
 	}
 	
@@ -91,11 +91,11 @@ public class ParameterSetterTest extends ATestCase {
 		modeVector.getResults().put(idleResult, idle.getTypeInstance());
 		
 		parameterSetter.set(parameter.getTypeInstance(), modeVector);
-		assertEquals("Case parameter = modeVector: Default Value Set Correctly", Double.valueOf(defaultValue.getValue()), parameter.getDefaultValue(), TEST_EPSILON);
+		assertEquals("Case parameter = modeVector: Default Value Set Correctly", Double.parseDouble(defaultValue.getValue()), parameter.getDefaultValue(), TEST_EPSILON);
 		double newIdleValue = parameter.getModeValues().get(0).getValue();
 		Value newModeValue = parameter.getModeValues().get(0);
 		
-		assertEquals("Case parameter = modeVector: Idle Value Set Correctly", Double.valueOf(idleValue.getValue()), newIdleValue, TEST_EPSILON);
+		assertEquals("Case parameter = modeVector: Idle Value Set Correctly", Double.parseDouble(idleValue.getValue()), newIdleValue, TEST_EPSILON);
 		
 		parameterSetter.set(parameter.getTypeInstance(), modeVector);
 		Value sameModeValue = parameter.getModeValues().get(0);

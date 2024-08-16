@@ -165,14 +165,12 @@ public class ExcelUpdater {
 		this.editingDomain = editingDomain;
 		this.virsatXlCalculationBean = excelCalc;
 		this.userContext = userContext;
-		
-		openExcelFile();
 	}
 	
 	/**
 	 * Opens an Excel file
 	 */
-	private void openExcelFile() {
+	public ExcelUpdater openExcelFile() {
 		URI eResourceUri = virsatXlCalculationBean.getExcelFileBean().getValue();
 		URIConverter converter = editingDomain.getResourceSet().getURIConverter();
 		
@@ -195,6 +193,8 @@ public class ExcelUpdater {
 		if (xlWorkbook != null) {
 			xlHelper = new ExcelHelper(xlWorkbook);
 		}
+		
+		return this;
 	}
 	
 	/**

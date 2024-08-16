@@ -28,7 +28,6 @@ public class CefRefreshValueAndStructureTest extends ACefSwtBotTestCase {
 	SWTBotTreeItem systemItem;
 	SWTBotTreeItem systemParameterItem;
 	SWTBotTreeItem modeDurationItem;
-	SWTBotTreeItem systemMassParametersItem;
 
 	static final int VALUE_COLUMN_INDEX = 1;
 	static final int UNIT_COLUMN_INDEX = 2; 

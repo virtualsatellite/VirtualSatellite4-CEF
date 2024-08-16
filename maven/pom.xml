@@ -93,17 +93,21 @@
 					<plugin>
 						<groupId>com.github.spotbugs</groupId>
 						<artifactId>spotbugs-maven-plugin</artifactId>
-						<version>3.1.12.2</version>
+						<version>4.8.6.1</version>
 						<dependencies>
 							<dependency>
 								<groupId>com.github.spotbugs</groupId>
 								<artifactId>spotbugs</artifactId>
-								<version>4.0.1</version>
+								<version>4.8.4</version>
 							</dependency>
 						</dependencies>
 						<configuration>
 							<excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
 							<includeFilterFile>spotbugs-include.xml</includeFilterFile>
+							<addSourceDirs>true</addSourceDirs>
+							<debug>false</debug>
+							<fork>true</fork>
+							<failOnError>true</failOnError>
 						</configuration>
 						<executions>
 							<execution>
@@ -145,7 +149,6 @@
 									<encoding>UTF-8</encoding>
 									<consoleOutput>true</consoleOutput>
 									<failsOnError>true</failsOnError>
-									<linkXRef>false</linkXRef>
 									<!-- violationSeverity>warning</violationSeverity -->
 								</configuration>
 								<goals>

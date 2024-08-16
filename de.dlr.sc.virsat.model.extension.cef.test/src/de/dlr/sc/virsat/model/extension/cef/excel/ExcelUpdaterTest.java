@@ -315,7 +315,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		setupExcelFile(EXCEL_FILE_UNPREPARED);
 		Command setCommand = excelCalc.setExcelFile(editingDomain, null);
 		editingDomain.getCommandStack().execute(setCommand);
-		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance());
+		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
 	}
 	
@@ -325,7 +325,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		paramInput.getModeValues().get(0).setMode(new SystemMode());
 		
-		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance());
+		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
 	}
 	
@@ -338,7 +338,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		cmd = excelCalc.getFromVirSat2Excel().add(editingDomain, new Parameter());
 		editingDomain.getCommandStack().execute(cmd);
 		
-		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance());
+		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
 	}
 	
@@ -348,7 +348,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		paramOutput.getModeValues().get(0).setMode(new SystemMode());
 		
-		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance());
+		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
 	}
 	
@@ -361,7 +361,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		cmd = excelCalc.getFromExcel2VirSat().add(editingDomain, new Parameter());
 		editingDomain.getCommandStack().execute(cmd);
 		
-		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance());
+		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
 	}
 	

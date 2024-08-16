@@ -54,8 +54,8 @@ public class ParameterGetterTest extends ATestCase {
 		ParameterGetter getter = new ParameterGetter();
 		ModeVectorResult modeVector = (ModeVectorResult) getter.get(parameter.getATypeInstance());
 		
-		assertEquals("Default value correct", Double.valueOf(modeVector.getResult(null).getNumberLiteral().getValue()), DEFAULT_VALUE, TEST_EPSILON);
-		double idleValue = Double.valueOf(modeVector.getResult(idle.getTypeInstance()).getNumberLiteral().getValue());
+		assertEquals("Default value correct", Double.parseDouble(modeVector.getResult(null).getNumberLiteral().getValue()), DEFAULT_VALUE, TEST_EPSILON);
+		double idleValue = Double.parseDouble(modeVector.getResult(idle.getTypeInstance()).getNumberLiteral().getValue());
 		assertEquals("Idle value correct", idleValue, IDLE_VALUE, TEST_EPSILON);
 	}
 
