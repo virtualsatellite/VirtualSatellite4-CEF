@@ -27,11 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Wizard page for configuring Comet server details and fetching data.
+ * The CometImportWizardPage class represents a wizard page used to configure 
+ * and fetch data from a COMET server. It provides a UI for entering server details, 
+ * initiating data fetch, and displaying the fetched data in a tree structure.
  */
 public class CometImportWizardPage extends WizardPage {
 
     private static final int GRID_COLUMNS = 2;
+    private static final int VERTICALSPAN = 1;
     private static final int TREE_HEIGHT_HINT = 400;
     private static final int TREE_WIDTH_HINT = 600;
 
@@ -39,11 +42,12 @@ public class CometImportWizardPage extends WizardPage {
     private Text loginText;
     private Text passwordText;
     private Tree targetTree;
+    private CometDataFetcher fetcher;
 
     /**
-     * Constructor to create the wizard page.
-     *
-     * @param pageName the name of the page
+     * Constructs a new CometImportWizardPage with the specified name.
+     * 
+     * @param pageName The name of the wizard page.
      */
     protected CometImportWizardPage(String pageName) {
         super(pageName);
@@ -52,9 +56,7 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Creates the UI controls for the wizard page.
-     *
-     * @param parent the parent composite
+     * Creates the controls (UI elements) for this wizard page.
      */
     @Override
     public void createControl(Composite parent) {
@@ -71,12 +73,12 @@ public class CometImportWizardPage extends WizardPage {
         fetchButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (validateInput()) {
+                    fetcher = new CometDataFetcher(serverUrlText.getText(), loginText.getText(), passwordText.getText());
                     fetchAndDisplayData();
-                    //fetchButton.setEnabled(false);
                 }
             }
         });
-        fetchButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, GRID_COLUMNS, 1));
+        fetchButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, GRID_COLUMNS, VERTICALSPAN));
 
         targetTree = new Tree(container, SWT.CHECK | SWT.MULTI | SWT.BORDER);
         targetTree.addSelectionListener(new SelectionAdapter() {
@@ -88,20 +90,16 @@ public class CometImportWizardPage extends WizardPage {
                 }
             }
         });
-        GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, true, true, GRID_COLUMNS, 1);
+        GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, true, true, GRID_COLUMNS, VERTICALSPAN);
         treeGridData.heightHint = TREE_HEIGHT_HINT;
-        treeGridData.widthHint = TREE_WIDTH_HINT;   
+        treeGridData.widthHint = TREE_WIDTH_HINT;
         targetTree.setLayoutData(treeGridData);
 
         setControl(container);
     }
 
     /**
-     * Creates a label and a text field for input.
-     *
-     * @param parent    the parent composite
-     * @param labelText the text for the label
-     * @param style     the style for the text field
+     * Creates a label and a text field with the specified label text and style.
      */
     private void createLabelAndTextField(Composite parent, String labelText, int style) {
         Label label = new Label(parent, SWT.NONE);
@@ -118,9 +116,7 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Validates the input fields.
-     *
-     * @return true if the input is valid, false otherwise
+     * Validates the user input in the text fields. Ensures that all fields are filled.
      */
     private boolean validateInput() {
         if (serverUrlText.getText().isEmpty() || loginText.getText().isEmpty() || passwordText.getText().isEmpty()) {
@@ -135,20 +131,15 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Fetches data from the server and displays it in the tree.
+     * Initiates the process of fetching data from the COMET server and displaying it 
+     * in the  Tree widget.
      */
     private void fetchAndDisplayData() {
-        String url = serverUrlText.getText();
-        String login = loginText.getText();
-        String password = passwordText.getText();
-        CometDataFetcher fetcher = new CometDataFetcher(url, login, password);
         fetcher.fetchData(targetTree);
     }
 
     /**
-     * Retrieves the checked items from the tree.
-     *
-     * @return a list of checked items
+     * Retrieves a list of all TreeItems that are checked in the Tree.
      */
     public List<TreeItem> getCheckedItems() {
         List<TreeItem> checkedItems = new ArrayList<>();
@@ -157,11 +148,9 @@ public class CometImportWizardPage extends WizardPage {
         }
         return checkedItems;
     }
+
     /**
-     * Recursively retrieves the checked items from the tree.
-     *
-     * @param item         the current tree item
-     * @param checkedItems the list to add the checked items to
+     * Recursively collects checked TreeItems and adds them to the provided list.
      */
     private void getCheckedItemsRecursively(TreeItem item, List<TreeItem> checkedItems) {
         if (item.getChecked()) {
@@ -171,11 +160,9 @@ public class CometImportWizardPage extends WizardPage {
             getCheckedItemsRecursively(child, checkedItems);
         }
     }
+
     /**
-     * Checks or unchecks all children of the given item.
-     *
-     * @param item    the parent tree item
-     * @param checked the checked state to set
+     * Recursively checks or unchecks all child {@link TreeItem}s of the specified TreeItem.
      */
     private void checkChildren(TreeItem item, boolean checked) {
         for (TreeItem child : item.getItems()) {
@@ -185,12 +172,9 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Performs any final actions when the wizard finishes.
-     *
-     * @return true to indicate that the finish button was pressed
+     * Performs the finish operation when the wizard is completed. 
      */
     public boolean performFinish() {
-        List<TreeItem> checkedItems = getCheckedItems();
         return true;
     }
 }

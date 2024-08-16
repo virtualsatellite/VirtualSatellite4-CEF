@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  */
 public class CometImportWizard extends Wizard implements IImportWizard {
     
-    private CometImportWizardPage mainPage;  // The main page of the wizard
+    private CometImportWizardPage mainPage; 
 
     /**
      * Constructor for CometImportWizard.
