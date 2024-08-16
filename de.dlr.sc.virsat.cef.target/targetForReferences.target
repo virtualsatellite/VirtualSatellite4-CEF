@@ -4,7 +4,7 @@
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="0.0.0"/>
-		<repository location="https://sourceforge.net/projects/virtualsatellite/files/VirtualSatellite4-Core/development/"/>
+		<repository location="https://downloads.sourceforge.net/project/virtualsatellite/VirtualSatellite4-Core/development/"/>
 		</location>
 		</locations>
 		<environment>

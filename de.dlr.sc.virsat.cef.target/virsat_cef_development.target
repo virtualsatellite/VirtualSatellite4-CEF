@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-<target name="virsat_cef_development" sequenceNumber="1">
+		<?pde version="3.8"?><target name="virsat_cef_development" sequenceNumber="1">
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="0.0.0"/>
@@ -36,7 +35,7 @@
 		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="0.0.0"/>
 		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="0.0.0"/>
-		<repository location="file:/C:/Git/VirtualSatellite4-Core/de.dlr.sc.virsat.p2updatesite/p2/"/>
+		<repository location="https://downloads.sourceforge.net/project/virtualsatellite/VirtualSatellite4-Core/development/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.202202012159"/>
