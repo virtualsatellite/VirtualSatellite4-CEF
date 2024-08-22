@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -160,6 +161,17 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 	
 	@After
 	public void tearDown() throws CoreException {
+
+		// Before cleaning up the project close the WB which was open
+		// THis is needed to stop file access
+		try {
+			if (wb != null) {
+				wb.close();
+			}
+		} catch (Exception e) {
+			throw(new CoreException(Status.error(e.getMessage())));
+		}
+
 		super.tearDown();
 		UserRegistry.getInstance().setSuperUser(false);
 	}
@@ -317,6 +329,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		editingDomain.getCommandStack().execute(setCommand);
 		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
+		updater.close();
 	}
 	
 	@Test
@@ -327,6 +340,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
+		updater.close();
 	}
 	
 	@Test
@@ -340,6 +354,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
+		updater.close();
 	}
 	
 	@Test
@@ -350,6 +365,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
+		updater.close();
 	}
 	
 	@Test
@@ -363,6 +379,7 @@ public class ExcelUpdaterTest extends AConceptProjectTestCase {
 		
 		ExcelUpdater updater = new ExcelUpdater(testProject, editingDomain, excelCalc, UserRegistry.getInstance()).openExcelFile();
 		assertFalse("Excel Updater cannot udpater", updater.canUpdateExcelFile());
+		updater.close();
 	}
 	
 	private Workbook wb;

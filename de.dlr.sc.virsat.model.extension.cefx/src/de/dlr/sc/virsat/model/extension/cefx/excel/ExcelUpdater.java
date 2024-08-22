@@ -145,11 +145,26 @@ public class ExcelUpdater {
 		List<ExcelCalculation> excelCalcs = beanCaHelper.getAllBeanCategories(sei, ExcelCalculation.class);
 		
 		for (ExcelCalculation excelCalc : excelCalcs) {
-			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc, userContext);
+			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc, userContext).openExcelFile();
 			if (updater.canUpdateExcelFile()) {
 				updater.updateExcelFile();
 			}
+			updater.close();
 		}	
+	}
+	
+	/**
+	 * This method has to be called after an excel sheet was opened and processed
+	 * otherwise open file handles may remain.
+	 */
+	public void close() {
+		try {
+			if (xlWorkbook != null) {
+				xlWorkbook.close();
+			}
+		} catch (IOException e) {
+			Activator.getDefault().getLog().warn("ExcelUpdater: Failed to close Excel file.", e);
+		}
 	}
 	
 	/**
