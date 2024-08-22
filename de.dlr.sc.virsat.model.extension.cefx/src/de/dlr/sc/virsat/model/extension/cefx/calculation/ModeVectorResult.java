@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import de.dlr.sc.virsat.model.calculation.compute.IExpressionResult;
@@ -71,9 +70,9 @@ public class ModeVectorResult implements IExpressionResult {
 	 * number literal is found.
 	 */
 	public NumberLiteralResult getResult(CategoryAssignment mode) {
-		for (Entry<NumberLiteralResult, CategoryAssignment> entry : results.entrySet()) {
-			if (entry.getValue() == mode) {
-				return entry.getKey();
+		for (NumberLiteralResult numberLiteralResult : results.keySet()) {
+			if (results.get(numberLiteralResult) == mode) {
+				return numberLiteralResult;
 			}
 		}
 		

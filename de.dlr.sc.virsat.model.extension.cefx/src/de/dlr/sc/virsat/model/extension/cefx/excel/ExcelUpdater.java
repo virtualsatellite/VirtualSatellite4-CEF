@@ -145,26 +145,11 @@ public class ExcelUpdater {
 		List<ExcelCalculation> excelCalcs = beanCaHelper.getAllBeanCategories(sei, ExcelCalculation.class);
 		
 		for (ExcelCalculation excelCalc : excelCalcs) {
-			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc, userContext).openExcelFile();
+			ExcelUpdater updater = new ExcelUpdater(project, editingDomain, excelCalc, userContext);
 			if (updater.canUpdateExcelFile()) {
 				updater.updateExcelFile();
 			}
-			updater.close();
 		}	
-	}
-	
-	/**
-	 * This method has to be called after an excel sheet was opened and processed
-	 * otherwise open file handles may remain.
-	 */
-	public void close() {
-		try {
-			if (xlWorkbook != null) {
-				xlWorkbook.close();
-			}
-		} catch (IOException e) {
-			Activator.getDefault().getLog().warn("ExcelUpdater: Failed to close Excel file.", e);
-		}
 	}
 	
 	/**
@@ -180,12 +165,14 @@ public class ExcelUpdater {
 		this.editingDomain = editingDomain;
 		this.virsatXlCalculationBean = excelCalc;
 		this.userContext = userContext;
+		
+		openExcelFile();
 	}
 	
 	/**
 	 * Opens an Excel file
 	 */
-	public ExcelUpdater openExcelFile() {
+	private void openExcelFile() {
 		URI eResourceUri = virsatXlCalculationBean.getExcelFileBean().getValue();
 		URIConverter converter = editingDomain.getResourceSet().getURIConverter();
 		
@@ -208,8 +195,6 @@ public class ExcelUpdater {
 		if (xlWorkbook != null) {
 			xlHelper = new ExcelHelper(xlWorkbook);
 		}
-		
-		return this;
 	}
 	
 	/**

@@ -101,7 +101,7 @@
         <setEntry value="javax.inject@default:default"/>
         <setEntry value="javax.servlet.jsp@default:default"/>
         <setEntry value="javax.servlet@default:default"/>
-        <setEntry value="javax.xml@default:default"/>
+        <setEntry value="jakarta.xml@default:default"/>
         <setEntry value="org.apache.ant@default:default"/>
         <setEntry value="org.apache.batik.css@default:default"/>
         <setEntry value="org.apache.batik.util.gui@default:default"/>
