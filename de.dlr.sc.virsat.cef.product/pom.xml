@@ -27,9 +27,12 @@
 			<id>deploy</id>
 			<properties>
 				<build.folder.application>VirSat4_CEF_Application</build.folder.application>
+				<build.folder.server>VirSat4_CEF_Server</build.folder.server>
 				<build.folder.fullpath>${build.folder.target.bin}/${build.folder.application}/${build.folder.type}</build.folder.fullpath>
 				<build.file.win32.fullpath>${build.folder.target.bin}/${build.folder.application}/${build.folder.type}/${build.file.win32}</build.file.win32.fullpath>
 				<build.file.linux.fullpath>${build.folder.target.bin}/${build.folder.application}/${build.folder.type}/${build.file.linux}</build.file.linux.fullpath>
+				<build.file.server.win32.fullpath>${build.folder.target.bin}/${build.folder.server}/${build.folder.type}/${build.file.server.win32}</build.file.server.win32.fullpath>
+				<build.file.server.linux.fullpath>${build.folder.target.bin}/${build.folder.server}/${build.folder.type}/${build.file.server.linux}</build.file.server.linux.fullpath>
 			</properties>
 
 			<build>
@@ -72,6 +75,8 @@
 
 										<delete file="${build.file.win32.fullpath}" />
 										<delete file="${build.file.linux.fullpath}" />
+										<delete file="${build.file.server.win32.fullpath}" />
+										<delete file="${build.file.server.linux.fullpath}" />
 
 										<zip destfile="${build.file.win32.fullpath}"
 											basedir="./target/products/de.dlr.virsat.cef.product/win32/win32/x86_64" />
@@ -79,6 +84,20 @@
 											basedir="./target/products/de.dlr.virsat.cef.product/linux/gtk/x86_64"
 											compression="gzip"
 											longfile="gnu" />
+											
+										<zip destfile="${build.file.server.win32.fullpath}"
+											basedir="./target/products/de.dlr.virsat.cef.server.product/win32/win32/x86_64" />
+										<tar destfile="${build.file.server.linux.fullpath}"
+											compression="gzip" 
+											longfile="gnu" >
+											<tarfileset dir="./target/products/de.dlr.virsat.cef.server.product/linux/gtk/x86_64" >
+												<include name="**" />
+												<exclude name="VirSat4_Server" />
+											</tarfileset>
+											<tarfileset dir="./target/products/de.dlr.virsat.cef.server.product/linux/gtk/x86_64" filemode="755" >
+												<include name="VirSat4_Server" />
+											</tarfileset>
+										</tar>
 										<!-- ANT Script Stop -->
 									</target>
 								</configuration>

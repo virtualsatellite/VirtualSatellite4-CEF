@@ -62,6 +62,8 @@
 				<build.folder.type>development</build.folder.type>
 				<build.file.win32>VirSat_CEF_Development_Win32.zip</build.file.win32>
 				<build.file.linux>VirSat_CEF_Development_Linux.tar.gz</build.file.linux>
+				<build.file.server.win32>VirSat_CEF_Server_Development_Win32.zip</build.file.server.win32>
+				<build.file.server.linux>VirSat_CEF_Server_Development_Linux.tar.gz</build.file.server.linux>
 			</properties>
 		</profile>
 		<profile>
@@ -72,6 +74,8 @@
 				<build.folder.type>integration/${build.version}</build.folder.type>
 				<build.file.win32>VirSat_CEF_Integration_${build.version}_Win32.zip</build.file.win32>
 				<build.file.linux>VirSat_CEF_Integration_${build.version}_Linux.tar.gz</build.file.linux>
+				<build.file.server.win32>VirSat_CEF_Server_Integration_${build.version}_Win32.zip</build.file.server.win32>
+				<build.file.server.linux>VirSat_CEF_Server_Integration_${build.version}_Linux.tar.gz</build.file.server.linux>
 			</properties>
 		</profile>
 		<profile>
@@ -83,6 +87,8 @@
 				<build.folder.type>release/${build.version}/${env.GITHUB_SHA}</build.folder.type>
 				<build.file.win32>VirSat_CEF_Release_${build.version}_${env.GITHUB_SHA}_Win32.zip</build.file.win32>
 				<build.file.linux>VirSat_CEF_Release_${build.version}_${env.GITHUB_SHA}_Linux.tar.gz</build.file.linux>
+				<build.file.server.win32>VirSat_CEF_Server_Release_${build.version}_${env.GITHUB_SHA}_Win32.zip</build.file.server.win32>
+				<build.file.server.linux>VirSat_CEF_Server_Release_${build.version}_${env.GITHUB_SHA}_Linux.tar.gz</build.file.server.linux>
 			</properties>
 		</profile>
 		<profile>

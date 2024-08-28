@@ -13,21 +13,23 @@ package de.dlr.sc.virsat.model.extension.cef.model;
 // * Import Statements
 // *****************************************************************
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import javax.xml.bind.annotation.XmlType;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 
 // *****************************************************************
 // * Class Declaration
 // *****************************************************************
 
+@XmlType(name = ASystemPowerParameters.FULL_QUALIFIED_CATEGORY_NAME)
 /**
- * Auto Generated Abstract Generator Gap Class
+ * Auto Generated Class inheriting from Generator Gap Class
  * 
- * Don't Manually modify this class
+ * This class is generated once, do your changes here
  * 
  * 
  * 
- */	
-public class SystemPowerParameters extends ASystemPowerParameters {
+ */
+public  class SystemPowerParameters extends ASystemPowerParameters {
 	
 	/**
 	 * Constructor of Concept Class
