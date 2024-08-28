@@ -2,7 +2,7 @@
 <feature
       id="de.dlr.sc.virsat.model.extension.cef.interfaces.feature"
       label="VirSat CEF Model Extension Interfaces Data Model Feature"
-      version="4.16.0.qualifier"
+      version="4.16.1.qualifier"
       provider-name="DLR (German Aerospace Center)"
       plugin="de.dlr.sc.virsat.cef.branding.ui"
       license-feature="de.dlr.sc.virsat.cef.license.feature">
@@ -10,11 +10,11 @@
    <description>
       VirSat CEF Interfaces Concept
  German Aerospace Center (DLR e.V.)
- Simulation and Software Technology
+Institute for Software Technology
    </description>
 
    <copyright>
-      Copyright 2017
+      Copyright 2024
  by German Aerospace Center (DLR e.V.)
    </copyright>
 
