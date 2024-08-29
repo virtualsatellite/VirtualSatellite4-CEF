@@ -128,7 +128,7 @@ public class UiSnippetSystem extends AUiSnippetTable {
 							
 							if (!undefined && Double.parseDouble(print) > 0) {
 								bufferColor = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN);
-							} else if (!undefined && Double.valueOf(print) < 0)	{
+							} else if (!undefined && Double.parseDouble(print) < 0)	{
 								bufferColor = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_DARK_RED);
 							} else {
 								bufferColor = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_BLACK);
