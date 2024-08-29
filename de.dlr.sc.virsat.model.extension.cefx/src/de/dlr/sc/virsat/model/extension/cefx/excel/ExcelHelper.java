@@ -73,7 +73,7 @@ public class ExcelHelper {
 		Cell cell = row.getCell(cellCounter) == null ? row.createCell(cellCounter) : row.getCell(cellCounter);
 		if (cellValue != null) {
 			if (cellValue.matches("-?\\d+(\\.\\d+)?")) {
-				cell.setCellValue(Double.valueOf(cellValue));
+				cell.setCellValue(Double.parseDouble(cellValue));
 			} else {
 				cell.setCellValue(createHelper.createRichTextString(cellValue));
 			}
