@@ -142,7 +142,6 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Sub System Mass Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		bot.button("Save").click();
 		openEditor(elementConfigurationSubSystem);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Sub System Mass Parameters").isChecked());
@@ -177,7 +176,6 @@ public class CefHierarchyLevelTest extends ACefSwtBotTestCase {
 		bot.checkBox("Equipment Parameters").click();
 		SwtBotDebugHelper.logCodeLine();
 		waitForEditingDomainAndUiThread();
-		bot.button("Save").click();
 		openEditor(elementConfigurationEquipment);
 		SwtBotDebugHelper.logCodeLine();
 		assertFalse(bot.checkBox("Equipment Parameters").isChecked());
