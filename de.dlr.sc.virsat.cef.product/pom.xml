@@ -56,7 +56,7 @@
 				              <product>
 				                <id>de.dlr.virsat.cef.product</id>
 				                <rootFolder>virsat</rootFolder>
-				                <archiveFileName>${build.file.core}</archiveFileName>
+				                <archiveFileName>${build.file}</archiveFileName>
 				                <attachId>core</attachId>
 				              </product>
 				            </products>
