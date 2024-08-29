@@ -157,7 +157,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 		paramOne.setDefaultValue(1);
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
@@ -183,7 +183,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		modeValue.setValue(1);
 		modeValue.setMode(new SystemMode(conceptCEFX));
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
@@ -208,7 +208,7 @@ public class ValidatorTest extends AConceptProjectTestCase {
 		URI uri = URI.createPlatformResourceURI("dummy", true);
 		excelCalc.setExcelFile(uri);
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
