@@ -347,6 +347,18 @@ jobs:
         with:
           build_job: assemble
           build_profile: ${{ steps.build_decision.outputs.build_type }}
+          
+      # --------------------------------------------
+      # Upload SWTBout screenshots to github artifacts
+      # --------------------------------------------
+      - name: Build - Upload Build Artifacts
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: Deployable Applications
+          path: |
+            deploy/**/*.zip
+            deploy/**/*.tar.gz
+          retention-days: 3
      
       # ---------------------------------------------
       # Deploying to github releases
