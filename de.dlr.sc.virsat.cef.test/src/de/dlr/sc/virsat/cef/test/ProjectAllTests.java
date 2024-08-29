@@ -20,6 +20,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
+	de.dlr.sc.virsat.cef.test.CoreAllTest.class,
 	de.dlr.sc.virsat.cef.calculation.test.AllTests.class,
 	de.dlr.sc.virsat.model.extension.cef.test.AllTests.class,
 	de.dlr.sc.virsat.model.extension.cef.test.AllTestsGen.class,
