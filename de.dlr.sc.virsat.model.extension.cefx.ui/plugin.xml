@@ -2698,5 +2698,22 @@
      	</activeWhen>
      </handler>
  </extension>
+ <extension
+       point="org.eclipse.ui.importWizards">
+    <wizard
+          category="de.dlr.virsat.global.category.import.virsat"
+          class="de.dlr.sc.virsat.model.extension.cefx.ui.importWizards.CometImportWizard"
+          icon="icons/sample.png"
+          id="de.dlr.sc.virsat.model.extension.cefx.ui.importWizards.CometImportWizard"
+          name="Comet Import Wizards">
+       <description>
+          Import a file from the local file system into the workspace.
+       </description>
+    </wizard>
+    <category
+          id="de.dlr.virsat.global.category.import.virsat"
+          name="Virtual Satellite">
+    </category>
+ </extension>
 	<!-- Plugin.XML Protected Region End -->
 </plugin>
