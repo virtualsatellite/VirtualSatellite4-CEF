@@ -9,7 +9,9 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,41 +23,38 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 public class CometImportWizard extends Wizard implements IImportWizard {
     
     private CometImportWizardPage mainPage; 
+    private SelectedElementsPage selectedElementsPage;
 
-    /**
-     * Constructor for CometImportWizard.
-     * Sets the window title and specifies that a progress monitor is needed.
-     */
     public CometImportWizard() {
         super();
-        setWindowTitle("Comet Import Wizard");
+        setWindowTitle("CometImportWizard");
         setNeedsProgressMonitor(true);
     }
 
-    /**
-     * Initializes the wizard with the workbench and current selection.
-     * This method is called when the wizard is initialized and is responsible
-     * for adding the pages to the wizard.
-     *
-     * @param workbench The current workbench.
-     * @param selection The current object selection.
-     */
     @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
         mainPage = new CometImportWizardPage("Configure Comet Server");
+        selectedElementsPage = new SelectedElementsPage("Selected Elements");
         addPage(mainPage);
+        addPage(selectedElementsPage);
     }
 
-    /**
-     * Called when the user clicks the Finish button on the wizard.
-     * This method should contain the logic to process the data collected through the wizard pages.
-     *
-     * @return true if the data processing is successful and the wizard can be closed; false otherwise.
-     */
     @Override
     public boolean performFinish() {
-        // This method delegates the finish operation to the mainPage
         return mainPage.performFinish();
     }
-}
 
+    @Override
+    public IWizardPage getNextPage(IWizardPage page) {
+        if (page == mainPage) {
+            java.util.List<TreeItem> checkedItems = mainPage.getCheckedItems();
+            java.util.List<String> elementNames = checkedItems.stream()
+                    .map(TreeItem::getText)
+                    .collect(java.util.stream.Collectors.toList());
+
+            selectedElementsPage.setSelectedElements(elementNames);
+            return selectedElementsPage;
+        }
+        return super.getNextPage(page);
+    }
+}

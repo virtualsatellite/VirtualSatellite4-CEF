@@ -29,7 +29,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import java.io.IOException;
 import java.net.URI;
+import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 /**
@@ -64,7 +66,14 @@ public class CometDataFetcher {
             try {
                 openSession();
                 Display.getDefault().asyncExec(() -> populateTreeWithIteration(tree));
-            } catch (Exception e) {
+            } catch (IOException e) {
+                // Handle I/O exceptions, such as network issues
+                handleException(e, tree);
+            } catch (GeneralSecurityException e) {
+                // Handle security-related exceptions, such as authentication failures
+                handleException(e, tree);
+            } catch (RuntimeException e) {
+                // Handle any other runtime exceptions that might occur
                 handleException(e, tree);
             }
         }).start();
@@ -73,25 +82,26 @@ public class CometDataFetcher {
     /**
      * Opens the session for communication with the COMET system.
      */
-    private void openSession() {
+    public void openSession() throws IOException, GeneralSecurityException {
         session.open().join();
     }
 
     /**
-     * Populates the provided Tree with data from the current iteration 
+     * Populates the provided Tree with data from the selected iteration 
      * of the engineering model.
      * 
      * @param tree The SWT Tree widget to populate.
      */
     private void populateTreeWithIteration(Tree tree) {
         var siteDirectory = session.getAssembler().retrieveSiteDirectory();
-        var engineeringModelIid = siteDirectory.getModel().get(0).getEngineeringModelIid();
-        var iterationIid = siteDirectory.getModel().get(0).getIterationSetup().get(0).getIterationIid();
-        var domainOfExpertiseIid = siteDirectory.getModel().get(0).getActiveDomain().get(0).getIid();
+        var model = siteDirectory.getModel().get(0); 
 
-        EngineeringModel model = new EngineeringModel(engineeringModelIid, session.getAssembler().getCache(), uri);
+        var iterationIid = model.getIterationSetup().get(0).getIterationIid();
+        var domainOfExpertiseIid = model.getActiveDomain().get(0).getIid();
+
+        EngineeringModel engineeringModel = new EngineeringModel(model.getEngineeringModelIid(), session.getAssembler().getCache(), uri);
         Iteration iteration = new Iteration(iterationIid, session.getAssembler().getCache(), uri);
-        iteration.setContainer(model);
+        iteration.setContainer(engineeringModel);
 
         DomainOfExpertise domainOfExpertise = new DomainOfExpertise(domainOfExpertiseIid, session.getAssembler().getCache(), uri);
 
@@ -101,18 +111,29 @@ public class CometDataFetcher {
 
         if (openIteration.isPresent()) {
             openIteration.get().getElement().stream()
-                    .filter(element -> "Space Segment".equals(element.getName()))
-                    .findFirst()
-                    .ifPresent(element -> {
-                        TreeItem spaceSegmentItem = new TreeItem(tree, SWT.NONE);
-                        spaceSegmentItem.setText(element.getName());
-                        addChildren(spaceSegmentItem, element);
-                        spaceSegmentItem.setExpanded(true);
-                    });
+                .filter(this::isTopLevelElement)  // Filter for the top-level element
+                .findFirst()
+                .ifPresent(element -> {
+                    TreeItem topLevelItem = new TreeItem(tree, SWT.NONE);
+                    topLevelItem.setText(element.getName());
+                    addChildren(topLevelItem, element);
+                    topLevelItem.setExpanded(true);
+                });
         } else {
             showErrorMessage(tree, "No open iteration found.");
         }
     }
+
+    /**
+     * Custom method to determine if an ElementDefinition is a top-level element.
+     * A top-level element is typically not referenced by any other elements.
+     */
+    private boolean isTopLevelElement(ElementDefinition element) {
+        return element.referencingElementUsages().isEmpty();
+    }
+
+
+
 
     /**
      * Recursively adds child elements of a parent  ElementDefinition to a TreeItem.

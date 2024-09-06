@@ -10,18 +10,30 @@
 
 package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.dlr.sc.virsat.build.ui.Activator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +55,7 @@ public class CometImportWizardPage extends WizardPage {
     private Text passwordText;
     private Tree targetTree;
     private CometDataFetcher fetcher;
+    private boolean isDataFetched = false;
 
     /**
      * Constructs a new CometImportWizardPage with the specified name.
@@ -52,7 +65,7 @@ public class CometImportWizardPage extends WizardPage {
     protected CometImportWizardPage(String pageName) {
         super(pageName);
         setTitle("Comet Server Configuration");
-        setDescription("Enter details and fetch data.");
+        setDescription("");
     }
 
     /**
@@ -64,21 +77,32 @@ public class CometImportWizardPage extends WizardPage {
         GridLayout layout = new GridLayout(GRID_COLUMNS, false);
         container.setLayout(layout);
 
-        createLabelAndTextField(container, "Server URL:", SWT.BORDER);
-        createLabelAndTextField(container, "Login:", SWT.BORDER);
-        createLabelAndTextField(container, "Password:", SWT.BORDER | SWT.PASSWORD);
+        // Create red color and bold font
+        Color red = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+        FontData[] fontData = getFont().getFontData();
+        for (FontData fd : fontData) {
+            fd.setStyle(SWT.BOLD); 
+        }
+        Font boldFont = new Font(Display.getCurrent(), fontData);
 
-        Button fetchButton = new Button(container, SWT.PUSH);
-        fetchButton.setText("Fetch Data");
-        fetchButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                if (validateInput()) {
-                    fetcher = new CometDataFetcher(serverUrlText.getText(), loginText.getText(), passwordText.getText());
-                    fetchAndDisplayData();
-                }
-            }
-        });
-        fetchButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, GRID_COLUMNS, VERTICALSPAN));
+        // Create a custom description label with red color and bold font
+        Label customDescription = new Label(container, SWT.NONE);
+        customDescription.setText("Enter details and fetch data.");
+        customDescription.setForeground(red);
+        customDescription.setFont(boldFont);   
+
+        GridData descriptionGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, GRID_COLUMNS, 1);
+        customDescription.setLayoutData(descriptionGridData);
+        
+        container.addDisposeListener(event -> boldFont.dispose());
+
+        // Create blue labels for the text fields
+        Color blue = Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
+        createLabelAndTextField(container, "Server URL:", SWT.BORDER, blue); 
+        createLabelAndTextField(container, "Login:", SWT.BORDER, blue);      
+        createLabelAndTextField(container, "Password:", SWT.BORDER | SWT.PASSWORD, blue);
+
+        createFetchButton(container);
 
         targetTree = new Tree(container, SWT.CHECK | SWT.MULTI | SWT.BORDER);
         targetTree.addSelectionListener(new SelectionAdapter() {
@@ -99,11 +123,96 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
+     * Creates a "Fetch Data" button within the provided container. The button is aligned to the right side of the container.
+     */
+    private void createFetchButton(Composite container) {
+        Button fetchButton = new Button(container, SWT.PUSH);
+        fetchButton.setText("Fetch Data");
+
+        // Set the button to be aligned to the right side
+        GridData fetchButtonGridData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+        fetchButtonGridData.horizontalSpan = GRID_COLUMNS;
+        fetchButton.setLayoutData(fetchButtonGridData);
+
+        fetchButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                handleFetchData();
+            }
+        });
+    }
+
+    /**
+     * Handles the process of fetching data from a server, triggered by the "Fetch Data" button.
+     * This method validates the input fields, retrieves user input (server URL, username, and password),
+     * and uses a ProgressMonitorDialog to display the progress of connecting to the COMET server 
+     * and fetching data. It ensures that the data is fetched only once.
+     */
+    private void handleFetchData() {
+        // Check if data has already been fetched
+        if (isDataFetched) {
+            setMessage("Data has already been fetched.", SWT.ICON_INFORMATION);
+            return;
+        }
+
+        // Validate the input fields before proceeding
+        if (!validateInput()) {
+            return;
+        }
+
+        // These variables will hold the input values from the UI
+        final String[] serverUrl = new String[1];
+        final String[] username = new String[1];
+        final String[] password = new String[1];
+
+        // Access UI elements from the UI thread
+        Display.getDefault().syncExec(() -> {
+            serverUrl[0] = serverUrlText.getText();
+            username[0] = loginText.getText();
+            password[0] = passwordText.getText();
+        });
+
+        Shell shell = getShell();
+
+        // Use a ProgressMonitorDialog to show progress to the user
+        ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(shell);
+        try {
+            progressDialog.run(true, true, new IRunnableWithProgress() {
+                @Override
+                public void run(IProgressMonitor monitor) {
+                    try {
+                        monitor.beginTask("Connecting to COMET server...", IProgressMonitor.UNKNOWN);
+
+                        // Instantiate the CometDataFetcher with the retrieved values
+                        fetcher = new CometDataFetcher(serverUrl[0], username[0], password[0]);
+
+                        // Fetch and display data
+                        fetcher.fetchData(targetTree);
+
+                        // After successful data fetch, set the flag to true
+                        isDataFetched = true;
+
+                    } catch (Exception e) {
+                        Status status = new Status(Status.ERROR, Activator.getPluginId(), "Failed to fetch data from COMET server.", e);
+                        StatusManager.getManager().handle(status, StatusManager.LOG | StatusManager.SHOW);
+                    } finally {
+                        monitor.done();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Status status = new Status(Status.ERROR, Activator.getPluginId(), "Failed to run progress dialog.", e);
+            StatusManager.getManager().handle(status, StatusManager.LOG | StatusManager.SHOW);
+        }
+    }
+
+    /**
      * Creates a label and a text field with the specified label text and style.
      */
-    private void createLabelAndTextField(Composite parent, String labelText, int style) {
+    private void createLabelAndTextField(Composite parent, String labelText, int style, Color labelColor) {
         Label label = new Label(parent, SWT.NONE);
         label.setText(labelText);
+        label.setForeground(labelColor);  // Set label color to blue
         Text text = new Text(parent, style);
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         if (labelText.equals("Server URL:")) {
@@ -131,14 +240,6 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Initiates the process of fetching data from the COMET server and displaying it 
-     * in the  Tree widget.
-     */
-    private void fetchAndDisplayData() {
-        fetcher.fetchData(targetTree);
-    }
-
-    /**
      * Retrieves a list of all TreeItems that are checked in the Tree.
      */
     public List<TreeItem> getCheckedItems() {
@@ -162,7 +263,7 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Recursively checks or unchecks all child {@link TreeItem}s of the specified TreeItem.
+     * Recursively checks or unchecks all child  TreeItems of the specified TreeItem.
      */
     private void checkChildren(TreeItem item, boolean checked) {
         for (TreeItem child : item.getItems()) {
@@ -177,4 +278,4 @@ public class CometImportWizardPage extends WizardPage {
     public boolean performFinish() {
         return true;
     }
-}
+} 
