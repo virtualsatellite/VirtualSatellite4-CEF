@@ -12,19 +12,19 @@ package de.dlr.sc.virsat.model.extension.cefx.model;
 // *****************************************************************
 // * Import Statements
 // *****************************************************************
-import javax.xml.bind.annotation.XmlAccessorType;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
-import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
-import javax.xml.bind.annotation.XmlRootElement;
-import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
 import de.dlr.sc.virsat.model.dvlm.categories.Category;
-import javax.xml.bind.annotation.XmlAccessType;
-import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ComposedPropertyInstance;
-import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyComposed;
+import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryInstantiator;
+import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.ext.core.model.GenericCategory;
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 
 // *****************************************************************
@@ -54,8 +54,8 @@ public abstract class ASubSystemPowerParameters extends GenericCategory implemen
 	}
 	
 	// property name constants
-	public static final String PROPERTY_POWERAVGWITHMARGIN = "powerAvgWithMargin";
-	public static final String PROPERTY_POWERENERGYWITHMARGIN = "powerEnergyWithMargin";
+	public static final String PROPERTY_POWERTOTALAVGWITHMARGIN = "powerTotalAvgWithMargin";
+	public static final String PROPERTY_POWERTOTALENERGYWITHMARGIN = "powerTotalEnergyWithMargin";
 	
 	
 	
@@ -78,49 +78,49 @@ public abstract class ASubSystemPowerParameters extends GenericCategory implemen
 	
 	
 	// *****************************************************************
-	// * Attribute: powerAvgWithMargin
+	// * Attribute: powerTotalAvgWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerAvgWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalAvgWithMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerAvgWithMargin() {
-		if (powerAvgWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerAvgWithMargin");
-			powerAvgWithMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalAvgWithMargin() {
+		if (powerTotalAvgWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalAvgWithMargin");
+			powerTotalAvgWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerAvgWithMargin() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin.getValue();
+	public Parameter getPowerTotalAvgWithMargin() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerAvgWithMarginBean() {
-		safeAccessPowerAvgWithMargin();
-		return powerAvgWithMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalAvgWithMarginBean() {
+		safeAccessPowerTotalAvgWithMargin();
+		return powerTotalAvgWithMargin;
 	}
 	
 	// *****************************************************************
-	// * Attribute: powerEnergyWithMargin
+	// * Attribute: powerTotalEnergyWithMargin
 	// *****************************************************************
-	private BeanPropertyComposed<Parameter> powerEnergyWithMargin = new BeanPropertyComposed<>();
+	private BeanPropertyComposed<Parameter> powerTotalEnergyWithMargin = new BeanPropertyComposed<>();
 	
-	private void safeAccessPowerEnergyWithMargin() {
-		if (powerEnergyWithMargin.getTypeInstance() == null) {
-			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerEnergyWithMargin");
-			powerEnergyWithMargin.setTypeInstance(propertyInstance);
+	private void safeAccessPowerTotalEnergyWithMargin() {
+		if (powerTotalEnergyWithMargin.getTypeInstance() == null) {
+			ComposedPropertyInstance propertyInstance = (ComposedPropertyInstance) helper.getPropertyInstance("powerTotalEnergyWithMargin");
+			powerTotalEnergyWithMargin.setTypeInstance(propertyInstance);
 		}
 	}
 	
 	@XmlElement(nillable = true)
-	public Parameter getPowerEnergyWithMargin() {
-		safeAccessPowerEnergyWithMargin();
-		return powerEnergyWithMargin.getValue();
+	public Parameter getPowerTotalEnergyWithMargin() {
+		safeAccessPowerTotalEnergyWithMargin();
+		return powerTotalEnergyWithMargin.getValue();
 	}
 	
-	public BeanPropertyComposed<Parameter> getPowerEnergyWithMarginBean() {
-		safeAccessPowerEnergyWithMargin();
-		return powerEnergyWithMargin;
+	public BeanPropertyComposed<Parameter> getPowerTotalEnergyWithMarginBean() {
+		safeAccessPowerTotalEnergyWithMargin();
+		return powerTotalEnergyWithMargin;
 	}
 	
 	

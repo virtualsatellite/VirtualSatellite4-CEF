@@ -37,28 +37,28 @@ jobs:
   #---------------------------------------------
   verify:
     name: Verify
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     
     steps:
       # --------------------------------------------
       # Checks out a copy of the repository
       # --------------------------------------------
       - name: Setup - Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
         
       # --------------------------------------------
       # Run a quick sanity check if all commits are
       # handed in by known users
       #---------------------------------------------
       - name: Verify - Authors Sanity Check
-        uses: virtualsatellite/ci-actions/ci-verify-authors-action@v6
+        uses: virtualsatellite/ci-actions/ci-verify-authors-action@v7
           
   # -----------------------------------------------------
   # Build and Test - SpotBugs Job
   # -----------------------------------------------------
   spotbugs:
     name: Build and Test - Spotbugs
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [verify]
 
     steps:
@@ -66,15 +66,28 @@ jobs:
       # Checks out a copy of the repository
       # --------------------------------------------
       - name: Setup - Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
       
+      - name: Setup - Java 17
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: 17
+          distribution: "temurin"
+          
+      - name: Setup - Maven 3.9.6
+        uses: virtualsatellite/ci-actions/ci-maven-setup@v7
+        with:
+           maven-version: "3.9.6"
       # --------------------------------------------
       # Setup caching for m2 repository
       # --------------------------------------------
       - name: Setup - Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v4.0.2
         with:
-          path: ~/.m2/repository/
+          path: |
+             ~/.m2/repository/
+             ./maven.tar.gz
+          save-always: true
           key: ${{ runner.os }}-local-maven-spotbugs-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-local-maven-spotbugs-
@@ -87,23 +100,23 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v6
+        uses: virtualsatellite/ci-actions/ci-setup-action@v7
         with:
            pkgs_file: apt_vtk_zmq_packages
-           jdk: 11
+           jdk: no
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v7
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Spotbugs
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v7
         with:
           build_job: spotbugs
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -113,7 +126,7 @@ jobs:
   # -----------------------------------------------------
   surefire:
     name: Build and Test - Surefire
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [verify]
 
     steps:
@@ -121,16 +134,29 @@ jobs:
       # Checks out a copy of your repository
       # --------------------------------------------
       - name: Setup - Checkout code
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v4.1.1
+      
+      - name: Setup - Java 17
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: 17
+          distribution: "temurin"
+          
+      - name: Setup - Maven 3.9.6
+        uses: virtualsatellite/ci-actions/ci-maven-setup@v7
+        with:
+           maven-version: "3.9.6"
       # --------------------------------------------
       # Setup caching for m2 repository
       # --------------------------------------------
       - name: Setup - Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v4.0.2
         with:
-          path: ~/.m2/repository/
-          key: ${{ runner.os }}-local-maven-surefire-{{ hashFiles('**/pom.xml') }}
+          path: |
+             ~/.m2/repository/
+             ./maven.tar.gz
+          save-always: true
+          key: ${{ runner.os }}-local-maven-surefire-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-local-maven-surefire-
             ${{ runner.os }}-local-maven-
@@ -142,24 +168,24 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v6
+        uses: virtualsatellite/ci-actions/ci-setup-action@v7
         with:
            xvfb: -x
            pkgs_file: apt_vtk_zmq_packages
-           jdk: 11
+           jdk: no
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v7
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Surefire
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v7
         with:
           build_job: sureheadless
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -169,7 +195,7 @@ jobs:
       # --------------------------------------------
       - name: Build and Test - Upload SWTBot Screenshots on Failure
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: SWTBot Screenshots
           path: 
@@ -180,7 +206,7 @@ jobs:
       # --------------------------------------------            
       - name: Upload Surefire Reports on Failure
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: Surefire Reports
           path: 
@@ -191,7 +217,7 @@ jobs:
   # -----------------------------------------------------
   checkstyle:
     name: Build and Test - Checkstyle
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [verify]
 
     steps:
@@ -199,15 +225,28 @@ jobs:
       # Checks out a copy of your repository
       # --------------------------------------------
       - name: Setup - Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
       
+      - name: Setup - Java 17
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: 17
+          distribution: "temurin"
+          
+      - name: Setup - Maven 3.9.6
+        uses: virtualsatellite/ci-actions/ci-maven-setup@v7
+        with:
+           maven-version: "3.9.6"
       # --------------------------------------------
       # Setup caching for m2 repository
       # --------------------------------------------      
       - name: Setup - Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v4.0.2
         with:
-          path: ~/.m2/repository/
+          path: |
+             ~/.m2/repository/
+             ./maven.tar.gz
+          save-always: true
           key: ${{ runner.os }}-local-maven-checkstyle-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-local-maven-checkstyle-
@@ -220,23 +259,23 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------      
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v6
+        uses: virtualsatellite/ci-actions/ci-setup-action@v7
         with:
            pkgs_file: apt_vtk_zmq_packages
-           jdk: 11
+           jdk: no
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v7
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build and Test - Checkstyle
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v7
         with:
           build_job: checkstyle
           build_profile: ${{ steps.build_decision.outputs.build_type }}
@@ -246,7 +285,7 @@ jobs:
   # -----------------------------------------------------
   deploy:
     name: Build, Assemble and Deploy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [spotbugs, surefire, checkstyle]
     
     steps:
@@ -254,15 +293,28 @@ jobs:
       # Checks out a copy of your repository
       # --------------------------------------------
       - name: Setup - Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
+      - name: Setup - Java 17
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: 17
+          distribution: "temurin"
+          
+      - name: Setup - Maven 3.9.6
+        uses: virtualsatellite/ci-actions/ci-maven-setup@v7
+        with:
+           maven-version: "3.9.6"
       # --------------------------------------------
       # Setup caching for m2 repository
       # --------------------------------------------
       - name: Setup - Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v4.0.2
         with:
-          path: ~/.m2/repository/
+          path: |
+             ~/.m2/repository/
+             ./maven.tar.gz
+          save-always: true
           key: ${{ runner.os }}-local-maven-deploy-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-local-maven-deploy-
@@ -275,32 +327,44 @@ jobs:
       # Perform various setup operations
       # --------------------------------------------
       - name: Setup - Prepare OS
-        uses: virtualsatellite/ci-actions/ci-setup-action@v6
+        uses: virtualsatellite/ci-actions/ci-setup-action@v7
         with:
            pkgs_file: apt_vtk_zmq_packages
-           jdk: 11
+           jdk: no
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Build and Deploy Decision
         id: build_decision
-        uses: virtualsatellite/ci-actions/ci-build-decision-action@v6
+        uses: virtualsatellite/ci-actions/ci-build-decision-action@v7
 
       # --------------------------------------------
       # Development and Feature branches
       # --------------------------------------------
       - name: Build - Assemble
-        uses: virtualsatellite/ci-actions/ci-maven-build-action@v6
+        uses: virtualsatellite/ci-actions/ci-maven-build-action@v7
         with:
           build_job: assemble
           build_profile: ${{ steps.build_decision.outputs.build_type }}
+          
+      # --------------------------------------------
+      # Upload SWTBout screenshots to github artifacts
+      # --------------------------------------------
+      - name: Build - Upload Build Artifacts
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: Deployable Applications
+          path: |
+            deploy/**/*.zip
+            deploy/**/*.tar.gz
+          retention-days: 3
      
       # ---------------------------------------------
       # Deploying to github releases
       # --------------------------------------------
       - name: Build - Deploy GH
-        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@v6
+        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@v7
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
@@ -310,7 +374,7 @@ jobs:
       # SF Deploy still to be done
       # ----------------------------------------------
       - name: Build - Deploy SF
-        uses: virtualsatellite/ci-actions/ci-deploy-sf-product-action@v6
+        uses: virtualsatellite/ci-actions/ci-deploy-sf-product-action@v7
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
           openssl_pass: ${{ secrets.SF_SSH_KEY_OPENSSL_PASS }}

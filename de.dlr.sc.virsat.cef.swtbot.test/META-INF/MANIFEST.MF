@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF UI Tests with SwtBot
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.swtbot.test
-Bundle-Version: 4.16.1.qualifier
+Bundle-Version: 4.17.0.qualifier
 Bundle-Vendor: 
  DLR (German Aerospace Center)
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.eclipse.swtbot.go,
  org.eclipse.swtbot.junit4_x,
  org.hamcrest.library,
@@ -21,7 +21,6 @@ Require-Bundle: org.eclipse.swtbot.go,
  de.dlr.sc.virsat.model.extension.cefx.ui
 Automatic-Module-Name: de.dlr.sc.virsat.fdir.swtbot.test
 Export-Package: de.dlr.sc.virsat.cef.swtbot.test
-Import-Package: org.zeromq,
- vtk,
+Import-Package: vtk,
  vtk.rendering,
  vtk.rendering.awt

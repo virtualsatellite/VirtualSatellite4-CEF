@@ -1,3 +1,12 @@
+---
+name: Release
+about: Create a Release for a new Version of Virtual Satellite CEF
+title: 'Release Version 4.x.x '
+labels: release
+assignees: ''
+
+---
+
 Virtual Satellite Release Version 4.x.x
 
 This ticket captures all release related work of the VirtualSatellite4-CEF release
@@ -8,6 +17,7 @@ This ticket captures all release related work of the VirtualSatellite4-CEF relea
 - [ ] Create new integration branch from development branch
 - [ ] Run ant script to update version numbers
 - [ ] Regenerate concept.xmi of all relevant projects
+- [ ] Check target platform to be compliant with latest Virtual Satellite Core Release
 - [ ] Launch application from product configuration and resolve all dependency issues
 - [ ] Merge integration branch into development branch (Pull Request named "Integration 4.x.x - Remerge Versions")
 

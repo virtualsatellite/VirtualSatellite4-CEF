@@ -13,7 +13,7 @@
 	<parent>
 		<artifactId>de.dlr.sc.virsat.cef.parent</artifactId>
 		<groupId>de.dlr.sc.virsat.cef</groupId>
-		<version>4.16.1-SNAPSHOT</version>
+		<version>4.17.0-SNAPSHOT</version>
 		<relativePath>../maven/pom.xml</relativePath>
 	</parent>
 
@@ -39,14 +39,28 @@
 						<artifactId>tycho-p2-director-plugin</artifactId>
 						<version>${tycho-version}</version>
 						<executions>
-							<execution>
-								<!-- install the product using the p2 director -->
-								<id>materialize-products</id>
-								<goals>
-									<goal>materialize-products</goal>
-								</goals>
+						    <execution>
+						      	<id>create-distributions</id>
+						      	<goals>
+						        	<goal>materialize-products</goal>
+						        	<goal>archive-products</goal>
+						    	</goals>
 							</execution>
 						</executions>
+					 	<configuration>
+				            <formats>
+				              <linux>tar.gz</linux>
+				              <win32>zip</win32>
+				            </formats>
+				            <products>
+				              <product>
+				                <id>de.dlr.virsat.cef.product</id>
+				                <rootFolder>virsat</rootFolder>
+				                <archiveFileName>${build.file}</archiveFileName>
+				                <attachId>core</attachId>
+				              </product>
+				            </products>
+			          	</configuration>
 					</plugin>
 
 					<plugin>
@@ -56,29 +70,15 @@
 								<phase>install</phase>
 								<configuration>
 									<target>
-										<fail
-											message="Cannot Release!!! Release folder already exists !!! Potential overwrite to ${build.folder.fullpath} !!!">
-											<condition>
-												<and>
-													<equals arg1="${build.deploy.release}" arg2="true" />
-													<available file="${build.folder.fullpath}"
-														type="dir" />
-												</and>
-											</condition>
-										</fail>
-
 										<!-- ANT Script Start -->
-										<mkdir dir="${build.folder.fullpath}" />
 
-										<delete file="${build.file.win32.fullpath}" />
-										<delete file="${build.file.linux.fullpath}" />
-
-										<zip destfile="${build.file.win32.fullpath}"
-											basedir="./target/products/de.dlr.virsat.cef.product/win32/win32/x86_64" />
-										<tar destfile="${build.file.linux.fullpath}"
-											basedir="./target/products/de.dlr.virsat.cef.product/linux/gtk/x86_64"
-											compression="gzip"
-											longfile="gnu" />
+										<copy toDir="${build.folder.fullpath}">
+											<fileset dir="./target/products/">
+											    <include name="*.tar.gz"/>
+											    <include name="*.zip"/>
+											</fileset>
+										</copy>
+										
 										<!-- ANT Script Stop -->
 									</target>
 								</configuration>
