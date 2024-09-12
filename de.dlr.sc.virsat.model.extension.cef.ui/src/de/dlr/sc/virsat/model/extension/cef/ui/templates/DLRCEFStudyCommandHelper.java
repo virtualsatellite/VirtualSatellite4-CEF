@@ -42,15 +42,6 @@ import de.dlr.sc.virsat.project.resources.command.CreateSeiResourceAndFileComman
  */
 public class DLRCEFStudyCommandHelper {
 	
-	public static final String POWER_PARAMETERS = "PowerParameters";
-	public static final String MASS_PARAMETERS = "MassParameters";
-	public static final String SYSTEM_PARAMETERS = "SystemParameters";
-	public static final String EQUIPMENT_MASS_PARAMETERS = "EquipmentMassParameters";
-	public static final String TEMPERATURE_PARAMETERS = "TemperatureParameters";
-	public static final String SYSTEM_NAME = "System";
-	public static final String SUB_SYSTEM_NAME = "SubSystem";
-	public static final String EQUIPMENT_NAME = "Equipment";
-	
 	/**
 	 * private Constructor
 	 */
@@ -74,7 +65,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static System createSystemBean(Concept concept) {
 		System system = new System(concept);
-		system.setName(SYSTEM_NAME);
+		system.setName("System");
 		return system;
 	}
 	
@@ -84,7 +75,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static SubSystem createSubSystemBean(Concept concept) {
 		SubSystem subSystem = new SubSystem(concept);
-		subSystem.setName(SUB_SYSTEM_NAME);
+		subSystem.setName("subSystem");
 		return subSystem;
 	}
 
@@ -94,7 +85,7 @@ public class DLRCEFStudyCommandHelper {
 	 */
 	public static Equipment createEquipmentBean(Concept concept) {
 		Equipment equipment = new Equipment(concept);
-		equipment.setName(EQUIPMENT_NAME);
+		equipment.setName("equipment");
 		return equipment;
 	}
 
@@ -102,29 +93,29 @@ public class DLRCEFStudyCommandHelper {
 	public static void addSystemParameters(Concept concept, System system) {
 		//default unit in concept is percent 
 		SystemParameters systemParameters = new SystemParameters(concept);
-		systemParameters.setName(SYSTEM_PARAMETERS);
+		systemParameters.setName("systemParameters");
 		systemParameters.setSystemMargin(20);  
 		system.add(systemParameters);
 		
 		SystemMassParameters systemMassParameters = new SystemMassParameters(concept);
-		systemMassParameters.setName(MASS_PARAMETERS);
+		systemMassParameters.setName("massParameters");
 		systemMassParameters.getMassAdapter().setDefaultValue(100);
 		systemMassParameters.getMassLaunchMax().setDefaultValue(850);
 		systemMassParameters.getMassPropellant().setDefaultValue(35);
 		system.add(systemMassParameters);
 		
 		SystemPowerParameters systemPowerParameters = new SystemPowerParameters(concept);
-		systemPowerParameters.setName(POWER_PARAMETERS);
+		systemPowerParameters.setName("powerParameters");
 		system.add(systemPowerParameters);
 	}
 
 	public static void addSubSystemParameters(Concept concept, SubSystem subSystem) {
 		SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(concept);
-		subSystemMassParameters.setName(MASS_PARAMETERS);
+		subSystemMassParameters.setName("massParameters");
 		subSystem.add(subSystemMassParameters);
 		
 		SubSystemPowerParameters subSystemPowerParameters = new SubSystemPowerParameters(concept);
-		subSystemPowerParameters.setName(POWER_PARAMETERS);
+		subSystemPowerParameters.setName("powerParameters");
 		subSystem.add(subSystemPowerParameters);
 	}
 
@@ -135,16 +126,16 @@ public class DLRCEFStudyCommandHelper {
 		equipment.add(equipmentParams);
 		
 		EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(concept);
-		equipmentMassParameters.setName(EQUIPMENT_MASS_PARAMETERS);
+		equipmentMassParameters.setName("EquipmentMassParameters");
 		equipmentMassParameters.getMassPerUnit().setDefaultValue(10);
 		equipment.add(equipmentMassParameters);
 		
 		EquipmentPowerParameters powerParameters = new EquipmentPowerParameters(concept);
-		powerParameters.setName(POWER_PARAMETERS);
+		powerParameters.setName("powerParameters");
 		equipment.add(powerParameters);
 		
 		EquipmentTemperatureParameters temperatureParameters = new EquipmentTemperatureParameters(concept);
-		temperatureParameters.setName(TEMPERATURE_PARAMETERS);
+		temperatureParameters.setName("temperatureParameters");
 		temperatureParameters.getTemperatureNoOpsMax().setDefaultValue(30);
 		temperatureParameters.getTemperatureNoOpsMin().setDefaultValue(5);
 		temperatureParameters.getTemperatureOpsMax().setDefaultValue(60);

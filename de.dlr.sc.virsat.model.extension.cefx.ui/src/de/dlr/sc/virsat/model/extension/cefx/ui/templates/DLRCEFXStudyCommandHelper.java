@@ -260,7 +260,7 @@ public class DLRCEFXStudyCommandHelper {
 		Discipline newDiscipline;
 		newDiscipline = RolesFactory.eINSTANCE.createDiscipline();
 		newDiscipline.setName(disciplineName);
-		newDiscipline.setUser(UserRegistry.getInstance().getUserName());
+		newDiscipline.getUsers().add(UserRegistry.getInstance().getUserName());
 		return new BeanDiscipline(newDiscipline);
 	}
 

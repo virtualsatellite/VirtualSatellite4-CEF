@@ -17,7 +17,7 @@ public class ManifestMf {
 	public static final String REQUIRE_BUNDLE = "org.eclipse.ui.workbench,org.eclipse.jface,org.eclipse.osgi,org.eclipse.core.runtime,org.eclipse.ui.intro,org.eclipse.ui";
 	public static final String BUNDLE_MANIFESTVERSION = "2";
 	public static final String BUNDLE_ACTIVATOR = "de.dlr.sc.virsat.cef.branding.ui.BrandingPlugin";
-	public static final String BUNDLE_REQUIREDEXECUTIONENVIRONMENT = "JavaSE-11";
+	public static final String BUNDLE_REQUIREDEXECUTIONENVIRONMENT = "JavaSE-17";
 	public static final String BUNDLE_ACTIVATIONPOLICY = "lazy";
 	public static final String BUNDLE_VENDOR = "DLR (German Aerospace Center)";
 	public static final String MANIFEST_VERSION = "1.0";

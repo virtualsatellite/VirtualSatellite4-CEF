@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VirSat CEF Calculation
 Bundle-SymbolicName: de.dlr.sc.virsat.cef.calculation;singleton:=true
-Bundle-Version: 4.16.2.qualifier
+Bundle-Version: 4.17.0.qualifier
 Bundle-ClassPath: .
 Eclipse-ExtensibleAPI: true
 Require-Bundle: org.eclipse.ui,
@@ -10,8 +10,9 @@ Require-Bundle: org.eclipse.ui,
  de.dlr.sc.virsat.model,
  de.dlr.sc.virsat.model.edit,
  de.dlr.sc.virsat.model.calculation,
- de.dlr.sc.virsat.model.extension.cef
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+ de.dlr.sc.virsat.model.extension.cef,
+ org.eclipse.core.expressions
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: DLR (German Aerospace Center)
 Export-Package: de.dlr.sc.virsat.cef.calculation.modes

@@ -196,7 +196,7 @@ public class IntroPart implements IIntroPart {
 	 * @author scha_vo
 	 *
 	 */
-	class OpenPerspectiveMouseListener implements MouseListener {
+	static class OpenPerspectiveMouseListener implements MouseListener {
 
 		private String perspectiveId;
 		

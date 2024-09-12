@@ -98,7 +98,7 @@ public class CefValidatorTest extends ACefValidatorTest {
 	Parameter paramOne;
 	
 	@Before
-	public void setUp() throws CoreException, IOException {
+	public void setupSpecific() throws CoreException, IOException {
 		UserRegistry.getInstance().setSuperUser(true);
 		
 		// Create an Editing Domain
@@ -270,7 +270,7 @@ public class CefValidatorTest extends ACefValidatorTest {
 		fileSys.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 		paramOne.setDefaultValue(1);
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
@@ -296,7 +296,7 @@ public class CefValidatorTest extends ACefValidatorTest {
 		modeValue.setValue(1);
 		modeValue.setMode(new SystemMode(conceptCef));
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}
@@ -321,7 +321,7 @@ public class CefValidatorTest extends ACefValidatorTest {
 		URI uri = URI.createPlatformResourceURI("dummy", true);
 		excelCalc.setExcelFile(uri);
 		
-		validate = seiValidator.validate(sys.getStructuralElementInstance());
+		seiValidator.validate(sys.getStructuralElementInstance());
 		assertTrue("validator brings no error", seiValidator.validate(sys.getStructuralElementInstance()));
 		assertEquals("There are no markers anymore", 0,	fileSys.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).length);	
 	}

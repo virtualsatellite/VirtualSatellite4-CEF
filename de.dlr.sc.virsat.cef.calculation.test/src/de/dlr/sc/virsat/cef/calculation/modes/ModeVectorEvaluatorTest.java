@@ -96,8 +96,8 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		
 		/* Case: operation modeVector */
 		modeVector = (ModeVectorResult) evaluator.caseAOpRightExpression(rightExpression, modeVector);
-		assertEquals("Case operation on single mode vector: Default Value", Math.sqrt(INIT_DEFAULT_VALUE), Double.valueOf(modeVector.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
-		assertEquals("Case operation on single mode vector: Idle Value", Math.sqrt(INIT_IDLE_VALUE), Double.valueOf(modeVector.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation on single mode vector: Default Value", Math.sqrt(INIT_DEFAULT_VALUE), Double.parseDouble(modeVector.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation on single mode vector: Idle Value", Math.sqrt(INIT_IDLE_VALUE), Double.parseDouble(modeVector.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
 	}
 
 	@Test
@@ -117,18 +117,18 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		
 		/* Case: modeVector operation modeVector */
 		ModeVectorResult result = (ModeVectorResult) evaluator.caseALeftOpRightExpression(leftOpRightExpression, modeVector1, modeVector2);
-		assertEquals("Case operation between 2 mode vectors: Default Value", INIT_DEFAULT_VALUE * INIT_DEFAULT_VALUE, Double.valueOf(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
-		assertEquals("Case operation between 2 mode vectors: Idle Value", INIT_IDLE_VALUE * INIT_DEFAULT_VALUE, Double.valueOf(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between 2 mode vectors: Default Value", INIT_DEFAULT_VALUE * INIT_DEFAULT_VALUE, Double.parseDouble(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between 2 mode vectors: Idle Value", INIT_IDLE_VALUE * INIT_DEFAULT_VALUE, Double.parseDouble(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
 	
 		/* Case: numberLiteral operation modeVector */
 		result = (ModeVectorResult) evaluator.caseALeftOpRightExpression(leftOpRightExpression, numberLiteral, modeVector1);
-		assertEquals("Case operation between mode vector and number literal: Default Value", INIT_DEFAULT_VALUE * VALUE, Double.valueOf(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
-		assertEquals("Case operation between mode vector and number literal: Idle Value", INIT_IDLE_VALUE * VALUE, Double.valueOf(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between mode vector and number literal: Default Value", INIT_DEFAULT_VALUE * VALUE, Double.parseDouble(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between mode vector and number literal: Idle Value", INIT_IDLE_VALUE * VALUE, Double.parseDouble(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
 		
 		/* Case: modeVector operation numberLiteral */
 		result = (ModeVectorResult) evaluator.caseALeftOpRightExpression(leftOpRightExpression, modeVector1, numberLiteral);
-		assertEquals("Case operation between mode vector and number literal (swapped): Default Value", INIT_DEFAULT_VALUE * VALUE, Double.valueOf(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
-		assertEquals("Case operation between mode vector and number literal (swapped): Idle Value", INIT_IDLE_VALUE * VALUE, Double.valueOf(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between mode vector and number literal (swapped): Default Value", INIT_DEFAULT_VALUE * VALUE, Double.parseDouble(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case operation between mode vector and number literal (swapped): Idle Value", INIT_IDLE_VALUE * VALUE, Double.parseDouble(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
 	}
 	
 	@Test
@@ -145,8 +145,8 @@ public class ModeVectorEvaluatorTest extends ATestCase {
 		
 		/* Case: modeVector operation modeVector */
 		ModeVectorResult result = (ModeVectorResult) evaluator.caseAAdvancedFunction(setFunction, set);
-		assertEquals("Case set operation with 2 mode vectors: Default Value", INIT_DEFAULT_VALUE + INIT_DEFAULT_VALUE, Double.valueOf(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
-		assertEquals("Case set operation with 2 mode vectors: Idle Value", INIT_IDLE_VALUE + INIT_DEFAULT_VALUE, Double.valueOf(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case set operation with 2 mode vectors: Default Value", INIT_DEFAULT_VALUE + INIT_DEFAULT_VALUE, Double.parseDouble(result.getResult(null).getNumberLiteral().getValue()), TEST_EPSILON);
+		assertEquals("Case set operation with 2 mode vectors: Idle Value", INIT_IDLE_VALUE + INIT_DEFAULT_VALUE, Double.parseDouble(result.getResult(idleMode).getNumberLiteral().getValue()), TEST_EPSILON);
 	}
 	
 	private static final double DEFAULT_VALUE = 50;

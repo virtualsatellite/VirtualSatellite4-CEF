@@ -23,6 +23,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 
 /**
  * The activator class controls the plug-in life cycle
@@ -38,6 +40,7 @@ public class BrandingPlugin extends AbstractUIPlugin implements IStartup {
 	/**
 	 * The constructor
 	 */
+	@SuppressFBWarnings(value = "SING_SINGLETON_HAS_NONPRIVATE_CONSTRUCTOR", justification = "needs to be public for osgi to instantiate plugin")
 	public BrandingPlugin() {
 	}
 
@@ -89,7 +92,7 @@ public class BrandingPlugin extends AbstractUIPlugin implements IStartup {
 	 *
 	 * @return the shared instance
 	 */
-	public static BrandingPlugin getDefault() {
+	public static synchronized BrandingPlugin getDefault() {
 		return plugin;
 	}
 	
