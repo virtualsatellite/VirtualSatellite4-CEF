@@ -91,7 +91,7 @@ public class CometImportWizardPage extends WizardPage {
         customDescription.setForeground(red);
         customDescription.setFont(boldFont);   
 
-        GridData descriptionGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, GRID_COLUMNS, 1);
+        GridData descriptionGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, GRID_COLUMNS, VERTICALSPAN);
         customDescription.setLayoutData(descriptionGridData);
         
         container.addDisposeListener(event -> boldFont.dispose());

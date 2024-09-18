@@ -16,16 +16,19 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+
+import java.util.List;
 
 public class SelectedElementsPage extends WizardPage {
 
-    private List selectedElementsList;
-
+    private Tree selectedElementsTree; 
+    private List<TreeItem> selectedTreeItems;
     protected SelectedElementsPage(String pageName) {
         super(pageName);
         setTitle("Selected Elements");
-        setDescription("Review the selected elements before finalizing the import.");
+        setDescription("Review the selected elements and tree structure.");
     }
 
     @Override
@@ -36,19 +39,46 @@ public class SelectedElementsPage extends WizardPage {
         Label label = new Label(container, SWT.NONE);
         label.setText("Selected Elements:");
 
-        selectedElementsList = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        selectedElementsList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        selectedElementsTree = new Tree(container, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+        selectedElementsTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         setControl(container);
     }
 
     /**
-     * Method to populate the list with the selected elements.
+     * Populates the Tree with the selected elements.
+     * This method will be called when the user clicks "Next" from the previous page.
      */
-    public void setSelectedElements(java.util.List<String> elements) {
-        selectedElementsList.removeAll();
-        for (String element : elements) {
-            selectedElementsList.add(element);
+    public void setSelectedElements(List<TreeItem> selectedItems) {
+    	
+    	// Clear any existing items
+        selectedElementsTree.removeAll(); 
+
+        // Create root TreeItem based on the first selected item
+        if (!selectedItems.isEmpty()) {
+            TreeItem root = new TreeItem(selectedElementsTree, SWT.NONE);
+            root.setText(selectedItems.get(0).getText());
+            addChildren(root, selectedItems.get(0));
+            root.setExpanded(true);
         }
+    }
+
+    /**
+     * Recursively adds children of the TreeItems.
+     */
+    private void addChildren(TreeItem parent, TreeItem original) {
+        for (TreeItem item : original.getItems()) {
+            TreeItem child = new TreeItem(parent, SWT.NONE);
+            child.setText(item.getText());
+            addChildren(child, item); 
+        }
+    }
+
+    public Tree getTree() {
+        return selectedElementsTree;
+    }
+    
+    public List<TreeItem> getSelectedItems() {
+        return this.selectedTreeItems;
     }
 }
