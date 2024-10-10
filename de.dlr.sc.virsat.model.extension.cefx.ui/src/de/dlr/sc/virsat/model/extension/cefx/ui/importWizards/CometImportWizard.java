@@ -22,6 +22,7 @@ import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -37,6 +38,8 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     
     private CometImportWizardPage mainPage; 
     private SelectedElementsPage selectedElementsPage;
+    private ImportTargetSelection targetSelectionPage;
+    private IContainer model;
 
     public CometImportWizard() {
         super();
@@ -46,9 +49,12 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
     @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
+    	this.model = ResourcesPlugin.getWorkspace().getRoot();
         mainPage = new CometImportWizardPage("Configure Comet Server");
+        targetSelectionPage = new ImportTargetSelection(model);
         selectedElementsPage = new SelectedElementsPage("Selected Elements");
         addPage(mainPage);
+        addPage(targetSelectionPage);
         addPage(selectedElementsPage);
     }
 
@@ -88,9 +94,9 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         }
 
         // Ensure that the rootInstance is associated with a resource
-        if (rootInstance.eResource() == null) {
-	            throw new IllegalStateException("StructuralElementInstance's resource is null.");
-        }
+//        if (rootInstance.eResource() == null) {
+//	            throw new IllegalStateException("StructuralElementInstance's resource is null.");
+//        }
 
         // Check if editing domain retrieval is successful
         VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(rootInstance);
@@ -99,7 +105,7 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         }
 
         try {
-            Command addCommand = AddCommand.create(editingDomain, rootInstance.eResource(), rootInstance.eResource().getContents(), rootInstance);
+            Command addCommand = AddCommand.create(editingDomain, ,);
             editingDomain.getCommandStack().execute(addCommand);
             editingDomain.saveAll();
             
@@ -112,14 +118,14 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
     @Override
     public IWizardPage getNextPage(IWizardPage page) {
-        if (page == mainPage) {
-            // Get the selected TreeItems from the mainPage
-            List<TreeItem> checkedItems = mainPage.getCheckedItems();
-            
-            // Pass the selected items to the SelectedElementsPage
-            selectedElementsPage.setSelectedElements(checkedItems);
-            return selectedElementsPage;
-        }
+//        if (page == mainPage) {
+//            // Get the selected TreeItems from the mainPage
+//            List<TreeItem> checkedItems = mainPage.getCheckedItems();
+//            
+//            // Pass the selected items to the SelectedElementsPage
+//            selectedElementsPage.setSelectedElements(checkedItems);
+//            return selectedElementsPage;
+//        }
         return super.getNextPage(page);
     }
 
