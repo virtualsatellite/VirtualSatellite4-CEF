@@ -15,11 +15,8 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
-import de.dlr.sc.virsat.model.dvlm.Repository;
-import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
-import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
-import de.dlr.sc.virsat.model.extension.cefx.Activator;
+import de.dlr.sc.virsat.model.dvlm.structural.StructuralPackage;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.project.editingDomain.VirSatEditingDomainRegistry;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
@@ -81,9 +78,20 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         return (StructuralElementInstance) getSelectedTarget();
     }
     
+    /**
+     * Imports elements from a specified root item in the source tree into a new
+     * ConfigurationTree structure. This method first checks if the target
+     * selected on the ImportTargetSelection page is a valid instance of
+     *  StructuralElementInstance. If valid, it initializes a new
+     * ConfigurationTree using this target element as its root.
+     */
     private ConfigurationTree importElements(TreeItem rootItem) {
-        ImportHandler importHandler = new ImportHandler();
-        return importHandler.importElements(rootItem);
+    	if (targetSelectionPage.getSelection()instanceof StructuralElementInstance) {
+
+    		return new ConfigurationTree((StructuralElementInstance) targetSelectionPage.getSelection());
+    	}
+
+    	return null;
     }
 
     /**
@@ -102,14 +110,13 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
         // Retrieve the editing domain from the registry
         VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(rootInstance);
-        Repository currentRepository = editingDomain.getResourceSet().getRepository();
-		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
 
         System.out.println("Editing domain retrieved successfully: " + editingDomain);
 
         // Proceed with saving and executing commands
+        
         try {
-            Command addCommand = AddCommand.create(editingDomain, targetInstance, null, rootInstance);
+            Command addCommand = AddCommand.create(editingDomain, targetInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, rootInstance);
             editingDomain.getCommandStack().execute(addCommand);
             editingDomain.saveAll();
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
