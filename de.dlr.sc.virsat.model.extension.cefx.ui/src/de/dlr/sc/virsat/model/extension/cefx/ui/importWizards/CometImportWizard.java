@@ -15,7 +15,11 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
+import de.dlr.sc.virsat.model.dvlm.Repository;
+import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
+import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
+import de.dlr.sc.virsat.model.extension.cefx.Activator;
 import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.project.editingDomain.VirSatEditingDomainRegistry;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
@@ -37,7 +41,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 public class CometImportWizard extends Wizard implements IImportWizard {
     
     private CometImportWizardPage mainPage; 
-    private SelectedElementsPage selectedElementsPage;
     private ImportTargetSelection targetSelectionPage;
     private IContainer model;
 
@@ -52,26 +55,31 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     	this.model = ResourcesPlugin.getWorkspace().getRoot();
         mainPage = new CometImportWizardPage("Configure Comet Server");
         targetSelectionPage = new ImportTargetSelection(model);
-        selectedElementsPage = new SelectedElementsPage("Selected Elements");
+
         addPage(mainPage);
         addPage(targetSelectionPage);
-        addPage(selectedElementsPage);
     }
 
     @Override
     public boolean performFinish() {
-        TreeItem rootItem = selectedElementsPage.getTree().getItem(0);
+        // Retrieve selected source tree items from the first page
+        List<TreeItem> selectedItems = mainPage.getCheckedItems();
 
-        if (rootItem != null) {
-            ConfigurationTree configurationTree = importElements(rootItem);
+        // Retrieve the selected target location from the second page
+        StructuralElementInstance targetInstance = (StructuralElementInstance) targetSelectionPage.getSelection();
 
-            // Save the configuration tree
-            saveConfigurationTree(configurationTree);
+        // Perform the actual import based on the selected source and target
+        for (TreeItem item : selectedItems) {
+            ConfigurationTree configurationTree = importElements(item);
+            saveConfigurationTree(configurationTree, targetInstance); 
         }
-        
+
         return true;
     }
-    
+  
+    public StructuralElementInstance getSelectedTarget() {
+        return (StructuralElementInstance) getSelectedTarget();
+    }
     
     private ConfigurationTree importElements(TreeItem rootItem) {
         ImportHandler importHandler = new ImportHandler();
@@ -82,8 +90,7 @@ public class CometImportWizard extends Wizard implements IImportWizard {
      * Saves the imported ConfigurationTree to the editing domain.
      */
     
-    
-    public void saveConfigurationTree(ConfigurationTree configurationTree) {
+    public void saveConfigurationTree(ConfigurationTree configurationTree, StructuralElementInstance targetInstance) {
         if (configurationTree == null) {
             throw new IllegalStateException("ConfigurationTree is null. Import failed or was not executed correctly.");
         }
@@ -93,22 +100,18 @@ public class CometImportWizard extends Wizard implements IImportWizard {
             throw new IllegalStateException("StructuralElementInstance is null in the ConfigurationTree.");
         }
 
-        // Ensure that the rootInstance is associated with a resource
-//        if (rootInstance.eResource() == null) {
-//	            throw new IllegalStateException("StructuralElementInstance's resource is null.");
-//        }
-
-        // Check if editing domain retrieval is successful
+        // Retrieve the editing domain from the registry
         VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(rootInstance);
-        if (editingDomain == null) {
-            throw new IllegalStateException("Editing domain is null. Unable to get the editing domain for the StructuralElementInstance.");
-        }
+        Repository currentRepository = editingDomain.getResourceSet().getRepository();
+		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
 
+        System.out.println("Editing domain retrieved successfully: " + editingDomain);
+
+        // Proceed with saving and executing commands
         try {
-            Command addCommand = AddCommand.create(editingDomain, ,);
+            Command addCommand = AddCommand.create(editingDomain, targetInstance, null, rootInstance);
             editingDomain.getCommandStack().execute(addCommand);
             editingDomain.saveAll();
-            
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e) {
             e.printStackTrace();
@@ -116,16 +119,9 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     }
 
 
+
     @Override
     public IWizardPage getNextPage(IWizardPage page) {
-//        if (page == mainPage) {
-//            // Get the selected TreeItems from the mainPage
-//            List<TreeItem> checkedItems = mainPage.getCheckedItems();
-//            
-//            // Pass the selected items to the SelectedElementsPage
-//            selectedElementsPage.setSelectedElements(checkedItems);
-//            return selectedElementsPage;
-//        }
         return super.getNextPage(page);
     }
 

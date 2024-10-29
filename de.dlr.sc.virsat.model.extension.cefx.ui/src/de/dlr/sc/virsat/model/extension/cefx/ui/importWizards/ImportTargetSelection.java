@@ -40,11 +40,11 @@ public class ImportTargetSelection extends AImportExportPage {
 		createTreeViewer();
 
 		Label label = new Label((Composite) getControl(), SWT.NONE);
-		label.setText("All Geometry files will be imported into the documents folder of the containing model element.");
+		label.setText("The selected structural element will receive the imported configuration, and all related files will be stored in the appropriate location.");
 	}
 
 	/**
-	 * Create a tree viewer with filters to show only relevant tree elements for CAD
+	 * Create a tree viewer with filters to show only relevant tree elements
 	 * import /export
 	 */
 	protected void createTreeViewer() {
