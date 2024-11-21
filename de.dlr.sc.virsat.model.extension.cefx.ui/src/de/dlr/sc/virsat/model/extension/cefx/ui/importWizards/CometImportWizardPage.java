@@ -110,7 +110,11 @@ public class CometImportWizardPage extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 if (e.detail == SWT.CHECK) {
                     TreeItem item = (TreeItem) e.item;
+
                     checkChildren(item, item.getChecked());
+
+                    List<TreeNode> updatedNodes = getCheckedTreeNodes();
+                    System.out.println("Updated TreeNodes: " + updatedNodes);
                 }
             }
         });
@@ -242,24 +246,54 @@ public class CometImportWizardPage extends WizardPage {
     /**
      * Retrieves a list of all TreeItems that are checked in the Tree.
      */
-    public List<TreeItem> getCheckedItems() {
-        List<TreeItem> checkedItems = new ArrayList<>();
+    public List<TreeNode> getCheckedTreeNodes() {
+        List<TreeNode> checkedNodes = new ArrayList<>();
         for (TreeItem item : targetTree.getItems()) {
-            getCheckedItemsRecursively(item, checkedItems);
+            TreeNode node = collectCheckedItemsRecursively(item);
+            if (node != null) {
+                checkedNodes.add(node);
+            }
         }
-        return checkedItems;
+        System.out.println("Checked nodes: " + checkedNodes);
+        return checkedNodes;
     }
 
     /**
      * Recursively collects checked TreeItems and adds them to the provided list.
      */
-    private void getCheckedItemsRecursively(TreeItem item, List<TreeItem> checkedItems) {
-        if (item.getChecked()) {
-            checkedItems.add(item);
+    private TreeNode collectCheckedItemsRecursively(TreeItem item) {
+        System.out.println("Checking item: " + item.getText() + ", isChecked: " + item.getChecked());
+
+        if (!item.getChecked() && item.getItems().length == 0) {
+            return null;
         }
+        TreeNode node = new TreeNode(cleanName(item.getText()));
+        System.out.println("Creating TreeNode: " + node.getName());
+
         for (TreeItem child : item.getItems()) {
-            getCheckedItemsRecursively(child, checkedItems);
+            TreeNode childNode = collectCheckedItemsRecursively(child);
+            if (childNode != null) {
+                node.addChild(childNode);
+                System.out.println("Added child: " + childNode.getName() + " to parent: " + node.getName());
+            }
         }
+
+        if (!item.getChecked() && node.getChildren().isEmpty()) {
+            return null; 
+        }
+
+        return node;
+    }
+
+    /**
+     * Clean a name.
+     * 
+     */
+    private String cleanName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name; 
+        }
+        return name.replaceAll("[^a-zA-Z0-9]", ""); 
     }
 
     /**

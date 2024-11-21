@@ -11,7 +11,6 @@ package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -20,7 +19,6 @@ import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralPackage;
-import de.dlr.sc.virsat.model.extension.ps.model.ConfigurationTree;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.project.editingDomain.VirSatEditingDomainRegistry;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
@@ -40,20 +38,20 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * It guides the user through server configuration and initiates the data import process.
  */
 public class CometImportWizard extends Wizard implements IImportWizard {
-    
-    private CometImportWizardPage mainPage; 
+
+    private CometImportWizardPage mainPage;
     private ImportTargetSelection targetSelectionPage;
     private IContainer model;
 
     public CometImportWizard() {
         super();
-        setWindowTitle("CometImportWizard");
+        setWindowTitle("Comet Import Wizard");
         setNeedsProgressMonitor(true);
     }
 
     @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
-    	this.model = ResourcesPlugin.getWorkspace().getRoot();
+        this.model = ResourcesPlugin.getWorkspace().getRoot();
         mainPage = new CometImportWizardPage("Configure Comet Server");
         targetSelectionPage = new ImportTargetSelection(model);
 
@@ -61,80 +59,92 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         addPage(targetSelectionPage);
     }
 
-    
-	public Concept getPsConcept(VirSatTransactionalEditingDomain domain) {
-		Repository currentRepository = domain.getResourceSet().getRepository();
-		ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
-		Concept activeConcept = acHelper.getConcept(de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId());
-		return activeConcept;
-	}
+    public Concept getPsConcept(VirSatTransactionalEditingDomain domain) {
+        Repository currentRepository = domain.getResourceSet().getRepository();
+        ActiveConceptHelper acHelper = new ActiveConceptHelper(currentRepository);
+        return acHelper.getConcept(de.dlr.sc.virsat.model.extension.ps.Activator.getPluginId());
+    }
+
     @Override
     public boolean performFinish() {
         // Retrieve selected source tree items from the first page
-        List<TreeItem> selectedItems = mainPage.getCheckedItems();
-
+        List<TreeNode> selectedItems = mainPage.getCheckedTreeNodes();
+        if (selectedItems == null || selectedItems.isEmpty()) {
+            System.out.println("No items selected. Aborting operation.");
+            return false;
+        }
+        
         // Retrieve the selected target location from the second page
         StructuralElementInstance targetInstance = (StructuralElementInstance) targetSelectionPage.getSelection();
         
-        VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(targetInstance); 
-        
-        Concept psConcept = getPsConcept(editingDomain);
-        
-        // Perform the actual import based on the selected source and target
-        //for (TreeItem item : selectedItems) {
-            //ConfigurationTree configurationTree = importElements(item);
-        	
-        	ElementConfiguration elementConfigOfElementFromComet = new ElementConfiguration(psConcept);
-        	elementConfigOfElementFromComet.setName(selectedItems.get(0).getText());
-    		saveDataFromComet(elementConfigOfElementFromComet.getStructuralElementInstance(), targetInstance); 
-       // }
-
-        return true;
-    }
-  
-    public StructuralElementInstance getSelectedTarget() {
-        return (StructuralElementInstance) getSelectedTarget();
-    }  
-    
-    /**
-     * Imports elements from a specified root item in the source tree into a new
-     * ConfigurationTree structure. This method first checks if the target
-     * selected on the ImportTargetSelection page is a valid instance of
-     *  StructuralElementInstance. If valid, it initializes a new
-     * ConfigurationTree using this target element as its root.
-     */
-//    private ConfigurationTree importElements(TreeItem rootItem) {
-//
-//    	if (targetSelectionPage.getSelection()instanceof StructuralElementInstance) {
-//
-//    		ConfigurationTree confTreeOfElementFromComet = new ConfigurationTree();
-//    		confTreeOfElementFromComet.setName(rootItem.getText(0));
-//
-//    		return 	new ConfigurationTree(confTreeOfElementFromComet.getStructuralElementInstance());
-//    	}
-//
-//    	return null;
-//    }
-
-    /**
-     * Saves the imported ConfigurationTree to the editing domain.
-     */
-    
-    public void saveDataFromComet(StructuralElementInstance elementFromComet, StructuralElementInstance targetInstance) {
-
-        if (elementFromComet == null) {
-            throw new IllegalStateException("StructuralElementInstance is null in the ConfigurationTree.");
+        if (targetInstance == null) {
+            System.out.println("No target instance selected. Aborting operation.");
+            return false;
         }
-
-        // Retrieve the editing domain from the registry
+        
         VirSatTransactionalEditingDomain editingDomain = VirSatEditingDomainRegistry.INSTANCE.getEd(targetInstance);
 
-        System.out.println("Editing domain retrieved successfully: " + editingDomain);
+        // Process each selected item
+        try {
+            for (TreeNode item : selectedItems) {
+                createElementConfigurationHierarchy(item, targetInstance, editingDomain);
+            }
+        } catch (Exception e) {
+            System.err.println("Error occurred while creating configuration hierarchy: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
 
-        // Proceed with saving and executing commands
-        
+        System.out.println("All items processed successfully.");
+        return true;
+    }
+    
+    /**
+     * Creates a hierarchy of ElementConfiguration instances corresponding to the structure of the provided TreeItem.
+     */    
+
+    private void createElementConfigurationHierarchy(TreeNode item, StructuralElementInstance parentInstance, VirSatTransactionalEditingDomain editingDomain) {
+        if (item == null) {
+            System.out.println("TreeNode is null. Skipping...");
+            return;
+        }
+        System.out.println("Processing TreeNode: " + item.getName());
+    	
+    	// Create an ElementConfiguration for the current tree item
+        ElementConfiguration elementConfig = new ElementConfiguration(getPsConcept(editingDomain));
+        elementConfig.setName(item.getName());
+        System.out.println("Created ElementConfiguration: " + elementConfig.getName());
+
+        // Save this ElementConfiguratiookn under the parentInstance
+        try {
+            saveDataFromComet(elementConfig.getStructuralElementInstance(), parentInstance, editingDomain);
+            System.out.println("Saved ElementConfiguration: " + elementConfig.getName() + " under parent.");
+        } catch (Exception e) {
+            System.err.println("Failed to save ElementConfiguration: " + elementConfig.getName());
+            e.printStackTrace();
+            return;
+        }
+
+        // Recursively process child nodes to maintain the nested structure
+        for (TreeNode childItem : item.getChildren()) {
+            createElementConfigurationHierarchy(childItem, elementConfig.getStructuralElementInstance(), editingDomain);
+
+        }
+    }
+
+    /**
+     * Saves the data represented by a StructuralElementInstance to a target parent instance.
+     * This method creates and executes an AddCommand to attach the provided 
+     * element as a child to the specified target instance.
+     */
+    private void saveDataFromComet(StructuralElementInstance elementFromComet, StructuralElementInstance targetInstance, VirSatTransactionalEditingDomain editingDomain) {
+        if (elementFromComet == null) {
+            throw new IllegalStateException("StructuralElementInstance is null in the Configuration Tree.");
+        }
+
         try {
             Command addCommand = AddCommand.create(editingDomain, targetInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, elementFromComet);
+            targetInstance.getAssignedDiscipline();
             editingDomain.getCommandStack().execute(addCommand);
             editingDomain.saveAll();
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -143,11 +153,8 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         }
     }
 
-
-
     @Override
     public IWizardPage getNextPage(IWizardPage page) {
         return super.getNextPage(page);
     }
-
 }
