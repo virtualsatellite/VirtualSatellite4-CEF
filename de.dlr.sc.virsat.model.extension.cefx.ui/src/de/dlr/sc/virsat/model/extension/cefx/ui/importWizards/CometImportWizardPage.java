@@ -259,7 +259,7 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Recursively collects checked TreeItems and adds them to the provided list.
+     * Recursively collects checked items from a TreeItem structure and constructs a hierarchical TreeNode structure.
      */
     private TreeNode collectCheckedItemsRecursively(TreeItem item) {
         System.out.println("Checking item: " + item.getText() + ", isChecked: " + item.getChecked());
@@ -286,8 +286,7 @@ public class CometImportWizardPage extends WizardPage {
     }
 
     /**
-     * Clean a name.
-     * 
+     * Cleans a name by removing spaces and special characters, keeping only alphanumeric characters.
      */
     private String cleanName(String name) {
         if (name == null || name.isEmpty()) {

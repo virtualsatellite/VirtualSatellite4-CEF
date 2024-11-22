@@ -100,8 +100,8 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     }
     
     /**
-     * Creates a hierarchy of ElementConfiguration instances corresponding to the structure of the provided TreeItem.
-     */    
+     * Creates a hierarchy of ElementConfiguration instances corresponding to the structure of the provided TreeNode.
+     */
 
     private void createElementConfigurationHierarchy(TreeNode item, StructuralElementInstance parentInstance, VirSatTransactionalEditingDomain editingDomain) {
         if (item == null) {
@@ -117,6 +117,8 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
         // Save this ElementConfiguratiookn under the parentInstance
         try {
+        	parentInstance.getAssignedDiscipline();
+        		
             saveDataFromComet(elementConfig.getStructuralElementInstance(), parentInstance, editingDomain);
             System.out.println("Saved ElementConfiguration: " + elementConfig.getName() + " under parent.");
         } catch (Exception e) {
@@ -141,10 +143,9 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         if (elementFromComet == null) {
             throw new IllegalStateException("StructuralElementInstance is null in the Configuration Tree.");
         }
-
+        elementFromComet.setAssignedDiscipline(targetInstance.getAssignedDiscipline());
         try {
             Command addCommand = AddCommand.create(editingDomain, targetInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, elementFromComet);
-            targetInstance.getAssignedDiscipline();
             editingDomain.getCommandStack().execute(addCommand);
             editingDomain.saveAll();
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);

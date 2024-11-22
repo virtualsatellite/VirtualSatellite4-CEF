@@ -29,7 +29,18 @@ public class TreeNode {
         return children;
     }
 
+    /**
+     * Checks if a child with the given name already exists in this TreeNode.
+     */
     public void addChild(TreeNode child) {
-        this.children.add(child);
+        for (TreeNode existingChild : children) {
+            if (existingChild.getName().equals(child.getName())) {
+                System.out.println("Duplicate child ignored: " + child.getName());
+                return; 
+            }
+        }
+        children.add(child);
+        System.out.println("Added child: " + child.getName());
     }
+
 }
