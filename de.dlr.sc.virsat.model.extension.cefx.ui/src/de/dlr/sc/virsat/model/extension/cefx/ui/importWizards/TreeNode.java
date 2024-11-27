@@ -13,16 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeNode {
-    private String name;
+    private String originalName; // Holds the original name
+    private String cleanedName;  // Holds the cleaned name
     private List<TreeNode> children;
 
-    public TreeNode(String name) {
-        this.name = name;
+    public TreeNode(String originalName) {
+        this.originalName = originalName;
+        this.cleanedName = cleanName(originalName); // Automatically clean the name during initialization
         this.children = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public String getCleanedName() {
+        return cleanedName;
     }
 
     public List<TreeNode> getChildren() {
@@ -30,17 +36,26 @@ public class TreeNode {
     }
 
     /**
-     * Checks if a child with the given name already exists in this TreeNode.
+     * Adds a child to this TreeNode. Prevents duplicates based on the cleaned name.
      */
     public void addChild(TreeNode child) {
         for (TreeNode existingChild : children) {
-            if (existingChild.getName().equals(child.getName())) {
-                System.out.println("Duplicate child ignored: " + child.getName());
-                return; 
+            if (existingChild.getCleanedName().equals(child.getCleanedName())) {
+                System.out.println("Duplicate child ignored: " + child.getCleanedName());
+                return;
             }
         }
         children.add(child);
-        System.out.println("Added child: " + child.getName());
+        System.out.println("Added child: " + child.getCleanedName());
     }
 
+    /**
+     * Cleans a name by removing special characters and spaces, leaving only alphanumeric characters.
+     */
+    private String cleanName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return name.replaceAll("[^a-zA-Z0-9]", ""); // Removes all non-alphanumeric characters
+    }
 }

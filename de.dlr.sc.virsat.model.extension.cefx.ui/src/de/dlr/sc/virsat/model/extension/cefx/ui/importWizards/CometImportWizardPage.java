@@ -216,7 +216,7 @@ public class CometImportWizardPage extends WizardPage {
     private void createLabelAndTextField(Composite parent, String labelText, int style, Color labelColor) {
         Label label = new Label(parent, SWT.NONE);
         label.setText(labelText);
-        label.setForeground(labelColor);  // Set label color to blue
+        label.setForeground(labelColor);
         Text text = new Text(parent, style);
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         if (labelText.equals("Server URL:")) {
@@ -267,32 +267,24 @@ public class CometImportWizardPage extends WizardPage {
         if (!item.getChecked() && item.getItems().length == 0) {
             return null;
         }
-        TreeNode node = new TreeNode(cleanName(item.getText()));
-        System.out.println("Creating TreeNode: " + node.getName());
+
+        // Use the original text
+        TreeNode node = new TreeNode(item.getText());
+        System.out.println("Creating TreeNode: " + node.getCleanedName());
 
         for (TreeItem child : item.getItems()) {
             TreeNode childNode = collectCheckedItemsRecursively(child);
             if (childNode != null) {
                 node.addChild(childNode);
-                System.out.println("Added child: " + childNode.getName() + " to parent: " + node.getName());
+                System.out.println("Added child: " + childNode.getCleanedName() + " to parent: " + node.getCleanedName());
             }
         }
 
         if (!item.getChecked() && node.getChildren().isEmpty()) {
-            return null; 
+            return null;
         }
 
         return node;
-    }
-
-    /**
-     * Cleans a name by removing spaces and special characters, keeping only alphanumeric characters.
-     */
-    private String cleanName(String name) {
-        if (name == null || name.isEmpty()) {
-            return name; 
-        }
-        return name.replaceAll("[^a-zA-Z0-9]", ""); 
     }
 
     /**
