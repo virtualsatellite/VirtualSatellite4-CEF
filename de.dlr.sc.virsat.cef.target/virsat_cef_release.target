@@ -3,42 +3,6 @@
 <target name="virsat_cef_development" sequenceNumber="1">
 		<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.budget.power.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.budget.cost.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.funcelectrical.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.statemachines.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.requirements.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.mechanical.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.thermal.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.extension.sequencing.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.server.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="4.17.0.r202408120822"/>
-		<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="4.17.0.r202408120822"/>
-		<repository location="https://downloads.sourceforge.net/project/virtualsatellite/VirtualSatellite4-Core/release/4.17.0/aaa5063b79d7a21ee35f69d4cb3291f1c116ac4d/"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.202202012159"/>
 		<unit id="org.eclipse.nebula.widgets.tablecombo.feature.feature.group" version="1.2.0.202202012159"/>
 		<unit id="org.eclipse.nebula.widgets.tablecombo.css.feature.feature.group" version="1.2.0.202202012159"/>
@@ -101,6 +65,42 @@
 		<unit id="org.eclipse.justj.openjdk.hotspot.jre.full.feature.group" version="0.0.0"/>
 		<repository location="https://download.eclipse.org/justj/jres/17/updates/release/17.0.11"/>
 		</location>
+			<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+				<repository location="https://downloads.sourceforge.net/project/virtualsatellite/VirtualSatellite4-Core/release/4.18.0/565adc560ae31814295f033298f6ae8748feeb27/"/>
+				<unit id="de.dlr.sc.virsat.apps.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.branding.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.build.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.commons.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.dependencies.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.docs.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.excel.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.external.lib.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.graphiti.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.javadoc.api.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.license.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.calculation.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.ext.core.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.budget.cost.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.budget.mass.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.budget.power.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.funcelectrical.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.maturity.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.mechanical.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.ps.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.requirements.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.sequencing.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.statemachines.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.tests.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.thermal.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.extension.visualisation.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.model.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.project.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.server.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.target.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.team.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.test.feature.feature.group" version="4.18.0.r202411141500"/>
+				<unit id="de.dlr.sc.virsat.uiengine.feature.feature.group" version="4.18.0.r202411141500"/>
+			</location>
 		</locations>
 		<environment>
 		<os>win32</os>

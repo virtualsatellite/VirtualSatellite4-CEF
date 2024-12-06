@@ -14,7 +14,7 @@ public class ManifestMf {
 	public static final String BUNDLE_MANIFESTVERSION = "2";
 	public static final String BUNDLE_NAME = "VirSat CEF Model Extension Data Model";
 	public static final String BUNDLE_SYMBOLICNAME = "de.dlr.sc.virsat.model.extension.cef";
-	public static final String BUNDLE_VERSION = "4.18.0.qualifier";
+	public static final String BUNDLE_VERSION = "4.18.1.qualifier";
 	public static final String BUNDLE_VENDOR = "DLR (German Aerospace Center)";
 	public static final String ECLIPSE_EXTENSIBLEAPI = "true";
 	public static final String REQUIRE_BUNDLE = "org.eclipse.ui,org.eclipse.core.runtime,de.dlr.sc.virsat.external.lib.apache.poi,de.dlr.sc.virsat.model,de.dlr.sc.virsat.model.edit,de.dlr.sc.virsat.project,de.dlr.sc.virsat.build,de.dlr.sc.virsat.model.ext.core";
