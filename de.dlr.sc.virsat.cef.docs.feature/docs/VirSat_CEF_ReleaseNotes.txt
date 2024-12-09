@@ -3,8 +3,15 @@ VirSat CEF Release Notes
 
 VirSat CEF is based on VirSat Core. Please don't forget to read the Release Notes of VirSat Core as well!
 
+Release 4.18.0 (14th November 2024)
+-----------------------------------
+
+Maintenance:
+	Update to Virtual Satellite Core 4.18.0
+
+
 Release 4.17.0 (12th September 2024)
-----------------------------------
+------------------------------------
 
 New Features:
 	Server is now hsoting the swagger UI by itself and is exploring the API at runtime
