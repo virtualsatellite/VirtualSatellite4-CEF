@@ -19,7 +19,7 @@ public class TreeNode {
 
     public TreeNode(String originalName) {
         this.originalName = originalName;
-        this.cleanedName = cleanName(originalName); // Automatically clean the name during initialization
+        this.cleanedName = cleanName(originalName); 
         this.children = new ArrayList<>();
     }
 

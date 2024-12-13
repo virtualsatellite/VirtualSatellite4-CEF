@@ -19,9 +19,9 @@ import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.concepts.util.ActiveConceptHelper;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralPackage;
+import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentMassParameters;
+import de.dlr.sc.virsat.model.extension.cefx.model.EquipmentParameters;
 import de.dlr.sc.virsat.model.extension.cefx.model.Parameter;
-import de.dlr.sc.virsat.model.extension.cefx.model.SubSystemMassParameters;
-import de.dlr.sc.virsat.model.extension.cefx.model.SystemMassParameters;
 import de.dlr.sc.virsat.model.extension.ps.model.ElementConfiguration;
 import de.dlr.sc.virsat.project.editingDomain.VirSatEditingDomainRegistry;
 import de.dlr.sc.virsat.project.editingDomain.VirSatTransactionalEditingDomain;
@@ -132,11 +132,12 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
         // Check if this node represents a mass value
         double massValue = extractMassValue(item.getOriginalName());
-        if (massValue > 0) {
-            // If this is a mass node, add it as a parameter and skip further processing
-            addMassParameter(parentInstance, editingDomain, massValue);
-            System.out.println("Added mass parameter with value: " + massValue + " for TreeNode: " + item.getOriginalName());
-            return; 
+        if (massValue > 0) {     
+        	boolean isMargin = item.getOriginalName().toLowerCase().contains("margin");
+        	addMassParameter(parentInstance, editingDomain, massValue, isMargin);
+        	System.out.println("Added mass parameter with value: " + massValue + " for TreeNode: " + item.getOriginalName());
+        	return;
+
         }
 
         // Create an ElementConfiguration for non-mass nodes
@@ -160,43 +161,49 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     }
 
     /**
-     * Adds a mass parameter to the parent instance based on the extracted mass value.
+     * Adds the mass parameter and mass margin to the parent instance.
+     * This method creates and inserts both EquipmentParameters and EquipmentMassParameters.
      */
-    private void addMassParameter(StructuralElementInstance parentInstance, VirSatTransactionalEditingDomain editingDomain, double massValue) {
+    private void addMassParameter(StructuralElementInstance parentInstance, VirSatTransactionalEditingDomain editingDomain, double massValue, boolean isMargin) {
         try {
-            // Check if the parent instance represents a SubSystem or System
-            String parentName = parentInstance.getName().toLowerCase();
-            if (parentName.contains("subsystem")) {
-                // Create and configure SubSystemMassParameters
-                SubSystemMassParameters subSystemMassParameters = new SubSystemMassParameters(getPsConcept(editingDomain));
-                subSystemMassParameters.setName("SubSystemMassParameter");
-                Parameter massTotal = subSystemMassParameters.getMassTotalBean().getValue();
-                if (massTotal == null) {
-                    massTotal = new Parameter(); // Create a new Parameter instance
-                }
-                massTotal.setDefaultValue(massValue);
-                subSystemMassParameters.getMassTotalBean().setValue(massTotal);
+            // Create EquipmentParameters
+            EquipmentParameters equipmentParameters = new EquipmentParameters(getPsConcept(editingDomain));
+            equipmentParameters.setName("EquipmentParameters");
 
-                // Add the SubSystemMassParameters to the parent instance
-                Command addCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, subSystemMassParameters);
-                editingDomain.getCommandStack().execute(addCommand);
-                System.out.println("Added SubSystemMassParameter with value: " + massValue);
+            // Create EquipmentMassParameters
+            EquipmentMassParameters equipmentMassParameters = new EquipmentMassParameters(getPsConcept(editingDomain));
+            equipmentMassParameters.setName("EquipmentMassParameters");
+
+            if (isMargin) {
+                // Add the value to massTotalWithMargin in EquipmentMassParameters
+                Parameter massTotalWithMargin = equipmentMassParameters.getMassTotalWithMarginBean().getValue();
+                if (massTotalWithMargin == null) {
+                    massTotalWithMargin = new Parameter(); // Create a new Parameter instance
+                }
+                massTotalWithMargin.setDefaultValue(massValue);
+                equipmentMassParameters.getMassTotalWithMarginBean().setValue(massTotalWithMargin);
+
+                System.out.println("Added Mass Total with Margin: " + massValue);
             } else {
-                // Create and configure SystemMassParameters
-                SystemMassParameters systemMassParameters = new SystemMassParameters(getPsConcept(editingDomain));
-                systemMassParameters.setName("SystemMassParameter");
-                Parameter massTotal = systemMassParameters.getMassTotalBean().getValue();
-                if (massTotal == null) {
-                    massTotal = new Parameter(); // Create a new Parameter instance
+                // Add the value to mass in EquipmentMassParameters
+                Parameter mass = equipmentMassParameters.getMassBean().getValue();
+                if (mass == null) {
+                    mass = new Parameter(); // Create a new Parameter instance
                 }
-                massTotal.setDefaultValue(massValue);
-                systemMassParameters.getMassTotalBean().setValue(massTotal);
+                mass.setDefaultValue(massValue);
+                equipmentMassParameters.getMassBean().setValue(mass);
 
-                // Add the SystemMassParameters to the parent instance
-                Command addCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, systemMassParameters);
-                editingDomain.getCommandStack().execute(addCommand);
-                System.out.println("Added SystemMassParameter with value: " + massValue);
+                System.out.println("Added Mass: " + massValue);
             }
+
+            // Add EquipmentParameters to the parent instance
+            Command addEquipmentParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, equipmentParameters);
+            editingDomain.getCommandStack().execute(addEquipmentParamsCommand);
+
+            // Add EquipmentMassParameters to the parent instance
+            Command addEquipmentMassParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, equipmentMassParameters);
+            editingDomain.getCommandStack().execute(addEquipmentMassParamsCommand);
+
         } catch (Exception e) {
             System.err.println("Error adding mass parameter: " + e.getMessage());
             e.printStackTrace();

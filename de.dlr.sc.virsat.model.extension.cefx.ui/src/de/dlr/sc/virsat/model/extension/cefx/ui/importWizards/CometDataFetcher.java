@@ -140,12 +140,14 @@ public class CometDataFetcher {
      */
     private void addChildren(TreeItem parentItem, ElementDefinition parentElement) {
         parentElement.getParameter().stream()
-                .filter(parameter -> "mass".equalsIgnoreCase(parameter.getParameterType().getName()))
-                .findFirst()
-                .ifPresent(parameter -> {
-                    String massValue = fetchParameterValue(parameter);
-                    TreeItem massItem = new TreeItem(parentItem, SWT.NONE);
-                    massItem.setText("Mass: " + massValue + " kg");
+                .filter(parameter -> "mass".equalsIgnoreCase(parameter.getParameterType().getName()) 
+                		|| "mass margin".equalsIgnoreCase(parameter.getParameterType().getName()))
+                .forEach(parameter -> {
+                    String value = fetchParameterValue(parameter);
+                    if (value != null) { // Ensure we only add valid manual values
+                        TreeItem item = new TreeItem(parentItem, SWT.NONE);
+                        item.setText(parameter.getParameterType().getName() + ": " + value + " kg");
+                    }
                 });
 
         for (ElementUsage usage : parentElement.getContainedElement()) {
@@ -160,20 +162,16 @@ public class CometDataFetcher {
      * 
      */
     private String fetchParameterValue(Parameter parameter) {
-        try {
-            ParameterValueSet valueSet = parameter.getValueSet().get(0);
+    	try {
+    		ParameterValueSet valueSet = parameter.getValueSet().get(0);
 
-            if (valueSet.getValueSwitch() == ParameterSwitchKind.COMPUTED) {
-                return valueSet.getComputed().get(0);
-            } else if (valueSet.getValueSwitch() == ParameterSwitchKind.MANUAL) {
-                return valueSet.getManual().get(0);
-            } else {
-                return "No valid mass found";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "N/A";
-        }
+    		if (valueSet.getValueSwitch() == ParameterSwitchKind.MANUAL) {
+    			return valueSet.getManual().get(0); 
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return null;
     }
 
     /**
@@ -192,6 +190,6 @@ public class CometDataFetcher {
      */
     private void handleException(Exception e, Tree tree) {
         e.printStackTrace();
-        showErrorMessage(tree, "An error occurred: " + e.getMessage());
+        showErrorMessage(tree, "An error occurred: " +  e.getMessage());
     }
 }
