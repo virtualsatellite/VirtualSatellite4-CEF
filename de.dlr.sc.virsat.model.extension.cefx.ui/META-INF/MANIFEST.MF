@@ -28,7 +28,9 @@ Require-Bundle: org.eclipse.ui,
  de.dlr.sc.virsat.build.ui,
  de.dlr.sc.virsat.model.calculation.ui,
  de.dlr.sc.virsat.cef.branding.ui,
- de.dlr.sc.virsat.model.extension.cefx
+ de.dlr.sc.virsat.model.extension.cefx,
+ de.dlr.sc.virsat.external.lib.comet.sdkj.servicedal;bundle-version="4.17.0",
+ org.eclipse.ui.ide
 Bundle-Activator: de.dlr.sc.virsat.model.extension.cefx.ui.Activator
 Bundle-Vendor: DLR (German Aerospace Center)
 Automatic-Module-Name: de.dlr.sc.virsat.model.extension.cef.ui
