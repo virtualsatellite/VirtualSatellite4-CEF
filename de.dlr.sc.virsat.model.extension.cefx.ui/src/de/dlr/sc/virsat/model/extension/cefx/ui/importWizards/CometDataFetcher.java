@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 
-
 package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
 import cdp4common.engineeringmodeldata.ElementDefinition;
@@ -104,7 +103,6 @@ public class CometDataFetcher {
         iteration.setContainer(engineeringModel);
 
         DomainOfExpertise domainOfExpertise = new DomainOfExpertise(domainOfExpertiseIid, session.getAssembler().getCache(), uri);
-
         session.read(iteration, domainOfExpertise).join();
 
         Optional<Iteration> openIteration = session.getOpenIterations().keySet().stream().findFirst();
@@ -192,4 +190,6 @@ public class CometDataFetcher {
         e.printStackTrace();
         showErrorMessage(tree, "An error occurred: " +  e.getMessage());
     }
+    
+    
 }

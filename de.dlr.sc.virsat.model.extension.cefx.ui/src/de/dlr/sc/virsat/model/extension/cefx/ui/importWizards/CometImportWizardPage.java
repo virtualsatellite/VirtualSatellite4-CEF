@@ -254,7 +254,7 @@ public class CometImportWizardPage extends WizardPage {
                 checkedNodes.add(node);
             }
         }
-        System.out.println("Checked nodes: " + checkedNodes);
+        DLRLogger.logInfo("Checked nodes: " + checkedNodes);
         return checkedNodes;
     }
 
@@ -262,7 +262,7 @@ public class CometImportWizardPage extends WizardPage {
      * Recursively collects checked items from a TreeItem structure and constructs a hierarchical TreeNode structure.
      */
     private TreeNode collectCheckedItemsRecursively(TreeItem item) {
-        System.out.println("Checking item: " + item.getText() + ", isChecked: " + item.getChecked());
+    	DLRLogger.logInfo("Checking item: " + item.getText() + ", isChecked: " + item.getChecked());
 
         if (!item.getChecked() && item.getItems().length == 0) {
             return null;
@@ -276,7 +276,8 @@ public class CometImportWizardPage extends WizardPage {
             TreeNode childNode = collectCheckedItemsRecursively(child);
             if (childNode != null) {
                 node.addChild(childNode);
-                System.out.println("Added child: " + childNode.getCleanedName() + " to parent: " + node.getCleanedName());
+                DLRLogger.logInfo("Added child: " + childNode.getCleanedName() + " to parent: " + node.getCleanedName());
+
             }
         }
 

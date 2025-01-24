@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.cefx.ui.importWizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
+
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -35,6 +36,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -47,7 +49,10 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     private CometImportWizardPage mainPage;
     private ImportTargetSelection targetSelectionPage;
     private IContainer model;
-
+    
+    private static final int GRAMS_TO_KILOGRAMS_CONVERSION_FACTOR = 1000;
+    private static final int  NUMBER_FOR_COMPUTATION = 3;
+    
     /**
      * Default constructor for the CometImportWizard.
      * Initializes the wizard with a title and sets the progress monitor flag.
@@ -70,7 +75,6 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         addPage(mainPage);
         addPage(targetSelectionPage);
     }
-
     /**
      * Retrieves the active Concept associated with PS.
      */
@@ -88,16 +92,22 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     public boolean performFinish() {
         // Retrieve selected source tree items from the first page
         List<TreeNode> selectedItems = mainPage.getCheckedTreeNodes();
+        
         if (selectedItems == null || selectedItems.isEmpty()) {
-            System.out.println("No items selected. Aborting operation.");
+        	
+            DLRLogger.showErrorDialog("Operation Aborted", "No items selected.");
+            DLRLogger.logError("No items selected. Aborting operation.", null);
+            
             return false;
         }
 
         // Retrieve the selected target location from the second page
         StructuralElementInstance targetInstance = (StructuralElementInstance) targetSelectionPage.getSelection();
-
+        
         if (targetInstance == null) {
-            System.out.println("No target instance selected. Aborting operation.");
+        	
+        	DLRLogger.showErrorDialog("Operation Aborted", "No target instance selected.");
+        	DLRLogger.logError("No target instance selected. Aborting operation.", null);
             return false;
         }
 
@@ -106,29 +116,31 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         // Process each selected item
         try {
             for (TreeNode item : selectedItems) {
+            	
                 createElementConfigurationHierarchy(item, targetInstance, editingDomain);
             }
         } catch (Exception e) {
-            System.err.println("Error occurred while creating configuration hierarchy: " + e.getMessage());
-            e.printStackTrace();
+        	
+        	DLRLogger.logError("Error occurred while creating configuration hierarchy", e);
+        	DLRLogger.showErrorDialog("Error", "An error occurred during processing. See logs for details.");
             return false;
         }
 
-        System.out.println("All items processed successfully.");
+        DLRLogger.logInfo("All items processed successfully.");
         return true;
     }
-
+    
     /**
      * Creates a hierarchy of ElementConfiguration instances corresponding to the structure of the provided TreeNode.
      */
     private void createElementConfigurationHierarchy(TreeNode item, StructuralElementInstance parentInstance, VirSatTransactionalEditingDomain editingDomain) {
         if (item == null) {
-            System.out.println("TreeNode is null. Skipping...");
+        	DLRLogger.logError("TreeNode is null. Skipping...", null);
             return;
         }
 
         // Log the current processing item
-        System.out.println("Processing TreeNode: " + item.getOriginalName());
+        DLRLogger.logInfo("Processing TreeNode: " + item.getOriginalName());
 
         // Check if this node represents a mass value
         double massValue = extractMassValue(item.getOriginalName());
@@ -145,11 +157,14 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         elementConfig.setName(item.getCleanedName());
 
         try {
+        	
             // Save this ElementConfiguration under the parent instance
             saveDataFromComet(elementConfig.getStructuralElementInstance(), parentInstance, editingDomain);
-            System.out.println("Saved ElementConfiguration: " + elementConfig.getName() + " under parent.");
+            DLRLogger.logInfo("Saved ElementConfiguration: " + elementConfig.getName() + " under parent.");
+            
         } catch (Exception e) {
-            System.err.println("Failed to save ElementConfiguration: " + elementConfig.getName());
+        	
+        	DLRLogger.logError("Failed to save ElementConfiguration: " + elementConfig.getName(), e);
             e.printStackTrace();
             return;
         }
@@ -176,37 +191,28 @@ public class CometImportWizard extends Wizard implements IImportWizard {
 
             if (isMargin) {
                 // Add the value to massTotalWithMargin in EquipmentMassParameters
-                Parameter massTotalWithMargin = equipmentMassParameters.getMassTotalWithMarginBean().getValue();
-                if (massTotalWithMargin == null) {
-                    massTotalWithMargin = new Parameter(); // Create a new Parameter instance
-                }
-                massTotalWithMargin.setDefaultValue(massValue);
-                equipmentMassParameters.getMassTotalWithMarginBean().setValue(massTotalWithMargin);
+            	equipmentParameters.getMarginMaturityBean().setValue(massValue);
 
-                System.out.println("Added Mass Total with Margin: " + massValue);
+            	DLRLogger.logInfo("Added Mass Total with Margin: " + massValue);
             } else {
                 // Add the value to mass in EquipmentMassParameters
+             
                 Parameter mass = equipmentMassParameters.getMassBean().getValue();
-                if (mass == null) {
-                    mass = new Parameter(); // Create a new Parameter instance
-                }
                 mass.setDefaultValue(massValue);
-                equipmentMassParameters.getMassBean().setValue(mass);
-
-                System.out.println("Added Mass: " + massValue);
+                
+                DLRLogger.logInfo("Added Mass: " + massValue);
             }
 
             // Add EquipmentParameters to the parent instance
-            Command addEquipmentParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, equipmentParameters);
+            Command addEquipmentParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CATEGORY_ASSIGNMENTS, equipmentParameters);
             editingDomain.getCommandStack().execute(addEquipmentParamsCommand);
 
             // Add EquipmentMassParameters to the parent instance
-            Command addEquipmentMassParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, equipmentMassParameters);
+            Command addEquipmentMassParamsCommand = AddCommand.create(editingDomain, parentInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CATEGORY_ASSIGNMENTS, equipmentMassParameters);
             editingDomain.getCommandStack().execute(addEquipmentMassParamsCommand);
 
         } catch (Exception e) {
-            System.err.println("Error adding mass parameter: " + e.getMessage());
-            e.printStackTrace();
+        	DLRLogger.logError("Error adding mass parameter", e);
         }
     }
 
@@ -217,42 +223,51 @@ public class CometImportWizard extends Wizard implements IImportWizard {
         if (text == null || text.isEmpty()) {
             return 0;
         }
-
         try {
-            // Regex to detect numbers followed by "kg"
-            Pattern pattern = Pattern.compile("(\\d+(\\.\\d+)?)\\s*kg", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("(\\d+(\\.\\d+)?)\\s*(kg|g)", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(text);
 
             if (matcher.find()) {
-            	// Extract and parse the numeric value
-                return Double.parseDouble(matcher.group(1)); 
+                double value = Double.parseDouble(matcher.group(1));
+                if (matcher.group(NUMBER_FOR_COMPUTATION).equalsIgnoreCase("g")) {
+                	value /= GRAMS_TO_KILOGRAMS_CONVERSION_FACTOR; 
+                }
+                return value;
             }
         } catch (Exception e) {
-            System.err.println("Error parsing mass value: " + e.getMessage());
+        	DLRLogger.logError("Error parsing mass value", e);
         }
-        // Return 0 if no valid mass is found
-        return 0; 
+        return 0;
     }
-
+       
     /**
      * Saves the data represented by a StructuralElementInstance to a target parent instance.
-     * This method creates and executes an AddCommand to attach the provided 
-     * element as a child to the specified target instance.
      */
     private void saveDataFromComet(StructuralElementInstance elementFromComet, StructuralElementInstance targetInstance, VirSatTransactionalEditingDomain editingDomain) {
         if (elementFromComet == null) {
             throw new IllegalStateException("StructuralElementInstance is null in the Configuration Tree.");
         }
+
         elementFromComet.setAssignedDiscipline(targetInstance.getAssignedDiscipline());
+
         try {
-            Command addCommand = AddCommand.create(editingDomain, targetInstance, StructuralPackage.STRUCTURAL_ELEMENT_INSTANCE__CHILDREN, elementFromComet);
-            editingDomain.getCommandStack().execute(addCommand);
+            CompoundCommand cmd = new CompoundCommand();
+
+            cmd.append(DLRStructureManager.createAddChildSEICommand(targetInstance, elementFromComet, editingDomain));
+
+            // Execute the compound command
+            editingDomain.getCommandStack().execute(cmd);
+
+            // Save changes and refresh workspace
             editingDomain.saveAll();
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+            
+
         } catch (CoreException e) {
-            e.printStackTrace();
+        	DLRLogger.logError("Error occurred during saveDataFromComet operation", e);
         }
     }
+
 
     /**
      * Retrieves the next wizard page after the current one.
@@ -261,4 +276,5 @@ public class CometImportWizard extends Wizard implements IImportWizard {
     public IWizardPage getNextPage(IWizardPage page) {
         return super.getNextPage(page);
     }
+    
 }
